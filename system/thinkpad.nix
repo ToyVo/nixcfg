@@ -14,13 +14,19 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/9bf8d1a7-2e43-41b2-8731-61832f0a5b14";
+    { device = "/dev/disk/by-label/NIXOS";
       fsType = "btrfs";
       options = [ "subvol=@" ];
     };
 
+  fileSystems."/home" =
+    { device = "/dev/disk/by-label/NIXOS";
+      fsType = "btrfs";
+      options = [ "subvol=@home" ];
+    };
+
   fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/CDC6-20F8";
+    { device = "/dev/disk/by-label/EFI";
       fsType = "vfat";
     };
 
