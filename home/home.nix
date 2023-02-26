@@ -7,6 +7,7 @@
   };
   home.shellAliases = {
     cat = "bat -pp";
+    tree = "exa --tree";
     gpg-scan-card = ''gpg-connect-agent "scd serialno" "learn --force" /bye'';
   };
   home.packages = with pkgs; [
