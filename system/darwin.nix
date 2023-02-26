@@ -12,4 +12,16 @@
   ];
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToControl = true;
+  homebrew = {
+    enable = true;
+    casks = [
+      "firefox"
+      "alacritty"
+    ];
+    masApps = {
+      "1Password 7" = 1333542190;
+      "Yubico Authenticator" = 1497506650;
+      "Wireguard" = 1451685025;
+    };
+  };
 }

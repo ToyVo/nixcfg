@@ -12,7 +12,6 @@
   };
   home.packages = with pkgs; [
     neovide
-    firefox
   ];
   xdg.configFile."ideavim/ideavimrc".source = ./assets/ideavimrc;
   programs.home-manager.enable = true;

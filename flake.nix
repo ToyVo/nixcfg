@@ -2,7 +2,7 @@
   description = "Collin Diekvoss Dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/master";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
@@ -22,7 +22,8 @@
               home.username = "toyvo";
               home.homeDirectory = "/Users/toyvo";
               imports = [ 
-                ./home/home.nix
+                ./home/home-common.nix
+                ./home/home-darwin.nix
                 ./home/neovim.nix
                 ./home/alacritty.nix
                 ./home/git.nix
@@ -53,7 +54,8 @@
               home.username = "CollinDie";
               home.homeDirectory = "/Users/CollinDie";
               imports = [ 
-                ./home/home.nix 
+                ./home/home-common.nix 
+                ./home/home-darwin.nix
                 ./home/emu.nix
                 ./home/neovim.nix
                 ./home/alacritty.nix
@@ -88,7 +90,8 @@
               home.username = "toyvo";
               home.homeDirectory = "/home/toyvo";
               imports = [ 
-                ./home/home.nix
+                ./home/home-common.nix
+                ./home/home-linux.nix
                 ./home/neovim.nix
                 ./home/alacritty.nix
                 ./home/git.nix
