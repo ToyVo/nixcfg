@@ -1,5 +1,5 @@
 {
-  description = "Darwin configuration";
+  description = "Collin Diekvoss Dotfiles";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/master";
@@ -14,7 +14,7 @@
       Collins-MacBook-Pro = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          ./darwin.nix
+          ./system/darwin.nix
           home-manager.darwinModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -22,14 +22,15 @@
               home.username = "toyvo";
               home.homeDirectory = "/Users/toyvo";
               imports = [ 
-                ./home.nix
-                ./neovim.nix
-                ./alacritty.nix
-                ./git.nix
-                ./gpg.nix
-                ./ssh.nix
-                ./starship.nix
-                ./zsh.nix
+                ./home/home.nix
+                ./home/neovim.nix
+                ./home/alacritty.nix
+                ./home/git.nix
+                ./home/gpg-common.nix
+                ./home/gpg-darwin.nix
+                ./home/ssh.nix
+                ./home/starship.nix
+                ./home/zsh.nix
               ];
             };
             users.users.toyvo = {
@@ -44,7 +45,7 @@
       FQ-M-4CP7WX04 = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          ./darwin.nix
+          ./system/darwin.nix
           home-manager.darwinModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -52,15 +53,16 @@
               home.username = "CollinDie";
               home.homeDirectory = "/Users/CollinDie";
               imports = [ 
-                ./home.nix 
-                ./emu.nix
-                ./neovim.nix
-                ./alacritty.nix
-                ./git.nix
-                ./gpg.nix
-                ./ssh.nix
-                ./starship.nix
-                ./zsh.nix
+                ./home/home.nix 
+                ./home/emu.nix
+                ./home/neovim.nix
+                ./home/alacritty.nix
+                ./home/git.nix
+                ./home/gpg-common.nix
+                ./home/gpg-darwin.nix
+                ./home/ssh.nix
+                ./home/starship.nix
+                ./home/zsh.nix
               ];
             };
             users.users.CollinDie = {
@@ -77,7 +79,8 @@
       Collins-Thinkpad = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./nixos.nix
+          ./system/thinkpad.nix
+          ./system/nixos.nix
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -85,20 +88,16 @@
               home.username = "toyvo";
               home.homeDirectory = "/home/toyvo";
               imports = [ 
-                ./home.nix
-                ./neovim.nix
-                ./alacritty.nix
-                ./git.nix
-                ./gpg.nix
-                ./ssh.nix
-                ./starship.nix
-                ./zsh.nix
+                ./home/home.nix
+                ./home/neovim.nix
+                ./home/alacritty.nix
+                ./home/git.nix
+                ./home/gpg-common.nix
+                ./home/gpg-linux.nix
+                ./home/ssh.nix
+                ./home/starship.nix
+                ./home/zsh.nix
               ];
-            };
-            users.users.toyvo = {
-              name = "toyvo";
-              description = "Collin Diekvoss";
-              home = "/home/toyvo";
             };
           }
         ];

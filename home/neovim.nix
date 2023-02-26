@@ -57,6 +57,6 @@
       telescope-dap-nvim
       which-key-nvim
     ];
-    extraLuaConfig = lib.fileContents ./init.lua;
+    extraLuaConfig = lib.fileContents ./assets/init.lua;
   };
 }

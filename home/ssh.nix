@@ -4,7 +4,7 @@
     enable = true;
     matchBlocks."*" = {
       identitiesOnly = true;
-      identityFile = "${./ssh_yubikey.pub}";
+      identityFile = "${./assets/ssh_yubikey.pub}";
       extraOptions = {
         IgnoreUnknown = "UseKeychain";
         AddKeysToAgent = "yes";
