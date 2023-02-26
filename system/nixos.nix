@@ -52,7 +52,4 @@
   };
   services.openssh.enable = true;
   system.stateVersion = "22.11";
-  fonts.fonts = [
-    (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
-  ];
 }

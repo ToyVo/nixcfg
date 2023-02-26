@@ -9,11 +9,12 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, darwin, ... }: {
+  outputs = { nixpkgs, home-manager, darwin, ... }: {
     darwinConfigurations = {
       Collins-MacBook-Pro = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
+          ./system/common.nix
           ./system/darwin.nix
           home-manager.darwinModules.home-manager {
             home-manager.useGlobalPkgs = true;
@@ -46,7 +47,9 @@
       FQ-M-4CP7WX04 = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
+          ./system/common.nix
           ./system/darwin.nix
+          ./system/work.nix
           home-manager.darwinModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -81,6 +84,7 @@
       Collins-Thinkpad = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
+          ./system/common.nix
           ./system/thinkpad.nix
           ./system/nixos.nix
           home-manager.nixosModules.home-manager {
