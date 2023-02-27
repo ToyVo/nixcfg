@@ -27,6 +27,7 @@
                 ./home/home-darwin.nix
                 ./home/neovim.nix
                 ./home/alacritty.nix
+                ./home/kitty.nix
                 ./home/git.nix
                 ./home/gpg-common.nix
                 ./home/gpg-darwin.nix
@@ -62,6 +63,7 @@
                 ./home/emu.nix
                 ./home/neovim.nix
                 ./home/alacritty.nix
+                ./home/kitty.nix
                 ./home/git.nix
                 ./home/gpg-common.nix
                 ./home/gpg-darwin.nix
@@ -98,6 +100,7 @@
                 ./home/home-linux.nix
                 ./home/neovim.nix
                 ./home/alacritty.nix
+                ./home/kitty.nix
                 ./home/git.nix
                 ./home/gpg-common.nix
                 ./home/gpg-linux.nix

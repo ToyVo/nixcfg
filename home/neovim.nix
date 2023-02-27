@@ -12,8 +12,6 @@
       rust-analyzer
       nodePackages.eslint
       nodePackages.typescript-language-server
-      ripgrep
-      fd
     ];
     plugins = with pkgs.vimPlugins; [
       impatient-nvim

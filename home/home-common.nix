@@ -16,6 +16,8 @@
   };
   home.packages = with pkgs; [
     git-crypt
+    ripgrep
+    fd
   ];
   xdg.configFile."ideavim/ideavimrc".source = ./assets/ideavimrc;
   programs.home-manager.enable = true;

@@ -19,6 +19,7 @@
     casks = [
       "firefox"
       "alacritty"
+      "kitty"
       "neovide"
       "1password"
     ];
