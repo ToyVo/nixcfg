@@ -67,7 +67,6 @@
                 ./home/git.nix
                 ./home/gpg-common.nix
                 ./home/gpg-darwin.nix
-                ./home/ssh.nix
                 ./home/starship.nix
                 ./home/zsh.nix
               ];
