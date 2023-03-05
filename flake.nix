@@ -7,9 +7,10 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-hardware.url = "github:nixos/nixos-hardware/master";
   };
 
-  outputs = { nixpkgs, home-manager, darwin, ... }: {
+  outputs = { nixpkgs, home-manager, darwin, nixos-hardware, ... }: {
     darwinConfigurations = {
       Collins-MacBook-Pro = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
@@ -86,8 +87,41 @@
         system = "x86_64-linux";
         modules = [
           ./system/common.nix
-          ./system/thinkpad.nix
           ./system/nixos.nix
+          ./system/gnome.nix
+          ./system/thinkpad.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.toyvo = {
+              home.username = "toyvo";
+              home.homeDirectory = "/home/toyvo";
+              imports = [ 
+                ./home/home-common.nix
+                ./home/home-linux.nix
+                ./home/neovim.nix
+                ./home/alacritty.nix
+                ./home/kitty.nix
+                ./home/git.nix
+                ./home/gpg-common.nix
+                ./home/gpg-linux.nix
+                ./home/ssh.nix
+                ./home/starship.nix
+                ./home/zsh.nix
+              ];
+            };
+          }
+        ];
+      };
+
+      rpi4a8a = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          ./system/common.nix
+          ./system/rpi4a8a.nix
+          ./system/xfce.nix
+          ./system/nixos.nix
+          nixos-hardware.nixosModules.raspberry-pi-4
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
