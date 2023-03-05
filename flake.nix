@@ -114,11 +114,11 @@
         ];
       };
 
-      rpi4a8a = nixpkgs.lib.nixosSystem {
+      rpi4b8a = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
           ./system/common.nix
-          ./system/rpi4a8a.nix
+          ./system/rpi4b8a.nix
           ./system/xfce.nix
           ./system/nixos.nix
           nixos-hardware.nixosModules.raspberry-pi-4
