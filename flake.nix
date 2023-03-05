@@ -119,7 +119,6 @@
         modules = [
           ./system/common.nix
           ./system/rpi4b8a.nix
-          ./system/xfce.nix
           ./system/nixos.nix
           nixos-hardware.nixosModules.raspberry-pi-4
           home-manager.nixosModules.home-manager {
@@ -130,10 +129,7 @@
               home.homeDirectory = "/home/toyvo";
               imports = [ 
                 ./home/home-common.nix
-                ./home/home-linux.nix
                 ./home/neovim.nix
-                ./home/alacritty.nix
-                ./home/kitty.nix
                 ./home/git.nix
                 ./home/gpg-common.nix
                 ./home/gpg-linux.nix
