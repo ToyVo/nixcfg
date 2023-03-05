@@ -144,9 +144,13 @@
     };
 
     homeConfigurations = {
-      "deck@steamdeck" = {
+      "deck" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         modules = [ 
+          ({...}:{
+            home.username = "deck";
+            home.homeDirectory = "/home/deck";
+          })
           ./home/home-common.nix
           ./home/home-linux.nix
           ./home/neovim.nix
