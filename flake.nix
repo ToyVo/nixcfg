@@ -142,5 +142,24 @@
         ];
       };
     };
+
+    homeConfigurations = {
+      "deck@steamdeck" = {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        modules = [ 
+          ./home/home-common.nix
+          ./home/home-linux.nix
+          ./home/neovim.nix
+          ./home/alacritty.nix
+          ./home/kitty.nix
+          ./home/git.nix
+          ./home/gpg-common.nix
+          ./home/gpg-linux.nix
+          ./home/ssh.nix
+          ./home/starship.nix
+          ./home/zsh.nix
+        ];
+      };
+    };
   };
 }
