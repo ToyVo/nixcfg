@@ -162,6 +162,7 @@
           ./home/ssh.nix
           ./home/starship.nix
           ./home/zsh.nix
+          ./home/desktop-files.nix
         ];
       };
     };
