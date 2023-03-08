@@ -141,6 +141,35 @@
           }
         ];
       };
+
+      Collins-PineBook-Pro = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          ./system/common.nix
+          ./system/pinebookpro.nix
+          ./system/nixos.nix
+          ./system/xfce.nix
+          nixos-hardware.nixosModules.pine64-pinebook-pro
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.toyvo = {
+              home.username = "toyvo";
+              home.homeDirectory = "/home/toyvo";
+              imports = [ 
+                ./home/home-common.nix
+                ./home/neovim.nix
+                ./home/git.nix
+                ./home/gpg-common.nix
+                ./home/gpg-linux.nix
+                ./home/ssh.nix
+                ./home/starship.nix
+                ./home/zsh.nix
+              ];
+            };
+          }
+        ];
+      };
     };
 
     homeConfigurations = {
