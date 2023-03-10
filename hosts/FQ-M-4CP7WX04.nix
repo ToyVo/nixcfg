@@ -1,14 +1,21 @@
-{home-manager, darwin}:
-darwin.lib.darwinSystem {
+{nixpkgs, nixpkgs-unstable, home-manager, darwin}: let
   system = "aarch64-darwin";
+  user = "CollinDie";
+  pkgs = nixpkgs.legacyPackages.${system};
+  pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+in darwin.lib.darwinSystem {
+  inherit system pkgs;
   modules = [
     ../system/work.nix
     home-manager.darwinModules.home-manager {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.users.CollinDie = {
-        home.username = "CollinDie";
-        home.homeDirectory = "/Users/CollinDie";
+      home-manager.extraSpecialArgs = {
+        inherit pkgs-unstable;
+      };
+      home-manager.users.${user} = {
+        home.username = user;
+        home.homeDirectory = "/Users/${user}";
         imports = [ 
           ../home/home-common.nix 
           ../home/home-darwin.nix
@@ -23,10 +30,10 @@ darwin.lib.darwinSystem {
           ../home/zsh.nix
         ];
       };
-      users.users.CollinDie = {
-        name = "CollinDie";
+      users.users.${user} = {
+        name = user;
         description = "Collin Diekvoss";
-        home = "/Users/CollinDie";
+        home = "/Users/${user}";
       };
     }
   ];

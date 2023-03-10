@@ -5,6 +5,7 @@
   programs.gnupg.agent.pinentryFlavor = "gnome3";
   services.printing.enable = true;
   security.rtkit.enable = true;
+  hardware.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa.enable = true;

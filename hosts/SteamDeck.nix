@@ -1,10 +1,14 @@
-{nixpkgs, home-manager}:
-home-manager.lib.homeManagerConfiguration {
-  pkgs = nixpkgs.legacyPackages.x86_64-linux;
+{nixpkgs, nixpkgs-unstable, home-manager}: let
+  system = "x86_64-linux";
+  user = "deck";
+  pkgs = nixpkgs.legacyPackages.${system};
+  pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+in home-manager.lib.homeManagerConfiguration {
+  inherit pkgs;
   modules = [ 
     ({...}:{
-      home.username = "deck";
-      home.homeDirectory = "/home/deck";
+      home.username = user;
+      home.homeDirectory = "/home/${user}";
     })
     ../home/home-common.nix
     ../home/home-linux.nix
@@ -19,4 +23,7 @@ home-manager.lib.homeManagerConfiguration {
     ../home/zsh.nix
     ../home/desktop-files.nix
   ];
+  extraSpecialArgs = {
+    inherit pkgs-unstable;
+  };
 }

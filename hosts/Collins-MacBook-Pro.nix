@@ -1,14 +1,21 @@
-{home-manager, darwin}:
-darwin.lib.darwinSystem {
+{nixpkgs, nixpkgs-unstable, home-manager, darwin}: let
   system = "aarch64-darwin";
+  user = "toyvo";
+  pkgs = nixpkgs.legacyPackages.${system};
+  pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+in darwin.lib.darwinSystem {
+  inherit system pkgs;
   modules = [
     ../system/darwin.nix
     home-manager.darwinModules.home-manager {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.users.toyvo = {
-        home.username = "toyvo";
-        home.homeDirectory = "/Users/toyvo";
+      home-manager.extraSpecialArgs = {
+        inherit pkgs-unstable;
+      };
+      home-manager.users.${user} = {
+        home.username = user;
+        home.homeDirectory = "/Users/${user}";
         imports = [ 
           ../home/home-common.nix
           ../home/home-darwin.nix
@@ -23,10 +30,10 @@ darwin.lib.darwinSystem {
           ../home/zsh.nix
         ];
       };
-      users.users.toyvo = {
-        name = "toyvo";
+      users.users.${user} = {
+        name = user;
         description = "Collin Diekvoss";
-        home = "/Users/toyvo";
+        home = "/Users/${user}";
       };
     }
   ];
