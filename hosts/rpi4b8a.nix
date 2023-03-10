@@ -6,6 +6,8 @@
 in nixpkgs.lib.nixosSystem {
   inherit system pkgs;
   modules = [
+    ../system/common.nix
+    ../system/nixos.nix
     ../system/rpi4b8a.nix
     nixos-hardware.nixosModules.raspberry-pi-4
     home-manager.nixosModules.home-manager {

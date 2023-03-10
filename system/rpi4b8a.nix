@@ -1,8 +1,4 @@
 { config, pkgs, lib, ... }: {
-  imports = [
-    ./common.nix
-    ./nixos.nix
-  ];
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";

@@ -6,6 +6,9 @@
 in nixpkgs.lib.nixosSystem {
   inherit system pkgs;
   modules = [
+    ../system/common.nix
+    ../system/nixos.nix
+    ../system/xfce.nix
     ../system/thinkpad.nix
     home-manager.nixosModules.home-manager {
       home-manager.useGlobalPkgs = true;

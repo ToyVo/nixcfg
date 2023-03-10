@@ -6,6 +6,10 @@
 in nixpkgs.lib.nixosSystem {
   inherit system pkgs;
   modules = [
+    {nixpkgs.config.allowUnfree = true;}
+    ../system/common.nix
+    ../system/nixos.nix
+    ../system/xfce.nix
     ../system/pinebookpro.nix
     nixos-hardware.nixosModules.pine64-pinebook-pro
     home-manager.nixosModules.home-manager {

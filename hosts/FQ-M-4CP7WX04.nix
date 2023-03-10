@@ -6,6 +6,8 @@
 in darwin.lib.darwinSystem {
   inherit system pkgs;
   modules = [
+    ../system/common.nix
+    ../system/darwin.nix
     ../system/work.nix
     home-manager.darwinModules.home-manager {
       home-manager.useGlobalPkgs = true;
