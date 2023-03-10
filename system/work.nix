@@ -1,5 +1,8 @@
 { ... }:
 {
+  imports = [
+    ./darwin.nix
+  ];
   homebrew.taps = [
     "mongodb/brew"
   ];

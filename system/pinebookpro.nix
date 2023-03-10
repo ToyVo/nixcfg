@@ -1,4 +1,9 @@
 { config, pkgs, lib, ... }: {
+  imports = [
+    ./common.nix
+    ./nixos.nix
+    ./xfce.nix
+  ];
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";

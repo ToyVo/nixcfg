@@ -12,190 +12,32 @@
 
   outputs = { nixpkgs, home-manager, darwin, nixos-hardware, ... }: {
     darwinConfigurations = {
-      Collins-MacBook-Pro = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          ./system/common.nix
-          ./system/darwin.nix
-          home-manager.darwinModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.toyvo = {
-              home.username = "toyvo";
-              home.homeDirectory = "/Users/toyvo";
-              imports = [ 
-                ./home/home-common.nix
-                ./home/home-darwin.nix
-                ./home/neovim.nix
-                ./home/alacritty.nix
-                ./home/kitty.nix
-                ./home/git.nix
-                ./home/gpg-common.nix
-                ./home/gpg-darwin.nix
-                ./home/ssh.nix
-                ./home/starship.nix
-                ./home/zsh.nix
-              ];
-            };
-            users.users.toyvo = {
-              name = "toyvo";
-              description = "Collin Diekvoss";
-              home = "/Users/toyvo";
-            };
-          }
-        ];
+      Collins-MacBook-Pro = import ./hosts/Collins-MacBook-Pro.nix {
+        inherit home-manager darwin;
       };
 
-      FQ-M-4CP7WX04 = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          ./system/common.nix
-          ./system/darwin.nix
-          ./system/work.nix
-          home-manager.darwinModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.CollinDie = {
-              home.username = "CollinDie";
-              home.homeDirectory = "/Users/CollinDie";
-              imports = [ 
-                ./home/home-common.nix 
-                ./home/home-darwin.nix
-                ./home/emu.nix
-                ./home/neovim.nix
-                ./home/alacritty.nix
-                ./home/kitty.nix
-                ./home/git.nix
-                ./home/gpg-common.nix
-                ./home/gpg-darwin.nix
-                ./home/starship.nix
-                ./home/zsh.nix
-              ];
-            };
-            users.users.CollinDie = {
-              name = "CollinDie";
-              description = "Collin Diekvoss";
-              home = "/Users/CollinDie";
-            };
-          }
-        ];
+      FQ-M-4CP7WX04 = import ./hosts/FQ-M-4CP7WX04.nix {
+        inherit home-manager darwin;
       };
     };
 
     nixosConfigurations = {
-      Collins-Thinkpad = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./system/common.nix
-          ./system/nixos.nix
-          ./system/gnome.nix
-          ./system/thinkpad.nix
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.toyvo = {
-              home.username = "toyvo";
-              home.homeDirectory = "/home/toyvo";
-              imports = [ 
-                ./home/home-common.nix
-                ./home/home-linux.nix
-                ./home/neovim.nix
-                ./home/alacritty.nix
-                ./home/kitty.nix
-                ./home/git.nix
-                ./home/gpg-common.nix
-                ./home/gpg-linux.nix
-                ./home/ssh.nix
-                ./home/starship.nix
-                ./home/zsh.nix
-              ];
-            };
-          }
-        ];
+      Collins-Thinkpad = import ./hosts/Collins-Thinkpad.nix {
+        inherit nixpkgs home-manager;
       };
 
-      rpi4b8a = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        modules = [
-          ./system/common.nix
-          ./system/rpi4b8a.nix
-          ./system/nixos.nix
-          nixos-hardware.nixosModules.raspberry-pi-4
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.toyvo = {
-              home.username = "toyvo";
-              home.homeDirectory = "/home/toyvo";
-              imports = [ 
-                ./home/home-common.nix
-                ./home/neovim.nix
-                ./home/git.nix
-                ./home/gpg-common.nix
-                ./home/gpg-linux.nix
-                ./home/ssh.nix
-                ./home/starship.nix
-                ./home/zsh.nix
-              ];
-            };
-          }
-        ];
+      rpi4b8a = import ./hosts/rpi4b8a.nix {
+        inherit nixpkgs home-manager nixos-hardware;
       };
 
-      Collins-PineBook-Pro = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        modules = [
-          ./system/common.nix
-          ./system/pinebookpro.nix
-          ./system/nixos.nix
-          ./system/xfce.nix
-          nixos-hardware.nixosModules.pine64-pinebook-pro
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.toyvo = {
-              home.username = "toyvo";
-              home.homeDirectory = "/home/toyvo";
-              imports = [ 
-                ./home/home-common.nix
-                ./home/neovim.nix
-                ./home/git.nix
-                ./home/gpg-common.nix
-                ./home/gpg-linux.nix
-                ./home/ssh.nix
-                ./home/starship.nix
-                ./home/zsh.nix
-                ./home/home-linux.nix
-                ./home/alacritty.nix
-                ./home/kitty.nix
-              ];
-            };
-          }
-        ];
+      Collins-PineBook-Pro = import ./hosts/Collins-PineBook-Pro.nix {
+        inherit nixpkgs home-manager nixos-hardware;
       };
     };
 
     homeConfigurations = {
-      "deck" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        modules = [ 
-          ({...}:{
-            home.username = "deck";
-            home.homeDirectory = "/home/deck";
-          })
-          ./home/home-common.nix
-          ./home/home-linux.nix
-          ./home/neovim.nix
-          ./home/alacritty.nix
-          ./home/kitty.nix
-          ./home/git.nix
-          ./home/gpg-common.nix
-          ./home/gpg-linux.nix
-          ./home/ssh.nix
-          ./home/starship.nix
-          ./home/zsh.nix
-          ./home/desktop-files.nix
-        ];
+      "deck" = import ./hosts/SteamDeck.nix {
+        inherit nixpkgs home-manager;
       };
     };
   };
