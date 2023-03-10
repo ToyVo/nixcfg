@@ -165,6 +165,9 @@
                 ./home/ssh.nix
                 ./home/starship.nix
                 ./home/zsh.nix
+                ./home/home-linux.nix
+                ./home/alacritty.nix
+                ./home/kitty.nix
               ];
             };
           }
