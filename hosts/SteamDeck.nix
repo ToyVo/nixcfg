@@ -13,8 +13,6 @@ in home-manager.lib.homeManagerConfiguration {
     ../home/home-common.nix
     ../home/home-linux.nix
     ../home/neovim.nix
-    ../home/alacritty.nix
-    ../home/kitty.nix
     ../home/git.nix
     ../home/gpg-common.nix
     ../home/gpg-linux.nix

@@ -1,10 +1,9 @@
 {nixpkgs, nixpkgs-unstable, home-manager, darwin}: let
   system = "aarch64-darwin";
   user = "toyvo";
-  pkgs = nixpkgs.legacyPackages.${system};
   pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
 in darwin.lib.darwinSystem {
-  inherit system pkgs;
+  inherit system;
   modules = [
     ../system/common.nix
     ../system/darwin.nix

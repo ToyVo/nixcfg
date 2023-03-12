@@ -1,20 +1,19 @@
 {pkgs, pkgs-unstable, lib, ...}: {
   programs.neovim = {
     enable = true;
-    # package = pkgs-unstable.neovim;
     # defaultEditor = true;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
     withNodeJs = true;
-    extraPackages = with pkgs; [
-      # lua-language-server
+    extraPackages = with pkgs-unstable; [
+      lua-language-server
       nil
       rust-analyzer
       nodePackages.eslint
       nodePackages.typescript-language-server
     ];
-    plugins = with pkgs.vimPlugins; [
+    plugins = with pkgs-unstable.vimPlugins; [
       impatient-nvim
       lualine-nvim
       lualine-lsp-progress
@@ -30,7 +29,7 @@
       vim-illuminate
       gitsigns-nvim
       comment-nvim
-      # lspsaga-nvim-original
+      lspsaga-nvim-original
       nvim-lspconfig
       nvim-web-devicons
       nvim-cmp

@@ -1,10 +1,9 @@
 {nixpkgs, nixpkgs-unstable, home-manager}: let
   system = "x86_64-linux";
   user = "toyvo";
-  pkgs = nixpkgs.legacyPackages.${system};
   pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
 in nixpkgs.lib.nixosSystem {
-  inherit system pkgs;
+  inherit system;
   modules = [
     ../system/common.nix
     ../system/nixos.nix
