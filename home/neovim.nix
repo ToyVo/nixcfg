@@ -11,6 +11,7 @@
       nil
       rust-analyzer
       nodePackages.eslint
+      nodePackages.vscode-langservers-extracted
       nodePackages.typescript-language-server
     ];
     plugins = with pkgs-unstable.vimPlugins; [
@@ -29,7 +30,6 @@
       vim-illuminate
       gitsigns-nvim
       comment-nvim
-      lspsaga-nvim-original
       nvim-lspconfig
       nvim-web-devicons
       nvim-cmp
@@ -40,6 +40,8 @@
       cmp-path
       cmp-cmdline
       cmp_luasnip
+      cmp-copilot
+      copilot-vim
       luasnip
       friendly-snippets
       nvim-tree-lua

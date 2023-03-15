@@ -19,6 +19,7 @@
     ripgrep
     fd
     cargo
+    rustfmt
   ];
   xdg.configFile."ideavim/ideavimrc".source = ./assets/ideavimrc;
   xdg.configFile."nix/nix.conf".text = '' experimental-features = nix-command flakes '';

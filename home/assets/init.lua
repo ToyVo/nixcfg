@@ -67,82 +67,53 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
--- keymaps
--- LSP finder - Find the symbol's definition
--- If there is no definition, it will instead be hidden
--- When you use an action in finder like "open vsplit",
--- you can use <C-t> to jump back
-vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>")
+vim.keymap.set("n", "<leader>u", "<cmd>UndoTreeToggle<CR>")
+vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>")
+vim.keymap.set('n', '<S-r>', '<cmd>bprevious<cr>');
+vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>');
+vim.keymap.set('n', '<C-h>', '<C-w>h');
+vim.keymap.set('n', '<C-j>', '<C-w>j');
+vim.keymap.set('n', '<C-k>', '<C-w>k');
+vim.keymap.set('n', '<C-l>', '<C-w>l');
+vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h")
+vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j")
+vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k")
+vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l")
 
--- Code action
-vim.keymap.set({"n","v"}, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
+local opts = { noremap = true, silent = true }
+vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
 
--- Rename all occurrences of the hovered word for the entire file
-vim.keymap.set("n", "gr", "<cmd>Lspsaga rename<CR>")
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
--- Rename all occurrences of the hovered word for the selected files
-vim.keymap.set("n", "gr", "<cmd>Lspsaga rename ++project<CR>")
-
-vim.keymap.set("n","gd", "<cmd>Lspsaga goto_definition<CR>", { desc = "Go to definition" })
-vim.keymap.set("n","gt", "<cmd>Lspsaga goto_type_definition<CR>", { desc = "Go to type definition" })
-
-
--- Show line diagnostics
--- You can pass argument ++unfocus to
--- unfocus the show_line_diagnostics floating window
-vim.keymap.set("n", "<leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
-
--- Show cursor diagnostics
--- Like show_line_diagnostics, it supports passing the ++unfocus argument
-vim.keymap.set("n", "<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
-
--- Show buffer diagnostics
-vim.keymap.set("n", "<leader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
-
--- Diagnostic jump
--- You can use <C-o> to jump back to your previous location
-vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
-vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
-
--- Diagnostic jump with filters such as only jumping to an error
-vim.keymap.set("n", "[E", function()
-  require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
-end)
-vim.keymap.set("n", "]E", function()
-  require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
-end)
-
-vim.keymap.set("n","<leader>o", "<cmd>Lspsaga outline<CR>")
-vim.keymap.set("n","<leader>u", "<cmd>UndoTreeToggle<CR>")
-vim.keymap.set("n","<leader>e", "<cmd>NvimTreeToggle<CR>")
-
--- Hover Doc
--- If there is no hover doc,
--- there will be a notification stating that
--- there is no information available.
--- To disable it just use ":Lspsaga hover_doc ++quiet"
--- Pressing the key twice will enter the hover window
-vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
-
--- If you want to keep the hover window in the top right hand corner,
--- you can pass the ++keep argument
--- Note that if you use hover with ++keep, pressing this key again will
--- close the hover window. If you want to jump to the hover window
--- you should use the wincmd command "<C-w>w"
-vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
-
--- Call hierarchy
-vim.keymap.set("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
-vim.keymap.set("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
-
--- Floating terminal
-vim.keymap.set({"n", "t"}, "<C-\\>", "<cmd>Lspsaga term_toggle<CR>")
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<leader>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+end
 
 -- plugins
 require('gitsigns').setup();
 require('Comment').setup();
 require('treesitter-context').setup();
-require('lspsaga').setup();
 
 require('which-key').setup({
   plugins = {
@@ -159,15 +130,15 @@ require('nvim-tree').setup();
 
 require('lualine').setup({
   sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename', 'lsp_progress'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'},
+    lualine_a = { 'mode' },
+    lualine_b = { 'branch', 'diff', 'diagnostics' },
+    lualine_c = { 'filename', 'lsp_progress' },
+    lualine_x = { 'encoding', 'fileformat', 'filetype' },
+    lualine_y = { 'progress' },
+    lualine_z = { 'location' },
   },
   tabline = {
-    lualine_a = {'buffers'},
+    lualine_a = { 'buffers' },
   },
 });
 
@@ -197,18 +168,16 @@ require('nvim-treesitter.configs').setup({
   textobjects = {
     select = {
       enable = true,
-
       -- Automatically jump forward to textobj, similar to targets.vim
       lookahead = true,
-
       keymaps = {
         -- You can use the capture groups defined in textobjects.scm
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
+            ["af"] = "@function.outer",
+            ["if"] = "@function.inner",
+            ["ac"] = "@class.outer",
         -- You can optionally set descriptions to the mappings (used in the desc parameter of
         -- nvim_buf_set_keymap) which plugins like which-key display
-        ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+            ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
       },
       -- You can choose the select mode (default is charwise 'v')
       --
@@ -218,9 +187,9 @@ require('nvim-treesitter.configs').setup({
       -- and should return the mode ('v', 'V', or '<c-v>') or a table
       -- mapping query_strings to modes.
       selection_modes = {
-        ['@parameter.outer'] = 'v', -- charwise
-        ['@function.outer'] = 'V', -- linewise
-        ['@class.outer'] = '<c-v>', -- blockwise
+            ['@parameter.outer'] = 'v', -- charwise
+            ['@function.outer'] = 'V',  -- linewise
+            ['@class.outer'] = '<c-v>', -- blockwise
       },
       -- If you set this to `true` (default is `false`) then any textobject is
       -- extended to include preceding or succeeding whitespace. Succeeding
@@ -236,38 +205,38 @@ require('nvim-treesitter.configs').setup({
     swap = {
       enable = true,
       swap_next = {
-        ["<leader>a"] = "@parameter.inner",
+            ["<leader>a"] = "@parameter.inner",
       },
       swap_previous = {
-        ["<leader>A"] = "@parameter.inner",
+            ["<leader>A"] = "@parameter.inner",
       },
     },
     move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
-        ["]m"] = "@function.outer",
-        ["]]"] = { query = "@class.outer", desc = "Next class start" },
+            ["]m"] = "@function.outer",
+            ["]]"] = { query = "@class.outer", desc = "Next class start" },
       },
       goto_next_end = {
-        ["]M"] = "@function.outer",
-        ["]["] = "@class.outer",
+            ["]M"] = "@function.outer",
+            ["]["] = "@class.outer",
       },
       goto_previous_start = {
-        ["[m"] = "@function.outer",
-        ["[["] = "@class.outer",
+            ["[m"] = "@function.outer",
+            ["[["] = "@class.outer",
       },
       goto_previous_end = {
-        ["[M"] = "@function.outer",
-        ["[]"] = "@class.outer",
+            ["[M"] = "@function.outer",
+            ["[]"] = "@class.outer",
       },
     },
     lsp_interop = {
       enable = true,
       border = 'none',
       peek_definition_code = {
-        ["<leader>df"] = "@function.outer",
-        ["<leader>dF"] = "@class.outer",
+            ["<leader>df"] = "@function.outer",
+            ["<leader>dF"] = "@class.outer",
       },
     },
   },
@@ -279,12 +248,41 @@ telescope.load_extension('ui-select');
 telescope.load_extension('frecency');
 telescope.load_extension('dap');
 
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local lspconfig = require('lspconfig');
+
+local servers = { 'nil_ls', 'rust_analyzer', 'eslint', 'tsserver', 'jsonls' };
+for _, lsp in ipairs(servers) do
+  lspconfig[lsp].setup({
+    capabilities = capabilities,
+    on_attach = on_attach,
+  });
+end
+lspconfig.lua_ls.setup({
+  capabilities = capabilities,
+  on_attach = on_attach,
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        globals = { 'vim' },
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+    },
+  },
+});
+
+local luasnip = require('luasnip');
 local cmp = require('cmp');
 
 cmp.setup({
   snippet = {
     expand = function(args)
-      require('luasnip').lsp_expand(args.body)
+      luasnip.lsp_expand(args.body)
     end,
   },
   window = {
@@ -292,18 +290,41 @@ cmp.setup({
     -- documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+        ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'nvim_lsp_signature_help' },
-    { name = 'nvim_lua' },
+    { name = 'copilot' },
     { name = 'luasnip' },
     { name = 'buffer' },
+    { name = 'path' },
+    { name = 'nvim_lua' },
   })
 })
 
@@ -335,37 +356,6 @@ require('nvim-autopairs').setup({
 });
 cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done());
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-local lspconfig = require('lspconfig');
-lspconfig.nil_ls.setup({
-  capabilities = capabilities,
-});
-lspconfig.rust_analyzer.setup({
-  capabilities = capabilities,
-});
-lspconfig.eslint.setup({
-  capabilities = capabilities,
-});
-lspconfig.tsserver.setup({
-  capabilities = capabilities,
-});
-lspconfig.lua_ls.setup({
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      runtime = {
-        version = 'LuaJIT',
-      },
-      diagnostics = {
-        globals = {'vim'},
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-    },
-  },
-});
-
 local rt = require("rust-tools")
 rt.setup({
   server = {
@@ -373,7 +363,7 @@ rt.setup({
       -- Hover actions
       vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
       -- Code action groups
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+      vim.keymap.set("n", "<leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
     end,
   },
 })
