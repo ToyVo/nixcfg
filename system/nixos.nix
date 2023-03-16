@@ -21,6 +21,7 @@
   };
   users.users.toyvo = {
     isNormalUser = true;
+    initialHashedPassword = "$y$j9T$jbvaDiuNpoRm.blRGD/Ne1$OpPEzRKM1u5/9On95bVlxS6r1N88c/MAoS479r1GRj5";
     description = "Collin Diekvoss";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
