@@ -27,6 +27,8 @@ in nixpkgs.lib.nixosSystem {
           ../home/ssh.nix
           ../home/starship.nix
           ../home/zsh.nix
+          ../home/kitty.nix
+          ../home/alacritty.nix
         ];
       };
     }
