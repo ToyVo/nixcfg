@@ -7,7 +7,7 @@ in nixpkgs.lib.nixosSystem {
   modules = [
     ../system/common.nix
     ../system/nixos.nix
-    ../system/xfce.nix
+    ../system/gnome.nix
     ../system/thinkpad.nix
     home-manager.nixosModules.home-manager {
       home-manager.useGlobalPkgs = true;

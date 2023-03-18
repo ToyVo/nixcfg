@@ -11,7 +11,7 @@
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, home-manager, darwin, nixos-hardware, ... }: {
+  outputs = { nixpkgs, nixpkgs-unstable, home-manager, darwin, nixos-hardware, self }: {
     darwinConfigurations = {
       Collins-MacBook-Pro = import ./hosts/Collins-MacBook-Pro.nix {
         inherit nixpkgs nixpkgs-unstable home-manager darwin;
