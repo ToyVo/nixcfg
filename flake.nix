@@ -9,9 +9,10 @@
     home-manager.url = "github:nix-community/home-manager/release-22.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
+    apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, home-manager, darwin, nixos-hardware, self }: {
+  outputs = { nixpkgs, nixpkgs-unstable, home-manager, darwin, nixos-hardware, apple-silicon-support, self }: {
     darwinConfigurations = {
       Collins-MacBook-Pro = import ./hosts/Collins-MacBook-Pro.nix {
         inherit nixpkgs nixpkgs-unstable home-manager darwin;
@@ -25,6 +26,10 @@
     nixosConfigurations = {
       Collins-Thinkpad = import ./hosts/Collins-Thinkpad.nix {
         inherit nixpkgs nixpkgs-unstable home-manager;
+      };
+
+      Collins-MacBook-Pro-Nixos = import ./hosts/Collins-MacBook-Pro-Nixos.nix {
+        inherit nixpkgs nixpkgs-unstable home-manager apple-silicon-support;
       };
 
       rpi4b8a = import ./hosts/rpi4b8a.nix {

@@ -1,4 +1,4 @@
-{nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager}: let
+{nixpkgs, nixpkgs-unstable, home-manager, apple-silicon-support}: let
   system = "aarch64-linux";
   user = "toyvo";
   pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
@@ -7,9 +7,10 @@ in nixpkgs.lib.nixosSystem {
   modules = [
     ../system/common.nix
     ../system/nixos.nix
-    ../system/xfce.nix
-    ../system/pinebookpro.nix
-    nixos-hardware.nixosModules.pine64-pinebook-pro
+    ../system/gnome.nix
+    ../system/macbook-nixos.nix
+    apple-silicon-support.nixosModules.apple-silicon-support
+    nixpkgs.nixosModules.notDetected
     home-manager.nixosModules.home-manager {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
@@ -36,3 +37,4 @@ in nixpkgs.lib.nixosSystem {
     }
   ];
 }
+

@@ -79,6 +79,7 @@ vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h")
 vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j")
 vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k")
 vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l")
+vim.keymap.set("v", "p", '"_dP')
 
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, opts)
