@@ -10,8 +10,12 @@
       initial_window_width = "120c";
       initial_window_height = "30c";
       window_padding_width = "6";
-      backgroud_opacity = "0.5";
-      dynamic_background_opacity = "yes";
+      background_opacity = "0.9";
     };
+    extraConfig = ''
+      modify_font cell_height -5px
+      modify_font baseline 1.5
+      modify_font underline_position 2
+    '';
   };
 }

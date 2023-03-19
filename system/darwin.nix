@@ -25,6 +25,7 @@
       "jetbrains-toolbox"
       "rectangle"
       "insomnia"
+      "gimp"
     ];
     masApps = {
       "Yubico Authenticator" = 1497506650;
