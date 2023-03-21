@@ -9,6 +9,7 @@
   fonts.fontDir.enable = true;
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToControl = true;
+  security.pam.enableSudoTouchIdAuth = true;
   homebrew = {
     onActivation = {
       autoUpdate = true;
