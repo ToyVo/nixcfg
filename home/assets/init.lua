@@ -67,19 +67,21 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
-vim.keymap.set("n", "<leader>u", "<cmd>UndoTreeToggle<CR>")
-vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>")
-vim.keymap.set('n', '<S-r>', '<cmd>bprevious<cr>');
+vim.keymap.set('n', '<leader>u', '<cmd>UndoTreeToggle<CR>')
+vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')
+vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>');
 vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>');
 vim.keymap.set('n', '<C-h>', '<C-w>h');
 vim.keymap.set('n', '<C-j>', '<C-w>j');
 vim.keymap.set('n', '<C-k>', '<C-w>k');
 vim.keymap.set('n', '<C-l>', '<C-w>l');
-vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h")
-vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j")
-vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k")
-vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l")
-vim.keymap.set("v", "p", '"_dP')
+vim.keymap.set('t', '<C-h>', '<C-\\><C-n><C-w>h')
+vim.keymap.set('t', '<C-j>', '<C-\\><C-n><C-w>j')
+vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>k')
+vim.keymap.set('t', '<C-l>', '<C-\\><C-n><C-w>l')
+vim.keymap.set('v', 'p', '"_dP')
+vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>');
+vim.keymap.set('n', '<leader>ft', '<cmd>Telescope live_grep<cr>');
 
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, opts)
@@ -151,10 +153,10 @@ require('nvim-treesitter.configs').setup({
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
+      init_selection = 'gnn',
+      node_incremental = 'grn',
+      scope_incremental = 'grc',
+      node_decremental = 'grm',
     },
   },
   indent = {
@@ -173,12 +175,12 @@ require('nvim-treesitter.configs').setup({
       lookahead = true,
       keymaps = {
         -- You can use the capture groups defined in textobjects.scm
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            ["ac"] = "@class.outer",
+        ['af'] = '@function.outer',
+        ['if'] = '@function.inner',
+        ['ac'] = '@class.outer',
         -- You can optionally set descriptions to the mappings (used in the desc parameter of
         -- nvim_buf_set_keymap) which plugins like which-key display
-            ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+        ['ic'] = { query = '@class.inner', desc = 'Select inner part of a class region' },
       },
       -- You can choose the select mode (default is charwise 'v')
       --
@@ -188,9 +190,9 @@ require('nvim-treesitter.configs').setup({
       -- and should return the mode ('v', 'V', or '<c-v>') or a table
       -- mapping query_strings to modes.
       selection_modes = {
-            ['@parameter.outer'] = 'v', -- charwise
-            ['@function.outer'] = 'V',  -- linewise
-            ['@class.outer'] = '<c-v>', -- blockwise
+        ['@parameter.outer'] = 'v',     -- charwise
+        ['@function.outer'] = 'V',      -- linewise
+        ['@class.outer'] = '<c-v>',     -- blockwise
       },
       -- If you set this to `true` (default is `false`) then any textobject is
       -- extended to include preceding or succeeding whitespace. Succeeding
@@ -206,38 +208,38 @@ require('nvim-treesitter.configs').setup({
     swap = {
       enable = true,
       swap_next = {
-            ["<leader>a"] = "@parameter.inner",
+        ['<leader>a'] = '@parameter.inner',
       },
       swap_previous = {
-            ["<leader>A"] = "@parameter.inner",
+        ['<leader>A'] = '@parameter.inner',
       },
     },
     move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
-            ["]m"] = "@function.outer",
-            ["]]"] = { query = "@class.outer", desc = "Next class start" },
+        [']m'] = '@function.outer',
+        [']]'] = { query = '@class.outer', desc = 'Next class start' },
       },
       goto_next_end = {
-            ["]M"] = "@function.outer",
-            ["]["] = "@class.outer",
+        [']M'] = '@function.outer',
+        [']['] = '@class.outer',
       },
       goto_previous_start = {
-            ["[m"] = "@function.outer",
-            ["[["] = "@class.outer",
+        ['[m'] = '@function.outer',
+        ['[['] = '@class.outer',
       },
       goto_previous_end = {
-            ["[M"] = "@function.outer",
-            ["[]"] = "@class.outer",
+        ['[M'] = '@function.outer',
+        ['[]'] = '@class.outer',
       },
     },
     lsp_interop = {
       enable = true,
       border = 'none',
       peek_definition_code = {
-            ["<leader>df"] = "@function.outer",
-            ["<leader>dF"] = "@class.outer",
+        ['<leader>df'] = '@function.outer',
+        ['<leader>dF'] = '@class.outer',
       },
     },
   },
@@ -271,7 +273,7 @@ lspconfig.lua_ls.setup({
         globals = { 'vim' },
       },
       workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
+        library = vim.api.nvim_get_runtime_file('', true),
       },
     },
   },
@@ -291,15 +293,15 @@ cmp.setup({
     -- documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm {
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-        ['<Tab>'] = cmp.mapping(function(fallback)
+    ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
@@ -308,7 +310,7 @@ cmp.setup({
         fallback()
       end
     end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
@@ -357,14 +359,14 @@ require('nvim-autopairs').setup({
 });
 cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done());
 
-local rt = require("rust-tools")
+local rt = require('rust-tools')
 rt.setup({
   server = {
     on_attach = function(_, bufnr)
       -- Hover actions
-      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+      vim.keymap.set('n', '<C-space>', rt.hover_actions.hover_actions, { buffer = bufnr })
       -- Code action groups
-      vim.keymap.set("n", "<leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+      vim.keymap.set('n', '<leader>a', rt.code_action_group.code_action_group, { buffer = bufnr })
     end,
   },
 })

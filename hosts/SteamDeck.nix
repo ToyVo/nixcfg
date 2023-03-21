@@ -1,8 +1,7 @@
-{nixpkgs, nixpkgs-unstable, home-manager}: let
+{nixpkgs, home-manager}: let
   system = "x86_64-linux";
   user = "deck";
   pkgs = nixpkgs.legacyPackages.${system};
-  pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
 in home-manager.lib.homeManagerConfiguration {
   inherit pkgs;
   modules = [ 
@@ -21,7 +20,4 @@ in home-manager.lib.homeManagerConfiguration {
     ../home/zsh.nix
     ../home/desktop-files.nix
   ];
-  extraSpecialArgs = {
-    inherit pkgs-unstable;
-  };
 }

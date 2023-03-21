@@ -1,12 +1,12 @@
-{pkgs, pkgs-unstable, lib, ...}: {
+{pkgs, lib, ...}: {
   programs.neovim = {
     enable = true;
-    # defaultEditor = true;
+    defaultEditor = true;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
     withNodeJs = true;
-    extraPackages = with pkgs-unstable; [
+    extraPackages = with pkgs; [
       lua-language-server
       nil
       rust-analyzer
@@ -14,7 +14,7 @@
       nodePackages.vscode-langservers-extracted
       nodePackages.typescript-language-server
     ];
-    plugins = with pkgs-unstable.vimPlugins; [
+    plugins = with pkgs.vimPlugins; [
       impatient-nvim
       lualine-nvim
       lualine-lsp-progress

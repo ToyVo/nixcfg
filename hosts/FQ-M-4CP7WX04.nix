@@ -1,7 +1,6 @@
-{nixpkgs, nixpkgs-unstable, home-manager, darwin}: let
+{nixpkgs, home-manager, darwin}: let
   system = "aarch64-darwin";
   user = "CollinDie";
-  pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
 in darwin.lib.darwinSystem {
   inherit system;
   modules = [
@@ -11,9 +10,6 @@ in darwin.lib.darwinSystem {
     home-manager.darwinModules.home-manager {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.extraSpecialArgs = {
-        inherit pkgs-unstable;
-      };
       home-manager.users.${user} = {
         home.username = user;
         home.homeDirectory = "/Users/${user}";

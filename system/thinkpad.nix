@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, lib, ... }:
 
 {
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
@@ -37,7 +37,6 @@
   networking.hostName = "Collins-Thinkpad";
   networking.useDHCP = lib.mkDefault true;
   hardware.cpu.amd.updateMicrocode = true;
-  hardware.enableRedistributableFirmware = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
   hardware.opengl = {
     extraPackages = with pkgs; [

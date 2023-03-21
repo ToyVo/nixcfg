@@ -1,7 +1,6 @@
-{nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager}: let
+{nixpkgs, nixos-hardware, home-manager}: let
   system = "aarch64-linux";
   user = "toyvo";
-  pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
 in nixpkgs.lib.nixosSystem {
   inherit system;
   modules = [
@@ -13,9 +12,6 @@ in nixpkgs.lib.nixosSystem {
     home-manager.nixosModules.home-manager {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.extraSpecialArgs = {
-        inherit pkgs-unstable;
-      };
       home-manager.users.${user} = {
         home.username = user;
         home.homeDirectory = "/home/${user}";
