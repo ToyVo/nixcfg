@@ -13,8 +13,8 @@
       background_opacity = "0.9";
     };
     extraConfig = ''
-      modify_font cell_height -5px
-      modify_font baseline 1.5
+      modify_font cell_height -2
+      modify_font baseline 2
       modify_font underline_position 2
     '';
   };
