@@ -19,6 +19,7 @@ in nixpkgs.lib.nixosSystem {
       networking.hostName = "Thinkpad";
       networking.useDHCP = lib.mkDefault true;
       hardware.cpu.amd.updateMicrocode = true;
+      nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
       services.xserver.videoDrivers = [ "amdgpu" ];
       hardware.opengl = {
         extraPackages = with pkgs; [
