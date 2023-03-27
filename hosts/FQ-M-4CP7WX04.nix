@@ -4,9 +4,22 @@
 in darwin.lib.darwinSystem {
   inherit system;
   modules = [
-    ../system/common.nix
     ../system/darwin.nix
-    ../system/work.nix
+    ({
+      homebrew.taps = [
+        "mongodb/brew"
+      ];
+      homebrew.casks = [
+        "slack"
+        "docker"
+      ];
+      homebrew.brews = [
+        "mongodb-community"
+        "mongodb-community-shell"
+        "mongosh"
+        "mongodb-database-tools"
+      ];
+    })
     home-manager.darwinModules.home-manager {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;

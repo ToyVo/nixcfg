@@ -1,4 +1,5 @@
 {...}:{
+  imports = [ ./nixos.nix ];
   services.xserver = {
     enable = true;
     displayManager.lightdm.enable = true;

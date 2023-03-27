@@ -4,9 +4,14 @@
 in nixpkgs.lib.nixosSystem {
   inherit system;
   modules = [
-    ../system/common.nix
+    ../system/filesystem/sd.nix
     ../system/nixos.nix
-    ../system/rpi4b8a.nix
+    ({ lib, ... }: {
+      networking.hostName = "rpi4b8a";
+      networking.useDHCP = lib.mkDefault true;
+      nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+      hardware.raspberry-pi."4".fkms-3d.enable = true;
+    })
     nixos-hardware.nixosModules.raspberry-pi-4
     home-manager.nixosModules.home-manager {
       home-manager.useGlobalPkgs = true;

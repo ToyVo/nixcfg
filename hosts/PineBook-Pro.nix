@@ -4,10 +4,15 @@
 in nixpkgs.lib.nixosSystem {
   inherit system;
   modules = [
-    ../system/common.nix
-    ../system/nixos.nix
+    ../system/filesystem/sd.nix
     ../system/xfce.nix
-    ../system/pinebookpro.nix
+    ({ lib, ... }: {
+      boot.loader.grub.enable = false;
+      boot.loader.generic-extlinux-compatible.enable = true;
+      networking.hostName = "PineBook-Pro";
+      networking.useDHCP = lib.mkDefault true;
+      nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+    })
     nixos-hardware.nixosModules.pine64-pinebook-pro
     home-manager.nixosModules.home-manager {
       home-manager.useGlobalPkgs = true;

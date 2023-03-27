@@ -4,10 +4,7 @@
 in nixpkgs.lib.nixosSystem {
   inherit system;
   modules = [
-    ../system/common.nix
-    ../system/nixos.nix
     ../system/gnome.nix
-    ../system/zbook.nix
     nixpkgs.nixosModules.notDetected
     home-manager.nixosModules.home-manager {
       home-manager.useGlobalPkgs = true;

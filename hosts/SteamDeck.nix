@@ -5,7 +5,7 @@
 in home-manager.lib.homeManagerConfiguration {
   inherit pkgs;
   modules = [ 
-    ({...}:{
+    ({
       home.username = user;
       home.homeDirectory = "/home/${user}";
     })
