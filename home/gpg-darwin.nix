@@ -1,4 +1,5 @@
 { pkgs, ... }: {
+  imports = [ ./gpg-common.nix ];
   home.file.".gnupg/gpg-agent.conf".text = ''
    enable-ssh-support
    ttyname $GPG_TTY

@@ -20,10 +20,8 @@ in nixpkgs.lib.nixosSystem {
         home.username = user;
         home.homeDirectory = "/home/${user}";
         imports = [ 
-          ../home/home-common.nix
           ../home/neovim.nix
           ../home/git.nix
-          ../home/gpg-common.nix
           ../home/gpg-linux.nix
           ../home/ssh.nix
           ../home/starship.nix

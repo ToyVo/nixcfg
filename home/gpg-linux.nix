@@ -1,4 +1,5 @@
 {...}: {
+  imports = [ ./gpg-common.nix ];
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;

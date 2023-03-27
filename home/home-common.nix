@@ -1,10 +1,9 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   home.stateVersion = "22.11";
   home.sessionVariables = {
     GPG_TTY = "$(tty)";
     SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
-    KEYID = "FAB3032CC9513440";
   };
   home.sessionPath = [
     "$HOME/.local/bin"

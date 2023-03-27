@@ -12,13 +12,11 @@ in darwin.lib.darwinSystem {
         home.username = user;
         home.homeDirectory = "/Users/${user}";
         imports = [ 
-          ../home/home-common.nix
           ../home/home-darwin.nix
           ../home/neovim.nix
           ../home/alacritty.nix
           ../home/kitty.nix
           ../home/git.nix
-          ../home/gpg-common.nix
           ../home/gpg-darwin.nix
           ../home/ssh.nix
           ../home/starship.nix
