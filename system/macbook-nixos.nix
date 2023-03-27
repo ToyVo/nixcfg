@@ -3,7 +3,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
   hardware.asahi.peripheralFirmwareDirectory = /boot/asahi;
-  networking.hostName = "Collins-MacBook-Pro-Nixos";
+  networking.hostName = "MacBook-Pro-Nixos";
   boot.initrd.availableKernelModules = [ "usb_storage" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];

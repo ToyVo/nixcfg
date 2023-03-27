@@ -34,7 +34,7 @@
 
   swapDevices = [ ];
 
-  networking.hostName = "Collins-Thinkpad";
+  networking.hostName = "Thinkpad";
   networking.useDHCP = lib.mkDefault true;
   hardware.cpu.amd.updateMicrocode = true;
   services.xserver.videoDrivers = [ "amdgpu" ];

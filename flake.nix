@@ -13,29 +13,31 @@
 
   outputs = { nixpkgs, home-manager, darwin, nixos-hardware, apple-silicon-support, self }: {
     darwinConfigurations = {
-      Collins-MacBook-Pro = import ./hosts/Collins-MacBook-Pro.nix {
+      MacBook-Pro = import ./hosts/MacBook-Pro.nix {
         inherit nixpkgs home-manager darwin;
       };
-
       FQ-M-4CP7WX04 = import ./hosts/FQ-M-4CP7WX04.nix {
         inherit nixpkgs home-manager darwin;
       };
     };
 
     nixosConfigurations = {
-      Collins-Thinkpad = import ./hosts/Collins-Thinkpad.nix {
+      Thinkpad = import ./hosts/Thinkpad.nix {
         inherit nixpkgs home-manager;
       };
-
-      Collins-MacBook-Pro-Nixos = import ./hosts/Collins-MacBook-Pro-Nixos.nix {
+      HP-Envy = import ./hosts/HP-Envy.nix {
+        inherit nixpkgs home-manager;
+      };
+      HP-ZBook = import ./hosts/HP-ZBook.nix {
+        inherit nixpkgs home-manager;
+      };
+      MacBook-Pro-Nixos = import ./hosts/MacBook-Pro-Nixos.nix {
         inherit nixpkgs home-manager apple-silicon-support;
       };
-
       rpi4b8a = import ./hosts/rpi4b8a.nix {
         inherit nixpkgs home-manager nixos-hardware;
       };
-
-      Collins-PineBook-Pro = import ./hosts/Collins-PineBook-Pro.nix {
+      PineBook-Pro = import ./hosts/PineBook-Pro.nix {
         inherit nixpkgs home-manager nixos-hardware;
       };
     };

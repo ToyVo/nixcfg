@@ -9,7 +9,7 @@
 
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
-  networking.hostName = "Collins-PineBook-Pro";
+  networking.hostName = "PineBook-Pro";
   networking.useDHCP = lib.mkDefault true;
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }
