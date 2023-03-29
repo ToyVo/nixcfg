@@ -13,7 +13,7 @@ in darwin.lib.darwinSystem {
         home.homeDirectory = "/Users/${user}";
         imports = [ 
           ../home/home-darwin.nix
-          ../home/neovim.nix
+          ../home/neovim
           ../home/alacritty.nix
           ../home/kitty.nix
           ../home/git.nix

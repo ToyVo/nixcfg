@@ -20,7 +20,7 @@
     cargo
     rustfmt
   ];
-  xdg.configFile."ideavim/ideavimrc".source = ./assets/ideavimrc;
+  xdg.configFile."ideavim/ideavimrc".source = ./ideavimrc;
   xdg.configFile."nix/nix.conf".text = '' experimental-features = nix-command flakes '';
   programs.home-manager.enable = true;
   programs.bat.enable = true;

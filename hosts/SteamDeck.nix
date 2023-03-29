@@ -10,7 +10,7 @@ in home-manager.lib.homeManagerConfiguration {
       home.homeDirectory = "/home/${user}";
     })
     ../home/home-linux.nix
-    ../home/neovim.nix
+    ../home/neovim
     ../home/git.nix
     ../home/gpg-linux.nix
     ../home/ssh.nix

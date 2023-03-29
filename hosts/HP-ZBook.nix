@@ -31,7 +31,7 @@ in nixpkgs.lib.nixosSystem {
         home.homeDirectory = "/home/${user}";
         imports = [
           ../home/home-linux.nix
-          ../home/neovim.nix
+          ../home/neovim
           ../home/alacritty.nix
           ../home/kitty.nix
           ../home/git.nix

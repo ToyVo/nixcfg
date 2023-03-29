@@ -27,7 +27,7 @@
     initialHashedPassword = "$y$j9T$jbvaDiuNpoRm.blRGD/Ne1$OpPEzRKM1u5/9On95bVlxS6r1N88c/MAoS479r1GRj5";
     description = "Collin Diekvoss";
     extraGroups = [ "networkmanager" "wheel" ];
-    openssh.authorizedKeys.keyFiles = [ ../home/assets/ssh_yubikey.pub ];
+    openssh.authorizedKeys.keyFiles = [ ../keys/ssh_yubikey.pub ];
     shell = pkgs.zsh;
   };
   environment.systemPackages = with pkgs; [

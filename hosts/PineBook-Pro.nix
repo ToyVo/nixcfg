@@ -21,7 +21,7 @@ in nixpkgs.lib.nixosSystem {
         home.username = user;
         home.homeDirectory = "/home/${user}";
         imports = [ 
-          ../home/neovim.nix
+          ../home/neovim
           ../home/git.nix
           ../home/gpg-linux.nix
           ../home/ssh.nix

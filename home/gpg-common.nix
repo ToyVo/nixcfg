@@ -2,7 +2,7 @@
   programs.gpg = {
     enable = true;
     publicKeys = [
-      { source = ./assets/gpg_yubikey.pub; trust = 5; }
+      { source = ../keys/gpg_yubikey.pub; trust = 5; }
     ];
   };
 }

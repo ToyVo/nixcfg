@@ -29,7 +29,7 @@ in darwin.lib.darwinSystem {
         imports = [ 
           ../home/home-darwin.nix
           ../home/emu.nix
-          ../home/neovim.nix
+          ../home/neovim
           ../home/alacritty.nix
           ../home/kitty.nix
           ../home/git.nix
