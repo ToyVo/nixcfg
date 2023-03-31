@@ -27,13 +27,13 @@ in darwin.lib.darwinSystem {
         home.username = user;
         home.homeDirectory = "/Users/${user}";
         imports = [ 
-          ../home/home-darwin.nix
+          ../home
           ../home/emu.nix
           ../home/neovim
           ../home/alacritty.nix
           ../home/kitty.nix
           ../home/git.nix
-          ../home/gpg-darwin.nix
+          ../home/gpg.nix
           ../home/starship.nix
           ../home/zsh.nix
         ];

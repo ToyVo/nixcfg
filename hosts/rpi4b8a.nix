@@ -22,7 +22,7 @@ in nixpkgs.lib.nixosSystem {
         imports = [ 
           ../home/neovim
           ../home/git.nix
-          ../home/gpg-linux.nix
+          ../home/gpg.nix
           ../home/ssh.nix
           ../home/starship.nix
           ../home/zsh.nix

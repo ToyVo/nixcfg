@@ -42,12 +42,12 @@ in nixpkgs.lib.nixosSystem {
         home.username = user;
         home.homeDirectory = "/home/${user}";
         imports = [
-          ../home/home-linux.nix
+          ../home
           ../home/neovim
           ../home/alacritty.nix
           ../home/kitty.nix
           ../home/git.nix
-          ../home/gpg-linux.nix
+          ../home/gpg.nix
           ../home/ssh.nix
           ../home/starship.nix
           ../home/zsh.nix
