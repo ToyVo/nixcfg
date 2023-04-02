@@ -31,6 +31,9 @@
       HP-ZBook = import ./hosts/HP-ZBook.nix {
         inherit nixpkgs home-manager;
       };
+      Protectli = import ./hosts/Protectli.nix {
+        inherit nixpkgs home-manager;
+      };
       MacBook-Pro-Nixos = import ./hosts/MacBook-Pro-Nixos.nix {
         inherit nixpkgs home-manager apple-silicon-support;
       };
