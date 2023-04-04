@@ -1,13 +1,15 @@
-{nixpkgs, home-manager, ...}: let
+{ nixpkgs, home-manager, ... }:
+let
   system = "x86_64-linux";
   user = "toyvo";
-in nixpkgs.lib.nixosSystem {
+in
+nixpkgs.lib.nixosSystem {
   inherit system;
   modules = [
     ../system/filesystem/btrfs.nix
     ../system/filesystem/efi.nix
     ../system/nixos.nix
-    ({lib, ...}: {
+    ({ lib, ... }: {
       boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
       boot.initrd.kernelModules = [ ];
       boot.kernelModules = [ "kvm-intel" ];
@@ -22,7 +24,8 @@ in nixpkgs.lib.nixosSystem {
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
     })
     nixpkgs.nixosModules.notDetected
-    home-manager.nixosModules.home-manager {
+    home-manager.nixosModules.home-manager
+    {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.${user} = {

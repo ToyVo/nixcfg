@@ -1,7 +1,9 @@
-{nixpkgs, home-manager}: let
+{ nixpkgs, home-manager }:
+let
   system = "x86_64-linux";
   user = "toyvo";
-in nixpkgs.lib.nixosSystem {
+in
+nixpkgs.lib.nixosSystem {
   inherit system;
   modules = [
     ../system/filesystem/btrfs.nix
@@ -23,7 +25,8 @@ in nixpkgs.lib.nixosSystem {
       hardware.cpu.intel.updateMicrocode = true;
     })
     nixpkgs.nixosModules.notDetected
-    home-manager.nixosModules.home-manager {
+    home-manager.nixosModules.home-manager
+    {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.${user} = {

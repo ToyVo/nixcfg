@@ -1,7 +1,9 @@
-{nixpkgs, home-manager, nixos-hardware}: let
+{ nixpkgs, home-manager, nixos-hardware }:
+let
   system = "aarch64-linux";
   user = "toyvo";
-in nixpkgs.lib.nixosSystem {
+in
+nixpkgs.lib.nixosSystem {
   inherit system;
   modules = [
     ../system/filesystem/sd.nix
@@ -13,13 +15,14 @@ in nixpkgs.lib.nixosSystem {
       hardware.raspberry-pi."4".fkms-3d.enable = true;
     })
     nixos-hardware.nixosModules.raspberry-pi-4
-    home-manager.nixosModules.home-manager {
+    home-manager.nixosModules.home-manager
+    {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.${user} = {
         home.username = user;
         home.homeDirectory = "/home/${user}";
-        imports = [ 
+        imports = [
           ../home/neovim
           ../home/git.nix
           ../home/gpg.nix

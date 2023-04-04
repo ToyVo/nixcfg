@@ -1,7 +1,9 @@
-{nixpkgs, nixos-hardware, home-manager}: let
+{ nixpkgs, nixos-hardware, home-manager }:
+let
   system = "aarch64-linux";
   user = "toyvo";
-in nixpkgs.lib.nixosSystem {
+in
+nixpkgs.lib.nixosSystem {
   inherit system;
   modules = [
     ../system/filesystem/sd.nix
@@ -14,13 +16,14 @@ in nixpkgs.lib.nixosSystem {
       nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
     })
     nixos-hardware.nixosModules.pine64-pinebook-pro
-    home-manager.nixosModules.home-manager {
+    home-manager.nixosModules.home-manager
+    {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.${user} = {
         home.username = user;
         home.homeDirectory = "/home/${user}";
-        imports = [ 
+        imports = [
           ../home
           ../home/neovim
           ../home/git.nix

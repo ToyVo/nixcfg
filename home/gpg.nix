@@ -1,4 +1,4 @@
-{pkgs, lib, ...}: 
+{ pkgs, lib, ... }:
 lib.mkMerge [
   {
     programs.gpg = {

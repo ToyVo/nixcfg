@@ -1,7 +1,9 @@
-{nixpkgs, home-manager, darwin}: let
+{ nixpkgs, home-manager, darwin }:
+let
   system = "aarch64-darwin";
   user = "CollinDie";
-in darwin.lib.darwinSystem {
+in
+darwin.lib.darwinSystem {
   inherit system;
   modules = [
     ../system/darwin.nix
@@ -21,13 +23,14 @@ in darwin.lib.darwinSystem {
         "mongodb-database-tools"
       ];
     })
-    home-manager.darwinModules.home-manager {
+    home-manager.darwinModules.home-manager
+    {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.${user} = {
         home.username = user;
         home.homeDirectory = "/Users/${user}";
-        imports = [ 
+        imports = [
           ../home
           ../home/emu
           ../home/neovim
