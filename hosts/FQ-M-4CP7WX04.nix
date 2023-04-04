@@ -12,6 +12,7 @@ in darwin.lib.darwinSystem {
       homebrew.casks = [
         "slack"
         "docker"
+        "keybase"
       ];
       homebrew.brews = [
         "mongodb-community"
@@ -28,7 +29,7 @@ in darwin.lib.darwinSystem {
         home.homeDirectory = "/Users/${user}";
         imports = [ 
           ../home
-          ../home/emu.nix
+          ../home/emu
           ../home/neovim
           ../home/alacritty.nix
           ../home/kitty.nix
