@@ -15,6 +15,7 @@ darwin.lib.darwinSystem {
         "slack"
         "docker"
         "keybase"
+        "mongodb-compass"
       ];
       homebrew.brews = [
         "mongodb-community"
