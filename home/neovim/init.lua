@@ -52,40 +52,48 @@ vim.g.loaded_netrwPlugin = 1;
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   pattern = { 'gitcommit', 'markdown' },
   callback = function()
-    vim.opt_local.wrap = true
-    vim.opt_local.spell = true
+    vim.opt_local.wrap = true;
+    vim.opt_local.spell = true;
   end,
-})
+});
 
 -- Highlight on yank
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true });
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
-    vim.highlight.on_yank()
+    vim.highlight.on_yank();
   end,
   group = highlight_group,
   pattern = '*',
-})
+});
 
-vim.keymap.set('n', '<leader>u', '<cmd>UndoTreeToggle<CR>')
-vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>')
+vim.keymap.set('n', '<leader>u', '<cmd>UndoTreeToggle<CR>');
+vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>');
 vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>');
 vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>');
 vim.keymap.set('n', '<C-h>', '<C-w>h');
 vim.keymap.set('n', '<C-j>', '<C-w>j');
 vim.keymap.set('n', '<C-k>', '<C-w>k');
 vim.keymap.set('n', '<C-l>', '<C-w>l');
-vim.keymap.set('t', '<C-h>', '<C-\\><C-n><C-w>h')
-vim.keymap.set('t', '<C-j>', '<C-\\><C-n><C-w>j')
-vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>k')
-vim.keymap.set('t', '<C-l>', '<C-\\><C-n><C-w>l')
-vim.keymap.set('v', 'p', '"_dP')
+vim.keymap.set('t', '<C-h>', '<C-\\><C-n><C-w>h');
+vim.keymap.set('t', '<C-j>', '<C-\\><C-n><C-w>j');
+vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>k');
+vim.keymap.set('t', '<C-l>', '<C-\\><C-n><C-w>l');
+vim.keymap.set('v', 'p', '"_dP');
 vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>');
 vim.keymap.set('n', '<leader>ft', '<cmd>Telescope live_grep<cr>');
 
-local opts = { noremap = true, silent = true }
-vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
+local opts = { noremap = true, silent = true };
+vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, opts);
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts);
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts);
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts);
+
+-- When I open neovide from an application launcher, it opens in /, so I change it to ~
+-- this means I can't do `neovide /` in the shell
+if vim.g.neovide then
+  if vim.fn.getcwd() == '/' then
+    vim.cmd('cd ~');
+  end
+end
 

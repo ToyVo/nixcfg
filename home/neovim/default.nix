@@ -60,10 +60,10 @@
         '';
       }
       {
-        plugin = gruvbox-nvim;
+        plugin = rose-pine;
         type = "lua";
         config = ''
-          vim.cmd.colorscheme('gruvbox');
+          vim.cmd.colorscheme('rose-pine');
         '';
       }
       {

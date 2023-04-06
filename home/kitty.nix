@@ -3,7 +3,7 @@
     enable = true;
     font.name = "FiraCode Nerd Font";
     font.size = 11;
-    theme = "Gruvbox Dark";
+    theme = "Rosé Pine";
     settings = {
       remember_window_size = "no";
       enable_audio_bell = "no";
