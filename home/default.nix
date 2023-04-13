@@ -28,6 +28,9 @@ lib.mkMerge [
     programs.bat.enable = true;
     programs.exa.enable = true;
     programs.exa.enableAliases = true;
+    programs.zellij.enable = true;
+    programs.wezterm.enable = true;
+    programs.wezterm.extraConfig = lib.fileContents ./wezterm.lua;
   }
   (lib.mkIf pkgs.stdenv.isLinux {
     home.packages = with pkgs; [

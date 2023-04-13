@@ -30,6 +30,7 @@
       "rectangle"
       "insomnia"
       "gimp"
+      "wezterm"
     ];
     masApps = {
       "Yubico Authenticator" = 1497506650;

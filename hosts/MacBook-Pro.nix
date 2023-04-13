@@ -7,6 +7,11 @@ darwin.lib.darwinSystem {
   inherit system;
   modules = [
     ../system/darwin.nix
+    ({
+      homebrew.casks = [
+        "prusaslicer"
+      ];
+    })
     home-manager.darwinModules.home-manager
     {
       home-manager.useGlobalPkgs = true;
