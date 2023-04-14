@@ -35,8 +35,6 @@ darwin.lib.darwinSystem {
           ../home
           ../home/emu
           ../home/neovim
-          ../home/alacritty.nix
-          ../home/kitty.nix
           ../home/git.nix
           ../home/gpg.nix
           ../home/starship.nix

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./common.nix
@@ -24,7 +24,7 @@
   };
   users.users.toyvo = {
     isNormalUser = true;
-    initialHashedPassword = "$y$j9T$jbvaDiuNpoRm.blRGD/Ne1$OpPEzRKM1u5/9On95bVlxS6r1N88c/MAoS479r1GRj5";
+    initialHashedPassword = "$y$j9T$XLO0/IdPsMJEWoxCh/IZp0$kU2LlpXdnv17hErTs7.21tye1Qdf7cChjFSPa/QNQTC";
     description = "Collin Diekvoss";
     extraGroups = [ "networkmanager" "wheel" ];
     openssh.authorizedKeys.keyFiles = [ ../keys/ssh_yubikey.pub ];

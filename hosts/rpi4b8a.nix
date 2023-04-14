@@ -23,14 +23,13 @@ nixpkgs.lib.nixosSystem {
         home.username = user;
         home.homeDirectory = "/home/${user}";
         imports = [
+          ../home
           ../home/neovim
           ../home/git.nix
           ../home/gpg.nix
           ../home/ssh.nix
           ../home/starship.nix
           ../home/zsh.nix
-          ../home/kitty.nix
-          ../home/alacritty.nix
         ];
       };
     }

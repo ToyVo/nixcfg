@@ -1,4 +1,4 @@
-{ ... }: {
+{
   imports = [ ./nixos.nix ];
   services.xserver = {
     enable = true;

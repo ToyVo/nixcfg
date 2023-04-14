@@ -22,8 +22,6 @@ darwin.lib.darwinSystem {
         imports = [
           ../home
           ../home/neovim
-          ../home/alacritty.nix
-          ../home/kitty.nix
           ../home/git.nix
           ../home/gpg.nix
           ../home/ssh.nix

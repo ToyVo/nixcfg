@@ -63,8 +63,6 @@ nixpkgs.lib.nixosSystem {
           ../home/ssh.nix
           ../home/starship.nix
           ../home/zsh.nix
-          ../home/alacritty.nix
-          ../home/kitty.nix
         ];
       };
     }
