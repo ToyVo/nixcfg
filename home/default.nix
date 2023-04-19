@@ -19,8 +19,7 @@ lib.mkMerge [
       git-crypt
       ripgrep
       fd
-      cargo
-      rustfmt
+      rustup
     ];
     xdg.configFile."ideavim/ideavimrc".source = ./ideavimrc;
     xdg.configFile."nix/nix.conf".text = '' experimental-features = nix-command flakes '';
