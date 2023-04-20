@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, apple-silicon-support }:
+{ nixpkgs, home-manager, apple-silicon-support, ... }:
 let
   system = "aarch64-linux";
   user = "toyvo";

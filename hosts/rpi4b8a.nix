@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, nixos-hardware }:
+{ nixpkgs, home-manager, nixos-hardware, ... }:
 let
   system = "aarch64-linux";
   user = "toyvo";

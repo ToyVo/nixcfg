@@ -8,6 +8,7 @@
   ];
   services.nix-daemon.enable = true;
   security.pam.enableSudoTouchIdAuth = true;
+  fonts.fontDir.enable = true;
   system = {
     stateVersion = 4;
     keyboard.enableKeyMapping = true;

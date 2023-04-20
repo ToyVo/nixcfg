@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, darwin }:
+{ home-manager, darwin, ... }:
 let
   system = "aarch64-darwin";
   user = "CollinDie";

@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager }:
+{ nixpkgs, home-manager, ... }:
 let
   system = "x86_64-linux";
   user = "deck";

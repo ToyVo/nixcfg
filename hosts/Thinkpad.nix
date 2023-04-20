@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager }:
+{ nixpkgs, home-manager, hyprland, ... }:
 let
   system = "x86_64-linux";
   user = "toyvo";
@@ -9,6 +9,7 @@ nixpkgs.lib.nixosSystem {
     ../system/filesystem/btrfs.nix
     ../system/filesystem/efi.nix
     ../system/gnome.nix
+    ../system/hyprland.nix
     ({ pkgs, lib, ... }: {
       boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
       boot.initrd.kernelModules = [ ];
@@ -38,6 +39,7 @@ nixpkgs.lib.nixosSystem {
     })
     nixpkgs.nixosModules.notDetected
     home-manager.nixosModules.home-manager
+    hyprland.nixosModules.default
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
@@ -45,6 +47,7 @@ nixpkgs.lib.nixosSystem {
         home.username = user;
         home.homeDirectory = "/home/${user}";
         imports = [
+          hyprland.homeManagerModules.default
           ../home
           ../home/neovim
           ../home/git.nix
@@ -52,6 +55,7 @@ nixpkgs.lib.nixosSystem {
           ../home/ssh.nix
           ../home/starship.nix
           ../home/zsh.nix
+          ../home/hyprland.nix
         ];
       };
     }

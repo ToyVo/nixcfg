@@ -13,6 +13,7 @@ end
 -- This is where you actually apply your config choices
 
 -- For example, changing the color scheme:
+config.font = wezterm.font 'FiraCode Nerd Font'
 config.color_scheme = 'rose-pine';
 config.initial_rows = 30;
 config.initial_cols = 120;

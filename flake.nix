@@ -9,46 +9,27 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
+    hyprland.url = "github:hyprwm/hyprland";
   };
 
-  outputs = { nixpkgs, home-manager, darwin, nixos-hardware, apple-silicon-support, self }: {
+  outputs = inputs: {
     darwinConfigurations = {
-      MacBook-Pro = import ./hosts/MacBook-Pro.nix {
-        inherit nixpkgs home-manager darwin;
-      };
-      FQ-M-4CP7WX04 = import ./hosts/FQ-M-4CP7WX04.nix {
-        inherit nixpkgs home-manager darwin;
-      };
+      MacBook-Pro = import ./hosts/MacBook-Pro.nix inputs;
+      FQ-M-4CP7WX04 = import ./hosts/FQ-M-4CP7WX04.nix inputs;
     };
 
     nixosConfigurations = {
-      Thinkpad = import ./hosts/Thinkpad.nix {
-        inherit nixpkgs home-manager;
-      };
-      HP-Envy = import ./hosts/HP-Envy.nix {
-        inherit nixpkgs home-manager;
-      };
-      HP-ZBook = import ./hosts/HP-ZBook.nix {
-        inherit nixpkgs home-manager;
-      };
-      Protectli = import ./hosts/Protectli.nix {
-        inherit nixpkgs home-manager;
-      };
-      MacBook-Pro-Nixos = import ./hosts/MacBook-Pro-Nixos.nix {
-        inherit nixpkgs home-manager apple-silicon-support;
-      };
-      rpi4b8a = import ./hosts/rpi4b8a.nix {
-        inherit nixpkgs home-manager nixos-hardware;
-      };
-      PineBook-Pro = import ./hosts/PineBook-Pro.nix {
-        inherit nixpkgs home-manager nixos-hardware;
-      };
+      Thinkpad = import ./hosts/Thinkpad.nix inputs;
+      HP-Envy = import ./hosts/HP-Envy.nix inputs;
+      HP-ZBook = import ./hosts/HP-ZBook.nix inputs;
+      Protectli = import ./hosts/Protectli.nix inputs;
+      MacBook-Pro-Nixos = import ./hosts/MacBook-Pro-Nixos.nix inputs;
+      rpi4b8a = import ./hosts/rpi4b8a.nix inputs;
+      PineBook-Pro = import ./hosts/PineBook-Pro.nix inputs;
     };
 
     homeConfigurations = {
-      "deck" = import ./hosts/SteamDeck.nix {
-        inherit nixpkgs home-manager;
-      };
+      "deck@steamdeck" = import ./hosts/SteamDeck.nix inputs;
     };
   };
 }

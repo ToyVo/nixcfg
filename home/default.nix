@@ -22,7 +22,9 @@ lib.mkMerge [
       rustup
     ];
     xdg.configFile."ideavim/ideavimrc".source = ./ideavimrc;
-    xdg.configFile."nix/nix.conf".text = '' experimental-features = nix-command flakes '';
+    xdg.configFile."nix/nix.conf".text = ''
+      experimental-features = nix-command flakes
+    '';
     programs.home-manager.enable = true;
     programs.bat.enable = true;
     programs.exa.enable = true;
@@ -32,9 +34,14 @@ lib.mkMerge [
     programs.wezterm.extraConfig = lib.fileContents ./wezterm.lua;
   }
   (lib.mkIf pkgs.stdenv.isLinux {
+    services.keybase.enable = true;
+    services.kbfs.enable = true;
     home.packages = with pkgs; [
       neovide
       firefox
+      keybase-gui
+      _1password
+      _1password-gui
       # yubico-authenticator
     ];
   })
@@ -45,3 +52,4 @@ lib.mkMerge [
     ];
   })
 ]
+
