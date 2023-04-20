@@ -31,6 +31,7 @@
     "insomnia"
     "gimp"
     "wezterm"
+    "libreoffice"
   ];
   homebrew.masApps = {
     "Yubico Authenticator" = 1497506650;
