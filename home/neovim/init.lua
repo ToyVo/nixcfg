@@ -67,10 +67,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 });
 
-vim.keymap.set('n', '<leader>u', '<cmd>UndoTreeToggle<CR>');
-vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>');
+-- Shift HL to change buffers
 vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>');
 vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>');
+
+-- Control hjkl to move between windows including terminal
 vim.keymap.set('n', '<C-h>', '<C-w>h');
 vim.keymap.set('n', '<C-j>', '<C-w>j');
 vim.keymap.set('n', '<C-k>', '<C-w>k');
@@ -79,9 +80,15 @@ vim.keymap.set('t', '<C-h>', '<C-\\><C-n><C-w>h');
 vim.keymap.set('t', '<C-j>', '<C-\\><C-n><C-w>j');
 vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>k');
 vim.keymap.set('t', '<C-l>', '<C-\\><C-n><C-w>l');
+
+-- Overwrite text in visual mode without overwriting the clipboard
 vim.keymap.set('v', 'p', '"_dP');
-vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>');
-vim.keymap.set('n', '<leader>ft', '<cmd>Telescope live_grep<cr>');
+
+vim.keymap.set('n', '<leader>pf', '<cmd>Telescope find_files<cr>', { desc = 'Project Files'});
+vim.keymap.set('n', '<leader>ps', '<cmd>Telescope live_grep<cr>', { desc = 'Project Search'});
+vim.keymap.set('n', '<leader>pv', '<cmd>NvimTreeToggle<CR>', { desc = 'Project View' });
+vim.keymap.set('n', '<C-p>', '<cmd>Telescope git_files<cr>', { desc = 'Git Files'});
+vim.keymap.set('n', '<leader>u', '<cmd>UndoTreeToggle<CR>', { desc = 'UndoTree' });
 
 local opts = { noremap = true, silent = true };
 vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, opts);
@@ -92,6 +99,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts);
 -- When I open neovide from an application launcher, it opens in /, so I change it to ~
 -- this means I can't do `neovide /` in the shell
 if vim.g.neovide then
+  vim.g.neovide_transparency = 0.9;
   if vim.fn.getcwd() == '/' then
     vim.cmd('cd ~');
   end

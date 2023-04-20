@@ -63,9 +63,11 @@
         plugin = rose-pine;
         type = "lua";
         config = ''
-          require('rose-pine').setup({
-            disable_background = true,
-          });
+          if not vim.g.neovide then
+            require('rose-pine').setup({
+              disable_background = true,
+            });
+          end
           vim.cmd('colorscheme rose-pine')
         '';
       }
