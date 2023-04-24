@@ -5,6 +5,7 @@ lib.mkMerge [
     home.sessionVariables = {
       GPG_TTY = "$(tty)";
       SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
+      MANPAGER = "sh -c 'col -bx | bat -l man -p'";
     };
     home.sessionPath = [
       "$HOME/.local/bin"
@@ -27,6 +28,7 @@ lib.mkMerge [
     '';
     programs.home-manager.enable = true;
     programs.bat.enable = true;
+    programs.bat.config.theme = "gruvbox-dark";
     programs.exa.enable = true;
     programs.exa.enableAliases = true;
     programs.zellij.enable = true;

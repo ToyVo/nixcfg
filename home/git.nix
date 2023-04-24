@@ -2,6 +2,13 @@
   programs.git = {
     enable = true;
     delta.enable = true;
+    delta.options = {
+      syntax-theme = "gruvbox-dark";
+      minus-style = "syntax \"#330011\"";
+      plus-style = "syntax \"#001a00\"";
+      side-by-side = true;
+      line-numbers = true;
+    };
     extraConfig = {
       pull.rebase = "true";
       rebase.autostash = "true";
