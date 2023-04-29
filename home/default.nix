@@ -1,4 +1,7 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, system, config, ... }:
+let
+  mkalias = inputs.mkAlias.outputs.apps.${system}.default.program;
+in
 lib.mkMerge [
   {
     home.stateVersion = "22.11";
@@ -54,4 +57,3 @@ lib.mkMerge [
     ];
   })
 ]
-

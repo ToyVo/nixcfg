@@ -1,4 +1,4 @@
-{ home-manager, darwin, ... }:
+{ home-manager, darwin, ... } @ inputs:
 let
   system = "aarch64-darwin";
   user = "CollinDie";
@@ -8,32 +8,26 @@ darwin.lib.darwinSystem {
   modules = [
     ../system/darwin.nix
     ({
-      homebrew.taps = [
-        "mongodb/brew"
-      ];
       homebrew.casks = [
         "slack"
         "docker"
         "keybase"
         "mongodb-compass"
       ];
-      homebrew.brews = [
-        "mongodb-community"
-        "mongodb-community-shell"
-        "mongosh"
-        "mongodb-database-tools"
-      ];
     })
     home-manager.darwinModules.home-manager
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
+      home-manager.extraSpecialArgs = {
+        inherit inputs system;
+      };
       home-manager.users.${user} = {
         home.username = user;
         home.homeDirectory = "/Users/${user}";
         imports = [
           ../home
-          ../home/emu
+          ../home/emu.nix
           ../home/neovim
           ../home/git.nix
           ../home/gpg.nix

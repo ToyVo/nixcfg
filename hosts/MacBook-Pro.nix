@@ -1,4 +1,4 @@
-{ home-manager, darwin, ... }:
+{ home-manager, darwin, ... } @ inputs:
 let
   system = "aarch64-darwin";
   user = "toyvo";
@@ -16,6 +16,9 @@ darwin.lib.darwinSystem {
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
+      home-manager.extraSpecialArgs = {
+        inherit inputs system;
+      };
       home-manager.users.${user} = {
         home.username = user;
         home.homeDirectory = "/Users/${user}";

@@ -1,3 +1,1 @@
-home/emu/default.nix filter=git-crypt diff=git-crypt
-home/emu/generate_uri.py filter=git-crypt diff=git-crypt
-home/emu/generate-credentials.sh filter=git-crypt diff=git-crypt
+home/emu.nix filter=git-crypt diff=git-crypt

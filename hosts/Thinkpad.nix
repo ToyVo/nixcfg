@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, hyprland, ... }:
+{ nixpkgs, home-manager, hyprland, ... } @ inputs:
 let
   system = "x86_64-linux";
   user = "toyvo";
@@ -43,6 +43,9 @@ nixpkgs.lib.nixosSystem {
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
+      home-manager.extraSpecialArgs = {
+        inherit inputs system;
+      };
       home-manager.users.${user} = {
         home.username = user;
         home.homeDirectory = "/home/${user}";

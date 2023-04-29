@@ -1,6 +1,6 @@
-{pkgs,...}:{
+{ pkgs, ... }: {
   fonts.fonts = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode"];})
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
   programs.zsh.enable = true;
   nixpkgs.config.allowUnfree = true;
