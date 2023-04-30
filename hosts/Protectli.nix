@@ -30,23 +30,27 @@ in nixpkgs.lib.nixosSystem {
         hostName = "Protectli";
         useDHCP = false;
         nameservers = [ "1.1.1.1" "1.0.0.1" ];
+        bridges.br0.interfaces = [ "enp2s0" "enp3s0" "enp4s0" ];
         interfaces = {
           enp1s0.useDHCP = true;
-          enp2s0 = {
+          enp2s0.useDHCP = true;
+          enp3s0.useDHCP = true;
+          enp4s0.useDHCP = true;
+          br0 = {
             useDHCP = false;
             ipv4.addresses = [{address = "192.168.0.1"; prefixLength = 24;}];
           };
         };
         nat.enable = true;
         nat.externalInterface = "enp1s0";
-        nat.internalInterfaces = [ "enp2s0" ];
+        nat.internalInterfaces = [ "br0" ];
         firewall = {
           enable = true;
-          trustedInterfaces = [ "enp2s0" ];
+          trustedInterfaces = [ "br0" ];
           # Temporary while testing
           interfaces.enp1s0.allowedTCPPorts = [ 22 ];
-          interfaces.enp2s0.allowedTCPPorts = [ 53 22 ];
-          interfaces.enp2s0.allowedUDPPorts = [ 53 ];
+          interfaces.br0.allowedTCPPorts = [ 53 22 ];
+          interfaces.br0.allowedUDPPorts = [ 53 ];
         };
       };
       services.openssh.openFirewall = false;
