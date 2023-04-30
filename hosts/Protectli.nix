@@ -75,18 +75,12 @@ in nixpkgs.lib.nixosSystem {
       services.openssh.openFirewall = false;
       services.dnsmasq = {
         enable = true;
-        servers = [ "1.1.1.1" ];
-        extraConfig = ''
-          domain-needed
-          interface=br0
-          interface=home
-          interface=iot
-          interface=guest
-          dhcp-range=10.0.0.100,10.0.0.199,24h
-          dhcp-range=10.10.0.100,10.10.0.199,24h
-          dhcp-range=10.20.0.100,10.20.0.199,24h
-          dhcp-range=10.30.0.10,10.30.0.199,24h
-        '';
+        settings = {
+          server = [ "1.1.1.1" ];
+          domain-needed = true;
+          interface = [ "br0" "home" "iot" "guest" ];
+          dhcp-range = [ "10.0.0.100,10.0.0.199,24h" "10.10.0.100,10.10.0.199,24h" "10.20.0.100,10.20.0.199,24h" "10.30.0.10,10.30.0.199,24h" ];
+        };
       };
       services.avahi = {
         enable = true;
