@@ -87,7 +87,6 @@ in nixpkgs.lib.nixosSystem {
           dhcp-range=10.20.0.100,10.20.0.199,24h
           dhcp-range=10.30.0.10,10.30.0.199,24h
         '';
-        interfaces = [ "br0" "home" "iot" "guest" ];
       };
       services.avahi = {
         enable = true;
