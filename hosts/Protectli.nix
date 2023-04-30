@@ -30,62 +30,37 @@ in nixpkgs.lib.nixosSystem {
         hostName = "Protectli";
         useDHCP = false;
         nameservers = [ "1.1.1.1" "1.0.0.1" ];
-        bridges.br0 = { interfaces = [ "enp2s0" "enp3s0" "enp4s0" ]; };
-        vlans = {
-          home = {
-            id = 10;
-            interface = "br0";
-          };
-          iot = {
-            id = 20;
-            interface = "br0";
-          };
-          guest = {
-            id = 30;
-            interface = "br0";
-          };
-        };
         interfaces = {
           enp1s0.useDHCP = true;
-          br0.ipv4.addresses = [{
-            address = "10.0.0.1";
-            prefixLength = 24;
-          }];
-          home.ipv4.addresses = [{
-            address = "10.0.10.1";
-            prefixLength = 24;
-          }];
-          iot.ipv4.addresses = [{
-            address = "10.0.20.1";
-            prefixLength = 24;
-          }];
-          guest.ipv4.addresses = [{
-            address = "10.0.30.1";
-            prefixLength = 24;
-          }];
+          enp2s0 = {
+            useDHCP = false;
+            ipv4.addresses = [{address = "192.168.0.1"; prefixLength = 24;}];
+          };
         };
         nat.enable = true;
         nat.externalInterface = "enp1s0";
-        nat.internalInterfaces = [ "br0" ];
-        # Temporary while testing
-        firewall.interfaces.enp1s0.allowedTCPPorts = [ 22 ];
-        firewall.interfaces.br0.allowedTCPPorts = [ 53 22 ];
-        firewall.interfaces.br0.allowedUDPPorts = [ 53 ];
+        nat.internalInterfaces = [ "enp2s0" ];
+        firewall = {
+          enable = true;
+          trustedInterfaces = [ "enp2s0" ];
+          # Temporary while testing
+          interfaces.enp1s0.allowedTCPPorts = [ 22 ];
+          interfaces.enp2s0.allowedTCPPorts = [ 53 22 ];
+          interfaces.enp2s0.allowedUDPPorts = [ 53 ];
+        };
       };
       services.openssh.openFirewall = false;
       services.dnsmasq = {
         enable = true;
         settings = {
-          server = [ "1.1.1.1" ];
+          server = [ "1.1.1.1" "1.0.0.1" ];
           domain-needed = true;
-          interface = [ "br0" "home" "iot" "guest" ];
-          dhcp-range = [ "10.0.0.100,10.0.0.199,24h" "10.10.0.100,10.10.0.199,24h" "10.20.0.100,10.20.0.199,24h" "10.30.0.10,10.30.0.199,24h" ];
+          dhcp-range = ["192.168.0.2,192.168.0.254"];
         };
       };
       services.avahi = {
         enable = true;
         reflector = true;
-        allowInterfaces = [ "home" "iot" ];
       };
     })
     nixpkgs.nixosModules.notDetected
