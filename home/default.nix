@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, system, config, ... }:
+{ pkgs, lib, ... }:
 lib.mkMerge [
   {
     home.stateVersion = "22.11";

@@ -19,8 +19,8 @@ in nixpkgs.lib.nixosSystem {
         loader.efi.canTouchEfiVariables = true;
         loader.efi.efiSysMountPoint = "/boot/efi";
         kernel.sysctl = {
-          net.ipv4.conf.all.forwarding = true;
-          net.ipv6.conf.all.forwarding = true;
+          "net.ipv4.conf.all.forwarding" = true;
+          "net.ipv6.conf.all.forwarding" = true;
         };
       };
       swapDevices = [ ];
@@ -29,9 +29,8 @@ in nixpkgs.lib.nixosSystem {
       networking = {
         hostName = "Protectli";
         useDHCP = false;
-        usePredictableInterfaceNames = true;
         nameservers = [ "1.1.1.1" "1.0.0.1" ];
-        bridges.br0 = { interfaces = [ "eth1" "eth2" "eth3" ]; };
+        bridges.br0 = { interfaces = [ "enp2s0" "enp3s0" "enp4s0" ]; };
         vlans = {
           home = {
             id = 10;
@@ -47,7 +46,7 @@ in nixpkgs.lib.nixosSystem {
           };
         };
         interfaces = {
-          eth0.useDHCP = true;
+          enp1s0.useDHCP = true;
           br0.ipv4.addresses = [{
             address = "10.0.0.1";
             prefixLength = 24;
@@ -66,52 +65,34 @@ in nixpkgs.lib.nixosSystem {
           }];
         };
         nat.enable = true;
-        nat.externalInterface = "eth0";
+        nat.externalInterface = "enp1s0";
         nat.internalInterfaces = [ "br0" ];
         # Temporary while testing
-        firewall.interfaces.eth0.allowedTCPPorts = [ 22 ];
+        firewall.interfaces.enp1s0.allowedTCPPorts = [ 22 ];
         firewall.interfaces.br0.allowedTCPPorts = [ 53 22 ];
         firewall.interfaces.br0.allowedUDPPorts = [ 53 ];
       };
       services.openssh.openFirewall = false;
-      services.dhcpd4 = {
+      services.dnsmasq = {
         enable = true;
+        servers = [ "1.1.1.1" ];
         extraConfig = ''
-          subnet 10.0.0.0 netmask 255.255.255.0 {
-            range 10.0.0.100 10.0.0.199
-            option routers 10.0.0.1;
-            option subnet-mask 255.255.255.0;
-            option domain-name-servers 10.0.0.1 1.1.1.1;
-            interface br0;
-          }
-          subnet 10.0.10.0 netmask 255.255.255.0 {
-            range 10.0.10.100 10.0.10.199
-            option routers 10.0.10.1;
-            option subnet-mask 255.255.255.0;
-            option domain-name-servers 10.0.0.1 1.1.1.1;
-            interface home;
-          }
-          subnet 10.0.20.0 netmask 255.255.255.0 {
-            range 10.0.20.100 10.0.20.199
-            option routers 10.0.20.1;
-            option subnet-mask 255.255.255.0;
-            option domain-name-servers 10.0.0.1 1.1.1.1;
-            interface iot;
-          }
-          subnet 10.0.30.0 netmask 255.255.255.0 {
-            range 10.0.30.2 10.0.30.254
-            option routers 10.0.30.1;
-            option subnet-mask 255.255.255.0;
-            option domain-name-servers 1.1.1.1;
-            interface guest;
-          }
+          domain-needed
+          interface=br0
+          interface=home
+          interface=iot
+          interface=guest
+          dhcp-range=10.0.0.100,10.0.0.199,24h
+          dhcp-range=10.10.0.100,10.10.0.199,24h
+          dhcp-range=10.20.0.100,10.20.0.199,24h
+          dhcp-range=10.30.0.10,10.30.0.199,24h
         '';
         interfaces = [ "br0" "home" "iot" "guest" ];
       };
       services.avahi = {
         enable = true;
         reflector = true;
-        interfaces = [ "home" "iot" ];
+        allowInterfaces = [ "home" "iot" ];
       };
     })
     nixpkgs.nixosModules.notDetected
