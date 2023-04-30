@@ -31,15 +31,29 @@ in nixpkgs.lib.nixosSystem {
         useDHCP = false;
         nameservers = [ "1.1.1.1" "1.0.0.1" ];
         bridges.br0.interfaces = [ "enp2s0" "enp3s0" "enp4s0" ];
+        vlans = {
+          home = {
+            id = 10;
+            interface = "br0";
+          };
+          iot = {
+            id = 20;
+            interface = "br0";
+          };
+          guest = {
+            id = 30;
+            interface = "br0";
+          };
+        };
         interfaces = {
           enp1s0.useDHCP = true;
           enp2s0.useDHCP = true;
           enp3s0.useDHCP = true;
           enp4s0.useDHCP = true;
-          br0 = {
-            useDHCP = false;
-            ipv4.addresses = [{address = "192.168.0.1"; prefixLength = 24;}];
-          };
+          br0.ipv4.addresses = [{address = "192.168.0.1"; prefixLength = 24;}];
+          home.ipv4.addresses = [{address = "192.168.10.1"; prefixLength = 24;}];
+          iot.ipv4.addresses = [{address = "192.168.20.1"; prefixLength = 24;}];
+          guest.ipv4.addresses = [{address = "192.168.30.1"; prefixLength = 24;}];
         };
         nat.enable = true;
         nat.externalInterface = "enp1s0";
@@ -59,7 +73,8 @@ in nixpkgs.lib.nixosSystem {
         settings = {
           server = [ "1.1.1.1" "1.0.0.1" ];
           domain-needed = true;
-          dhcp-range = ["192.168.0.2,192.168.0.254"];
+          interface = [ "br0" "home" "iot" "guest" ];
+          dhcp-range = [ "192.168.0.2,192.168.0.254" "192.168.10.2,192.168.10.254" "192.168.20.2,192.168.20.254" "192.168.30.2,192.168.30.254" ];
         };
       };
       services.avahi = {
