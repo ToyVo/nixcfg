@@ -50,27 +50,27 @@ vim.g.loaded_netrwPlugin = 1
 
 -- Set wrap and spell in markdown and gitcommit
 vim.api.nvim_create_autocmd({ "FileType" }, {
-	pattern = { "gitcommit", "markdown" },
-	callback = function()
-		vim.opt_local.wrap = true
-		vim.opt_local.spell = true
-	end,
+  pattern = { "gitcommit", "markdown" },
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.spell = true
+  end,
 })
 
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
-	group = vim.api.nvim_create_augroup("YankHighlight", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-	pattern = "*",
+  group = vim.api.nvim_create_augroup("YankHighlight", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  pattern = "*",
 })
 
 -- remove excess whitespace on save
 -- TODO: replace with format on save when formatter is available
 vim.api.nvim_create_autocmd("BufWritePre", {
-	group = vim.api.nvim_create_augroup("TrimWhitespace", {}),
-	pattern = "*",
-	command = [[%s/\s\+$//e]],
+  group = vim.api.nvim_create_augroup("TrimWhitespace", {}),
+  pattern = "*",
+  command = [[%s/\s\+$//e]],
 })
 

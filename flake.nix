@@ -10,6 +10,8 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
     apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
     hyprland.url = "github:hyprwm/hyprland";
+    mkAlias.url = "github:reckenrode/mkAlias";
+    mkAlias.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs: {

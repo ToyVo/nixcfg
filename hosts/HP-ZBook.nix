@@ -1,9 +1,8 @@
-{ nixpkgs, home-manager, ... } @ inputs:
+{ nixpkgs, home-manager, ... }@inputs:
 let
   system = "x86_64-linux";
   user = "toyvo";
-in
-nixpkgs.lib.nixosSystem {
+in nixpkgs.lib.nixosSystem {
   inherit system;
   modules = [
     ../system/filesystem/btrfs.nix
@@ -14,7 +13,8 @@ nixpkgs.lib.nixosSystem {
       boot.loader.efi.canTouchEfiVariables = true;
       boot.loader.efi.efiSysMountPoint = "/boot/efi";
       networking.hostName = "HP-ZBook";
-      boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
+      boot.initrd.availableKernelModules =
+        [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
       boot.initrd.kernelModules = [ ];
       boot.kernelModules = [ "kvm-intel" ];
       boot.extraModulePackages = [ ];
@@ -29,9 +29,7 @@ nixpkgs.lib.nixosSystem {
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.extraSpecialArgs = {
-        inherit inputs system;
-      };
+      home-manager.extraSpecialArgs = { inherit inputs system; };
       home-manager.users.${user} = {
         home.username = user;
         home.homeDirectory = "/home/${user}";

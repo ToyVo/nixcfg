@@ -3,9 +3,10 @@ lib.mkMerge [
   {
     programs.gpg = {
       enable = true;
-      publicKeys = [
-        { source = ../keys/gpg_yubikey.pub; trust = 5; }
-      ];
+      publicKeys = [{
+        source = ../keys/gpg_yubikey.pub;
+        trust = 5;
+      }];
     };
   }
   (lib.mkIf pkgs.stdenv.isLinux {

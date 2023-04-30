@@ -1,9 +1,5 @@
 { pkgs, lib, ... }: {
-  home.packages = with pkgs; [
-    libsForQt5.dolphin
-    wofi
-    hyprpaper
-  ];
+  home.packages = with pkgs; [ libsForQt5.dolphin wofi hyprpaper ];
   wayland.windowManager.hyprland = {
     enable = true;
     recommendedEnvironment = true;
@@ -105,7 +101,18 @@
       spacing = 4; # Gaps between modules (4px)
       modules-left = [ "wlr/workspaces" "hyprland/submap" ];
       modules-center = [ "hyprland/window" ];
-      modules-right = [ "idle_inhibitor" "pulseaudio" "network" "cpu" "memory" "temperature" "backlight" "battery" "clock" "tray" ];
+      modules-right = [
+        "idle_inhibitor"
+        "pulseaudio"
+        "network"
+        "cpu"
+        "memory"
+        "temperature"
+        "backlight"
+        "battery"
+        "clock"
+        "tray"
+      ];
       "wlr/workspaces" = {
         all-outputs = true;
         active-only = true;
@@ -121,12 +128,8 @@
           default = "";
         };
       };
-      "hyprland/window" = {
-        separate-outputs = true;
-      };
-      "hyprland/submap" = {
-        format = "<span style=\"italic\">{}</span>";
-      };
+      "hyprland/window" = { separate-outputs = true; };
+      "hyprland/submap" = { format = ''<span style="italic">{}</span>''; };
       "sway/scratchpad" = {
         format = "{icon} {count}";
         show-empty = false;
@@ -147,16 +150,16 @@
       };
       clock = {
         # timezone = "America/New_York";
-        tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+        tooltip-format = ''
+          <big>{:%Y %B}</big>
+          <tt><small>{calendar}</small></tt>'';
         format-alt = "{:%Y-%m-%d}";
       };
       cpu = {
         format = "{usage}% ";
         tooltip = false;
       };
-      memory = {
-        format = "{}% ";
-      };
+      memory = { format = "{}% "; };
       temperature = {
         # thermal-zone = 2;
         # hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";

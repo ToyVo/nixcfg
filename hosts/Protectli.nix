@@ -1,9 +1,8 @@
-{ nixpkgs, home-manager, ... } @ inputs:
+{ nixpkgs, home-manager, ... }@inputs:
 let
   system = "x86_64-linux";
   user = "toyvo";
-in
-nixpkgs.lib.nixosSystem {
+in nixpkgs.lib.nixosSystem {
   inherit system;
   modules = [
     ../system/filesystem/btrfs.nix
@@ -11,7 +10,8 @@ nixpkgs.lib.nixosSystem {
     ../system/nixos.nix
     ({ lib, ... }: {
       boot = {
-        initrd.availableKernelModules = [ "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
+        initrd.availableKernelModules =
+          [ "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
         initrd.kernelModules = [ ];
         kernelModules = [ "kvm-intel" ];
         extraModulePackages = [ ];
@@ -31,9 +31,7 @@ nixpkgs.lib.nixosSystem {
         useDHCP = false;
         usePredictableInterfaceNames = true;
         nameservers = [ "1.1.1.1" "1.0.0.1" ];
-        bridges.br0 = {
-          interfaces = [ "eth1" "eth2" "eth3" ];
-        };
+        bridges.br0 = { interfaces = [ "eth1" "eth2" "eth3" ]; };
         vlans = {
           home = {
             id = 10;
@@ -121,9 +119,7 @@ nixpkgs.lib.nixosSystem {
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.extraSpecialArgs = {
-        inherit inputs system;
-      };
+      home-manager.extraSpecialArgs = { inherit inputs system; };
       home-manager.users.${user} = {
         home.username = user;
         home.homeDirectory = "/home/${user}";

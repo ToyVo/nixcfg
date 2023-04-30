@@ -1,11 +1,6 @@
-{ pkgs, ... }:
-{
-  imports = [
-    ./common.nix
-  ];
-  environment.systemPackages = with pkgs; [
-    coreutils
-  ];
+{ pkgs, ... }: {
+  imports = [ ./common.nix ];
+  environment.systemPackages = with pkgs; [ coreutils ];
   services.nix-daemon.enable = true;
   security.pam.enableSudoTouchIdAuth = true;
   fonts.fontDir.enable = true;
@@ -23,15 +18,16 @@
     };
   };
   homebrew.casks = [
+    # nix package not available on darwin
     "firefox"
-    "neovide"
-    "1password"
     "jetbrains-toolbox"
-    "rectangle"
     "insomnia"
-    "gimp"
-    "wezterm"
     "libreoffice"
+    "keybase"
+    # nix package doesn't provide an app bundle
+    "neovide"
+    # must be installed at /Applications, nix-darwin installs it at /Applications/nix apps
+    "1password"
   ];
   homebrew.masApps = {
     "Yubico Authenticator" = 1497506650;

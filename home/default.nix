@@ -1,7 +1,4 @@
 { pkgs, lib, inputs, system, config, ... }:
-let
-  mkalias = inputs.mkAlias.outputs.apps.${system}.default.program;
-in
 lib.mkMerge [
   {
     home.stateVersion = "22.11";
@@ -10,21 +7,13 @@ lib.mkMerge [
       SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
       MANPAGER = "sh -c 'col -bx | bat -l man -p'";
     };
-    home.sessionPath = [
-      "$HOME/.local/bin"
-      "$HOME/.cargo/bin"
-    ];
+    home.sessionPath = [ "$HOME/.local/bin" "$HOME/.cargo/bin" ];
     home.shellAliases = {
       cat = "bat -pp";
       tree = "exa --tree";
       gpg-scan-card = ''gpg-connect-agent "scd serialno" "learn --force" /bye'';
     };
-    home.packages = with pkgs; [
-      git-crypt
-      ripgrep
-      fd
-      rustup
-    ];
+    home.packages = with pkgs; [ git-crypt ripgrep fd rustup gimp ];
     xdg.configFile."ideavim/ideavimrc".source = ./ideavimrc;
     xdg.configFile."nix/nix.conf".text = ''
       experimental-features = nix-command flakes
@@ -42,18 +31,16 @@ lib.mkMerge [
     services.keybase.enable = true;
     services.kbfs.enable = true;
     home.packages = with pkgs; [
-      neovide
       firefox
+      neovide
       keybase-gui
       _1password
       _1password-gui
-      # yubico-authenticator
     ];
   })
   (lib.mkIf pkgs.stdenv.isDarwin {
     home.file.".hushlogin".text = "";
-    home.sessionPath = [
-      "/opt/homebrew/bin"
-    ];
+    home.sessionPath = [ "/opt/homebrew/bin" ];
+    home.packages = with pkgs; [ rectangle ];
   })
 ]

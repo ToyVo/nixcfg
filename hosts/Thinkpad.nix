@@ -1,9 +1,8 @@
-{ nixpkgs, home-manager, hyprland, ... } @ inputs:
+{ nixpkgs, home-manager, hyprland, ... }@inputs:
 let
   system = "x86_64-linux";
   user = "toyvo";
-in
-nixpkgs.lib.nixosSystem {
+in nixpkgs.lib.nixosSystem {
   inherit system;
   modules = [
     ../system/filesystem/btrfs.nix
@@ -11,7 +10,8 @@ nixpkgs.lib.nixosSystem {
     ../system/gnome.nix
     ../system/hyprland.nix
     ({ pkgs, lib, ... }: {
-      boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+      boot.initrd.availableKernelModules =
+        [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
       boot.initrd.kernelModules = [ ];
       boot.kernelModules = [ "kvm-amd" "amdgpu" ];
       boot.extraModulePackages = [ ];
@@ -30,9 +30,7 @@ nixpkgs.lib.nixosSystem {
           rocm-opencl-runtime
           amdvlk
         ];
-        extraPackages32 = with pkgs; [
-          driversi686Linux.amdvlk
-        ];
+        extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
         driSupport = true;
         driSupport32Bit = true;
       };
@@ -43,9 +41,7 @@ nixpkgs.lib.nixosSystem {
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.extraSpecialArgs = {
-        inherit inputs system;
-      };
+      home-manager.extraSpecialArgs = { inherit inputs system; };
       home-manager.users.${user} = {
         home.username = user;
         home.homeDirectory = "/home/${user}";

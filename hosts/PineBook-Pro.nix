@@ -1,9 +1,8 @@
-{ nixpkgs, nixos-hardware, home-manager, ... } @ inputs:
+{ nixpkgs, nixos-hardware, home-manager, ... }@inputs:
 let
   system = "aarch64-linux";
   user = "toyvo";
-in
-nixpkgs.lib.nixosSystem {
+in nixpkgs.lib.nixosSystem {
   inherit system;
   modules = [
     ../system/filesystem/sd.nix
@@ -20,9 +19,7 @@ nixpkgs.lib.nixosSystem {
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.extraSpecialArgs = {
-        inherit inputs system;
-      };
+      home-manager.extraSpecialArgs = { inherit inputs system; };
       home-manager.users.${user} = {
         home.username = user;
         home.homeDirectory = "/home/${user}";

@@ -4,8 +4,8 @@
     delta.enable = true;
     delta.options = {
       syntax-theme = "gruvbox-dark";
-      minus-style = "syntax \"#330011\"";
-      plus-style = "syntax \"#001a00\"";
+      minus-style = ''syntax "#330011"'';
+      plus-style = ''syntax "#001a00"'';
       side-by-side = true;
       line-numbers = true;
     };

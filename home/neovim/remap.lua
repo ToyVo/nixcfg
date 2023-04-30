@@ -1,12 +1,12 @@
 require("which-key").setup({
-	plugins = {
-		spelling = {
-			enabled = true,
-		},
-	},
-	window = {
-		border = "rounded",
-	},
+  plugins = {
+    spelling = {
+      enabled = true,
+    },
+  },
+  window = {
+    border = "rounded",
+  },
 })
 
 -- Shift HL to change buffers
@@ -40,16 +40,16 @@ local ui = require("harpoon.ui")
 vim.keymap.set("n", "<leader>a", mark.add_file, { desc = "Add File to Harpoon" })
 vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu, { desc = "Open Harpoon" })
 vim.keymap.set("n", "<C-1>", function()
-	ui.nav_file(1)
+  ui.nav_file(1)
 end, { desc = "Harpoon 1" })
 vim.keymap.set("n", "<C-2>", function()
-	ui.nav_file(2)
+  ui.nav_file(2)
 end, { desc = "Harpoon 2" })
 vim.keymap.set("n", "<C-3>", function()
-	ui.nav_file(3)
+  ui.nav_file(3)
 end, { desc = "Harpoon 3" })
 vim.keymap.set("n", "<C-4>", function()
-	ui.nav_file(4)
+  ui.nav_file(4)
 end, { desc = "Harpoon 4" })
 
 -- Move highlighted text
@@ -76,37 +76,37 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd("LspAttach", {
-	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-	callback = function(ev)
-		vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = ev.buf })
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = ev.buf })
-		vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = ev.buf })
-		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = ev.buf })
-		vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, { buffer = ev.buf })
-		vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { buffer = ev.buf })
-		vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { buffer = ev.buf })
-		vim.keymap.set("n", "<leader>wl", function()
-			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-		end, { buffer = ev.buf })
-		vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, { buffer = ev.buf })
-		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = ev.buf })
-		vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = ev.buf })
-		vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = ev.buf })
-		vim.keymap.set("n", "<leader>f", function()
-			vim.lsp.buf.format({ async = true })
-		end, { buffer = ev.buf })
-		if vim.lsp.buf.range_code_action then
-			vim.keymap.set("n", "<leader>ca", function()
-				vim.lsp.buf.code_action()
-			end, { buffer = ev.buf })
-			vim.keymap.set("x", "<leader>ca", function()
-				vim.lsp.buf.range_code_action()
-			end, { buffer = ev.buf })
-		else
-			vim.keymap.set({ "n", "x" }, "<leader>ca", function()
-				vim.lsp.buf.code_action()
-			end, { buffer = ev.buf })
-		end
-	end,
+  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+  callback = function(ev)
+    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = ev.buf })
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = ev.buf })
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = ev.buf })
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = ev.buf })
+    vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, { buffer = ev.buf })
+    vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { buffer = ev.buf })
+    vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { buffer = ev.buf })
+    vim.keymap.set("n", "<leader>wl", function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, { buffer = ev.buf })
+    vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, { buffer = ev.buf })
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = ev.buf })
+    vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = ev.buf })
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = ev.buf })
+    vim.keymap.set("n", "<leader>f", function()
+      vim.lsp.buf.format({ async = true })
+    end, { buffer = ev.buf })
+    if vim.lsp.buf.range_code_action then
+      vim.keymap.set("n", "<leader>ca", function()
+        vim.lsp.buf.code_action()
+        end, { buffer = ev.buf })
+      vim.keymap.set("x", "<leader>ca", function()
+        vim.lsp.buf.range_code_action()
+        end, { buffer = ev.buf })
+    else
+      vim.keymap.set({ "n", "x" }, "<leader>ca", function()
+        vim.lsp.buf.code_action()
+        end, { buffer = ev.buf })
+    end
+  end,
 })

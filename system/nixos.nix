@@ -1,8 +1,5 @@
-{ pkgs, ... }:
-{
-  imports = [
-    ./common.nix
-  ];
+{ pkgs, ... }: {
+  imports = [ ./common.nix ];
   networking.networkmanager.enable = true;
   time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -24,15 +21,14 @@
   };
   users.users.toyvo = {
     isNormalUser = true;
-    initialHashedPassword = "$y$j9T$XLO0/IdPsMJEWoxCh/IZp0$kU2LlpXdnv17hErTs7.21tye1Qdf7cChjFSPa/QNQTC";
+    initialHashedPassword =
+      "$y$j9T$XLO0/IdPsMJEWoxCh/IZp0$kU2LlpXdnv17hErTs7.21tye1Qdf7cChjFSPa/QNQTC";
     description = "Collin Diekvoss";
     extraGroups = [ "networkmanager" "wheel" ];
     openssh.authorizedKeys.keyFiles = [ ../keys/ssh_yubikey.pub ];
     shell = pkgs.zsh;
   };
-  environment.systemPackages = with pkgs; [
-    yubikey-personalization
-  ];
+  environment.systemPackages = with pkgs; [ yubikey-personalization ];
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;

@@ -1,14 +1,11 @@
-{ nixpkgs, home-manager, ... } @ inputs:
+{ nixpkgs, home-manager, ... }@inputs:
 let
   system = "x86_64-linux";
   user = "deck";
   pkgs = nixpkgs.legacyPackages.${system};
-in
-home-manager.lib.homeManagerConfiguration {
+in home-manager.lib.homeManagerConfiguration {
   inherit pkgs;
-  extraSpecialArgs = {
-    inherit inputs system;
-  };
+  extraSpecialArgs = { inherit inputs system; };
   modules = [
     ({
       home.username = user;
