@@ -69,10 +69,10 @@ in nixpkgs.lib.nixosSystem {
         };
         nat.enable = true;
         nat.externalInterface = "enp1s0";
-        nat.internalInterfaces = [ "br0" ];
+        nat.internalInterfaces = [ "br0" "home" "iot" "guest" ];
         firewall = {
           enable = true;
-          trustedInterfaces = [ "br0" ];
+          trustedInterfaces = [ "br0" "home" "iot" ];
           # Temporary while testing
           interfaces.enp1s0.allowedTCPPorts = [ 22 ];
           interfaces.br0.allowedTCPPorts = [ 53 22 ];
