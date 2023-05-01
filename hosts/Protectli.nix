@@ -73,8 +73,6 @@ in nixpkgs.lib.nixosSystem {
         firewall = {
           enable = true;
           trustedInterfaces = [ "br0" "cdwifi" "cdiot" ];
-          # Temporary while testing
-          interfaces.enp1s0.allowedTCPPorts = [ 22 ];
           interfaces.br0.allowedTCPPorts = [ 53 22 ];
           interfaces.br0.allowedUDPPorts = [ 53 ];
         };
@@ -83,7 +81,7 @@ in nixpkgs.lib.nixosSystem {
       services.dnsmasq = {
         enable = true;
         settings = {
-          server = [ "1.1.1.1" "1.0.0.1" ];
+          server = [ "10.1.0.6" "1.1.1.1" "1.0.0.1" ];
           domain-needed = true;
           interface = [ "br0" "cdwifi" "cdiot" "cdguest" ];
           dhcp-range = [
