@@ -32,7 +32,7 @@ in nixpkgs.lib.nixosSystem {
         nameservers = [ "1.1.1.1" "1.0.0.1" ];
         bridges.br0.interfaces = [ "enp2s0" "enp3s0" "enp4s0" ];
         vlans = {
-          home = {
+          main = {
             id = 10;
             interface = "br0";
           };
@@ -54,7 +54,7 @@ in nixpkgs.lib.nixosSystem {
             address = "10.0.0.1";
             prefixLength = 24;
           }];
-          home.ipv4.addresses = [{
+          main.ipv4.addresses = [{
             address = "10.0.10.1";
             prefixLength = 24;
           }];
@@ -69,10 +69,10 @@ in nixpkgs.lib.nixosSystem {
         };
         nat.enable = true;
         nat.externalInterface = "enp1s0";
-        nat.internalInterfaces = [ "br0" "home" "iot" "guest" ];
+        nat.internalInterfaces = [ "br0" "main" "iot" "guest" ];
         firewall = {
           enable = true;
-          trustedInterfaces = [ "br0" "home" "iot" ];
+          trustedInterfaces = [ "br0" "main" "iot" ];
           # Temporary while testing
           interfaces.enp1s0.allowedTCPPorts = [ 22 ];
           interfaces.br0.allowedTCPPorts = [ 53 22 ];
@@ -85,7 +85,7 @@ in nixpkgs.lib.nixosSystem {
         settings = {
           server = [ "1.1.1.1" "1.0.0.1" ];
           domain-needed = true;
-          interface = [ "br0" "home" "iot" "guest" ];
+          interface = [ "br0" "main" "iot" "guest" ];
           dhcp-range = [
             "10.0.0.2,10.0.0.254"
             "10.0.10.2,10.0.10.254"
@@ -97,7 +97,7 @@ in nixpkgs.lib.nixosSystem {
       services.avahi = {
         enable = true;
         reflector = true;
-        allowInterfaces = [ "home" "iot" ];
+        allowInterfaces = [ "main" "iot" ];
       };
     })
     nixpkgs.nixosModules.notDetected
