@@ -91,7 +91,7 @@ nixpkgs.lib.nixosSystem {
         dnsmasq = {
           enable = true;
           settings = {
-            server = [ "10.1.0.6" "1.1.1.1" "1.0.0.1" ];
+            server = [ "10.1.10.6" "1.1.1.1" "1.0.0.1" ];
             domain-needed = true;
             interface = [ "br0" "cdwifi" "cdiot" "cdguest" ];
             dhcp-range = [
