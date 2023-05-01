@@ -51,19 +51,19 @@ in nixpkgs.lib.nixosSystem {
           enp3s0.useDHCP = true;
           enp4s0.useDHCP = true;
           br0.ipv4.addresses = [{
-            address = "10.0.0.1";
+            address = "10.1.0.1";
             prefixLength = 24;
           }];
           cdwifi.ipv4.addresses = [{
-            address = "10.0.10.1";
+            address = "10.1.10.1";
             prefixLength = 24;
           }];
           cdiot.ipv4.addresses = [{
-            address = "10.0.20.1";
+            address = "10.1.20.1";
             prefixLength = 24;
           }];
           cdguest.ipv4.addresses = [{
-            address = "10.0.30.1";
+            address = "10.1.30.1";
             prefixLength = 24;
           }];
         };
@@ -87,10 +87,22 @@ in nixpkgs.lib.nixosSystem {
           domain-needed = true;
           interface = [ "br0" "cdwifi" "cdiot" "cdguest" ];
           dhcp-range = [
-            "10.0.0.2,10.0.0.254"
-            "10.0.10.2,10.0.10.254"
-            "10.0.20.2,10.0.20.254"
-            "10.0.30.2,10.0.30.254"
+            "10.1.0.2,10.1.0.254"
+            "10.1.10.2,10.1.10.254"
+            "10.1.20.2,10.1.20.254"
+            "10.1.30.2,10.1.30.254"
+          ];
+          dhcp-host = [
+            # Omada Controller
+            "10:27:f5:bd:04:97,10.1.0.2"
+            # Proxmox
+            "70:85:c2:8a:53:5b,10.1.10.3"
+            # TrueNAS VM (Proxmox)
+            "e2:8b:29:5e:56:ca,10.1.10.4"
+            # Canon Printer
+            "c4:ac:59:a6:63:33,10.1.10.5"
+            # Docker VM (Proxmox)
+            "7a:8d:bd:a3:66:ba,10.1.10.6"
           ];
         };
       };
