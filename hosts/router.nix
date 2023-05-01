@@ -11,7 +11,7 @@ in nixpkgs.lib.nixosSystem {
     ({ lib, ... }: {
       boot = {
         initrd.availableKernelModules =
-          [ "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
+          [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sdhci_pci" ];
         initrd.kernelModules = [ ];
         kernelModules = [ "kvm-intel" ];
         extraModulePackages = [ ];
@@ -24,13 +24,14 @@ in nixpkgs.lib.nixosSystem {
         };
       };
       swapDevices = [ ];
+      powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
       hardware.cpu.intel.updateMicrocode = true;
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
       networking = {
-        hostName = "Protectli";
+        hostName = "router";
         useDHCP = false;
         nameservers = [ "1.1.1.1" "1.0.0.1" ];
-        bridges.br0.interfaces = [ "enp2s0" "enp3s0" "enp4s0" ];
+        bridges.br0.interfaces = [ "enp3s0" "enp4s0" "enp5s0" ];
         vlans = {
           cdwifi = {
             id = 10;
@@ -46,29 +47,29 @@ in nixpkgs.lib.nixosSystem {
           };
         };
         interfaces = {
-          enp1s0.useDHCP = true;
           enp2s0.useDHCP = true;
           enp3s0.useDHCP = true;
           enp4s0.useDHCP = true;
+          enp5s0.useDHCP = true;
           br0.ipv4.addresses = [{
-            address = "192.168.0.1";
+            address = "10.1.0.1";
             prefixLength = 24;
           }];
           cdwifi.ipv4.addresses = [{
-            address = "192.168.10.1";
+            address = "10.1.10.1";
             prefixLength = 24;
           }];
           cdiot.ipv4.addresses = [{
-            address = "192.168.20.1";
+            address = "10.1.20.1";
             prefixLength = 24;
           }];
           cdguest.ipv4.addresses = [{
-            address = "192.168.30.1";
+            address = "10.1.30.1";
             prefixLength = 24;
           }];
         };
         nat.enable = true;
-        nat.externalInterface = "enp1s0";
+        nat.externalInterface = "enp2s0";
         nat.internalInterfaces = [ "br0" "cdwifi" "cdiot" "cdguest" ];
         firewall = {
           enable = true;
@@ -81,26 +82,26 @@ in nixpkgs.lib.nixosSystem {
       services.dnsmasq = {
         enable = true;
         settings = {
-          server = [ "192.168.0.6" "1.1.1.1" "1.0.0.1" ];
+          server = [ "10.1.0.6" "1.1.1.1" "1.0.0.1" ];
           domain-needed = true;
           interface = [ "br0" "cdwifi" "cdiot" "cdguest" ];
           dhcp-range = [
-            "192.168.0.100,192.168.0.199"
-            "192.168.10.100,192.168.10.199"
-            "192.168.20.100,192.168.20.199"
-            "192.168.30.2,192.168.30.254"
+            "10.1.0.100,10.1.0.199"
+            "10.1.10.100,10.1.10.199"
+            "10.1.20.100,10.1.20.199"
+            "10.1.30.2,10.1.30.254"
           ];
           dhcp-host = [
             # Omada Controller
-            "10:27:f5:bd:04:97,192.168.0.2"
+            "10:27:f5:bd:04:97,10.1.0.2"
             # Proxmox
-            "70:85:c2:8a:53:5b,192.168.10.3"
+            "70:85:c2:8a:53:5b,10.1.10.3"
             # TrueNAS VM (Proxmox)
-            "e2:8b:29:5e:56:ca,192.168.10.4"
+            "e2:8b:29:5e:56:ca,10.1.10.4"
             # Canon Printer
-            "c4:ac:59:a6:63:33,192.168.10.5"
+            "c4:ac:59:a6:63:33,10.1.10.5"
             # Docker VM (Proxmox)
-            "7a:8d:bd:a3:66:ba,192.168.10.6"
+            "7a:8d:bd:a3:66:ba,10.1.10.6"
           ];
         };
       };
