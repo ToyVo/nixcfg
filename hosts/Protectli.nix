@@ -19,10 +19,6 @@ nixpkgs.lib.nixosSystem {
         loader.systemd-boot.enable = true;
         loader.efi.canTouchEfiVariables = true;
         loader.efi.efiSysMountPoint = "/boot/efi";
-        kernel.sysctl = {
-          "net.ipv4.conf.all.forwarding" = true;
-          "net.ipv6.conf.all.forwarding" = true;
-        };
       };
       swapDevices = [ ];
       hardware.cpu.intel.updateMicrocode = true;
@@ -31,137 +27,10 @@ nixpkgs.lib.nixosSystem {
         hostName = "Protectli";
         useDHCP = false;
         nameservers = [ "1.1.1.1" "1.0.0.1" ];
-        bridges.br0.interfaces = [ "enp2s0" "enp3s0" "enp4s0" ];
-        vlans = {
-          cdwifi = {
-            id = 10;
-            interface = "br0";
-          };
-          cdiot = {
-            id = 20;
-            interface = "br0";
-          };
-          cdguest = {
-            id = 30;
-            interface = "br0";
-          };
-        };
-        interfaces = {
-          enp1s0.useDHCP = true;
-          enp2s0.useDHCP = true;
-          enp3s0.useDHCP = true;
-          enp4s0.useDHCP = true;
-          br0.ipv4.addresses = [{
-            address = "192.168.0.1";
-            prefixLength = 24;
-          }];
-          cdwifi.ipv4.addresses = [{
-            address = "192.168.10.1";
-            prefixLength = 24;
-          }];
-          cdiot.ipv4.addresses = [{
-            address = "192.168.20.1";
-            prefixLength = 24;
-          }];
-          cdguest.ipv4.addresses = [{
-            address = "192.168.30.1";
-            prefixLength = 24;
-          }];
-        };
         nat.enable = true;
+        nat.enableIPv6 = true;
         nat.externalInterface = "enp1s0";
-        nat.internalInterfaces = [ "br0" "cdwifi" "cdiot" "cdguest" ];
-        firewall = {
-          enable = true;
-          trustedInterfaces = [ "br0" "cdwifi" "cdiot" ];
-          interfaces.br0.allowedTCPPorts = [ 53 22 ];
-          interfaces.br0.allowedUDPPorts = [ 53 ];
-        };
-      };
-      services = {
-        kea.dhcp4 = {
-          enable = true;
-          settings = {
-            interfaces-config = {
-              interfaces = [ "br0" "cdwifi" "cdiot" "cdguest" ];
-            };
-            rebind-timer = 2000;
-            renew-timer = 1000;
-            subnet4 = [
-              {
-                pools = [{ pool = "192.168.0.100 - 192.168.0.240"; }];
-                subnet = "192.168.0.0/24";
-                interface = "br0";
-                reservations-in-subnet = true;
-                reservations = [{
-                  hw-address = "10:27:f5:bd:04:97";
-                  ip-address = "192.168.0.2";
-                  hostname = "omada";
-                }];
-                option-data = [{
-                  name = "domain-name-servers";
-                  data = "1.1.1.1, 1.0.0.1";
-                }];
-              }
-              {
-                pools = [{ pool = "192.168.10.100 - 192.168.10.240"; }];
-                subnet = "192.168.10.0/24";
-                interface = "cdwifi";
-                reservations-in-subnet = true;
-                reservations = [
-                  {
-                    hw-address = "70:85:c2:8a:53:5b";
-                    ip-address = "192.168.10.3";
-                    hostname = "proxmox";
-                  }
-                  {
-                    hw-address = "e2:8b:29:5e:56:ca";
-                    ip-address = "192.168.10.4";
-                    hostname = "truenas";
-                  }
-                  {
-                    hw-address = "c4:ac:59:a6:63:33";
-                    ip-address = "192.168.10.5";
-                    hostname = "canon";
-                  }
-                  {
-                    hw-address = "7a:8d:bd:a3:66:ba";
-                    ip-address = "192.168.10.6";
-                    hostname = "docker";
-                  }
-                ];
-                option-data = [{
-                  name = "domain-name-servers";
-                  data = "192.168.0.6, 1.1.1.1, 1.0.0.1";
-                }];
-              }
-              {
-                pools = [{ pool = "192.168.20.100 - 192.168.20.240"; }];
-                subnet = "192.168.20.0/24";
-                interface = "cdiot";
-                option-data = [{
-                  name = "domain-name-servers";
-                  data = "192.168.0.6, 1.1.1.1, 1.0.0.1";
-                }];
-              }
-              {
-                pools = [{ pool = "192.168.30.100 - 192.168.30.240"; }];
-                subnet = "192.168.30.0/24";
-                interface = "cdguest";
-                option-data = [{
-                  name = "domain-name-servers";
-                  data = "1.1.1.1, 1.0.0.1";
-                }];
-              }
-            ];
-            valid-lifetime = 4000;
-          };
-        };
-        avahi = {
-          enable = true;
-          reflector = true;
-          allowInterfaces = [ "cdwifi" "cdiot" ];
-        };
+        nat.internalInterfaces = [ "enp2s0" "enp3s0" "enp4s0" ];
       };
     })
     nixpkgs.nixosModules.notDetected
