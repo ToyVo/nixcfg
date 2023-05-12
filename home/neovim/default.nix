@@ -170,7 +170,7 @@
         '';
       }
       {
-        plugin = gruvbox-nvim;
+        plugin = everforest;
         type = "lua";
         config = ''
           vim.o.background = "dark";
@@ -182,11 +182,9 @@
               vim.cmd("cd ~");
             end
           else
-            require("gruvbox").setup({
-              transparent_mode = true,
-            });
+            vim.g.everforest_transparent_background = 1;
           end
-          vim.cmd("colorscheme gruvbox")
+          vim.cmd("colorscheme everforest")
         '';
       }
       {
