@@ -24,6 +24,7 @@
     "insomnia"
     "libreoffice"
     "keybase"
+    "grammarly"
     # nix package doesn't provide an app bundle
     "neovide"
     # must be installed at /Applications, nix-darwin installs it at /Applications/nix apps

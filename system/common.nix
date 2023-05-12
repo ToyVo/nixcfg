@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  fonts.fonts = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
+  fonts.fonts = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) font-awesome ];
   programs.zsh.enable = true;
   nixpkgs.config.allowUnfree = true;
   nix.extraOptions = ''
