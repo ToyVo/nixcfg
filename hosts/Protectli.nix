@@ -39,26 +39,6 @@ nixpkgs.lib.nixosSystem {
               VLAN = "enp2s0.20";
             };
           };
-          "22-IOT" = {
-            matchConfig.Name = "enp2s0.20";
-            networkConfig = {
-              Address = "192.168.20.1/24";
-              DNS = "1.1.1.1";
-            };
-            routingPolicyRules = [{
-              From = "192.168.20.0/24";
-              Table = "iot";
-            }];
-          };
-        };
-        netdevs = {
-          "22-IOT" = {
-            netdevConfig = {
-              Name = "enp2s0.20";
-              Kind = "vlan";
-            };
-            vlanConfig.Id = 20;
-          };
         };
       };
       networking = {
