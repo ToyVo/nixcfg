@@ -35,14 +35,15 @@ nixpkgs.lib.nixosSystem {
           };
           "20-lan" = {
             matchConfig.Name = "enp2s0";
+            linkConfig.RequiredForOnline = "routable";
             networkConfig = {
               Address = "192.168.0.1/24";
+              DNS = ["1.1.1.1" "1.0.0.1"];
               DHCPServer = "yes";
-              IPMasquerade = "ipv4";
             };
             dhcpServerConfig = {
               EmitDNS = true;
-              DNS = "1.1.1.1";
+              DNS = ["1.1.1.1" "1.0.0.1"];
               EmitRouter = true;
               EmitNTP = true;
               EmitTimezone = true;
@@ -133,6 +134,7 @@ nixpkgs.lib.nixosSystem {
         nat.enableIPv6 = true;
         nat.externalInterface = "enp1s0";
         nat.internalInterfaces = [ "enp2s0" "enp3s0" "enp4s0" ];
+        firewall.interfaces.enp2s0.allowedUDPPorts = [ 53 67 ];
       };
     })
     nixpkgs.nixosModules.notDetected
