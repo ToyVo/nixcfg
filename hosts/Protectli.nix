@@ -27,18 +27,52 @@ nixpkgs.lib.nixosSystem {
       systemd.network = {
         enable = true;
         networks = {
-          "20-WAN" = {
+          "20-wan" = {
             matchConfig.Name = "enp1s0";
             networkConfig.DHCP = "ipv4";
             networkConfig.IPv6AcceptRA = true;
             linkConfig.RequiredForOnline = "routable";
           };
-          "21-LAN" = {
+          "20-lan" = {
             matchConfig.Name = "enp2s0";
             networkConfig = {
               Address = "192.168.0.1/24";
               DNS = "1.1.1.1";
+              DHCPServer = "yes";
             };
+            vlan = [ "main" "iot" "guest" ];
+          };
+          "30-main" = {
+            matchConfig.Name = "main";
+          };
+          "30-iot" = {
+            matchConfig.Name = "iot";
+          };
+          "30-guest" = {
+            matchConfig.Name = "guest";
+          };
+        };
+        netdevs = {
+          "10-main" = {
+            netdevConfig = {
+              Kind = "vlan";
+              Name = "main";
+            };
+            vlanConfig.Id = 10;
+          };
+          "10-iot" = {
+            netdevConfig = {
+              Kind = "vlan";
+              Name = "iot";
+            };
+            vlanConfig.Id = 20;
+          };
+          "10-guest" = {
+            netdevConfig = {
+              Kind = "vlan";
+              Name = "guest";
+            };
+            vlanConfig.Id = 30;
           };
         };
       };
