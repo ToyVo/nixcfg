@@ -10,10 +10,20 @@ nixpkgs.lib.nixosSystem {
     ../system/filesystem/efi.nix
     ../system/nixos.nix
     ({ lib, ... }: {
+      networking.networkmanager.enable = lib.mkForce false;
       boot = {
         initrd.availableKernelModules =
           [ "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
         initrd.kernelModules = [ ];
+        initrd.systemd.network = {
+          enable = true;
+          networks = {
+            "20-WAN" = {
+              Match.Name = "enp1s0";
+              Network.DHCP = "yes";
+            };
+          };
+        };
         kernelModules = [ "kvm-intel" ];
         extraModulePackages = [ ];
         loader.systemd-boot.enable = true;
