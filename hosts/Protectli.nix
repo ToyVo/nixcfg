@@ -35,19 +35,10 @@ nixpkgs.lib.nixosSystem {
           };
           "20-lan" = {
             matchConfig.Name = "enp2s0";
-            linkConfig.RequiredForOnline = "routable";
-            networkConfig = {
-              Address = "192.168.0.1/24";
-              DNS = ["1.1.1.1" "1.0.0.1"];
-              DHCPServer = "yes";
-            };
+            networkConfig.DHCPServer = "yes";
             dhcpServerConfig = {
-              EmitDNS = true;
+              ServerAddress = "192.168.0.1/24";
               DNS = ["1.1.1.1" "1.0.0.1"];
-              EmitRouter = true;
-              EmitNTP = true;
-              EmitTimezone = true;
-              Timezone = "America/Chicago";
               PoolSize = 100;
               PoolOffset = 20;
             };
