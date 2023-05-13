@@ -36,9 +36,11 @@ nixpkgs.lib.nixosSystem {
           "20-lan" = {
             matchConfig.Name = "enp2s0";
             networkConfig = {
-              Address = "192.168.0.1/24";
-              DNS = "1.1.1.1";
               DHCPServer = "yes";
+            };
+            dhcpServerConfig = {
+              ServerAddress = "192.168.0.1/24";
+              DNS = "1.1.1.1";
             };
             vlan = [ "main" "iot" "guest" ];
           };
