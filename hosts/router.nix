@@ -45,7 +45,7 @@ nixpkgs.lib.nixosSystem {
             matchConfig.Name = "enp3s0";
             networkConfig.DHCPServer = "yes";
             dhcpServerConfig = {
-              ServerAddress = "192.168.0.1/24";
+              ServerAddress = "10.1.0.1/24";
               DNS = ["1.1.1.1" "1.0.0.1"];
               PoolSize = 100;
               PoolOffset = 20;
@@ -65,7 +65,7 @@ nixpkgs.lib.nixosSystem {
             matchConfig.Name = "cdwifi";
             networkConfig.DHCPServer = "yes";
             dhcpServerConfig = {
-              ServerAddress = "192.168.10.1/24";
+              ServerAddress = "10.1.10.1/24";
               DNS = ["1.1.1.1" "1.0.0.1"];
               PoolSize = 100;
               PoolOffset = 20;
@@ -105,7 +105,7 @@ nixpkgs.lib.nixosSystem {
             matchConfig.Name = "cdiot";
             networkConfig.DHCPServer = "yes";
             dhcpServerConfig = {
-              ServerAddress = "192.168.20.1/24";
+              ServerAddress = "10.1.20.1/24";
               DNS = ["1.1.1.1" "1.0.0.1"];
               PoolSize = 100;
               PoolOffset = 20;
@@ -115,7 +115,7 @@ nixpkgs.lib.nixosSystem {
             matchConfig.Name = "cdguest";
             networkConfig.DHCPServer = "yes";
             dhcpServerConfig = {
-              ServerAddress = "192.168.30.1/24";
+              ServerAddress = "10.1.30.1/24";
               DNS = ["1.1.1.1" "1.0.0.1"];
               PoolSize = 100;
               PoolOffset = 20;
