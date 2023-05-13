@@ -37,6 +37,7 @@ nixpkgs.lib.nixosSystem {
             matchConfig.Name = "enp2s0";
             networkConfig = {
               DHCPServer = "yes";
+              IPMasquerade = "ipv4";
             };
             dhcpServerConfig = {
               ServerAddress = "192.168.0.1/24";
@@ -53,6 +54,7 @@ nixpkgs.lib.nixosSystem {
             matchConfig.Name = "main";
             networkConfig = {
               DHCPServer = "yes";
+              IPMasquerade = "ipv4";
             };
             dhcpServerConfig = {
               ServerAddress = "192.168.10.1/24";
@@ -68,6 +70,7 @@ nixpkgs.lib.nixosSystem {
             matchConfig.Name = "iot";
             networkConfig = {
               DHCPServer = "yes";
+              IPMasquerade = "ipv4";
             };
             dhcpServerConfig = {
               ServerAddress = "192.168.20.1/24";
@@ -83,6 +86,7 @@ nixpkgs.lib.nixosSystem {
             matchConfig.Name = "guest";
             networkConfig = {
               DHCPServer = "yes";
+              IPMasquerade = "ipv4";
             };
             dhcpServerConfig = {
               ServerAddress = "192.168.30.1/24";
