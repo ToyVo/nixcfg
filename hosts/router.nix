@@ -156,14 +156,14 @@ nixpkgs.lib.nixosSystem {
         firewall = {
           enable = true;
           trustedInterfaces = [ "enp3s0" "cdwifi" "cdiot" ];
-          firewall.interfaces.enp3s0.allowedTCPPorts = [ 53 22 ];
-          firewall.interfaces.enp3s0.allowedUDPPorts = [ 53 67 ];
-          firewall.interfaces.cdwifi.allowedTCPPorts = [ 53 22 ];
-          firewall.interfaces.cdwifi.allowedUDPPorts = [ 53 67 ];
-          firewall.interfaces.cdiot.allowedTCPPorts = [ 53 ];
-          firewall.interfaces.cdiot.allowedUDPPorts = [ 53 67 ];
-          firewall.interfaces.cdguest.allowedTCPPorts = [ 53 ];
-          firewall.interfaces.cdguest.allowedUDPPorts = [ 53 67 ];
+          interfaces.enp3s0.allowedTCPPorts = [ 53 22 ];
+          interfaces.enp3s0.allowedUDPPorts = [ 53 67 ];
+          interfaces.cdwifi.allowedTCPPorts = [ 53 22 ];
+          interfaces.cdwifi.allowedUDPPorts = [ 53 67 ];
+          interfaces.cdiot.allowedTCPPorts = [ 53 ];
+          interfaces.cdiot.allowedUDPPorts = [ 53 67 ];
+          interfaces.cdguest.allowedTCPPorts = [ 53 ];
+          interfaces.cdguest.allowedUDPPorts = [ 53 67 ];
         };
       };
       services = {
