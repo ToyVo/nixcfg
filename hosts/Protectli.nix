@@ -42,80 +42,62 @@ nixpkgs.lib.nixosSystem {
               PoolSize = 100;
               PoolOffset = 20;
             };
-            # vlan = [ "main" "iot" "guest" ];
+            vlan = [ "main" "iot" "guest" ];
           };
-          # "30-main" = {
-          #   matchConfig.Name = "main";
-          #   networkConfig = {
-          #     DHCPServer = "yes";
-          #     IPMasquerade = "ipv4";
-          #   };
-          #   dhcpServerConfig = {
-          #     ServerAddress = "192.168.10.1/24";
-          #     EmitDNS = true;
-          #     DNS = "1.1.1.1";
-          #     EmitRouter = true;
-          #     Router = "192.168.0.1";
-          #     PoolSize = 100;
-          #     PoolOffset = 20;
-          #   };
-          # };
-          # "30-iot" = {
-          #   matchConfig.Name = "iot";
-          #   networkConfig = {
-          #     DHCPServer = "yes";
-          #     IPMasquerade = "ipv4";
-          #   };
-          #   dhcpServerConfig = {
-          #     ServerAddress = "192.168.20.1/24";
-          #     EmitDNS = true;
-          #     DNS = "1.1.1.1";
-          #     EmitRouter = true;
-          #     Router = "192.168.0.1";
-          #     PoolSize = 100;
-          #     PoolOffset = 20;
-          #   };
-          # };
-          # "30-guest" = {
-          #   matchConfig.Name = "guest";
-          #   networkConfig = {
-          #     DHCPServer = "yes";
-          #     IPMasquerade = "ipv4";
-          #   };
-          #   dhcpServerConfig = {
-          #     ServerAddress = "192.168.30.1/24";
-          #     EmitDNS = true;
-          #     DNS = "1.1.1.1";
-          #     EmitRouter = true;
-          #     Router = "192.168.0.1";
-          #     PoolSize = 100;
-          #     PoolOffset = 20;
-          #   };
-          # };
+          "30-main" = {
+            matchConfig.Name = "main";
+            networkConfig.DHCPServer = "yes";
+            dhcpServerConfig = {
+              ServerAddress = "192.168.10.1/24";
+              DNS = ["1.1.1.1" "1.0.0.1"];
+              PoolSize = 100;
+              PoolOffset = 20;
+            };
+          };
+          "30-iot" = {
+            matchConfig.Name = "iot";
+            networkConfig.DHCPServer = "yes";
+            dhcpServerConfig = {
+              ServerAddress = "192.168.20.1/24";
+              DNS = ["1.1.1.1" "1.0.0.1"];
+              PoolSize = 100;
+              PoolOffset = 20;
+            };
+          };
+          "30-guest" = {
+            matchConfig.Name = "guest";
+            networkConfig.DHCPServer = "yes";
+            dhcpServerConfig = {
+              ServerAddress = "192.168.30.1/24";
+              DNS = ["1.1.1.1" "1.0.0.1"];
+              PoolSize = 100;
+              PoolOffset = 20;
+            };
+          };
         };
-        # netdevs = {
-        #   "10-main" = {
-        #     netdevConfig = {
-        #       Kind = "vlan";
-        #       Name = "main";
-        #     };
-        #     vlanConfig.Id = 10;
-        #   };
-        #   "10-iot" = {
-        #     netdevConfig = {
-        #       Kind = "vlan";
-        #       Name = "iot";
-        #     };
-        #     vlanConfig.Id = 20;
-        #   };
-        #   "10-guest" = {
-        #     netdevConfig = {
-        #       Kind = "vlan";
-        #       Name = "guest";
-        #     };
-        #     vlanConfig.Id = 30;
-        #   };
-        # };
+        netdevs = {
+          "10-main" = {
+            netdevConfig = {
+              Kind = "vlan";
+              Name = "main";
+            };
+            vlanConfig.Id = 10;
+          };
+          "10-iot" = {
+            netdevConfig = {
+              Kind = "vlan";
+              Name = "iot";
+            };
+            vlanConfig.Id = 20;
+          };
+          "10-guest" = {
+            netdevConfig = {
+              Kind = "vlan";
+              Name = "guest";
+            };
+            vlanConfig.Id = 30;
+          };
+        };
       };
       networking = {
         hostName = "Protectli";
@@ -126,6 +108,13 @@ nixpkgs.lib.nixosSystem {
         nat.externalInterface = "enp1s0";
         nat.internalInterfaces = [ "enp2s0" "enp3s0" "enp4s0" ];
         firewall.interfaces.enp2s0.allowedUDPPorts = [ 53 67 ];
+        firewall.interfaces.enp2s0.allowedTCPPorts = [ 53 22 ];
+        firewall.interfaces.main.allowedUDPPorts = [ 53 67 ];
+        firewall.interfaces.main.allowedTCPPorts = [ 53 22 ];
+        firewall.interfaces.iot.allowedUDPPorts = [ 53 67 ];
+        firewall.interfaces.iot.allowedTCPPorts = [ 53 ];
+        firewall.interfaces.guest.allowedUDPPorts = [ 53 67 ];
+        firewall.interfaces.guest.allowedTCPPorts = [ 53 ];
       };
     })
     nixpkgs.nixosModules.notDetected
