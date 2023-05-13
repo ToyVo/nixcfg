@@ -101,30 +101,30 @@ nixpkgs.lib.nixosSystem {
           #   };
           # };
         };
-      #   netdevs = {
-      #     "10-main" = {
-      #       netdevConfig = {
-      #         Kind = "vlan";
-      #         Name = "main";
-      #       };
-      #       vlanConfig.Id = 10;
-      #     };
-      #     "10-iot" = {
-      #       netdevConfig = {
-      #         Kind = "vlan";
-      #         Name = "iot";
-      #       };
-      #       vlanConfig.Id = 20;
-      #     };
-      #     "10-guest" = {
-      #       netdevConfig = {
-      #         Kind = "vlan";
-      #         Name = "guest";
-      #       };
-      #       vlanConfig.Id = 30;
-      #     };
-      #   };
-      # };
+        # netdevs = {
+        #   "10-main" = {
+        #     netdevConfig = {
+        #       Kind = "vlan";
+        #       Name = "main";
+        #     };
+        #     vlanConfig.Id = 10;
+        #   };
+        #   "10-iot" = {
+        #     netdevConfig = {
+        #       Kind = "vlan";
+        #       Name = "iot";
+        #     };
+        #     vlanConfig.Id = 20;
+        #   };
+        #   "10-guest" = {
+        #     netdevConfig = {
+        #       Kind = "vlan";
+        #       Name = "guest";
+        #     };
+        #     vlanConfig.Id = 30;
+        #   };
+        # };
+      };
       networking = {
         hostName = "Protectli";
         useDHCP = false;
