@@ -29,14 +29,15 @@ nixpkgs.lib.nixosSystem {
         networks = {
           "20-WAN" = {
             matchConfig.Name = "enp1s0";
-            networkConfig.DHCP = "yes";
+            networkConfig.DHCP = "ipv4";
+            networkConfig.IPv6AcceptRA = true;
+            linkConfig.RequiredForOnline = "routable";
           };
           "21-LAN" = {
             matchConfig.Name = "enp2s0";
             networkConfig = {
               Address = "192.168.0.1/24";
               DNS = "1.1.1.1";
-              VLAN = "enp2s0.20";
             };
           };
         };
