@@ -40,18 +40,59 @@ nixpkgs.lib.nixosSystem {
             };
             dhcpServerConfig = {
               ServerAddress = "192.168.0.1/24";
+              EmitDNS = true;
               DNS = "1.1.1.1";
+              EmitRouter = true;
+              Router = "192.168.0.1";
+              PoolSize = 100;
+              PoolOffset = 20;
             };
             vlan = [ "main" "iot" "guest" ];
           };
           "30-main" = {
             matchConfig.Name = "main";
+            networkConfig = {
+              DHCPServer = "yes";
+            };
+            dhcpServerConfig = {
+              ServerAddress = "192.168.10.1/24";
+              EmitDNS = true;
+              DNS = "1.1.1.1";
+              EmitRouter = true;
+              Router = "192.168.0.1";
+              PoolSize = 100;
+              PoolOffset = 20;
+            };
           };
           "30-iot" = {
             matchConfig.Name = "iot";
+            networkConfig = {
+              DHCPServer = "yes";
+            };
+            dhcpServerConfig = {
+              ServerAddress = "192.168.20.1/24";
+              EmitDNS = true;
+              DNS = "1.1.1.1";
+              EmitRouter = true;
+              Router = "192.168.0.1";
+              PoolSize = 100;
+              PoolOffset = 20;
+            };
           };
           "30-guest" = {
             matchConfig.Name = "guest";
+            networkConfig = {
+              DHCPServer = "yes";
+            };
+            dhcpServerConfig = {
+              ServerAddress = "192.168.30.1/24";
+              EmitDNS = true;
+              DNS = "1.1.1.1";
+              EmitRouter = true;
+              Router = "192.168.0.1";
+              PoolSize = 100;
+              PoolOffset = 20;
+            };
           };
         };
         netdevs = {
