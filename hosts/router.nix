@@ -10,6 +10,7 @@ nixpkgs.lib.nixosSystem {
     ../system/filesystem/efi.nix
     ../system/nixos.nix
     ({ lib, ... }: {
+      networking.networkmanager.enable = lib.mkForce false;
       boot = {
         initrd.availableKernelModules = [
           "xhci_pci"
@@ -26,94 +27,147 @@ nixpkgs.lib.nixosSystem {
         loader.systemd-boot.enable = true;
         loader.efi.canTouchEfiVariables = true;
         loader.efi.efiSysMountPoint = "/boot/efi";
-        kernel.sysctl = {
-          "net.ipv4.conf.all.forwarding" = true;
-          "net.ipv6.conf.all.forwarding" = true;
-        };
       };
       swapDevices = [ ];
       powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
       hardware.cpu.intel.updateMicrocode = true;
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+      systemd.network = {
+        enable = true;
+        networks = {
+          "20-wan" = {
+            matchConfig.Name = "enp2s0";
+            networkConfig.DHCP = "ipv4";
+            networkConfig.IPv6AcceptRA = true;
+            linkConfig.RequiredForOnline = "routable";
+          };
+          "20-lan" = {
+            matchConfig.Name = "enp3s0";
+            networkConfig.DHCPServer = "yes";
+            dhcpServerConfig = {
+              ServerAddress = "192.168.0.1/24";
+              DNS = ["1.1.1.1" "1.0.0.1"];
+              PoolSize = 100;
+              PoolOffset = 20;
+            };
+            dhcpServerStaticLeases = [
+              # Omada Controller
+              {
+                dhcpServerStaticLeaseConfig = {
+                  Address = "10.1.0.2";
+                  MACAddress = "10:27:f5:bd:04:97";
+                };
+              }
+            ];
+            vlan = [ "cdwifi" "cdiot" "cdguest" ];
+          };
+          "30-cdwifi" = {
+            matchConfig.Name = "cdwifi";
+            networkConfig.DHCPServer = "yes";
+            dhcpServerConfig = {
+              ServerAddress = "192.168.10.1/24";
+              DNS = ["1.1.1.1" "1.0.0.1"];
+              PoolSize = 100;
+              PoolOffset = 20;
+            };
+            dhcpServerStaticLeases = [
+              # Proxmox
+              {
+                dhcpServerStaticLeaseConfig = {
+                  Address = "10.1.10.3";
+                  MACAddress = "70:85:c2:8a:53:5b";
+                };
+              }
+              # TrueNAS VM (Proxmox)
+              {
+                dhcpServerStaticLeaseConfig = {
+                  Address = "10.1.10.4";
+                  MACAddress = "e2:8b:29:5e:56:ca";
+                };
+              }
+              # Canon Printer
+              {
+                dhcpServerStaticLeaseConfig = {
+                  Address = "10.1.10.4";
+                  MACAddress = "c4:ac:59:a6:63:33";
+                };
+              }
+              # Docker VM (Proxmox)
+              {
+                dhcpServerStaticLeaseConfig = {
+                  Address = "10.1.10.6";
+                  MACAddress = "7a:8d:bd:a3:66:ba";
+                };
+              }
+            ];
+          };
+          "30-cdiot" = {
+            matchConfig.Name = "cdiot";
+            networkConfig.DHCPServer = "yes";
+            dhcpServerConfig = {
+              ServerAddress = "192.168.20.1/24";
+              DNS = ["1.1.1.1" "1.0.0.1"];
+              PoolSize = 100;
+              PoolOffset = 20;
+            };
+          };
+          "30-cdguest" = {
+            matchConfig.Name = "cdguest";
+            networkConfig.DHCPServer = "yes";
+            dhcpServerConfig = {
+              ServerAddress = "192.168.30.1/24";
+              DNS = ["1.1.1.1" "1.0.0.1"];
+              PoolSize = 100;
+              PoolOffset = 20;
+            };
+          };
+        };
+        netdevs = {
+          "10-cdwifi" = {
+            netdevConfig = {
+              Kind = "vlan";
+              Name = "cdwifi";
+            };
+            vlanConfig.Id = 10;
+          };
+          "10-cdiot" = {
+            netdevConfig = {
+              Kind = "vlan";
+              Name = "cdiot";
+            };
+            vlanConfig.Id = 20;
+          };
+          "10-cdguest" = {
+            netdevConfig = {
+              Kind = "vlan";
+              Name = "cdguest";
+            };
+            vlanConfig.Id = 30;
+          };
+        };
+      };
       networking = {
         hostName = "router";
         useDHCP = false;
         nameservers = [ "1.1.1.1" "1.0.0.1" ];
-        bridges.br0.interfaces = [ "enp3s0" "enp4s0" "enp5s0" ];
-        vlans = {
-          cdwifi = {
-            id = 10;
-            interface = "br0";
-          };
-          cdiot = {
-            id = 20;
-            interface = "br0";
-          };
-          cdguest = {
-            id = 30;
-            interface = "br0";
-          };
-        };
-        interfaces = {
-          enp2s0.useDHCP = true;
-          enp3s0.useDHCP = true;
-          enp4s0.useDHCP = true;
-          enp5s0.useDHCP = true;
-          br0.ipv4.addresses = [{
-            address = "10.1.0.1";
-            prefixLength = 24;
-          }];
-          cdwifi.ipv4.addresses = [{
-            address = "10.1.10.1";
-            prefixLength = 24;
-          }];
-          cdiot.ipv4.addresses = [{
-            address = "10.1.20.1";
-            prefixLength = 24;
-          }];
-          cdguest.ipv4.addresses = [{
-            address = "10.1.30.1";
-            prefixLength = 24;
-          }];
-        };
         nat.enable = true;
         nat.externalInterface = "enp2s0";
-        nat.internalInterfaces = [ "br0" "cdwifi" "cdiot" "cdguest" ];
+        nat.internalInterfaces = [ "enp3s0" "cdwifi" "cdiot" "cdguest" ];
         firewall = {
           enable = true;
-          trustedInterfaces = [ "br0" "cdwifi" "cdiot" ];
-          interfaces.br0.allowedTCPPorts = [ 53 22 ];
-          interfaces.br0.allowedUDPPorts = [ 53 ];
+          trustedInterfaces = [ "enp3s0" "cdwifi" "cdiot" ];
+          firewall.interfaces.enp3s0.allowedTCPPorts = [ 53 22 ];
+          firewall.interfaces.enp3s0.allowedUDPPorts = [ 53 67 ];
+          firewall.interfaces.cdwifi.allowedTCPPorts = [ 53 22 ];
+          firewall.interfaces.cdwifi.allowedUDPPorts = [ 53 67 ];
+          firewall.interfaces.cdiot.allowedTCPPorts = [ 53 ];
+          firewall.interfaces.cdiot.allowedUDPPorts = [ 53 67 ];
+          firewall.interfaces.cdguest.allowedTCPPorts = [ 53 ];
+          firewall.interfaces.cdguest.allowedUDPPorts = [ 53 67 ];
         };
       };
       services = {
         openssh.openFirewall = false;
-        dnsmasq = {
-          enable = true;
-          settings = {
-            server = [ "10.1.10.6" "1.1.1.1" "1.0.0.1" ];
-            domain-needed = true;
-            interface = [ "br0" "cdwifi" "cdiot" "cdguest" ];
-            dhcp-range = [
-              "10.1.0.100,10.1.0.199"
-              "10.1.10.100,10.1.10.199"
-              "10.1.20.100,10.1.20.199"
-              "10.1.30.2,10.1.30.254"
-            ];
-            dhcp-host = [
-              # Omada Controller
-              "10:27:f5:bd:04:97,10.1.0.2"
-              # Proxmox
-              "70:85:c2:8a:53:5b,10.1.10.3"
-              # TrueNAS VM (Proxmox)
-              "e2:8b:29:5e:56:ca,10.1.10.4"
-              # Canon Printer
-              "c4:ac:59:a6:63:33,10.1.10.5"
-              # Docker VM (Proxmox)
-              "7a:8d:bd:a3:66:ba,10.1.10.6"
-            ];
-          };
-        };
         avahi = {
           enable = true;
           reflector = true;
