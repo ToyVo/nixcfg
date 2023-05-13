@@ -45,10 +45,10 @@ nixpkgs.lib.nixosSystem {
               Address = "192.168.20.1/24";
               DNS = "1.1.1.1";
             };
-            routingPolicyRuleConfig = {
+            routingPolicyRules = [{
               From = "192.168.20.0/24";
               Table = "iot";
-            };
+            }];
           };
         };
         netdevs = {
