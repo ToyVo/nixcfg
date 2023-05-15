@@ -29,6 +29,7 @@
       rpi4b8a = import ./hosts/rpi4b8a.nix inputs;
       PineBook-Pro = import ./hosts/PineBook-Pro.nix inputs;
       router = import ./hosts/router.nix inputs;
+      ncase = import ./hosts/ncase.nix inputs;
     };
 
     homeConfigurations = {

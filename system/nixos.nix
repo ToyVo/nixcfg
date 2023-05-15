@@ -24,7 +24,7 @@
     initialHashedPassword =
       "$y$j9T$XLO0/IdPsMJEWoxCh/IZp0$kU2LlpXdnv17hErTs7.21tye1Qdf7cChjFSPa/QNQTC";
     description = "Collin Diekvoss";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "toyvo" "share" ];
     openssh.authorizedKeys.keyFiles = [ ../keys/ssh_yubikey.pub ];
     shell = pkgs.zsh;
   };
