@@ -27,6 +27,7 @@ in darwin.lib.darwinSystem {
           ../home/neovim
           ../home/git.nix
           ../home/gpg.nix
+          ../home/ssh.nix
           ../home/starship.nix
           ../home/zsh.nix
           ../home/alias-mac-apps.nix
