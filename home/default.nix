@@ -46,6 +46,11 @@ lib.mkMerge [
       _1password-gui
     ];
   })
+  (lib.mkIf (pkgs.system == "x86_64-linux") {
+    home.packages = with pkgs; [
+      keybase-gui
+    ];
+  })
   (lib.mkIf pkgs.stdenv.isDarwin {
     home.file.".hushlogin".text = "";
     home.sessionPath = [ "/opt/homebrew/bin" ];
