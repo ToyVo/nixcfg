@@ -34,146 +34,112 @@ nixpkgs.lib.nixosSystem {
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
       systemd.network = {
         enable = true;
-        networks = {
-          "20-wan" = {
-            matchConfig.Name = "enp2s0";
-            networkConfig.DHCP = "ipv4";
-            networkConfig.IPv6AcceptRA = true;
-            linkConfig.RequiredForOnline = "routable";
+
+        networks."10-wan0" = {
+          matchConfig.Name = "enp2s0";
+          networkConfig.DHCP = "ipv4";
+          dhcpV4Config = {
+            UseDNS = false;
+            UseDomains = false;
+            SendRelease = false;
           };
-          "20-lan" = {
-            matchConfig.Name = "enp3s0";
-            networkConfig.DHCPServer = "yes";
-            dhcpServerConfig = {
-              ServerAddress = "10.1.0.1/24";
-              DNS = ["1.1.1.1" "1.0.0.1"];
-              PoolSize = 100;
-              PoolOffset = 20;
-            };
-            dhcpServerStaticLeases = [
-              # Omada Controller
-              {
-                dhcpServerStaticLeaseConfig = {
-                  Address = "10.1.0.2";
-                  MACAddress = "10:27:f5:bd:04:97";
-                };
-              }
-            ];
-            vlan = [ "cdwifi" "cdiot" "cdguest" ];
-          };
-          "30-cdwifi" = {
-            matchConfig.Name = "cdwifi";
-            networkConfig.DHCPServer = "yes";
-            dhcpServerConfig = {
-              ServerAddress = "10.1.10.1/24";
-              DNS = ["1.1.1.1" "1.0.0.1"];
-              PoolSize = 100;
-              PoolOffset = 20;
-            };
-            dhcpServerStaticLeases = [
-              # Proxmox
-              {
-                dhcpServerStaticLeaseConfig = {
-                  Address = "10.1.10.3";
-                  MACAddress = "70:85:c2:8a:53:5b";
-                };
-              }
-              # TrueNAS VM (Proxmox)
-              {
-                dhcpServerStaticLeaseConfig = {
-                  Address = "10.1.10.4";
-                  MACAddress = "e2:8b:29:5e:56:ca";
-                };
-              }
-              # Canon Printer
-              {
-                dhcpServerStaticLeaseConfig = {
-                  Address = "10.1.10.4";
-                  MACAddress = "c4:ac:59:a6:63:33";
-                };
-              }
-              # Docker VM (Proxmox)
-              {
-                dhcpServerStaticLeaseConfig = {
-                  Address = "10.1.10.6";
-                  MACAddress = "7a:8d:bd:a3:66:ba";
-                };
-              }
-            ];
-          };
-          "30-cdiot" = {
-            matchConfig.Name = "cdiot";
-            networkConfig.DHCPServer = "yes";
-            dhcpServerConfig = {
-              ServerAddress = "10.1.20.1/24";
-              DNS = ["1.1.1.1" "1.0.0.1"];
-              PoolSize = 100;
-              PoolOffset = 20;
-            };
-          };
-          "30-cdguest" = {
-            matchConfig.Name = "cdguest";
-            networkConfig.DHCPServer = "yes";
-            dhcpServerConfig = {
-              ServerAddress = "10.1.30.1/24";
-              DNS = ["1.1.1.1" "1.0.0.1"];
-              PoolSize = 100;
-              PoolOffset = 20;
-            };
-          };
+          linkConfig.RequiredForOnline = "routable";
         };
-        netdevs = {
-          "10-cdwifi" = {
-            netdevConfig = {
-              Kind = "vlan";
-              Name = "cdwifi";
-            };
-            vlanConfig.Id = 10;
+
+        networks."20-lan" = {
+          matchConfig.Name = "enp3s0";
+          address = [ "10.1.0.1/24" ];
+          vlan = [ "cdiot" ];
+          networkConfig = {
+            DHCPServer = true;
+            IPMasquerade = "ipv4";
           };
-          "10-cdiot" = {
-            netdevConfig = {
-              Kind = "vlan";
-              Name = "cdiot";
-            };
-            vlanConfig.Id = 20;
+          dhcpServerConfig.DNS = ["1.1.1.1" "1.0.0.1"];
+          dhcpServerStaticLeases = [
+            # Omada Controller
+            {
+              dhcpServerStaticLeaseConfig = {
+                Address = "10.1.0.2";
+                MACAddress = "10:27:f5:bd:04:97";
+              };
+            }
+            # Canon Printer
+            {
+              dhcpServerStaticLeaseConfig = {
+                Address = "10.1.0.3";
+                MACAddress = "c4:ac:59:a6:63:33";
+              };
+            }
+            # NCase
+            {
+              dhcpServerStaticLeaseConfig = {
+                Address = "10.1.0.4";
+                MACAddress = "70:85:c2:8a:53:5b";
+              };
+            }
+          ];
+          linkConfig.RequiredForOnline = "no";
+        };
+
+        networks."20-opt0" = {
+          matchConfig.Name = "enp4s0";
+          address = [ "10.2.0.1/24" ];
+          networkConfig = {
+            DHCPServer = true;
+            IPMasquerade = "ipv4";
           };
-          "10-cdguest" = {
-            netdevConfig = {
-              Kind = "vlan";
-              Name = "cdguest";
-            };
-            vlanConfig.Id = 30;
+          dhcpServerConfig.DNS = ["1.1.1.1" "1.0.0.1"];
+          linkConfig.RequiredForOnline = "no";
+        };
+
+        networks."20-opt1" = {
+          matchConfig.Name = "enp5s0";
+          address = [ "10.3.0.1/24" ];
+          networkConfig = {
+            DHCPServer = true;
+            IPMasquerade = "ipv4";
           };
+          dhcpServerConfig.DNS = ["1.1.1.1" "1.0.0.1"];
+          linkConfig.RequiredForOnline = "no";
+        };
+
+        netdevs."25-cdiot" = {
+          netdevConfig = {
+            Name = "cdiot";
+            Kind = "vlan";
+          };
+          vlanConfig.Id = 20;
+        };
+        networks."25-cdiot" = {
+          matchConfig.Name = "cdiot";
+          address = [ "10.1.20.1/24" ];
+          networkConfig = {
+            DHCPServer = true;
+            IPMasquerade = "ipv4";
+          };
+          dhcpServerConfig.DNS = ["1.1.1.1" "1.0.0.1"];
+          linkConfig.RequiredForOnline = "no";
         };
       };
       networking = {
         hostName = "router";
+        domain = "diekvoss.net";
+        useNetworkd = true;
         useDHCP = false;
         nameservers = [ "1.1.1.1" "1.0.0.1" ];
         nat.enable = true;
         nat.externalInterface = "enp2s0";
-        nat.internalInterfaces = [ "enp3s0" "cdwifi" "cdiot" "cdguest" ];
+        nat.internalInterfaces = [ "enp3s0" "cdiot" ];
         firewall = {
           enable = true;
-          trustedInterfaces = [ "enp3s0" "cdwifi" "cdiot" ];
           interfaces.enp3s0.allowedTCPPorts = [ 53 22 ];
-          interfaces.enp3s0.allowedUDPPorts = [ 53 67 ];
-          interfaces.cdwifi.allowedTCPPorts = [ 53 22 ];
-          interfaces.cdwifi.allowedUDPPorts = [ 53 67 ];
+          interfaces.enp3s0.allowedUDPPorts = [ 53 67 68 ];
           interfaces.cdiot.allowedTCPPorts = [ 53 ];
-          interfaces.cdiot.allowedUDPPorts = [ 53 67 ];
-          interfaces.cdguest.allowedTCPPorts = [ 53 ];
-          interfaces.cdguest.allowedUDPPorts = [ 53 67 ];
+          interfaces.cdiot.allowedUDPPorts = [ 53 67 68 ];
         };
       };
-      services = {
-        openssh.openFirewall = false;
-        avahi = {
-          enable = true;
-          reflector = true;
-          allowInterfaces = [ "cdwifi" "cdiot" ];
-        };
-      };
+      services.openssh.openFirewall = false;
+      services.resolved.enable = true;
     })
     nixpkgs.nixosModules.notDetected
     home-manager.nixosModules.home-manager
