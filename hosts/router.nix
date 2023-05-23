@@ -140,6 +140,9 @@ nixpkgs.lib.nixosSystem {
       };
       services.openssh.openFirewall = false;
       services.resolved.enable = true;
+      services.resolved.extraConfig = ''
+        DNSStubListenerExtra=0.0.0.0
+      '';
       services.adguardhome = {
         enable = true;
         settings.dns.bind_hosts = ["127.0.1.53"];
