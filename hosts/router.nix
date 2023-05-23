@@ -126,7 +126,7 @@ nixpkgs.lib.nixosSystem {
         domain = "diekvoss.net";
         useNetworkd = true;
         useDHCP = false;
-        nameservers = [ "9.9.9.9" ];
+        nameservers = [ "127.0.1.53" ];
         nat.enable = true;
         nat.externalInterface = "enp2s0";
         nat.internalInterfaces = [ "enp3s0" "cdiot" ];
@@ -141,7 +141,7 @@ nixpkgs.lib.nixosSystem {
       services.openssh.openFirewall = false;
       services.resolved.enable = true;
       services.resolved.extraConfig = ''
-        DNSStubListenerExtra=0.0.0.0
+        DNSStubListenerExtra=10.1.0.1
       '';
       services.adguardhome = {
         enable = true;
