@@ -142,7 +142,7 @@ nixpkgs.lib.nixosSystem {
       services.resolved.enable = true;
       services.adguardhome = {
         enable = true;
-        settings.dns.bind_hosts = "127.0.1.53";
+        settings.dns.bind_hosts = ["127.0.1.53"];
       };
     })
     nixpkgs.nixosModules.notDetected
