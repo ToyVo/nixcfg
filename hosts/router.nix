@@ -54,7 +54,7 @@ nixpkgs.lib.nixosSystem {
             DHCPServer = true;
             IPMasquerade = "ipv4";
           };
-          dhcpServerConfig.DNS = ["10.1.0.1"];
+          dhcpServerConfig.DNS = ["9.9.9.9"];
           dhcpServerStaticLeases = [
             # Omada Controller
             {
@@ -88,7 +88,7 @@ nixpkgs.lib.nixosSystem {
             DHCPServer = true;
             IPMasquerade = "ipv4";
           };
-          dhcpServerConfig.DNS = ["10.1.0.1"];
+          dhcpServerConfig.DNS = ["9.9.9.9"];
           linkConfig.RequiredForOnline = "no";
         };
 
@@ -99,7 +99,7 @@ nixpkgs.lib.nixosSystem {
             DHCPServer = true;
             IPMasquerade = "ipv4";
           };
-          dhcpServerConfig.DNS = ["10.1.0.1"];
+          dhcpServerConfig.DNS = ["9.9.9.9"];
           linkConfig.RequiredForOnline = "no";
         };
 
@@ -117,7 +117,7 @@ nixpkgs.lib.nixosSystem {
             DHCPServer = true;
             IPMasquerade = "ipv4";
           };
-          dhcpServerConfig.DNS = ["10.1.0.1"];
+          dhcpServerConfig.DNS = ["9.9.9.9"];
           linkConfig.RequiredForOnline = "no";
         };
       };
