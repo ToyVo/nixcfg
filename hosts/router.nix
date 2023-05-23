@@ -54,7 +54,7 @@ nixpkgs.lib.nixosSystem {
             DHCPServer = true;
             IPMasquerade = "ipv4";
           };
-          dhcpServerConfig.DNS = ["1.1.1.1" "1.0.0.1"];
+          dhcpServerConfig.DNS = ["10.1.0.1"];
           dhcpServerStaticLeases = [
             # Omada Controller
             {
@@ -88,7 +88,7 @@ nixpkgs.lib.nixosSystem {
             DHCPServer = true;
             IPMasquerade = "ipv4";
           };
-          dhcpServerConfig.DNS = ["1.1.1.1" "1.0.0.1"];
+          dhcpServerConfig.DNS = ["10.1.0.1"];
           linkConfig.RequiredForOnline = "no";
         };
 
@@ -99,7 +99,7 @@ nixpkgs.lib.nixosSystem {
             DHCPServer = true;
             IPMasquerade = "ipv4";
           };
-          dhcpServerConfig.DNS = ["1.1.1.1" "1.0.0.1"];
+          dhcpServerConfig.DNS = ["10.1.0.1"];
           linkConfig.RequiredForOnline = "no";
         };
 
@@ -117,7 +117,7 @@ nixpkgs.lib.nixosSystem {
             DHCPServer = true;
             IPMasquerade = "ipv4";
           };
-          dhcpServerConfig.DNS = ["1.1.1.1" "1.0.0.1"];
+          dhcpServerConfig.DNS = ["10.1.0.1"];
           linkConfig.RequiredForOnline = "no";
         };
       };
@@ -126,7 +126,7 @@ nixpkgs.lib.nixosSystem {
         domain = "diekvoss.net";
         useNetworkd = true;
         useDHCP = false;
-        nameservers = [ "1.1.1.1" "1.0.0.1" ];
+        nameservers = [ "9.9.9.9" ];
         nat.enable = true;
         nat.externalInterface = "enp2s0";
         nat.internalInterfaces = [ "enp3s0" "cdiot" ];
@@ -139,7 +139,11 @@ nixpkgs.lib.nixosSystem {
         };
       };
       services.openssh.openFirewall = false;
-      services.resolved.enable = true;
+      services.resolved.enable = false;
+      services.adguardhome = {
+        enable = true;
+        # settings.dns.bind_hosts = "127.0.1.53";
+      };
     })
     nixpkgs.nixosModules.notDetected
     home-manager.nixosModules.home-manager
