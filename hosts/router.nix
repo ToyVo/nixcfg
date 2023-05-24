@@ -132,7 +132,7 @@ nixpkgs.lib.nixosSystem {
         nat.internalInterfaces = [ "enp3s0" "cdiot" ];
         firewall = {
           enable = true;
-          interfaces.enp3s0.allowedTCPPorts = [ 53 22 ];
+          interfaces.enp3s0.allowedTCPPorts = [ 53 22 3000 ];
           interfaces.enp3s0.allowedUDPPorts = [ 53 67 68 ];
           interfaces.cdiot.allowedTCPPorts = [ 53 ];
           interfaces.cdiot.allowedUDPPorts = [ 53 67 68 ];
