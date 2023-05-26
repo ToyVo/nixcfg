@@ -1,6 +1,5 @@
 { pkgs, ... }: {
   imports = [ ./common.nix ];
-  environment.systemPackages = with pkgs; [ coreutils ];
   services.nix-daemon.enable = true;
   security.pam.enableSudoTouchIdAuth = true;
   fonts.fontDir.enable = true;
