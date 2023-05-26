@@ -29,6 +29,10 @@
     # must be installed at /Applications, nix-darwin installs it at /Applications/nix apps
     "1password"
   ];
+  homebrew.brews = [
+    # required for neovide
+    "libuv"
+  ];
   homebrew.masApps = {
     "Yubico Authenticator" = 1497506650;
     "Wireguard" = 1451685025;
