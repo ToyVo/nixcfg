@@ -6,13 +6,6 @@ in darwin.lib.darwinSystem {
   inherit system;
   modules = [
     ../system/darwin.nix
-    ({
-      homebrew.casks = [
-        # nix package not available on darwin
-        "docker"
-        "mongodb-compass"
-      ];
-    })
     home-manager.darwinModules.home-manager
     {
       home-manager.useGlobalPkgs = true;
@@ -38,6 +31,20 @@ in darwin.lib.darwinSystem {
         description = "Collin Diekvoss";
         home = "/Users/${user}";
       };
+      homebrew.brews = [
+        "mongosh"
+        "mongodb-community@4.4"
+        "mongodb-community-shell@4.4"
+        "mongodb-database-tools"
+      ];
+      homebrew.casks = [
+        # nix package not available on darwin
+        "docker"
+        "mongodb-compass"
+      ];
+      homebrew.taps = [
+        "mongodb/brew"
+      ];
     }
   ];
 }
