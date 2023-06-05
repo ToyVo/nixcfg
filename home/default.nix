@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 lib.mkMerge [
   {
-    home.stateVersion = "22.11";
+    home.stateVersion = "23.05";
     home.sessionVariables = {
       GPG_TTY = "$(tty)";
       SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
@@ -13,7 +13,7 @@ lib.mkMerge [
       tree = "exa --tree";
       gpg-scan-card = ''gpg-connect-agent "scd serialno" "learn --force" /bye'';
     };
-    home.packages = with pkgs; [ git-crypt ripgrep fd rustup gimp ];
+    home.packages = with pkgs; [ git-crypt ripgrep fd rustup gimp element-desktop ];
     xdg.configFile."ideavim/ideavimrc".source = ./ideavimrc;
     xdg.configFile."nix/nix.conf".text = ''
       experimental-features = nix-command flakes
