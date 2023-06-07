@@ -12,6 +12,8 @@
     hyprland.url = "github:hyprwm/hyprland";
     mkAlias.url = "github:reckenrode/mkAlias";
     mkAlias.inputs.nixpkgs.follows = "nixpkgs";
+    fenix.url = "github:nix-community/fenix";
+    fenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs: {

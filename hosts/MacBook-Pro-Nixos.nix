@@ -4,6 +4,7 @@ let
   user = "toyvo";
 in nixpkgs.lib.nixosSystem {
   inherit system;
+  specialArgs = { inherit inputs; };
   modules = [
     ../system/gnome.nix
     ../system/filesystem/btrfs.nix

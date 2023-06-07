@@ -4,6 +4,7 @@ let
   user = "toyvo";
 in darwin.lib.darwinSystem {
   inherit system;
+  specialArgs = { inherit inputs; };
   modules = [
     ../system/darwin.nix
     ({ homebrew.casks = [ "prusaslicer" ]; })

@@ -4,6 +4,7 @@ let
   user = "CollinDie";
 in darwin.lib.darwinSystem {
   inherit system;
+  specialArgs = { inherit inputs; };
   modules = [
     ../system/darwin.nix
     home-manager.darwinModules.home-manager

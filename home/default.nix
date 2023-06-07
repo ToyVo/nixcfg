@@ -13,7 +13,7 @@ lib.mkMerge [
       tree = "exa --tree";
       gpg-scan-card = ''gpg-connect-agent "scd serialno" "learn --force" /bye'';
     };
-    home.packages = with pkgs; [ git-crypt ripgrep fd rustup gimp element-desktop ];
+    home.packages = with pkgs; [ git-crypt gimp element-desktop ];
     xdg.configFile."ideavim/ideavimrc".source = ./ideavimrc;
     xdg.configFile."nix/nix.conf".text = ''
       experimental-features = nix-command flakes

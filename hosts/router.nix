@@ -5,6 +5,7 @@ let
 in
 nixpkgs.lib.nixosSystem {
   inherit system;
+  specialArgs = { inherit inputs; };
   modules = [
     ../system/filesystem/btrfs.nix
     ../system/filesystem/efi.nix
