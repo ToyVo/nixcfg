@@ -1,12 +1,13 @@
-{ nixpkgs, home-manager, ... }@inputs:
+inputs:
 let
   system = "x86_64-linux";
   user = "deck";
-  pkgs = nixpkgs.legacyPackages.${system};
-in home-manager.lib.homeManagerConfiguration {
+  pkgs = inputs.nixpkgs.legacyPackages.${system};
+in inputs.home-manager.lib.homeManagerConfiguration {
   inherit pkgs;
   extraSpecialArgs = { inherit inputs system; };
   modules = [
+    inputs.nixvim.homeManagerModules.nixvim
     ({
       home.username = user;
       home.homeDirectory = "/home/${user}";

@@ -1,9 +1,9 @@
-{ nixpkgs, home-manager, ... }@inputs:
+inputs:
 let
   system = "x86_64-linux";
   user = "toyvo";
 in
-nixpkgs.lib.nixosSystem {
+inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
@@ -149,8 +149,9 @@ nixpkgs.lib.nixosSystem {
         settings.dns.bind_hosts = ["127.0.1.53"];
       };
     })
-    nixpkgs.nixosModules.notDetected
-    home-manager.nixosModules.home-manager
+    inputs.nixpkgs.nixosModules.notDetected
+    inputs.nixvim.nixosModules.nixvim
+    inputs.home-manager.nixosModules.home-manager
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;

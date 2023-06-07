@@ -1,8 +1,8 @@
-{ nixpkgs, home-manager, ... }@inputs:
+inputs:
 let
   system = "x86_64-linux";
   user = "toyvo";
-in nixpkgs.lib.nixosSystem {
+in inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
@@ -25,8 +25,9 @@ in nixpkgs.lib.nixosSystem {
       powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
       hardware.cpu.intel.updateMicrocode = true;
     })
-    nixpkgs.nixosModules.notDetected
-    home-manager.nixosModules.home-manager
+    inputs.nixpkgs.nixosModules.notDetected
+    inputs.home-manager.nixosModules.home-manager
+    inputs.nixvim.nixosModules.nixvim
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;

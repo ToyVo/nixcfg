@@ -1,8 +1,8 @@
-{ nixpkgs, nixos-hardware, home-manager, ... }@inputs:
+inputs:
 let
   system = "aarch64-linux";
   user = "toyvo";
-in nixpkgs.lib.nixosSystem {
+in inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
@@ -15,8 +15,9 @@ in nixpkgs.lib.nixosSystem {
       networking.useDHCP = lib.mkDefault true;
       nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
     })
-    nixos-hardware.nixosModules.pine64-pinebook-pro
-    home-manager.nixosModules.home-manager
+    inputs.nixos-hardware.nixosModules.pine64-pinebook-pro
+    inputs.home-manager.nixosModules.home-manager
+    inputs.nixvim.nixosModules.nixvim
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;

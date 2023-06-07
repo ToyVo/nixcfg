@@ -1,13 +1,14 @@
-{ home-manager, darwin, ... }@inputs:
+inputs:
 let
   system = "aarch64-darwin";
   user = "CollinDie";
-in darwin.lib.darwinSystem {
+in inputs.darwin.lib.darwinSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
     ../system/darwin.nix
-    home-manager.darwinModules.home-manager
+    inputs.home-manager.darwinModules.home-manager
+    inputs.nixvim.nixDarwinModules.nixvim
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;

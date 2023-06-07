@@ -1,8 +1,8 @@
-{ nixpkgs, home-manager, apple-silicon-support, ... }@inputs:
+inputs:
 let
   system = "aarch64-linux";
   user = "toyvo";
-in nixpkgs.lib.nixosSystem {
+in inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
@@ -26,9 +26,10 @@ in nixpkgs.lib.nixosSystem {
       nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
       powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
     })
-    apple-silicon-support.nixosModules.apple-silicon-support
-    nixpkgs.nixosModules.notDetected
-    home-manager.nixosModules.home-manager
+    inputs.apple-silicon-support.nixosModules.apple-silicon-support
+    inputs.nixpkgs.nixosModules.notDetected
+    inputs.home-manager.nixosModules.home-manager
+    inputs.nixvim.nixosModules.nixvim
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
