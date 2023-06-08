@@ -19,7 +19,6 @@ in inputs.darwin.lib.darwinSystem {
         home.homeDirectory = "/Users/${user}";
         imports = [
           ../home
-          ../home/neovim
           ../home/git.nix
           ../home/gpg.nix
           ../home/ssh.nix

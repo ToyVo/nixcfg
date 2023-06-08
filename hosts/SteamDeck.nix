@@ -13,7 +13,6 @@ in inputs.home-manager.lib.homeManagerConfiguration {
       home.homeDirectory = "/home/${user}";
     })
     ../home
-    ../home/neovim
     ../home/git.nix
     ../home/gpg.nix
     ../home/ssh.nix

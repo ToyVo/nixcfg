@@ -50,7 +50,6 @@ in inputs.nixpkgs.lib.nixosSystem {
         imports = [
           inputs.hyprland.homeManagerModules.default
           ../home
-          ../home/neovim
           ../home/git.nix
           ../home/gpg.nix
           ../home/ssh.nix

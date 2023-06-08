@@ -103,7 +103,6 @@ inputs.nixpkgs.lib.nixosSystem {
         home.homeDirectory = "/home/${user}";
         imports = [
           ../home
-          ../home/neovim
           ../home/git.nix
           ../home/gpg.nix
           ../home/ssh.nix

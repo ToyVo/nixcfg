@@ -19,7 +19,6 @@ in inputs.darwin.lib.darwinSystem {
         imports = [
           ../home
           ../home/emu.nix
-          ../home/neovim
           ../home/git.nix
           ../home/gpg.nix
           ../home/ssh.nix
