@@ -1,4 +1,5 @@
 { pkgs, config, inputs, ... }: {
+  imports = [ ./neovim.nix ];
   fonts.fonts = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) font-awesome ];
   programs.zsh.enable = true;
   nixpkgs.config.allowUnfree = true;
