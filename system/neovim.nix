@@ -199,6 +199,7 @@
 
     plugins.nvim-cmp = {
       enable = true;
+      preselect = "None";
       snippet.expand = "luasnip";
       sources = [
         { name = "nvim_lsp"; }
@@ -270,6 +271,7 @@
     plugins.copilot.enable = true;
     plugins.treesitter-context.enable = true;
     plugins.ts-context-commentstring.enable = true;
+    plugins.barbar.enable = true;
 
     extraPlugins = with pkgs.vimPlugins; [
       lualine-lsp-progress
