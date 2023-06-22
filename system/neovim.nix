@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   programs.nixvim = {
     enable = true;
     luaLoader.enable = true;
@@ -14,14 +14,14 @@
       "<C-j>" = "<C-w>j";
       "<C-k>" = "<C-w>k";
       "<C-l>" = "<C-w>l";
-      "<leader>pf" = {action = "<cmd>Telescope find_files<cr>"; desc = "Project Files"; };
-      "<leader>ps" = {action = "<cmd>Telescope live_grep<cr>"; desc = "Project Search"; };
-      "<leader>vh" = {action = "<cmd>Telescope help_tags<cr>"; desc = "Help Tags"; };
-      "<C-p>" = {action = "<cmd>Telescope git_files<cr>"; desc = "Git Files"; };
-      "<leader>pi" = {action = "<cmd>TroubleToggle quickfix<cr>"; desc = "Project Issues"; };
-      "<leader>pv" = {action = "<cmd>NvimTreeToggle<cr>"; desc = "Project View"; };
-      "<leader>u" = {action = "<cmd>UndoTreeToggle<cr>"; desc = "UndoTree"; };
-      "<leader>gs" = {action = "<cmd>Git<cr>"; desc = "Git"; };
+      "<leader>pf" = { action = "<cmd>Telescope find_files<cr>"; desc = "Project Files"; };
+      "<leader>ps" = { action = "<cmd>Telescope live_grep<cr>"; desc = "Project Search"; };
+      "<leader>vh" = { action = "<cmd>Telescope help_tags<cr>"; desc = "Help Tags"; };
+      "<C-p>" = { action = "<cmd>Telescope git_files<cr>"; desc = "Git Files"; };
+      "<leader>pi" = { action = "<cmd>TroubleToggle quickfix<cr>"; desc = "Project Issues"; };
+      "<leader>pv" = { action = "<cmd>NvimTreeToggle<cr>"; desc = "Project View"; };
+      "<leader>u" = { action = "<cmd>UndoTreeToggle<cr>"; desc = "UndoTree"; };
+      "<leader>gs" = { action = "<cmd>Git<cr>"; desc = "Git"; };
       # Keep centered
       "J" = "mzJ`z";
       "<C-d>" = "<C-d>zz";
@@ -31,10 +31,10 @@
       # Convenience
       "Q" = "<nop>";
       # Diagnostics
-      "<leader>e" = {action = "vim.diagnostic.open_float"; lua = true; };
-      "[d" = {action = "vim.diagnostic.goto_prev"; lua = true; };
-      "]d" = {action = "vim.diagnostic.goto_next"; lua = true; };
-      "<leader>q" = {action = "vim.diagnostic.setloclist"; lua = true; };
+      "<leader>e" = { action = "vim.diagnostic.open_float"; lua = true; };
+      "[d" = { action = "vim.diagnostic.goto_prev"; lua = true; };
+      "]d" = { action = "vim.diagnostic.goto_next"; lua = true; };
+      "<leader>q" = { action = "vim.diagnostic.setloclist"; lua = true; };
     };
 
     maps.insert."<C-c>" = "<Esc>";
@@ -48,10 +48,10 @@
     };
 
     maps.terminal = {
-        "<C-h>" = "<C-\\><C-n><C-w>h";
-        "<C-j>" = "<C-\\><C-n><C-w>j";
-        "<C-k>" = "<C-\\><C-n><C-w>k";
-        "<C-l>" = "<C-\\><C-n><C-w>l";
+      "<C-h>" = "<C-\\><C-n><C-w>h";
+      "<C-j>" = "<C-\\><C-n><C-w>j";
+      "<C-k>" = "<C-\\><C-n><C-w>k";
+      "<C-l>" = "<C-\\><C-n><C-w>l";
     };
 
     maps.normalVisualOp."<space>" = {
@@ -103,32 +103,37 @@
     };
 
     globals = {
-        mapleader = " ";
-        maplocalleader = " ";
-        loaded_netrw = 1;
-        loaded_netrwPlugin = 1;
+      mapleader = " ";
+      maplocalleader = " ";
+      loaded_netrw = 1;
+      loaded_netrwPlugin = 1;
     };
 
-    autoCmd = [ 
-      { 
-        event = [ "FileType" ]; 
-        pattern = [ "gitcommit" "markdown" ]; 
-        callback = { __raw = ''function() 
+    autoCmd = [
+      {
+        event = [ "FileType" ];
+        pattern = [ "gitcommit" "markdown" ];
+        callback = {
+          __raw = ''function() 
           vim.opt_local.wrap = true
           vim.opt_local.spell = true
-        end''; }; 
+        end'';
+        };
       }
       {
         event = [ "TextYankPost" ];
         pattern = [ "*" ];
-        callback = { __raw = ''function() 
+        callback = {
+          __raw = ''function() 
             vim.highlight.on_yank() 
-        end''; }; 
+        end'';
+        };
         group = "YankHighlight";
       }
       {
         event = [ "LspAttach" ];
-        callback = { __raw = ''function(ev) 
+        callback = {
+          __raw = ''function(ev) 
           vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
           vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = ev.buf })
           vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = ev.buf })
@@ -159,7 +164,8 @@
               vim.lsp.buf.code_action()
               end, { buffer = ev.buf })
           end
-        end''; }; 
+        end'';
+        };
         group = "UserLspConfig";
       }
     ];
@@ -203,7 +209,7 @@
       snippet.expand = "luasnip";
       sources = [
         { name = "nvim_lsp"; }
-        { name = "luasnip"; } 
+        { name = "luasnip"; }
         { name = "path"; }
         { name = "buffer"; }
         { name = "copilot"; }
@@ -259,6 +265,8 @@
       enable = true;
       sources.formatting.stylua.enable = true;
       sources.formatting.prettier.enable = true;
+      sources.formatting.nixpkgs_fmt.enable = true;
+      sources.formatting.taplo.enable = true;
       #sources.diagnostics.eslint.enable = true;
       #sources.completion.spell.enable = true;
     };
@@ -454,6 +462,6 @@
           },
         })
       end
-  '';
+    '';
   };
 }
