@@ -29,6 +29,7 @@
       ba = "branch -a";
       c = "commit -m";
       ca = "commit -am";
+      cam = "commit --amend --date=now";
       co = "checkout";
       cob = "checkout -b";
       sw = "switch";

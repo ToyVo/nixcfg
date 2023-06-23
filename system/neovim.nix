@@ -271,12 +271,17 @@
       #sources.completion.spell.enable = true;
     };
 
+    plugins.copilot-lua = {
+      enable = true;
+      suggestion.enabled = false;
+      panel.enabled = false;
+    };
+
     plugins.rust-tools.enable = true;
     plugins.gitsigns.enable = true;
     plugins.comment-nvim.enable = true;
     plugins.nvim-tree.enable = true;
-    plugins.cmp-copilot.enable = true;
-    plugins.copilot.enable = true;
+    plugins.copilot-cmp.enable = true;
     plugins.treesitter-context.enable = true;
     plugins.ts-context-commentstring.enable = true;
     plugins.barbar.enable = true;
@@ -310,8 +315,6 @@
       telescope-ui-select-nvim
       telescope-dap-nvim
       everforest
-      #copilot-cmp
-      #copilot-lua
     ];
 
     extraConfigLua = ''
