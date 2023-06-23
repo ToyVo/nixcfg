@@ -31,10 +31,7 @@
       PineBook-Pro = import ./hosts/PineBook-Pro.nix inputs;
       router = import ./hosts/router.nix inputs;
       ncase = import ./hosts/ncase.nix inputs;
-    };
-
-    homeConfigurations = {
-      "deck@steamdeck" = import ./hosts/SteamDeck.nix inputs;
+      steamdeck = import ./hosts/SteamDeck.nix inputs;
     };
   };
 }

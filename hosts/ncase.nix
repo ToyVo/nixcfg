@@ -12,7 +12,7 @@ inputs.nixpkgs.lib.nixosSystem {
     ../system/nixos.nix
     ({ lib, ... }: {
       boot = {
-  	initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+        initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
         initrd.kernelModules = [ ];
         kernelModules = [ "kvm-amd" ];
         extraModulePackages = [ ];
@@ -30,8 +30,8 @@ inputs.nixpkgs.lib.nixosSystem {
       networking.hostName = "ncase";
 
       services.samba-wsdd.enable = true;
-      networking.firewall.allowedTCPPorts = [5357];
-      networking.firewall.allowedUDPPorts = [3702];
+      networking.firewall.allowedTCPPorts = [ 5357 ];
+      networking.firewall.allowedUDPPorts = [ 3702 ];
 
       users.users.chloe = {
         isNormalUser = true;
