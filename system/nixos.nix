@@ -28,12 +28,22 @@
     openssh.authorizedKeys.keyFiles = [ ../keys/ssh_yubikey.pub ];
     shell = pkgs.zsh;
   };
-  environment.systemPackages = with pkgs; [ yubikey-personalization ];
+  environment.systemPackages = with pkgs; [ 
+    yubikey-manager
+    yubikey-manager-qt
+    yubikey-personalization
+    yubikey-personalization-gui
+    yubico-piv-tool
+    yubioath-flutter
+  ];
+  programs.ssh.startAgent = false;
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
   services.openssh.enable = true;
+  services.pcscd.enable = true;
+  services.udev.packages = with pkgs; [ yubikey-personalization ];
   system = {
     stateVersion = "23.05";
     autoUpgrade.enable = true;

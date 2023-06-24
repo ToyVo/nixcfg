@@ -7,6 +7,9 @@ lib.mkMerge [
       SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
       MANPAGER = "sh -c 'col -bx | bat -l man -p'";
     };
+    programs.zsh.profileExtra = ''
+      export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+    '';
     home.sessionPath = [ "$HOME/.local/bin" "$HOME/.cargo/bin" ];
     home.shellAliases = {
       cat = "bat -pp";
