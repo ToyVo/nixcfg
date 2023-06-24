@@ -11,7 +11,7 @@ lib.mkMerge [
       export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
     '';
     programs.zsh.initExtra = ''
-      if [[ -n "$SSH_TTY" && -n "$SSH_CONNECTION" && -n "$SSH_CLIENT" ]]; then
+      if [ -z $SSH_TTY ] && [ -z $SSH_CLIENT ] && [ -z $SSH_CONNECTION ]; then
           eval "$(zellij setup --generate-auto-start zsh)"
       fi
     '';
