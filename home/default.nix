@@ -10,6 +10,11 @@ lib.mkMerge [
     programs.zsh.profileExtra = ''
       export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
     '';
+    programs.zsh.initExtra = ''
+      if [[ -n "$SSH_TTY" && -n "$SSH_CONNECTION" && -n "$SSH_CLIENT" ]]; then
+          eval "$(zellij setup --generate-auto-start zsh)"
+      fi
+    '';
     home.sessionPath = [ "$HOME/.local/bin" "$HOME/.cargo/bin" ];
     home.shellAliases = {
       cat = "bat -pp";
@@ -43,7 +48,6 @@ lib.mkMerge [
     programs.exa.enable = true;
     programs.exa.enableAliases = true;
     programs.zellij.enable = true;
-    programs.zellij.enableZshIntegration = true;
     programs.zellij.settings = {
       themes = {
         everforest-dark = {
