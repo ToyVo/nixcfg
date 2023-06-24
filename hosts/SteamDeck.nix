@@ -24,6 +24,11 @@ inputs.nixpkgs.lib.nixosSystem {
         loader.efi.canTouchEfiVariables = true;
         loader.efi.efiSysMountPoint = "/boot/efi";
       };
+      fileSystems."/mnt/POOL" = {
+        device = "/dev/disk/by-label/POOL";
+        fsType = "btrfs";
+        options = [ "defaults" "nofail" ];
+      };
       swapDevices = [ ];
       hardware.cpu.amd.updateMicrocode = true;
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
