@@ -198,6 +198,27 @@
         "type": "github"
       }
     },
+    "jovian": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1686001303,
+        "narHash": "sha256-Rz9GOj3UFP1TxDzM2jZI5mH8mWnEJhIQxt1g10kz4Ds=",
+        "owner": "m1cr0man",
+        "repo": "Jovian-NixOS",
+        "rev": "ad01ce54a0c4019f6752e20b2e2109142367a14b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "m1cr0man",
+        "ref": "flakes-with-some-prs",
+        "repo": "Jovian-NixOS",
+        "type": "github"
+      }
+    },
     "mkAlias": {
       "inputs": {
         "nixpkgs": [
@@ -392,6 +413,7 @@
         "darwin": "darwin",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
+        "jovian": "jovian",
         "mkAlias": "mkAlias",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",

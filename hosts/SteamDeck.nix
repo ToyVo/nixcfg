@@ -14,7 +14,7 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.nixvim.nixosModules.nixvim
     inputs.home-manager.nixosModules.home-manager
     inputs.jovian.nixosModules.jovian
-    ({ lib, ... }: {
+    ({ lib, pkgs, ... }: {
       boot = {
         initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
         initrd.kernelModules = [ ];
@@ -35,6 +35,10 @@ inputs.nixpkgs.lib.nixosSystem {
         steam.user = user;
         steam.desktopSession = "gnome";
       };
+      environment.systemPackages = [
+        pkgs.steam
+      ];
+      services.xserver.displayManager.gdm.enable = lib.mkForce false;
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };

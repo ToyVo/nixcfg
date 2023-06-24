@@ -1,4 +1,4 @@
-{
+{ pkgs, ... }: {
   imports = [ ./gui.nix ];
   services.xserver = {
     enable = true;
@@ -7,4 +7,5 @@
     libinput.enable = true;
   };
   programs.gnupg.agent.pinentryFlavor = "gnome3";
+  environment.systemPackages = [ pkgs.gnome.gnome-tweaks ];
 }
