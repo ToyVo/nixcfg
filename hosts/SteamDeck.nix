@@ -10,6 +10,10 @@ inputs.nixpkgs.lib.nixosSystem {
     ../system/filesystem/btrfs.nix
     ../system/filesystem/efi.nix
     ../system/gnome.nix
+    inputs.nixpkgs.nixosModules.notDetected
+    inputs.nixvim.nixosModules.nixvim
+    inputs.home-manager.nixosModules.home-manager
+    inputs.jovian.nixosModules.jovian
     ({ lib, ... }: {
       boot = {
         initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
@@ -24,11 +28,13 @@ inputs.nixpkgs.lib.nixosSystem {
       hardware.cpu.amd.updateMicrocode = true;
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
       networking.hostName = "steamdeck";
-    })
-    inputs.nixpkgs.nixosModules.notDetected
-    inputs.nixvim.nixosModules.nixvim
-    inputs.home-manager.nixosModules.home-manager
-    {
+      jovian = {
+        devices.steamdeck.enable = true;
+        steam.enable = true;
+        steam.autoStart = true;
+        steam.user = user;
+        steam.desktopSession = "gnome";
+      };
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
@@ -44,6 +50,6 @@ inputs.nixpkgs.lib.nixosSystem {
           ../home/zsh.nix
         ];
       };
-    }
+    })
   ];
 }

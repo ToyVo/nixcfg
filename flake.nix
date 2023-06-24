@@ -13,6 +13,8 @@
     mkAlias.url = "github:reckenrode/mkAlias";
     mkAlias.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.url = "github:pta2002/nixvim";
+    jovian.url = "github:m1cr0man/Jovian-NixOS/flakes-with-some-prs";
+    jovian.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs: {

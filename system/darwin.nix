@@ -8,6 +8,9 @@
     keyboard.enableKeyMapping = true;
     keyboard.remapCapsLockToControl = true;
   };
+  environment.systemPackages = with pkgs; [
+    openssh
+  ];
   homebrew = {
     enable = true;
     onActivation = {
