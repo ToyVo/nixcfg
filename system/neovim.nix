@@ -4,6 +4,7 @@
     luaLoader.enable = true;
     viAlias = true;
     vimAlias = true;
+    wrapRc = true;
 
     maps.normal = {
       # Shift HL to change buffers
