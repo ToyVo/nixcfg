@@ -25,9 +25,6 @@ lib.mkMerge [
       git-crypt
       gimp
       element-desktop
-      trunk
-      rustup
-      rustup-toolchain-install-master
     ];
     xdg.configFile."ideavim/ideavimrc".source = ./ideavimrc;
     xdg.configFile."nix/nix.conf".text = ''
