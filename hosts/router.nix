@@ -55,7 +55,7 @@ inputs.nixpkgs.lib.nixosSystem {
           vlan = [ "cdiot" ];
           networkConfig = {
             DHCPServer = true;
-            IPMasquerade = "ipv4";
+            IPMasquerade = "both";
             IPv6SendRA = true;
             DHCPPrefixDelegation = true;
           };
@@ -86,28 +86,6 @@ inputs.nixpkgs.lib.nixosSystem {
           linkConfig.RequiredForOnline = "no";
         };
 
-        networks."20-opt0" = {
-          matchConfig.Name = "enp4s0";
-          address = [ "10.2.0.1/24" ];
-          networkConfig = {
-            DHCPServer = true;
-            IPMasquerade = "ipv4";
-          };
-          dhcpServerConfig.DNS = ["10.1.0.1"];
-          linkConfig.RequiredForOnline = "no";
-        };
-
-        networks."20-opt1" = {
-          matchConfig.Name = "enp5s0";
-          address = [ "10.3.0.1/24" ];
-          networkConfig = {
-            DHCPServer = true;
-            IPMasquerade = "ipv4";
-          };
-          dhcpServerConfig.DNS = ["10.1.0.1"];
-          linkConfig.RequiredForOnline = "no";
-        };
-
         netdevs."25-cdiot" = {
           netdevConfig = {
             Name = "cdiot";
@@ -120,7 +98,7 @@ inputs.nixpkgs.lib.nixosSystem {
           address = [ "10.1.20.1/24" ];
           networkConfig = {
             DHCPServer = true;
-            IPMasquerade = "ipv4";
+            IPMasquerade = "both";
           };
           dhcpServerConfig.DNS = ["10.1.0.1"];
           linkConfig.RequiredForOnline = "no";
