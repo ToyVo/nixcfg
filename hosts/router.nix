@@ -57,7 +57,7 @@ inputs.nixpkgs.lib.nixosSystem {
             DHCPServer = true;
             IPMasquerade = "ipv4";
             IPv6SendRA = true;
-            DHCPv6PrefixDelegation = true;
+            DHCPPrefixDelegation = true;
           };
           dhcpServerConfig.DNS = ["10.1.0.1"];
           dhcpServerStaticLeases = [
