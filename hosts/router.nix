@@ -38,11 +38,13 @@ inputs.nixpkgs.lib.nixosSystem {
 
         networks."10-wan0" = {
           matchConfig.Name = "enp2s0";
-          networkConfig.DHCP = "ipv4";
+          networkConfig.DHCP = "yes";
           dhcpV4Config = {
             UseDNS = false;
-            UseDomains = false;
-            SendRelease = false;
+          };
+          dhcpV6Config = {
+            UseDNS = false;
+            PrefixDelegationHint = "::/56";
           };
           linkConfig.RequiredForOnline = "routable";
         };
@@ -54,6 +56,8 @@ inputs.nixpkgs.lib.nixosSystem {
           networkConfig = {
             DHCPServer = true;
             IPMasquerade = "ipv4";
+            IPv6SendRA = true;
+            DHCPv6PrefixDelegation = true;
           };
           dhcpServerConfig.DNS = ["10.1.0.1"];
           dhcpServerStaticLeases = [

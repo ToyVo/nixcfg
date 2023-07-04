@@ -87,6 +87,6 @@ lib.mkMerge [
     manual.manpages.enable = false;
     home.file.".hushlogin".text = "";
     home.sessionPath = [ "/opt/homebrew/bin" ];
-    home.packages = with pkgs; [ rectangle ];
+    home.packages = with pkgs; [ rectangle utm ];
   })
 ]
