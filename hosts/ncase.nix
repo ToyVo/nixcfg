@@ -7,6 +7,9 @@ inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
+    inputs.nixpkgs.nixosModules.notDetected
+    inputs.nixvim.nixosModules.nixvim
+    inputs.home-manager.nixosModules.home-manager
     ../system/filesystem/btrfs.nix
     ../system/filesystem/efi.nix
     ../system/nixos.nix
@@ -90,11 +93,6 @@ inputs.nixpkgs.lib.nixosSystem {
           };
         };
       };
-    })
-    inputs.nixpkgs.nixosModules.notDetected
-    inputs.nixvim.nixosModules.nixvim
-    inputs.home-manager.nixosModules.home-manager
-    {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
@@ -110,6 +108,6 @@ inputs.nixpkgs.lib.nixosSystem {
           ../home/zsh.nix
         ];
       };
-    }
+    })
   ];
 }

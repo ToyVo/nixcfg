@@ -6,6 +6,10 @@ in inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
+    inputs.nixpkgs.nixosModules.notDetected
+    inputs.home-manager.nixosModules.home-manager
+    inputs.hyprland.nixosModules.default
+    inputs.nixvim.nixosModules.nixvim
     ../system/filesystem/btrfs.nix
     ../system/filesystem/efi.nix
     ../system/gnome.nix
@@ -35,12 +39,6 @@ in inputs.nixpkgs.lib.nixosSystem {
         driSupport = true;
         driSupport32Bit = true;
       };
-    })
-    inputs.nixpkgs.nixosModules.notDetected
-    inputs.home-manager.nixosModules.home-manager
-    inputs.hyprland.nixosModules.default
-    inputs.nixvim.nixosModules.nixvim
-    {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
@@ -58,6 +56,6 @@ in inputs.nixpkgs.lib.nixosSystem {
           ../home/hyprland.nix
         ];
       };
-    }
+    })
   ];
 }

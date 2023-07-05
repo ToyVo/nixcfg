@@ -7,6 +7,9 @@ inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
+    inputs.nixpkgs.nixosModules.notDetected
+    inputs.home-manager.nixosModules.home-manager
+    inputs.nixvim.nixosModules.nixvim
     ../system/filesystem/btrfs.nix
     ../system/filesystem/efi.nix
     ../system/nixos.nix
@@ -156,11 +159,6 @@ inputs.nixpkgs.lib.nixosSystem {
         firewall.interfaces.cdguest.allowedTCPPorts = [ 53 ];
         firewall.interfaces.cdguest.allowedUDPPorts = [ 53 67 ];
       };
-    })
-    inputs.nixpkgs.nixosModules.notDetected
-    inputs.home-manager.nixosModules.home-manager
-    inputs.nixvim.nixosModules.nixvim
-    {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
@@ -176,6 +174,6 @@ inputs.nixpkgs.lib.nixosSystem {
           ../home/zsh.nix
         ];
       };
-    }
+    })
   ];
 }

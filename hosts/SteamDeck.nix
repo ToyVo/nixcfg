@@ -7,13 +7,13 @@ inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
-    ../system/filesystem/btrfs.nix
-    ../system/filesystem/efi.nix
-    ../system/gnome.nix
     inputs.nixpkgs.nixosModules.notDetected
     inputs.nixvim.nixosModules.nixvim
     inputs.home-manager.nixosModules.home-manager
     inputs.jovian.nixosModules.jovian
+    ../system/filesystem/btrfs.nix
+    ../system/filesystem/efi.nix
+    ../system/gnome.nix
     ({ lib, pkgs, ... }: {
       boot = {
         initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];

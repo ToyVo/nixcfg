@@ -6,11 +6,11 @@ in inputs.darwin.lib.darwinSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
-    ../system/darwin.nix
-    ({ homebrew.casks = [ "prusaslicer" ]; })
     inputs.home-manager.darwinModules.home-manager
     inputs.nixvim.nixDarwinModules.nixvim
+    ../system/darwin.nix
     {
+      homebrew.casks = [ "prusaslicer" ];
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };

@@ -6,6 +6,9 @@ in inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
+    inputs.nixpkgs.nixosModules.notDetected
+    inputs.home-manager.nixosModules.home-manager
+    inputs.nixvim.nixosModules.nixvim
     ../system/filesystem/btrfs.nix
     ../system/filesystem/efi.nix
     ../system/gnome.nix
@@ -24,15 +27,10 @@ in inputs.nixpkgs.lib.nixosSystem {
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
       powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
       hardware.cpu.intel.updateMicrocode = true;
-    })
-    inputs.nixpkgs.nixosModules.notDetected
-    inputs.home-manager.nixosModules.home-manager
-    inputs.nixvim.nixosModules.nixvim
-    {
-      home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
       home-manager.users.${user} = {
+        home-manager.useGlobalPkgs = true;
         home.username = user;
         home.homeDirectory = "/home/${user}";
         imports = [
@@ -44,6 +42,6 @@ in inputs.nixpkgs.lib.nixosSystem {
           ../home/zsh.nix
         ];
       };
-    }
+    })
   ];
 }

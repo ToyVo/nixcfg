@@ -6,9 +6,9 @@ in inputs.darwin.lib.darwinSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
-    ../system/darwin.nix
     inputs.home-manager.darwinModules.home-manager
     inputs.nixvim.nixDarwinModules.nixvim
+    ../system/darwin.nix
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;

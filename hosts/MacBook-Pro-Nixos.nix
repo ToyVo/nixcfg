@@ -6,8 +6,13 @@ in inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
+    inputs.apple-silicon-support.nixosModules.apple-silicon-support
+    inputs.nixpkgs.nixosModules.notDetected
+    inputs.home-manager.nixosModules.home-manager
+    inputs.nixvim.nixosModules.nixvim
     ../system/gnome.nix
     ../system/filesystem/btrfs.nix
+    ../system/filesystem/boot.nix
     ({ lib, ... }: {
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = false;
@@ -17,20 +22,10 @@ in inputs.nixpkgs.lib.nixosSystem {
       boot.initrd.kernelModules = [ ];
       boot.kernelModules = [ ];
       boot.extraModulePackages = [ ];
-      fileSystems."/boot" = {
-        device = "/dev/disk/by-label/EFI";
-        fsType = "vfat";
-      };
       swapDevices = [ ];
       networking.useDHCP = lib.mkDefault true;
       nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
       powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
-    })
-    inputs.apple-silicon-support.nixosModules.apple-silicon-support
-    inputs.nixpkgs.nixosModules.notDetected
-    inputs.home-manager.nixosModules.home-manager
-    inputs.nixvim.nixosModules.nixvim
-    {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
@@ -46,7 +41,7 @@ in inputs.nixpkgs.lib.nixosSystem {
           ../home/zsh.nix
         ];
       };
-    }
+    })
   ];
 }
 
