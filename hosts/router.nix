@@ -41,17 +41,9 @@ inputs.nixpkgs.lib.nixosSystem {
 
         networks."10-wan0" = {
           matchConfig.Name = "enp2s0";
-          networkConfig = {
-            IPv6AcceptRA = true;
-            IPForward = "yes";
-            DHCP = "yes";
-          };
+          networkConfig.DHCP = "ipv4";
           dhcpV4Config = {
             UseDNS = false;
-          };
-          dhcpV6Config = {
-            UseDNS = false;
-            PrefixDelegationHint = "::56";
           };
           linkConfig.RequiredForOnline = "routable";
         };
@@ -62,9 +54,7 @@ inputs.nixpkgs.lib.nixosSystem {
           vlan = [ "cdiot" ];
           networkConfig = {
             DHCPServer = true;
-            IPMasquerade = "both";
-            IPv6SendRA = true;
-            DHCPPrefixDelegation = true;
+            IPMasquerade = "ipv4";
           };
           dhcpServerConfig.DNS = ["10.1.0.1"];
           dhcpServerStaticLeases = [
@@ -105,7 +95,7 @@ inputs.nixpkgs.lib.nixosSystem {
           address = [ "10.1.20.1/24" ];
           networkConfig = {
             DHCPServer = true;
-            IPMasquerade = "both";
+            IPMasquerade = "ipv4";
           };
           dhcpServerConfig.DNS = ["10.1.0.1"];
           linkConfig.RequiredForOnline = "no";
