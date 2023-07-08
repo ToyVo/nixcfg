@@ -55,6 +55,7 @@ inputs.nixpkgs.lib.nixosSystem {
           networkConfig = {
             DHCPServer = true;
             IPMasquerade = "ipv4";
+            MulticastDNS = true;
           };
           dhcpServerConfig.DNS = ["10.1.0.1"];
           dhcpServerStaticLeases = [
@@ -65,18 +66,18 @@ inputs.nixpkgs.lib.nixosSystem {
                 MACAddress = "10:27:f5:bd:04:97";
               };
             }
-            # Canon Printer
-            {
-              dhcpServerStaticLeaseConfig = {
-                Address = "10.1.0.3";
-                MACAddress = "c4:ac:59:a6:63:33";
-              };
-            }
             # NCase
             {
               dhcpServerStaticLeaseConfig = {
-                Address = "10.1.0.4";
+                Address = "10.1.0.3";
                 MACAddress = "70:85:c2:8a:53:5b";
+              };
+            }
+            # Canon Printer
+            {
+              dhcpServerStaticLeaseConfig = {
+                Address = "10.1.0.4";
+                MACAddress = "c4:ac:59:a6:63:33";
               };
             }
           ];
