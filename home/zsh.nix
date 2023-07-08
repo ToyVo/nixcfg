@@ -8,6 +8,14 @@
       setopt globdots
       zstyle ':completion:*' matcher-list ''' '+m:{a-zA-Z}={A-Za-z}' '+r:|[._-]=* r:|=*' '+l:|=* r:|=*'
       gpgconf --launch gpg-agent
+      if [ -z "$SSH_TTY" ] && [ -z "$SSH_CLIENT" ] && [ -z "$SSH_CONNECTION" ]; then
+        if [ -z "$TERMINAL_EMULATOR" ] || [ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]; then
+          eval "$(zellij setup --generate-auto-start zsh)"
+        fi
+      fi
+    '';
+    profileExtra = ''
+      export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
     '';
     plugins = [{
       name = "zsh-nix-shell";

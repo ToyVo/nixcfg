@@ -7,14 +7,6 @@ lib.mkMerge [
       SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
       MANPAGER = "sh -c 'col -bx | bat -l man -p'";
     };
-    programs.zsh.profileExtra = ''
-      export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-    '';
-    programs.zsh.initExtra = ''
-      if [ -z $SSH_TTY ] && [ -z $SSH_CLIENT ] && [ -z $SSH_CONNECTION ]; then
-          eval "$(zellij setup --generate-auto-start zsh)"
-      fi
-    '';
     home.sessionPath = [ "$HOME/.local/bin" "$HOME/.cargo/bin" ];
     home.shellAliases = {
       cat = "bat -pp";
@@ -66,6 +58,10 @@ lib.mkMerge [
     };
     programs.wezterm.enable = true;
     programs.wezterm.extraConfig = lib.fileContents ./wezterm.lua;
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
   }
   (lib.mkIf pkgs.stdenv.isLinux {
     services.keybase.enable = true;
