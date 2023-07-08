@@ -41,13 +41,17 @@ inputs.nixpkgs.lib.nixosSystem {
 
         networks."10-wan0" = {
           matchConfig.Name = "enp2s0";
-          networkConfig.DHCP = "yes";
+          networkConfig = {
+            IPV6AcceptRA = true;
+            IPForward = "yes";
+            DHCP = "yes";
+          };
           dhcpV4Config = {
             UseDNS = false;
           };
           dhcpV6Config = {
             UseDNS = false;
-            PrefixDelegationHint = "::/56";
+            PrefixDelegationHint = "::56";
           };
           linkConfig.RequiredForOnline = "routable";
         };
