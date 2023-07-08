@@ -42,7 +42,7 @@ inputs.nixpkgs.lib.nixosSystem {
         networks."10-wan0" = {
           matchConfig.Name = "enp2s0";
           networkConfig = {
-            IPV6AcceptRA = true;
+            IPv6AcceptRA = true;
             IPForward = "yes";
             DHCP = "yes";
           };
