@@ -1,7 +1,6 @@
 inputs:
 let
   system = "aarch64-linux";
-  user = "toyvo";
 in inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
@@ -12,6 +11,7 @@ in inputs.nixpkgs.lib.nixosSystem {
     ../system/filesystem/boot.nix
     ../system/filesystem/btrfs.nix
     ../system/nixos.nix
+    ../home/toyvo.nix
     ({ lib, ... }: {
       boot.loader.generic-extlinux-compatible.enable = true;
       networking.hostName = "rpi4b8a";
@@ -21,18 +21,7 @@ in inputs.nixpkgs.lib.nixosSystem {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
-      home-manager.users.${user} = {
-        home.username = user;
-        home.homeDirectory = "/home/${user}";
-        imports = [
-          ../home
-          ../home/git.nix
-          ../home/gpg.nix
-          ../home/ssh.nix
-          ../home/starship.nix
-          ../home/zsh.nix
-        ];
-      };
+      cdcfg.users.toyvo.enable = true;
     })
   ];
 }

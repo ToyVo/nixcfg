@@ -1,7 +1,6 @@
 inputs:
 let
   system = "x86_64-linux";
-  user = "toyvo";
 in inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
@@ -14,6 +13,7 @@ in inputs.nixpkgs.lib.nixosSystem {
     ../system/filesystem/efi.nix
     ../system/gnome.nix
     ../system/hyprland.nix
+    ../home/toyvo.nix
     ({ pkgs, lib, ... }: {
       boot.initrd.availableKernelModules =
         [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
@@ -42,17 +42,10 @@ in inputs.nixpkgs.lib.nixosSystem {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
-      home-manager.users.${user} = {
-        home.username = user;
-        home.homeDirectory = "/home/${user}";
-        imports = [
+      cdcfg.users.toyvo = {
+        enable = true;
+        extraHomeManagerModules = [
           inputs.hyprland.homeManagerModules.default
-          ../home
-          ../home/git.nix
-          ../home/gpg.nix
-          ../home/ssh.nix
-          ../home/starship.nix
-          ../home/zsh.nix
           ../home/hyprland.nix
         ];
       };

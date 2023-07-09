@@ -1,7 +1,6 @@
 inputs:
 let
   system = "aarch64-darwin";
-  user = "CollinDie";
 in inputs.darwin.lib.darwinSystem {
   inherit system;
   specialArgs = { inherit inputs; };
@@ -9,28 +8,18 @@ in inputs.darwin.lib.darwinSystem {
     inputs.home-manager.darwinModules.home-manager
     inputs.nixvim.nixDarwinModules.nixvim
     ../system/darwin.nix
+    ../home/toyvo.nix
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
-      home-manager.users.${user} = {
-        home.username = user;
-        home.homeDirectory = "/Users/${user}";
-        imports = [
-          ../home
+      cdcfg.users.toyvo = {
+        enable = true;
+        name = "CollinDie";
+        extraHomeManagerModules = [
           ../home/emu.nix
-          ../home/git.nix
-          ../home/gpg.nix
-          ../home/ssh.nix
-          ../home/starship.nix
-          ../home/zsh.nix
           ../home/alias-mac-apps.nix
         ];
-      };
-      users.users.${user} = {
-        name = user;
-        description = "Collin Diekvoss";
-        home = "/Users/${user}";
       };
       homebrew.brews = [
         "mongosh"
@@ -39,7 +28,6 @@ in inputs.darwin.lib.darwinSystem {
         "mongodb-database-tools"
       ];
       homebrew.casks = [
-        # nix package not available on darwin
         "docker"
         "mongodb-compass"
       ];

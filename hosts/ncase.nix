@@ -1,7 +1,6 @@
 inputs:
 let
   system = "x86_64-linux";
-  user = "toyvo";
 in
 inputs.nixpkgs.lib.nixosSystem {
   inherit system;
@@ -13,6 +12,7 @@ inputs.nixpkgs.lib.nixosSystem {
     ../system/filesystem/btrfs.nix
     ../system/filesystem/efi.nix
     ../system/nixos.nix
+    ../home/toyvo.nix
     ({ lib, ... }: {
       boot = {
         initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
@@ -96,18 +96,7 @@ inputs.nixpkgs.lib.nixosSystem {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
-      home-manager.users.${user} = {
-        home.username = user;
-        home.homeDirectory = "/home/${user}";
-        imports = [
-          ../home
-          ../home/git.nix
-          ../home/gpg.nix
-          ../home/ssh.nix
-          ../home/starship.nix
-          ../home/zsh.nix
-        ];
-      };
+      cdcfg.users.toyvo.enable = true;
     })
   ];
 }

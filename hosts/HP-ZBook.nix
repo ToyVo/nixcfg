@@ -1,7 +1,6 @@
 inputs:
 let
   system = "x86_64-linux";
-  user = "toyvo";
 in inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
@@ -12,6 +11,7 @@ in inputs.nixpkgs.lib.nixosSystem {
     ../system/filesystem/btrfs.nix
     ../system/filesystem/efi.nix
     ../system/gnome.nix
+    ../home/toyvo.nix
     ({ lib, ... }: {
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
@@ -29,19 +29,7 @@ in inputs.nixpkgs.lib.nixosSystem {
       hardware.cpu.intel.updateMicrocode = true;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
-      home-manager.users.${user} = {
-        home-manager.useGlobalPkgs = true;
-        home.username = user;
-        home.homeDirectory = "/home/${user}";
-        imports = [
-          ../home
-          ../home/git.nix
-          ../home/gpg.nix
-          ../home/ssh.nix
-          ../home/starship.nix
-          ../home/zsh.nix
-        ];
-      };
+      cdcfg.users.toyvo.enable = true;
     })
   ];
 }
