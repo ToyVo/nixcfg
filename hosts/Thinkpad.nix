@@ -48,6 +48,8 @@ in inputs.nixpkgs.lib.nixosSystem {
       };
       cdcfg.fs.efi.enable = true;
       cdcfg.fs.btrfs.enable = true;
+      cdcfg.gnome.enable = true;
+      cdcfg.hyprland.enable = true;
     })
   ];
 }

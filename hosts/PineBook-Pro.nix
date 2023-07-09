@@ -21,6 +21,7 @@ in inputs.nixpkgs.lib.nixosSystem {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       cdcfg.users.toyvo.enable = true;
       cdcfg.fs.sd.enable = true;
+      cdcfg.xfce.enable = true;
     })
   ];
 }

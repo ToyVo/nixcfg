@@ -48,6 +48,7 @@ inputs.nixpkgs.lib.nixosSystem {
       cdcfg.users.toyvo.enable = true;
       cdcfg.fs.efi.enable = true;
       cdcfg.fs.btrfs.enable = true;
+      cdcfg.gnome.enable = true;
     })
   ];
 }

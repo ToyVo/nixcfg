@@ -30,6 +30,7 @@ in inputs.nixpkgs.lib.nixosSystem {
       cdcfg.users.toyvo.enable = true;
       cdcfg.fs.boot.enable = true;
       cdcfg.fs.btrfs.enable = true;
+      cdcfg.gnome.enable = true;
     })
   ];
 }
