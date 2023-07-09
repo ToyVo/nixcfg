@@ -6,6 +6,7 @@ lib.mkMerge [
       GPG_TTY = "$(tty)";
       SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
       MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+      EDITOR = "nvim";
     };
     home.sessionPath = [ "$HOME/.local/bin" "$HOME/.cargo/bin" ];
     home.shellAliases = {
@@ -56,6 +57,17 @@ lib.mkMerge [
 
       theme = "everforest-dark";
     };
+    xdg.configFile."zellij/layouts/default.kdl".text = ''
+      layout {
+          pane size=1 borderless=true {
+              plugin location="zellij:tab-bar"
+          }
+          pane borderless=true
+          pane size=2 borderless=true {
+              plugin location="zellij:status-bar"
+          }
+      }
+    '';
     programs.wezterm.enable = true;
     programs.wezterm.extraConfig = lib.fileContents ./wezterm.lua;
     programs.direnv = {
@@ -69,7 +81,6 @@ lib.mkMerge [
     home.packages = with pkgs; [
       firefox
       neovide
-      keybase-gui
       _1password
       _1password-gui
     ];
