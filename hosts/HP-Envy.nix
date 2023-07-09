@@ -8,9 +8,7 @@ in inputs.nixpkgs.lib.nixosSystem {
     inputs.nixpkgs.nixosModules.notDetected
     inputs.nixvim.nixosModules.nixvim
     inputs.home-manager.nixosModules.home-manager
-    ../system/filesystem/btrfs.nix
-    ../system/filesystem/efi.nix
-    ../system/gnome.nix
+    ../system/nixos.nix
     ../home/toyvo.nix
     ({ lib, pkgs, ... }: {
       boot.loader.systemd-boot.enable = true;
@@ -41,6 +39,8 @@ in inputs.nixpkgs.lib.nixosSystem {
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
       cdcfg.users.toyvo.enable = true;
+      cdcfg.fs.efi.enable = true;
+      cdcfg.fs.btrfs.enable = true;
     })
   ];
 }

@@ -8,8 +8,7 @@ in inputs.nixpkgs.lib.nixosSystem {
     inputs.nixos-hardware.nixosModules.pine64-pinebook-pro
     inputs.home-manager.nixosModules.home-manager
     inputs.nixvim.nixosModules.nixvim
-    ../system/filesystem/sd.nix
-    ../system/xfce.nix
+    ../system/nixos.nix
     ../home/toyvo.nix
     ({ lib, ... }: {
       boot.loader.grub.enable = false;
@@ -21,6 +20,7 @@ in inputs.nixpkgs.lib.nixosSystem {
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
       cdcfg.users.toyvo.enable = true;
+      cdcfg.fs.sd.enable = true;
     })
   ];
 }

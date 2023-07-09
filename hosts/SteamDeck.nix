@@ -10,9 +10,7 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.nixvim.nixosModules.nixvim
     inputs.home-manager.nixosModules.home-manager
     inputs.jovian.nixosModules.jovian
-    ../system/filesystem/btrfs.nix
-    ../system/filesystem/efi.nix
-    ../system/gnome.nix
+    ../system/nixos.nix
     ../home/toyvo.nix
     ({ lib, pkgs, ... }: {
       boot = {
@@ -48,6 +46,8 @@ inputs.nixpkgs.lib.nixosSystem {
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
       cdcfg.users.toyvo.enable = true;
+      cdcfg.fs.efi.enable = true;
+      cdcfg.fs.btrfs.enable = true;
     })
   ];
 }

@@ -1,17 +1,16 @@
 { lib, pkgs, config, ... }:
-with lib;
 let
   cfg = config.cdcfg.users.toyvo;
 in
 {
   options.cdcfg.users.toyvo = {
-    enable = mkEnableOption "toyvo user";
-    name = mkOption {
-      type = types.str;
+    enable = lib.mkEnableOption "toyvo user";
+    name = lib.mkOption {
+      type = lib.types.str;
       default = "toyvo";
     };
-    extraHomeManagerModules = mkOption {
-      type = types.listOf types.raw;
+    extraHomeManagerModules = lib.mkOption {
+      type = lib.types.listOf lib.types.raw;
       default = [ ];
     };
   };
@@ -24,7 +23,7 @@ in
       homeDirectory = if pkgs.stdenv.isDarwin then "/Users/${cfg.name}" else "/home/${cfg.name}";
       key = lib.fileContents ../keys/ssh_yubikey.pub;
     in
-    mkIf cfg.enable {
+    lib.mkIf cfg.enable {
       users.users.${cfg.name} = lib.mkMerge [
         {
           name = cfg.name;

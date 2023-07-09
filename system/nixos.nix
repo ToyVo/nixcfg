@@ -1,5 +1,15 @@
 { pkgs, ... }: {
-  imports = [ ./common.nix ];
+  imports = [
+    ./common.nix
+    ./gnome.nix
+    ./xfce.nix
+    ./hyprland.nix
+    ./gui.nix
+    ./filesystem/boot.nix
+    ./filesystem/efi.nix
+    ./filesystem/btrfs.nix
+    ./filesystem/sd.nix
+  ];
   networking.networkmanager.enable = true;
   time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -19,7 +29,7 @@
     layout = "us";
     xkbOptions = "ctrl:nocaps";
   };
-  environment.systemPackages = with pkgs; [ 
+  environment.systemPackages = with pkgs; [
     yubikey-manager
     yubikey-manager-qt
     yubikey-personalization

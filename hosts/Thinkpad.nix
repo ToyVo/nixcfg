@@ -9,10 +9,7 @@ in inputs.nixpkgs.lib.nixosSystem {
     inputs.home-manager.nixosModules.home-manager
     inputs.hyprland.nixosModules.default
     inputs.nixvim.nixosModules.nixvim
-    ../system/filesystem/btrfs.nix
-    ../system/filesystem/efi.nix
-    ../system/gnome.nix
-    ../system/hyprland.nix
+    ../system/nixos.nix
     ../home/toyvo.nix
     ({ pkgs, lib, ... }: {
       boot.initrd.availableKernelModules =
@@ -49,6 +46,8 @@ in inputs.nixpkgs.lib.nixosSystem {
           ../home/hyprland.nix
         ];
       };
+      cdcfg.fs.efi.enable = true;
+      cdcfg.fs.btrfs.enable = true;
     })
   ];
 }
