@@ -15,7 +15,7 @@ inputs.nixpkgs.lib.nixosSystem {
     ({ lib, pkgs, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;
-      nixpkgs.overlays = [ inputs.nixpkgs.overlays.jovian ];
+      nixpkgs.overlays = [ inputs.jovian.overlays.jovian ];
       hardware.cpu.amd.updateMicrocode = true;
       networking.hostName = "steamdeck";
       boot = {

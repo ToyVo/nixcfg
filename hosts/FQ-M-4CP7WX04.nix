@@ -32,8 +32,8 @@ inputs.darwin.lib.darwinSystem {
           "mongodb-database-tools"
         ];
         casks = [
-          "docker"
-          "mongodb-compass"
+          { name = "docker"; greedy = true; }
+          { name = "mongodb-compass"; greedy = true; }
         ];
         taps = [
           "mongodb/brew"

@@ -14,7 +14,9 @@ inputs.darwin.lib.darwinSystem {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       cdcfg.users.toyvo.enable = true;
 
-      homebrew.casks = [ "prusaslicer" ];
+      homebrew.casks = [
+        { name = "prusaslicer"; greedy = true; }
+      ];
       homebrew.masApps = {
         "Yubico Authenticator" = 1497506650;
         "Wireguard" = 1451685025;

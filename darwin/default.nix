@@ -23,17 +23,17 @@
   };
   homebrew.casks = [
     # nix package not available on darwin
-    "firefox"
-    "jetbrains-toolbox"
-    "insomnia"
-    "libreoffice"
-    "keybase"
-    "grammarly"
+    { name = "firefox"; greedy = true; }
+    { name = "brave-browser"; greedy = true; }
+    { name = "jetbrains-toolbox"; greedy = true; }
+    { name = "insomnia"; greedy = true; }
+    { name = "libreoffice"; greedy = true; }
+    { name = "keybase"; greedy = true; }
+    { name = "grammarly"; greedy = true; }
     # nix package doesn't provide an app bundle
-    "neovide"
+    { name = "neovide"; greedy = true; }
     # must be installed at /Applications, nix-darwin installs it at /Applications/nix apps
-    "1password"
-    "brave-browser"
+    { name = "1password"; greedy = true; }
   ];
   homebrew.brews = [
     # required for neovide

@@ -3,11 +3,11 @@ let
   cfg = config.cdcfg;
 in
 {
-  config = lib.mkIf (cfg.gnome.enable || cfg.xfce.enable || cfg.hyprland.enable) {
-    cdcfg.gui.enable = lib.mkDefault true;
+  config = lib.mkIf (cfg.gnome.enable || cfg.xfce.enable || cfg.hyprland.enable || cfg.plasma.enable || cfg.plasma.mobile.enable) {
+    cdcfg.packages.gui.enable = lib.mkDefault true;
     services.printing.enable = true;
     security.rtkit.enable = true;
-    hardware.pulseaudio.enable = false;
+    hardware.pulseaudio.enable = lib.mkForce false;
     services.pipewire = {
       enable = true;
       alsa.enable = true;

@@ -1,7 +1,8 @@
 inputs:
 let
   system = "aarch64-darwin";
-in inputs.darwin.lib.darwinSystem {
+in
+inputs.darwin.lib.darwinSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
@@ -13,7 +14,10 @@ in inputs.darwin.lib.darwinSystem {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       cdcfg.users.toyvo.enable = true;
 
-      homebrew.casks = [ "prusaslicer" "google-chrome" ];
+      homebrew.casks = [
+        { name = "prusaslicer"; greedy = true; }
+        { name = "google-chrome"; greedy = true; }
+      ];
     }
   ];
 }
