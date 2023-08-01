@@ -1,1 +1,1 @@
-home/emu.nix filter=git-crypt diff=git-crypt
+home/toyvo/emu.nix filter=git-crypt diff=git-crypt

@@ -1,27 +1,35 @@
 inputs:
 let
   system = "aarch64-linux";
-in inputs.nixpkgs.lib.nixosSystem {
+in
+inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
+    inputs.nixpkgs.nixosModules.notDetected
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
     inputs.home-manager.nixosModules.home-manager
     inputs.nixvim.nixosModules.nixvim
-    ../system/nixos.nix
-    ../home/toyvo.nix
+    ../nixos
+    ../home/toyvo
     ({ lib, ... }: {
-      boot.loader.generic-extlinux-compatible.enable = true;
-      networking.hostName = "rpi4b8a";
-      networking.useDHCP = lib.mkDefault true;
-      nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
-      hardware.raspberry-pi."4".fkms-3d.enable = true;
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
-      cdcfg.users.toyvo.enable = true;
-      cdcfg.fs.boot.enable = true;
-      cdcfg.fs.btrfs.enable = true;
+      powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
+      nixpkgs.hostPlatform = lib.mkDefault system;
+      networking.hostName = "rpi4b8a";
+      boot = {
+        loader.grub.enable = false;
+        loader.generic-extlinux-compatible.enable = false;
+        loader.systemd-boot.enable = true;
+        initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
+      };
+      cdcfg = {
+        users.toyvo.enable = true;
+        fs.boot.enable = true;
+        fs.btrfs.enable = true;
+      };
+
+      hardware.raspberry-pi."4".fkms-3d.enable = true;
     })
   ];
 }

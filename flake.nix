@@ -21,13 +21,16 @@
     nixvim.url = "github:pta2002/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
 
-    jovian.url = "github:ToyVo/Jovian-NixOS/flakes";
+    jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     jovian.inputs.nixpkgs.follows = "nixpkgs";
+
+    rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
   outputs = inputs: {
     darwinConfigurations = {
       MacBook-Pro = import ./hosts/MacBook-Pro.nix inputs;
+      MacMini-M1 = import ./hosts/MacMini-M1.nix inputs;
       FQ-M-4CP7WX04 = import ./hosts/FQ-M-4CP7WX04.nix inputs;
     };
 

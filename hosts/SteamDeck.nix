@@ -10,45 +10,43 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.nixvim.nixosModules.nixvim
     inputs.home-manager.nixosModules.home-manager
     inputs.jovian.nixosModules.jovian
-    ../system/nixos.nix
-    ../home/toyvo.nix
+    ../nixos
+    ../home/toyvo
     ({ lib, pkgs, ... }: {
+      home-manager.extraSpecialArgs = { inherit inputs system; };
+      nixpkgs.hostPlatform = lib.mkDefault system;
+      nixpkgs.overlays = [ inputs.nixpkgs.overlays.jovian ];
+      hardware.cpu.amd.updateMicrocode = true;
+      networking.hostName = "steamdeck";
       boot = {
-        initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
-        initrd.kernelModules = [ ];
-        kernelModules = [ "kvm-amd" ];
-        extraModulePackages = [ ];
         loader.systemd-boot.enable = true;
         loader.efi.canTouchEfiVariables = true;
-        loader.efi.efiSysMountPoint = "/boot/efi";
+        initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
+        kernelModules = [ "kvm-amd" ];
       };
+      cdcfg = {
+        users.toyvo.enable = true;
+        fs.boot.enable = true;
+        fs.btrfs.enable = true;
+        plasma.mobile.enable = true;
+      };
+
       fileSystems."/mnt/POOL" = {
         device = "/dev/disk/by-label/POOL";
         fsType = "btrfs";
-        options = [ "defaults" "nofail" ];
+        options = [ "nofail" "noatime" "lazytime" "compress-force=zstd" "space_cache=v2" "autodefrag" "ssd_spread" ];
       };
-      swapDevices = [ ];
-      hardware.cpu.amd.updateMicrocode = true;
-      nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-      networking.hostName = "steamdeck";
       jovian = {
         devices.steamdeck.enable = true;
         steam.enable = true;
-        steam.autoStart = true;
-        steam.user = "toyvo";
-        steam.desktopSession = "gnome";
+        # steam.autoStart = true;
+        # steam.user = "toyvo";
+        # steam.desktopSession = "plasma-mobile";
       };
       environment.systemPackages = [
         pkgs.steam
       ];
-      services.xserver.displayManager.gdm.enable = lib.mkForce false;
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.extraSpecialArgs = { inherit inputs system; };
-      cdcfg.users.toyvo.enable = true;
-      cdcfg.fs.efi.enable = true;
-      cdcfg.fs.btrfs.enable = true;
-      cdcfg.gnome.enable = true;
+      # services.xserver.displayManager.sddm.enable = lib.mkForce false;
     })
   ];
 }

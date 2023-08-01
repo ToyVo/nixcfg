@@ -9,11 +9,34 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.nixpkgs.nixosModules.notDetected
     inputs.nixvim.nixosModules.nixvim
     inputs.home-manager.nixosModules.home-manager
-    ../system/nixos.nix
-    ../home/toyvo.nix
+    ../nixos
+    ../home/toyvo
     ({ lib, ... }: {
-      networking.networkmanager.enable = lib.mkForce false;
+      home-manager.extraSpecialArgs = { inherit inputs system; };
+      nixpkgs.hostPlatform = lib.mkDefault system;
+      hardware.cpu.intel.updateMicrocode = true;
+      powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+      networking = {
+        hostName = "router";
+        networkmanager.enable = lib.mkForce false;
+        domain = "diekvoss.net";
+        useNetworkd = true;
+        useDHCP = false;
+        nameservers = [ "127.0.1.53" ];
+        nat.enable = true;
+        nat.externalInterface = "enp2s0";
+        nat.internalInterfaces = [ "enp3s0" "cdiot" ];
+        firewall = {
+          enable = true;
+          interfaces.enp3s0.allowedTCPPorts = [ 53 22 3000 ];
+          interfaces.enp3s0.allowedUDPPorts = [ 53 67 68 ];
+          interfaces.cdiot.allowedTCPPorts = [ 53 ];
+          interfaces.cdiot.allowedUDPPorts = [ 53 67 68 ];
+        };
+      };
       boot = {
+        loader.systemd-boot.enable = true;
+        loader.efi.canTouchEfiVariables = true;
         initrd.availableKernelModules = [
           "xhci_pci"
           "ahci"
@@ -23,20 +46,16 @@ inputs.nixpkgs.lib.nixosSystem {
           "sd_mod"
           "sdhci_pci"
         ];
-        initrd.kernelModules = [ ];
         kernelModules = [ "kvm-intel" ];
-        extraModulePackages = [ ];
-        loader.systemd-boot.enable = true;
-        loader.efi.canTouchEfiVariables = true;
-        loader.efi.efiSysMountPoint = "/boot/efi";
       };
-      swapDevices = [ ];
-      powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-      hardware.cpu.intel.updateMicrocode = true;
-      nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+      cdcfg = {
+        users.toyvo.enable = true;
+        fs.boot.enable = true;
+        fs.btrfs.enable = true;
+      };
+
       systemd.network = {
         enable = true;
-
         networks."10-wan0" = {
           matchConfig.Name = "enp2s0";
           networkConfig.DHCP = "ipv4";
@@ -45,7 +64,6 @@ inputs.nixpkgs.lib.nixosSystem {
           };
           linkConfig.RequiredForOnline = "routable";
         };
-
         networks."20-lan" = {
           matchConfig.Name = "enp3s0";
           address = [ "10.1.0.1/24" ];
@@ -55,7 +73,7 @@ inputs.nixpkgs.lib.nixosSystem {
             IPMasquerade = "ipv4";
             MulticastDNS = true;
           };
-          dhcpServerConfig.DNS = ["10.1.0.1"];
+          dhcpServerConfig.DNS = [ "10.1.0.1" ];
           dhcpServerStaticLeases = [
             # Omada Controller
             {
@@ -81,7 +99,6 @@ inputs.nixpkgs.lib.nixosSystem {
           ];
           linkConfig.RequiredForOnline = "no";
         };
-
         netdevs."25-cdiot" = {
           netdevConfig = {
             Name = "cdiot";
@@ -96,25 +113,8 @@ inputs.nixpkgs.lib.nixosSystem {
             DHCPServer = true;
             IPMasquerade = "ipv4";
           };
-          dhcpServerConfig.DNS = ["10.1.0.1"];
+          dhcpServerConfig.DNS = [ "10.1.0.1" ];
           linkConfig.RequiredForOnline = "no";
-        };
-      };
-      networking = {
-        hostName = "router";
-        domain = "diekvoss.net";
-        useNetworkd = true;
-        useDHCP = false;
-        nameservers = [ "127.0.1.53" ];
-        nat.enable = true;
-        nat.externalInterface = "enp2s0";
-        nat.internalInterfaces = [ "enp3s0" "cdiot" ];
-        firewall = {
-          enable = true;
-          interfaces.enp3s0.allowedTCPPorts = [ 53 22 3000 ];
-          interfaces.enp3s0.allowedUDPPorts = [ 53 67 68 ];
-          interfaces.cdiot.allowedTCPPorts = [ 53 ];
-          interfaces.cdiot.allowedUDPPorts = [ 53 67 68 ];
         };
       };
       services.openssh.openFirewall = false;
@@ -124,14 +124,8 @@ inputs.nixpkgs.lib.nixosSystem {
       '';
       services.adguardhome = {
         enable = true;
-        settings.dns.bind_hosts = ["127.0.1.53"];
+        settings.dns.bind_hosts = [ "127.0.1.53" ];
       };
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.extraSpecialArgs = { inherit inputs system; };
-      cdcfg.users.toyvo.enable = true;
-      cdcfg.fs.efi.enable = true;
-      cdcfg.fs.btrfs.enable = true;
     })
   ];
 }

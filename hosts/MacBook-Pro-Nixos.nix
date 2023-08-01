@@ -1,7 +1,8 @@
 inputs:
 let
   system = "aarch64-linux";
-in inputs.nixpkgs.lib.nixosSystem {
+in
+inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
@@ -9,29 +10,26 @@ in inputs.nixpkgs.lib.nixosSystem {
     inputs.nixpkgs.nixosModules.notDetected
     inputs.home-manager.nixosModules.home-manager
     inputs.nixvim.nixosModules.nixvim
-    ../system/nixos.nix
-    ../home/toyvo.nix
+    ../nixos
+    ../home/toyvo
     ({ lib, ... }: {
-      boot.loader.systemd-boot.enable = true;
-      boot.loader.efi.canTouchEfiVariables = false;
-      hardware.asahi.peripheralFirmwareDirectory = /boot/asahi;
-      networking.hostName = "MacBook-Pro-Nixos";
-      boot.initrd.availableKernelModules = [ "usb_storage" "sdhci_pci" ];
-      boot.initrd.kernelModules = [ ];
-      boot.kernelModules = [ ];
-      boot.extraModulePackages = [ ];
-      swapDevices = [ ];
-      networking.useDHCP = lib.mkDefault true;
-      nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
-      powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit inputs system; };
-      cdcfg.users.toyvo.enable = true;
-      cdcfg.fs.boot.enable = true;
-      cdcfg.fs.btrfs.enable = true;
-      cdcfg.gnome.enable = true;
+      nixpkgs.hostPlatform = lib.mkDefault system;
+      powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
+      networking.hostName = "MacBook-Pro-Nixos";
+      boot = {
+        loader.systemd-boot.enable = true;
+        loader.efi.canTouchEfiVariables = false;
+        initrd.availableKernelModules = [ "usb_storage" "sdhci_pci" ];
+      };
+      cdcfg = {
+        users.toyvo.enable = true;
+        fs.boot.enable = true;
+        fs.btrfs.enable = true;
+        gnome.enable = true;
+      };
+
+      hardware.asahi.peripheralFirmwareDirectory = ../darwin/firmware;
     })
   ];
 }
-

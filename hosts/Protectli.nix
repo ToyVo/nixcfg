@@ -9,23 +9,43 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.nixpkgs.nixosModules.notDetected
     inputs.home-manager.nixosModules.home-manager
     inputs.nixvim.nixosModules.nixvim
-    ../system/nixos.nix
-    ../home/toyvo.nix
+    ../nixos
+    ../home/toyvo
     ({ lib, ... }: {
-      networking.networkmanager.enable = lib.mkForce false;
+      home-manager.extraSpecialArgs = { inherit inputs system; };
+      nixpkgs.hostPlatform = lib.mkDefault system;
+      hardware.cpu.intel.updateMicrocode = true;
+      networking = {
+        hostName = "Protectli";
+        networkmanager.enable = lib.mkForce false;
+        useDHCP = false;
+        nameservers = [ "1.1.1.1" "1.0.0.1" ];
+        nat.enable = true;
+        nat.enableIPv6 = true;
+        nat.externalInterface = "enp1s0";
+        nat.internalInterfaces = [ "enp2s0" "enp3s0" "enp4s0" ];
+        firewall.interfaces.enp2s0.allowedTCPPorts = [ 53 22 ];
+        firewall.interfaces.enp2s0.allowedUDPPorts = [ 53 67 ];
+        firewall.interfaces.cdwifi.allowedTCPPorts = [ 53 22 ];
+        firewall.interfaces.cdwifi.allowedUDPPorts = [ 53 67 ];
+        firewall.interfaces.cdiot.allowedTCPPorts = [ 53 ];
+        firewall.interfaces.cdiot.allowedUDPPorts = [ 53 67 ];
+        firewall.interfaces.cdguest.allowedTCPPorts = [ 53 ];
+        firewall.interfaces.cdguest.allowedUDPPorts = [ 53 67 ];
+      };
       boot = {
-        initrd.availableKernelModules =
-          [ "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
-        initrd.kernelModules = [ ];
-        kernelModules = [ "kvm-intel" ];
-        extraModulePackages = [ ];
         loader.systemd-boot.enable = true;
         loader.efi.canTouchEfiVariables = true;
-        loader.efi.efiSysMountPoint = "/boot/efi";
+        initrd.availableKernelModules =
+          [ "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
+        kernelModules = [ "kvm-intel" ];
       };
-      swapDevices = [ ];
-      hardware.cpu.intel.updateMicrocode = true;
-      nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+      cdcfg = {
+        users.toyvo.enable = true;
+        fs.boot.enable = true;
+        fs.btrfs.enable = true;
+      };
+
       systemd.network = {
         enable = true;
         networks = {
@@ -40,7 +60,7 @@ inputs.nixpkgs.lib.nixosSystem {
             networkConfig.DHCPServer = "yes";
             dhcpServerConfig = {
               ServerAddress = "192.168.0.1/24";
-              DNS = ["1.1.1.1" "1.0.0.1"];
+              DNS = [ "1.1.1.1" "1.0.0.1" ];
               PoolSize = 100;
               PoolOffset = 20;
             };
@@ -60,7 +80,7 @@ inputs.nixpkgs.lib.nixosSystem {
             networkConfig.DHCPServer = "yes";
             dhcpServerConfig = {
               ServerAddress = "192.168.10.1/24";
-              DNS = ["1.1.1.1" "1.0.0.1"];
+              DNS = [ "1.1.1.1" "1.0.0.1" ];
               PoolSize = 100;
               PoolOffset = 20;
             };
@@ -100,7 +120,7 @@ inputs.nixpkgs.lib.nixosSystem {
             networkConfig.DHCPServer = "yes";
             dhcpServerConfig = {
               ServerAddress = "192.168.20.1/24";
-              DNS = ["1.1.1.1" "1.0.0.1"];
+              DNS = [ "1.1.1.1" "1.0.0.1" ];
               PoolSize = 100;
               PoolOffset = 20;
             };
@@ -110,7 +130,7 @@ inputs.nixpkgs.lib.nixosSystem {
             networkConfig.DHCPServer = "yes";
             dhcpServerConfig = {
               ServerAddress = "192.168.30.1/24";
-              DNS = ["1.1.1.1" "1.0.0.1"];
+              DNS = [ "1.1.1.1" "1.0.0.1" ];
               PoolSize = 100;
               PoolOffset = 20;
             };
@@ -140,29 +160,6 @@ inputs.nixpkgs.lib.nixosSystem {
           };
         };
       };
-      networking = {
-        hostName = "Protectli";
-        useDHCP = false;
-        nameservers = [ "1.1.1.1" "1.0.0.1" ];
-        nat.enable = true;
-        nat.enableIPv6 = true;
-        nat.externalInterface = "enp1s0";
-        nat.internalInterfaces = [ "enp2s0" "enp3s0" "enp4s0" ];
-        firewall.interfaces.enp2s0.allowedTCPPorts = [ 53 22 ];
-        firewall.interfaces.enp2s0.allowedUDPPorts = [ 53 67 ];
-        firewall.interfaces.cdwifi.allowedTCPPorts = [ 53 22 ];
-        firewall.interfaces.cdwifi.allowedUDPPorts = [ 53 67 ];
-        firewall.interfaces.cdiot.allowedTCPPorts = [ 53 ];
-        firewall.interfaces.cdiot.allowedUDPPorts = [ 53 67 ];
-        firewall.interfaces.cdguest.allowedTCPPorts = [ 53 ];
-        firewall.interfaces.cdguest.allowedUDPPorts = [ 53 67 ];
-      };
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.extraSpecialArgs = { inherit inputs system; };
-      cdcfg.users.toyvo.enable = true;
-      cdcfg.fs.efi.enable = true;
-      cdcfg.fs.btrfs.enable = true;
     })
   ];
 }
