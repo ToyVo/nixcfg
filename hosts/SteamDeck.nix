@@ -39,14 +39,14 @@ inputs.nixpkgs.lib.nixosSystem {
       jovian = {
         devices.steamdeck.enable = true;
         steam.enable = true;
-        # steam.autoStart = true;
-        # steam.user = "toyvo";
-        # steam.desktopSession = "plasma-mobile";
+        steam.autoStart = true;
+        steam.user = "toyvo";
+        steam.desktopSession = "plasma-mobile";
       };
       environment.systemPackages = [
         pkgs.steam
       ];
-      # services.xserver.displayManager.sddm.enable = lib.mkForce false;
+      services.xserver.displayManager.sddm.enable = lib.mkForce false;
     })
   ];
 }

@@ -21,7 +21,7 @@
     nixvim.url = "github:pta2002/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
 
-    jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
+    jovian.url = "github:toyvo/Jovian-NixOS/rebased";
     jovian.inputs.nixpkgs.follows = "nixpkgs";
 
     rust-overlay.url = "github:oxalica/rust-overlay";
