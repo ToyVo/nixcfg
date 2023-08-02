@@ -124,7 +124,11 @@ inputs.nixpkgs.lib.nixosSystem {
       '';
       services.adguardhome = {
         enable = true;
-        settings.dns.bind_hosts = [ "127.0.1.53" ];
+        mutableSettings = false;
+        settings.dns = {
+          bind_hosts = [ "127.0.1.53" ];
+          bootstrap_dns = [ "9.9.9.9" ];
+        };
       };
     })
   ];
