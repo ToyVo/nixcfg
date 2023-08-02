@@ -24,5 +24,6 @@ in
       yubioath-flutter
     ]
     ++ lib.optionals (system == "x86_64-linux") [ keybase-gui ];
+    fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) font-awesome ];
   };
 }

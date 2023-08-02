@@ -3,6 +3,7 @@
   services.nix-daemon.enable = true;
   security.pam.enableSudoTouchIdAuth = true;
   fonts.fontDir.enable = true;
+  fonts.fonts = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) font-awesome ];
   system = {
     stateVersion = 4;
     keyboard.enableKeyMapping = true;
