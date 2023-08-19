@@ -73,6 +73,7 @@ in
           ./wezterm.nix
           ./zellij.nix
           ./zsh.nix
+          ./vscode.nix
         ] ++ cfg.extraHomeManagerModules;
       };
     };

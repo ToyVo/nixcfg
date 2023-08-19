@@ -9,10 +9,10 @@ in
 
   config = lib.mkIf cfg.enable {
     programs.zsh.initExtra = ''
-      if [ -z "$SSH_TTY" ] && [ -z "$SSH_CLIENT" ] && [ -z "$SSH_CONNECTION" ]; then
-        if [ -z "$TERMINAL_EMULATOR" ] || [ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]; then
-          eval "$(zellij setup --generate-auto-start zsh)"
-        fi
+      if [ -z "$SSH_TTY" ] && [ -z "$SSH_CLIENT" ] && [ -z "$SSH_CONNECTION" ] && \
+          ([ -z "$TERMINAL_EMULATOR" ] || [ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]) && \
+          ([ -z "$TERM_PROGRAM" ] || [ "$TERM_PROGRAM" != "vscode" ]); then
+        eval "$(zellij setup --generate-auto-start zsh)"
       fi
     '';
     programs.zellij = {
