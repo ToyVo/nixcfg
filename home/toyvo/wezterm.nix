@@ -26,7 +26,7 @@ in
       
       -- For example, changing the color scheme:
       config.font = wezterm.font("FiraCode Nerd Font")
-      config.color_scheme = "Everforest Dark (Gogh)"
+      config.color_scheme = "Gruvbox Dark (Gogh)"
       config.initial_rows = 30
       config.initial_cols = 120
       config.window_background_opacity = 0.9

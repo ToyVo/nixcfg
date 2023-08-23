@@ -12,9 +12,9 @@ in
       enable = true;
       delta.enable = true;
       delta.options = {
-        syntax-theme = "everforest-dark";
-        minus-style = ''syntax "#514045"'';
-        plus-style = ''syntax "#425047"'';
+        syntax-theme = "gruvbox-dark";
+        minus-style = ''syntax "#cc241d"'';
+        plus-style = ''syntax "#689d6a"'';
         side-by-side = true;
         line-numbers = true;
       };

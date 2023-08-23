@@ -560,7 +560,7 @@ in
         "custom/powermenu" = {
           format = "";
           on-click =
-            "pkill wofi || sh .config/wofi/scripts/powermenu.sh 'everforest-light' '--height=17% -o $MAIN_DISPLAY'";
+            "pkill wofi || sh .config/wofi/scripts/powermenu.sh 'gruvbox-light' '--height=17% -o $MAIN_DISPLAY'";
           tooltip = false;
         };
       }];

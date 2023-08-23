@@ -315,22 +315,26 @@
       nvim-dap
       telescope-ui-select-nvim
       telescope-dap-nvim
-      everforest
+      gruvbox-nvim
     ];
 
     extraConfigLua = ''
       do
         -- When I open neovide from an application launcher, it opens in /, so I change it to ~
         -- this means I can't do `neovide /` in the shell
+        local gruvbox = require("gruvbox");
         if vim.g.neovide then
           vim.g.neovide_transparency = 0.9;
           if vim.fn.getcwd() == "/" then
             vim.cmd("cd ~");
           end
+          gruvbox.setup();
         else
-          vim.g.everforest_transparent_background = 1;
+          gruvbox.setup({
+            transparent_mode = true;
+          });
         end
-        vim.cmd("colorscheme everforest")
+        vim.cmd("colorscheme gruvbox")
       end
 
       do

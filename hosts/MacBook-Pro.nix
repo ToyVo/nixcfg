@@ -10,10 +10,12 @@ inputs.darwin.lib.darwinSystem {
     inputs.nixvim.nixDarwinModules.nixvim
     ../darwin
     ../home/toyvo
-    {
+    ({ pkgs, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       cdcfg.users.toyvo.enable = true;
-
+      environment.systemPackages = with pkgs; [
+        openscad
+      ];
       homebrew.casks = [
         { name = "prusaslicer"; greedy = true; }
       ];
@@ -21,6 +23,6 @@ inputs.darwin.lib.darwinSystem {
         "Yubico Authenticator" = 1497506650;
         "Wireguard" = 1451685025;
       };
-    }
+    })
   ];
 }
