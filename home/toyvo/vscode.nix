@@ -24,6 +24,20 @@ in
         # Can be added to the above when merged https://github.com/NixOS/nixpkgs/pull/211321
         # vadimcn.vscode-lldb
       ];
+      userSettings = {
+        "workbench.colorTheme" = "Gruvbox Dark Medium";
+        "editor.formatOnSave" = true;
+        "editor.formatOnSaveMode" = "modificationsIfAvailable";
+        "files.autoSave" = "onFocusChange";
+        "prettier.tabWidth" = 4;
+        "prettier.singleQuote" = true;
+        "editor.fontSize" = 14;
+        "editor.fontLigatures" = true;
+        "editor.fontFamily" = "'FiraCode Nerd Font' ,'Font Awesome 6 Free'";
+        "[javascript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+        "[json]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+        "git.autofetch" = true;
+      };
     };
   };
 }
