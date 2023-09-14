@@ -66,7 +66,7 @@ in
 
         imports = [
           ./bat.nix
-          ./exa.nix
+          ./eza.nix
           ./git.nix
           ./gpg.nix
           ./ssh.nix

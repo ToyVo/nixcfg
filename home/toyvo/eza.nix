@@ -1,19 +1,19 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.cdcfg.exa;
+  cfg = config.cdcfg.eza;
 in
 {
-  options.cdcfg.exa.enable = lib.mkEnableOption "Enable exa" // {
+  options.cdcfg.eza.enable = lib.mkEnableOption "Enable eza" // {
     default = true;
   };
 
   config = lib.mkIf cfg.enable {
-    programs.exa = {
+    programs.eza = {
       enable = true;
       enableAliases = true;
     };
     home.shellAliases = {
-      tree = "exa --tree";
+      tree = "eza --tree";
     };
   };
 }
