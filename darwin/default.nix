@@ -26,6 +26,7 @@
     # nix package not available on darwin
     { name = "firefox"; greedy = true; }
     { name = "thunderbird"; greedy = true; }
+    { name = "protonmail-bridge"; greedy = true; }
     { name = "jetbrains-toolbox"; greedy = true; }
     { name = "insomnia"; greedy = true; }
     { name = "libreoffice"; greedy = true; }
