@@ -38,10 +38,7 @@ in
       wget
       lsof
       dig
-      wasmer
-      deno
       bun
-      nodejs_20
       ripgrep
       fd
       openssh
@@ -53,10 +50,9 @@ in
     ++ lib.optionals cfg.packages.rust.enable [
       cargo-watch
       rust-analyzer
-      (rust-bin.selectLatestNightlyWith
-        (toolchain: toolchain.default.override {
+      (rust-bin.beta.latest.default.override {
           extensions = [ "rust-src" ];
-        }))
+      })
     ];
     nixpkgs.overlays = [ ]
     ++ lib.optionals cfg.packages.rust.enable [

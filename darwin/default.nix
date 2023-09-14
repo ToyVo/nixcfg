@@ -25,7 +25,7 @@
   homebrew.casks = [
     # nix package not available on darwin
     { name = "firefox"; greedy = true; }
-    { name = "brave-browser"; greedy = true; }
+    { name = "thunderbird"; greedy = true; }
     { name = "jetbrains-toolbox"; greedy = true; }
     { name = "insomnia"; greedy = true; }
     { name = "libreoffice"; greedy = true; }
