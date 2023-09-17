@@ -42,6 +42,7 @@ in
       ripgrep
       fd
       openssh
+      helix
     ]
     ++ lib.optionals cfg.packages.gui.enable [
       gimp

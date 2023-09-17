@@ -74,6 +74,7 @@ in
           ./zellij.nix
           ./zsh.nix
           ./vscode.nix
+          ./helix.nix
         ] ++ cfg.extraHomeManagerModules;
       };
     };
