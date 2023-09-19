@@ -44,7 +44,7 @@
       PineBook-Pro = import ./hosts/PineBook-Pro.nix inputs;
       router = import ./hosts/router.nix inputs;
       ncase = import ./hosts/ncase.nix inputs;
-      steamdeck = import ./hosts/SteamDeck.nix inputs;
+      steamdeck-nixos = import ./hosts/steamdeck-nixos.nix inputs;
     };
   };
 

@@ -17,7 +17,7 @@ inputs.nixpkgs.lib.nixosSystem {
       nixpkgs.hostPlatform = lib.mkDefault system;
       nixpkgs.overlays = [ inputs.jovian.overlays.jovian ];
       hardware.cpu.amd.updateMicrocode = true;
-      networking.hostName = "steamdeck";
+      networking.hostName = "steamdeck-nixos";
       boot = {
         loader.systemd-boot.enable = true;
         loader.efi.canTouchEfiVariables = true;
@@ -28,7 +28,7 @@ inputs.nixpkgs.lib.nixosSystem {
         users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;
-        plasma.mobile.enable = true;
+        plasma.enable = true;
       };
 
       fileSystems."/mnt/POOL" = {
@@ -41,7 +41,7 @@ inputs.nixpkgs.lib.nixosSystem {
         steam.enable = true;
         steam.autoStart = true;
         steam.user = "toyvo";
-        steam.desktopSession = "plasma-mobile";
+        steam.desktopSession = "plasma-wayland";
       };
       environment.systemPackages = [
         pkgs.steam

@@ -20,10 +20,6 @@ inputs.darwin.lib.darwinSystem {
         ];
       };
 
-      environment.systemPackages = with pkgs; [
-        slack
-      ];
-
       homebrew = {
         brews = [
           "mongosh"
@@ -34,6 +30,7 @@ inputs.darwin.lib.darwinSystem {
         casks = [
           { name = "docker"; greedy = true; }
           { name = "mongodb-compass"; greedy = true; }
+          { name = "slack"; greedy = true; }
         ];
         taps = [
           "mongodb/brew"
