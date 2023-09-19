@@ -75,6 +75,7 @@ in
           ./zsh.nix
           ./vscode.nix
           ./helix.nix
+          ./rio.nix
         ] ++ cfg.extraHomeManagerModules;
       };
     };
