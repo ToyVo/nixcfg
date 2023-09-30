@@ -36,6 +36,8 @@
       "[d" = { action = "vim.diagnostic.goto_prev"; lua = true; };
       "]d" = { action = "vim.diagnostic.goto_next"; lua = true; };
       "<leader>q" = { action = "vim.diagnostic.setloclist"; lua = true; };
+      # remap U to <C-r> for redo
+      "U" = "<C-r>";
     };
 
     maps.insert."<C-c>" = "<Esc>";

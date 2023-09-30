@@ -51,6 +51,7 @@ in
         unignore = "update-index --no-assume-unchanged";
         ignored = "!git ls-files -v | grep ^h | cut -c 3-";
         rbm = "!git fetch && git rebase origin/main";
+        rbc = "-c core.editor=true rebase --continue";
       };
     };
   };

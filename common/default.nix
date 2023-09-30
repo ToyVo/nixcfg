@@ -33,20 +33,23 @@ in
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
     environment.systemPackages = with pkgs; [
+      broot
+      bun
       coreutils
       curl
-      wget
-      lsof
       dig
-      bun
-      ripgrep
+      dogdns
       fd
-      openssh
+      gping
       helix
+      lsof
+      openssh
+      ripgrep
+      wget
     ]
     ++ lib.optionals cfg.packages.gui.enable [
-      gimp
       element-desktop
+      gimp
     ]
     ++ lib.optionals cfg.packages.rust.enable [
       cargo-watch

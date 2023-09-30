@@ -28,7 +28,7 @@
     { name = "thunderbird"; greedy = true; }
     { name = "protonmail-bridge"; greedy = true; }
     { name = "jetbrains-toolbox"; greedy = true; }
-    { name = "insomnia"; greedy = true; }
+    { name = "bruno"; greedy = true; }
     { name = "libreoffice"; greedy = true; }
     { name = "keybase"; greedy = true; }
     { name = "grammarly"; greedy = true; }
