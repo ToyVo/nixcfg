@@ -20,10 +20,8 @@ in
       _1password
       _1password-gui
       yubikey-manager-qt
-      yubikey-personalization-gui
       yubioath-flutter
-    ]
-    ++ lib.optionals (system == "x86_64-linux") [ keybase-gui ];
+    ];
     fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) font-awesome ];
   };
 }

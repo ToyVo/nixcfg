@@ -13,6 +13,9 @@ in
       libinput.enable = true;
     };
     programs.gnupg.agent.pinentryFlavor = "gnome3";
-    environment.systemPackages = [ pkgs.gnome.gnome-tweaks ];
+    environment.systemPackages = with pkgs; [ 
+      gnome.gnome-tweaks
+      gnome-extension-manager
+    ];
   };
 }
