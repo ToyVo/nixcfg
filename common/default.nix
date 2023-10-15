@@ -45,6 +45,7 @@ in
       lsof
       openssh
       ripgrep
+      rsync
       wget
     ]
     ++ lib.optionals cfg.packages.gui.enable [
@@ -52,15 +53,9 @@ in
       gimp
     ]
     ++ lib.optionals cfg.packages.rust.enable [
+      rustup
       cargo-watch
-      rust-analyzer
-      (rust-bin.beta.latest.default.override {
-          extensions = [ "rust-src" ];
-      })
-    ];
-    nixpkgs.overlays = [ ]
-    ++ lib.optionals cfg.packages.rust.enable [
-      inputs.rust-overlay.overlays.default
+      cargo-generate
     ];
   };
 }

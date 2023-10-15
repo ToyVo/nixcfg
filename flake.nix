@@ -23,8 +23,6 @@
 
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     jovian.inputs.nixpkgs.follows = "nixpkgs";
-
-    rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
   outputs = inputs: {
