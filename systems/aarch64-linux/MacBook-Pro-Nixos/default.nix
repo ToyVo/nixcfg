@@ -10,7 +10,7 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.nixpkgs.nixosModules.notDetected
     inputs.home-manager.nixosModules.home-manager
     ../../../modules/nixos/cd-nixos
-    ../../../modules/nixos/toyvo
+    ../../../modules/nixos/users/toyvo
     ({ lib, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;

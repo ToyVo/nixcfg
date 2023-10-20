@@ -10,7 +10,7 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.home-manager.nixosModules.home-manager
     inputs.hyprland.nixosModules.default
     ../../../modules/nixos/cd-nixos
-    ../../../modules/nixos/toyvo
+    ../../../modules/nixos/users/toyvo
     ({ pkgs, lib, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;
@@ -29,7 +29,6 @@ inputs.nixpkgs.lib.nixosSystem {
           extraHomeManagerModules = [
             inputs.hyprland.homeManagerModules.default
             ../../../modules/home/hyprland
-
           ];
         };
         fs.boot.enable = true;
@@ -37,7 +36,6 @@ inputs.nixpkgs.lib.nixosSystem {
         gnome.enable = true;
         hyprland.enable = true;
       };
-
       services.xserver.videoDrivers = [ "amdgpu" ];
       hardware.opengl = {
         extraPackages = with pkgs; [

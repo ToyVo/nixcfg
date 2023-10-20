@@ -10,7 +10,7 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.home-manager.nixosModules.home-manager
     inputs.jovian.nixosModules.jovian
     ../../../modules/nixos/cd-nixos
-    ../../../modules/nixos/toyvo
+    ../../../modules/nixos/users/toyvo
     ({ lib, pkgs, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;
@@ -24,7 +24,6 @@ inputs.nixpkgs.lib.nixosSystem {
         kernelModules = [ "kvm-amd" ];
       };
       cd = {
-
         users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;

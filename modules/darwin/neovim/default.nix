@@ -4,4 +4,3 @@
     ../../nixos/neovim/common.nix
   ];
 }
-

@@ -8,7 +8,7 @@ inputs.darwin.lib.darwinSystem {
   modules = [
     inputs.home-manager.darwinModules.home-manager
     ../../../modules/darwin/cd-darwin
-    ../../../modules/darwin/toyvo
+    ../../../modules/darwin/users/toyvo
     ({ pkgs, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       cd.users.toyvo = {
@@ -16,9 +16,11 @@ inputs.darwin.lib.darwinSystem {
         name = "CollinDie";
         extraHomeManagerModules = [
           ../../../modules/home/emu
+          {
+            cd.emu.enable = true;
+          }
         ];
       };
-
       homebrew = {
         brews = [
           "mongosh"

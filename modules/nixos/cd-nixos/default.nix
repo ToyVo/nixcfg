@@ -9,12 +9,12 @@ in
     ../desktops/xfce
     ../desktops/hyprland
     ../desktops/plasma
-    ../filesystem/boot
-    ../filesystem/btrfs
+    ../filesystems/boot
+    ../filesystems/btrfs
     ../neovim
   ];
 
-  config = {
+  config = lib.mkIf cfg.defaults.enable {
     networking.networkmanager.enable = true;
     time.timeZone = "America/Chicago";
     i18n.defaultLocale = "en_US.UTF-8";
@@ -47,7 +47,6 @@ in
       yubikey-manager-qt
       yubioath-flutter
     ];
-
     programs.ssh.startAgent = false;
     programs.gnupg.agent = {
       enable = true;

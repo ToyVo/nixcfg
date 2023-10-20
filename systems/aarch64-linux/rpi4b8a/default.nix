@@ -10,7 +10,7 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
     inputs.home-manager.nixosModules.home-manager
     ../../../modules/nixos/cd-nixos
-    ../../../modules/nixos/toyvo
+    ../../../modules/nixos/users/toyvo
     ({ lib, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";

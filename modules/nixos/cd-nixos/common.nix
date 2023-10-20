@@ -3,11 +3,16 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.packages.gui.enable = lib.mkEnableOption "GUI Applications" // {
-    default = true;
+  options.cd = {
+    packages.gui.enable = lib.mkEnableOption "GUI Applications" // {
+      default = true;
+    };
+    defaults.enable = lib.mkEnableOption "Enable Defaults" // {
+      default = true;
+    };
   };
 
-  config = {
+  config = lib.mkIf cfg.defaults.enable {
     programs.zsh.enable = true;
     nixpkgs.config.allowUnfree = true;
     nix.extraOptions = ''

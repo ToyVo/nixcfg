@@ -3,8 +3,10 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.plasma.enable = lib.mkEnableOption "Enable Plasma";
-  options.cd.plasma.mobile.enable = lib.mkEnableOption "Enable Plasma Mobile";
+  options.cd.plasma = {
+    enable = lib.mkEnableOption "Enable Plasma";
+    mobile.enable = lib.mkEnableOption "Enable Plasma Mobile";
+  };
 
   config = lib.mkIf (cfg.plasma.enable || cfg.plasma.mobile.enable) {
     services.xserver = {
