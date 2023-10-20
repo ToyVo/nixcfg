@@ -17,5 +17,6 @@ in
       gnome.gnome-tweaks
       gnome-extension-manager
     ];
+    cd.packages.gui.enable = true;
   };
 }

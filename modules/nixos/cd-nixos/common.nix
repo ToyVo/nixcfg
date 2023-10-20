@@ -7,10 +7,6 @@ in
     default = true;
   };
 
-  options.cd.packages.rust.enable = lib.mkEnableOption "Rust toolchain" // {
-    default = true;
-  };
-
   config = {
     programs.zsh.enable = true;
     nixpkgs.config.allowUnfree = true;
@@ -48,16 +44,13 @@ in
       jq
       nixpkgs-fmt
       git-crypt
-
+      rustup
+      cargo-watch
+      cargo-generate
     ]
     ++ lib.optionals cfg.packages.gui.enable [
       element-desktop
       gimp
-    ]
-    ++ lib.optionals cfg.packages.rust.enable [
-      rustup
-      cargo-watch
-      cargo-generate
     ];
   };
 }

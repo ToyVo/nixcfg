@@ -7,5 +7,6 @@ in
 
   config = lib.mkIf cfg.hyprland.enable {
     programs.hyprland.enable = true;
+    cd.packages.gui.enable = true;
   };
 }

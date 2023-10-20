@@ -12,5 +12,6 @@ in
       desktopManager.xfce.enable = true;
       libinput.enable = true;
     };
+    cd.packages.gui.enable = true;
   };
 }

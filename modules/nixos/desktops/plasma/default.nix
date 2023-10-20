@@ -15,5 +15,6 @@ in
       libinput.enable = true;
     };
     programs.gnupg.agent.pinentryFlavor = "qt";
+    cd.packages.gui.enable = true;
   };
 }
