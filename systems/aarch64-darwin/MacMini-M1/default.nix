@@ -10,7 +10,8 @@ inputs.darwin.lib.darwinSystem {
     inputs.nixvim.nixDarwinModules.nixvim
 ../../../modules/darwin/cd-darwin
 
-    ../../../home/toyvo
+../../../modules/nixos/toyvo
+
     {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       cdcfg.users.toyvo.enable = true;

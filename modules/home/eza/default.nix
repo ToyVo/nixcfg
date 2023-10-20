@@ -12,8 +12,5 @@ in
       enable = true;
       enableAliases = true;
     };
-    home.shellAliases = {
-      tree = "eza --tree";
-    };
   };
 }

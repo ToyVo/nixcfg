@@ -11,7 +11,8 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.home-manager.nixosModules.home-manager
 ../../../modules/nixos/cd-nixos
 
-    ../../../home/toyvo
+../../../modules/nixos/toyvo
+
     ({ lib, pkgs, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;

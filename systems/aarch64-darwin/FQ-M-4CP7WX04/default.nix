@@ -9,15 +9,16 @@ inputs.darwin.lib.darwinSystem {
     inputs.home-manager.darwinModules.home-manager
     inputs.nixvim.nixDarwinModules.nixvim
 ../../../modules/darwin/cd-darwin
+../../../modules/nixos/toyvo
 
-    ../../../home/toyvo
     ({pkgs, ...}: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       cdcfg.users.toyvo = {
         enable = true;
         name = "CollinDie";
         extraHomeManagerModules = [
-          ../../../home/toyvo/emu.nix
+../../../modules/home/emu
+
         ];
       };
 

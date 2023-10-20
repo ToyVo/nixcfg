@@ -18,7 +18,8 @@ in
   config =
     let
       homeDirectory = if pkgs.stdenv.isDarwin then "/Users/${cfg.name}" else "/home/${cfg.name}";
-      key = lib.fileContents ./keys/ssh_yubikey.pub;
+key = lib.fileContents ../../home/ssh/ssh_yubikey.pub;
+
     in
     lib.mkIf cfg.enable {
       users.users.${cfg.name} = lib.mkMerge [
@@ -65,17 +66,17 @@ in
         services.kbfs.enable = pkgs.stdenv.isLinux;
 
         imports = [
-          ./bat.nix
-          ./eza.nix
-          ./git.nix
-          ./gpg.nix
-          ./ssh.nix
-          ./wezterm.nix
-          ./zellij.nix
-          ./zsh.nix
-          ./vscode.nix
-          ./helix.nix
-          ./rio.nix
+          ../../home/bat
+          ../../home/eza
+          ../../home/git
+          ../../home/gpg
+          ../../home/ssh
+          ../../home/wezterm
+          ../../home/zellij
+          ../../home/zsh
+          ../../home/vscode
+          ../../home/helix
+          ../../home/rio
         ] ++ cfg.extraHomeManagerModules;
       };
     };

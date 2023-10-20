@@ -12,7 +12,8 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.hyprland.nixosModules.default
 ../../../modules/nixos/cd-nixos
 
-    ../../../home/toyvo
+../../../modules/nixos/toyvo
+
     ({ pkgs, lib, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;
@@ -30,7 +31,8 @@ inputs.nixpkgs.lib.nixosSystem {
           enable = true;
           extraHomeManagerModules = [
             inputs.hyprland.homeManagerModules.default
-            ../home/toyvo/hyprland.nix
+../../../modules/home/hyprland
+
           ];
         };
         fs.boot.enable = true;
