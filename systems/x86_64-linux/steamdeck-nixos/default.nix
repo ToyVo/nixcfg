@@ -1,4 +1,4 @@
-inputs:
+{ inputs, ... }:
 let
   system = "x86_64-linux";
 in
@@ -10,8 +10,8 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.nixvim.nixosModules.nixvim
     inputs.home-manager.nixosModules.home-manager
     inputs.jovian.nixosModules.jovian
-    ../nixos
-    ../home/toyvo
+    ../../../nixos
+    ../../../home/toyvo
     ({ lib, pkgs, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;

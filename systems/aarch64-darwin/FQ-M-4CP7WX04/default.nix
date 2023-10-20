@@ -1,4 +1,4 @@
-inputs:
+{ inputs, ... }:
 let
   system = "aarch64-darwin";
 in
@@ -8,15 +8,15 @@ inputs.darwin.lib.darwinSystem {
   modules = [
     inputs.home-manager.darwinModules.home-manager
     inputs.nixvim.nixDarwinModules.nixvim
-    ../darwin
-    ../home/toyvo
+    ../../../darwin
+    ../../../home/toyvo
     ({pkgs, ...}: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       cdcfg.users.toyvo = {
         enable = true;
         name = "CollinDie";
         extraHomeManagerModules = [
-          ../home/toyvo/emu.nix
+          ../../../home/toyvo/emu.nix
         ];
       };
 

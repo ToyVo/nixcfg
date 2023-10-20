@@ -1,4 +1,4 @@
-inputs:
+{ inputs, ... }:
 let
   system = "x86_64-linux";
 in
@@ -7,16 +7,15 @@ inputs.nixpkgs.lib.nixosSystem {
   specialArgs = { inherit inputs; };
   modules = [
     inputs.nixpkgs.nixosModules.notDetected
-    inputs.home-manager.nixosModules.home-manager
     inputs.nixvim.nixosModules.nixvim
-    inputs.hyprland.nixosModules.default
-    ../nixos
-    ../home/toyvo
-    ({ pkgs, lib, ... }: {
+    inputs.home-manager.nixosModules.home-manager
+    ../../../nixos
+    ../../../home/toyvo
+    ({ lib, pkgs, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;
       hardware.cpu.amd.updateMicrocode = true;
-      networking.hostName = "Thinkpad";
+      networking.hostName = "HP-Envy";
       boot = {
         loader.systemd-boot.enable = true;
         loader.efi.canTouchEfiVariables = true;
@@ -25,17 +24,10 @@ inputs.nixpkgs.lib.nixosSystem {
         kernelModules = [ "kvm-amd" "amdgpu" ];
       };
       cdcfg = {
-        users.toyvo = {
-          enable = true;
-          extraHomeManagerModules = [
-            inputs.hyprland.homeManagerModules.default
-            ../home/toyvo/hyprland.nix
-          ];
-        };
+        users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;
         gnome.enable = true;
-        hyprland.enable = true;
       };
 
       services.xserver.videoDrivers = [ "amdgpu" ];

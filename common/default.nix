@@ -48,6 +48,7 @@ in
       rsync
       wget
       jq
+      nixpkgs-fmt
     ]
     ++ lib.optionals cfg.packages.gui.enable [
       element-desktop

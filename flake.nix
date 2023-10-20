@@ -27,22 +27,23 @@
 
   outputs = inputs: {
     darwinConfigurations = {
-      MacBook-Pro = import ./hosts/MacBook-Pro.nix inputs;
-      MacMini-M1 = import ./hosts/MacMini-M1.nix inputs;
-      FQ-M-4CP7WX04 = import ./hosts/FQ-M-4CP7WX04.nix inputs;
+      MacBook-Pro = import ./systems/aarch64-darwin/MacBook-Pro { inherit inputs; };
+      MacMini-M1 = import ./systems/aarch64-darwin/MacMini-M1 { inherit inputs; };
+      FQ-M-4CP7WX04 = import ./systems/aarch64-darwin/FQ-M-4CP7WX04 { inherit inputs; };
     };
 
     nixosConfigurations = {
-      Thinkpad = import ./hosts/Thinkpad.nix inputs;
-      HP-Envy = import ./hosts/HP-Envy.nix inputs;
-      HP-ZBook = import ./hosts/HP-ZBook.nix inputs;
-      Protectli = import ./hosts/Protectli.nix inputs;
-      MacBook-Pro-Nixos = import ./hosts/MacBook-Pro-Nixos.nix inputs;
-      rpi4b8a = import ./hosts/rpi4b8a.nix inputs;
-      PineBook-Pro = import ./hosts/PineBook-Pro.nix inputs;
-      router = import ./hosts/router.nix inputs;
-      ncase = import ./hosts/ncase.nix inputs;
-      steamdeck-nixos = import ./hosts/steamdeck-nixos.nix inputs;
+      Thinkpad = import ./systems/x86_64-linux/Thinkpad { inherit inputs; };
+      HP-Envy = import ./systems/x86_64-linux/HP-Envy { inherit inputs; };
+      HP-ZBook = import ./systems/x86_64-linux/HP-ZBook { inherit inputs; };
+      Protectli = import ./systems/x86_64-linux/Protectli { inherit inputs; };
+      router = import ./systems/x86_64-linux/router { inherit inputs; };
+      ncase = import ./systems/x86_64-linux/ncase { inherit inputs; };
+      steamdeck-nixos = import ./systems/x86_64-linux/steamdeck-nixos { inherit inputs; };
+
+      MacBook-Pro-Nixos = import ./systems/aarch64-linux/MacBook-Pro-Nixos { inherit inputs; };
+      rpi4b8a = import ./systems/aarch64-linux/rpi4b8a { inherit inputs; };
+      PineBook-Pro = import ./systems/aarch64-linux/PineBook-Pro { inherit inputs; };
     };
   };
 
