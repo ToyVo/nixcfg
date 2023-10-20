@@ -6,9 +6,11 @@ inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
-    ../../../modules/nixos/cd-nixos
-    ../../../modules/nixos/users/toyvo
     ({ lib, pkgs, ... }: {
+      imports = [
+        ../../../modules/nixos/cd-nixos
+        ../../../modules/nixos/users/toyvo
+      ];
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;
       hardware.cpu.amd.updateMicrocode = true;

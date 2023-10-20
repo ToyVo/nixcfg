@@ -6,13 +6,15 @@ inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
-    inputs.nixos-hardware.nixosModules.raspberry-pi-4
-    ../../../modules/nixos/cd-nixos
-    ../../../modules/nixos/users/toyvo
     ({ lib, ... }: {
+      imports = [
+        inputs.nixos-hardware.nixosModules.raspberry-pi-4
+        ../../../modules/nixos/cd-nixos
+        ../../../modules/nixos/users/toyvo
+      ];
       home-manager.extraSpecialArgs = { inherit inputs system; };
-      powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
       nixpkgs.hostPlatform = lib.mkDefault system;
+      powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
       networking.hostName = "rpi4b8a";
       boot = {
         loader.grub.enable = false;

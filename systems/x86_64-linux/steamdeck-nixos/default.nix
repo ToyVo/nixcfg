@@ -6,10 +6,12 @@ inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
-    inputs.jovian.nixosModules.jovian
-    ../../../modules/nixos/cd-nixos
-    ../../../modules/nixos/users/toyvo
     ({ lib, pkgs, ... }: {
+      imports = [
+        inputs.jovian.nixosModules.jovian
+        ../../../modules/nixos/cd-nixos
+        ../../../modules/nixos/users/toyvo
+      ];
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;
       nixpkgs.overlays = [ inputs.jovian.overlays.jovian ];

@@ -6,10 +6,12 @@ inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
-    inputs.apple-silicon-support.nixosModules.apple-silicon-support
-    ../../../modules/nixos/cd-nixos
-    ../../../modules/nixos/users/toyvo
     ({ lib, ... }: {
+      imports = [
+        inputs.apple-silicon-support.nixosModules.apple-silicon-support
+        ../../../modules/nixos/cd-nixos
+        ../../../modules/nixos/users/toyvo
+      ];
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;
       powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";

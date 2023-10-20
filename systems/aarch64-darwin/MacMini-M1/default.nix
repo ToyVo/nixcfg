@@ -6,9 +6,11 @@ inputs.darwin.lib.darwinSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
-    ../../../modules/darwin/cd-darwin
-    ../../../modules/darwin/users/toyvo
-    {
+    ({ ... }: {
+      imports = [
+        ../../../modules/darwin/cd-darwin
+        ../../../modules/darwin/users/toyvo
+      ];
       home-manager.extraSpecialArgs = { inherit inputs system; };
       cd.defaults.enable = true;
       cd.users.toyvo.enable = true;
@@ -16,6 +18,6 @@ inputs.darwin.lib.darwinSystem {
         { name = "prusaslicer"; greedy = true; }
         { name = "google-chrome"; greedy = true; }
       ];
-    }
+    })
   ];
 }
