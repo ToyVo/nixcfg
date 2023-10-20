@@ -44,7 +44,6 @@ in
       wget
       jq
       nixpkgs-fmt
-      git-crypt
       rustup
       cargo-watch
       cargo-generate

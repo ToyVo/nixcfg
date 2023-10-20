@@ -1,1 +1,0 @@
-modules/home/emu/default.nix filter=git-crypt diff=git-crypt
