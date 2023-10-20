@@ -1,19 +1,4 @@
-{ inputs, ... }:
-let
-  system = "aarch64-linux";
-in
-inputs.nixpkgs.lib.nixosSystem {
-  inherit system;
-  specialArgs = { inherit inputs; };
-  modules = [
-    ({ lib, ... }: {
-      imports = [
-        inputs.nixos-hardware.nixosModules.raspberry-pi-4
-        ../../../modules/nixos/cd-nixos
-        ../../../modules/nixos/users/toyvo
-      ];
-      home-manager.extraSpecialArgs = { inherit inputs system; };
-      nixpkgs.hostPlatform = lib.mkDefault system;
+{ lib, ... }: {
       powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
       networking.hostName = "rpi4b8a";
       boot = {
@@ -29,6 +14,4 @@ inputs.nixpkgs.lib.nixosSystem {
         fs.btrfs.enable = true;
       };
       hardware.raspberry-pi."4".fkms-3d.enable = true;
-    })
-  ];
-}
+    }

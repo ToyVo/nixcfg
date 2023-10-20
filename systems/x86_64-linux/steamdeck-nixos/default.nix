@@ -1,19 +1,4 @@
-{ inputs, ... }:
-let
-  system = "x86_64-linux";
-in
-inputs.nixpkgs.lib.nixosSystem {
-  inherit system;
-  specialArgs = { inherit inputs; };
-  modules = [
-    ({ lib, pkgs, ... }: {
-      imports = [
-        inputs.jovian.nixosModules.jovian
-        ../../../modules/nixos/cd-nixos
-        ../../../modules/nixos/users/toyvo
-      ];
-      home-manager.extraSpecialArgs = { inherit inputs system; };
-      nixpkgs.hostPlatform = lib.mkDefault system;
+{ lib, pkgs, ... }: {
       nixpkgs.overlays = [ inputs.jovian.overlays.jovian ];
       hardware.cpu.amd.updateMicrocode = true;
       networking.hostName = "steamdeck-nixos";
@@ -46,6 +31,4 @@ inputs.nixpkgs.lib.nixosSystem {
         pkgs.steam
       ];
       services.xserver.displayManager.sddm.enable = lib.mkForce false;
-    })
-  ];
-}
+    }

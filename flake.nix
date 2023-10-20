@@ -11,6 +11,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    snowfall-lib = {
+      url = "github:snowfallorg/lib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Hardware
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -38,25 +46,27 @@
     };
   };
 
-  outputs = inputs: {
-    darwinConfigurations = {
-      MacBook-Pro = import ./systems/aarch64-darwin/MacBook-Pro { inherit inputs; };
-      MacMini-M1 = import ./systems/aarch64-darwin/MacMini-M1 { inherit inputs; };
-      FQ-M-4CP7WX04 = import ./systems/aarch64-darwin/FQ-M-4CP7WX04 { inherit inputs; };
+  outputs = inputs:
+  let
+    lib = inputs.snowfall-lib.mkLib {
+      inherit inputs;
+      src = ./.;
     };
-
-    nixosConfigurations = {
-      Thinkpad = import ./systems/x86_64-linux/Thinkpad { inherit inputs; };
-      HP-Envy = import ./systems/x86_64-linux/HP-Envy { inherit inputs; };
-      HP-ZBook = import ./systems/x86_64-linux/HP-ZBook { inherit inputs; };
-      Protectli = import ./systems/x86_64-linux/Protectli { inherit inputs; };
-      router = import ./systems/x86_64-linux/router { inherit inputs; };
-      ncase = import ./systems/x86_64-linux/ncase { inherit inputs; };
-      steamdeck-nixos = import ./systems/x86_64-linux/steamdeck-nixos { inherit inputs; };
-
-      MacBook-Pro-Nixos = import ./systems/aarch64-linux/MacBook-Pro-Nixos { inherit inputs; };
-      rpi4b8a = import ./systems/aarch64-linux/rpi4b8a { inherit inputs; };
-      PineBook-Pro = import ./systems/aarch64-linux/PineBook-Pro { inherit inputs; };
+  in lib.mkFlake {
+    channels-config.allowUnfree = true;
+    systems.hosts = {
+      MacBook-Pro-Nixos.modules = [
+        inputs.apple-silicon-support.nixosModules.apple-silicon-support
+      ];
+      PineBook-Pro.modules = [
+        inputs.nixos-hardware.nixosModules.pine64-pinebook-pro
+      ];
+      rpi4b8a.modules = [
+        inputs.nixos-hardware.nixosModules.raspberry-pi-4
+      ];
+      steamdeck-nixos.modules = [
+        inputs.jovian.nixosModules.jovian
+      ];
     };
   };
 

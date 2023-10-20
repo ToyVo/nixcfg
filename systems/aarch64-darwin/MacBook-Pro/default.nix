@@ -1,17 +1,4 @@
-{ inputs, ... }:
-let
-  system = "aarch64-darwin";
-in
-inputs.darwin.lib.darwinSystem {
-  inherit system;
-  specialArgs = { inherit inputs; };
-  modules = [
-    ({ pkgs, ... }: {
-      imports = [
-        ../../../modules/darwin/cd-darwin
-        ../../../modules/darwin/users/toyvo
-      ];
-      home-manager.extraSpecialArgs = { inherit inputs system; };
+{ pkgs, ... }: {
       cd.defaults.enable = true;
       cd.users.toyvo.enable = true;
       environment.systemPackages = with pkgs; [
@@ -24,6 +11,4 @@ inputs.darwin.lib.darwinSystem {
         "Yubico Authenticator" = 1497506650;
         "Wireguard" = 1451685025;
       };
-    })
-  ];
-}
+    }

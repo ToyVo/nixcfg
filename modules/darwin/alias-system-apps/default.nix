@@ -1,6 +1,6 @@
-{ pkgs, lib, inputs, config, ... }:
+{ pkgs, lib, inputs, config, system, ... }:
 let
-  mkalias = inputs.mkAlias.outputs.apps.${config.nixpkgs.system}.default.program;
+  mkalias = inputs.mkAlias.outputs.apps.${system}.default.program;
   cfg = config.cd;
 in
 {

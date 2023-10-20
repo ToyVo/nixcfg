@@ -3,12 +3,7 @@ let
   cfg = config.cd;
 in
 {
-  imports = [
-    inputs.home-manager.darwinModules.home-manager
-    ../../nixos/cd-nixos/common.nix
-    ../neovim
-    ../alias-system-apps
-  ];
+  imports = [ ../../nixos/cd-nixos/common.nix ];
 
   config = lib.mkIf cfg.defaults.enable {
     services.nix-daemon.enable = true;
@@ -54,7 +49,6 @@ in
       "libuv"
     ];
     home-manager.sharedModules = [
-      ../../home/alias-home-apps
       {
         cd.darwin.aliasHomeApplications = true;
       }

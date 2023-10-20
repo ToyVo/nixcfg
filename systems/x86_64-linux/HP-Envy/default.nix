@@ -1,18 +1,4 @@
-{ inputs, ... }:
-let
-  system = "x86_64-linux";
-in
-inputs.nixpkgs.lib.nixosSystem {
-  inherit system;
-  specialArgs = { inherit inputs; };
-  modules = [
-    ({ lib, pkgs, ... }: {
-      imports = [
-        ../../../modules/nixos/cd-nixos
-        ../../../modules/nixos/users/toyvo
-      ];
-      home-manager.extraSpecialArgs = { inherit inputs system; };
-      nixpkgs.hostPlatform = lib.mkDefault system;
+{ lib, pkgs, ... }: {
       hardware.cpu.amd.updateMicrocode = true;
       networking.hostName = "HP-Envy";
       boot = {
@@ -40,6 +26,4 @@ inputs.nixpkgs.lib.nixosSystem {
         driSupport = true;
         driSupport32Bit = true;
       };
-    })
-  ];
-}
+    }

@@ -13,7 +13,7 @@ in
 
   config = lib.mkIf cfg.darwin.aliasHomeApplications {
     home.file."Applications/Home Manager Apps".enable = false;
-    home.activation.aliasApplications = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    home.activation.aliasApplications = lib.home-manager.hm.dag.entryAfter [ "linkGeneration" ] ''
       ${pkgs.coreutils}/bin/echo "setting up ~/Applications/Home Manager Apps..." >&2
       app_path="$HOME/Applications/Home Manager Apps"
       tmp_path=$(mktemp -dt "home-manager-applications.XXXXXX") || exit 1

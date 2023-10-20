@@ -12,57 +12,51 @@ in
       viAlias = true;
       vimAlias = true;
       wrapRc = true;
-      maps.normal = {
+      keymaps = [
         # Shift HL to change buffers
-        "<S-h>" = "<cmd>bprevious<cr>";
-        "<S-l>" = "<cmd>bnext<cr>";
+        { key = "<S-h>"; action = "<cmd>bprevious<cr>"; mode = "n"; }
+        { key = "<S-l>"; action = "<cmd>bnext<cr>"; mode = "n"; }
         # Control hjkl to move between windows including terminal
-        "<C-h>" = "<C-w>h";
-        "<C-j>" = "<C-w>j";
-        "<C-k>" = "<C-w>k";
-        "<C-l>" = "<C-w>l";
-        "<leader>pf" = { action = "<cmd>Telescope find_files<cr>"; desc = "Project Files"; };
-        "<leader>ps" = { action = "<cmd>Telescope live_grep<cr>"; desc = "Project Search"; };
-        "<leader>vh" = { action = "<cmd>Telescope help_tags<cr>"; desc = "Help Tags"; };
-        "<C-p>" = { action = "<cmd>Telescope git_files<cr>"; desc = "Git Files"; };
-        "<leader>pi" = { action = "<cmd>TroubleToggle quickfix<cr>"; desc = "Project Issues"; };
-        "<leader>pv" = { action = "<cmd>NvimTreeToggle<cr>"; desc = "Project View"; };
-        "<leader>u" = { action = "<cmd>UndoTreeToggle<cr>"; desc = "UndoTree"; };
-        "<leader>gs" = { action = "<cmd>Git<cr>"; desc = "Git"; };
+        { key = "<C-h>"; action = "<C-w>h"; mode = "n"; }
+        { key = "<C-j>"; action = "<C-w>j"; mode = "n"; }
+        { key = "<C-k>"; action = "<C-w>k"; mode = "n"; }
+        { key = "<C-l>"; action = "<C-w>l"; mode = "n"; }
+        { key = "<leader>pf"; action = "<cmd>Telescope find_files<cr>"; mode = "n"; options.desc = "Project Files"; }
+        { key = "<leader>ps"; action = "<cmd>Telescope live_grep<cr>"; mode = "n"; options.desc = "Project Search"; }
+        { key = "<leader>vh"; action = "<cmd>Telescope help_tags<cr>"; mode = "n"; options.desc = "Help Tags"; }
+        { key = "<C-p>"; action = "<cmd>Telescope git_files<cr>"; mode = "n"; options.desc = "Git Files"; }
+        { key = "<leader>pi"; action = "<cmd>TroubleToggle quickfix<cr>"; mode = "n"; options.desc = "Project Issues"; }
+        { key = "<leader>pv"; action = "<cmd>NvimTreeToggle<cr>"; mode = "n"; options.desc = "Project View"; }
+        { key = "<leader>u"; action = "<cmd>UndoTreeToggle<cr>"; mode = "n"; options.desc = "UndoTree"; }
+        { key = "<leader>gs"; action = "<cmd>Git<cr>"; mode = "n"; options.desc = "Git"; }
         # Keep centered
-        "J" = "mzJ`z";
-        "<C-d>" = "<C-d>zz";
-        "<C-u>" = "<C-u>zz";
-        "n" = "nzzzv";
-        "N" = "Nzzzv";
+        { key = "J"; action = "mzJ`z"; mode = "n"; }
+        { key = "<C-d>"; action = "<C-d>zz"; mode = "n"; }
+        { key = "<C-u>"; action = "<C-u>zz"; mode = "n"; }
+        { key = "n"; action = "nzzzv"; mode = "n"; }
+        { key = "N"; action = "Nzzzv"; mode = "n"; }
         # Convenience
-        "Q" = "<nop>";
+        { key = "Q"; action = "<nop>"; mode = "n"; }
         # Diagnostics
-        "<leader>e" = { action = "vim.diagnostic.open_float"; lua = true; };
-        "[d" = { action = "vim.diagnostic.goto_prev"; lua = true; };
-        "]d" = { action = "vim.diagnostic.goto_next"; lua = true; };
-        "<leader>q" = { action = "vim.diagnostic.setloclist"; lua = true; };
+        { key = "<leader>e"; action = "vim.diagnostic.open_float"; lua = true; mode = "n"; }
+        { key = "[d"; action = "vim.diagnostic.goto_prev"; lua = true; mode = "n"; }
+        { key = "]d"; action = "vim.diagnostic.goto_next"; lua = true; mode = "n"; }
+        { key = "<leader>q"; action = "vim.diagnostic.setloclist"; lua = true; mode = "n"; }
         # remap U to <C-r> for redo
-        "U" = "<C-r>";
-      };
-      maps.insert."<C-c>" = "<Esc>";
-      maps.visual = {
+        { key = "U"; action = "<C-r>"; mode = "n"; }
+        { key = "<C-c>"; action = "<Esc>"; mode = "i"; }
         # Overwrite text in visual mode without overwriting the clipboard
-        "p" = ''"_dP'';
+        { key = "p"; action = ''"_dP''; mode = "v"; }
         # Move highlighted text
-        "J" = ":m '>+1<CR>gv=gv";
-        "K" = ":m '<-2<CR>gv=gv";
-      };
-      maps.terminal = {
-        "<C-h>" = "<C-\\><C-n><C-w>h";
-        "<C-j>" = "<C-\\><C-n><C-w>j";
-        "<C-k>" = "<C-\\><C-n><C-w>k";
-        "<C-l>" = "<C-\\><C-n><C-w>l";
-      };
-      maps.normalVisualOp."<space>" = {
-        silent = true;
-        action = "<Nop>";
-      };
+        { key = "J"; action = ":m '>+1<CR>gv=gv"; mode = "v"; }
+        { key = "K"; action = ":m '<-2<CR>gv=gv"; mode = "v"; }
+        { key = "<C-h>"; action = "<C-\\><C-n><C-w>h"; mode = "t"; }
+        { key = "<C-j>"; action = "<C-\\><C-n><C-w>j"; mode = "t"; }
+        { key = "<C-k>"; action = "<C-\\><C-n><C-w>k"; mode = "t"; }
+        { key = "<C-l>"; action = "<C-\\><C-n><C-w>l"; mode = "t"; }
+        # default mode is normal-visual-op
+        { key = "<space>"; action = "<Nop>"; options.silent = true; }
+      ];
       options = {
         number = true;
         relativenumber = true;
@@ -178,7 +172,7 @@ in
         UserLspConfig.clear = true;
       };
       plugins.harpoon = {
-        enable = true;
+        # enable = true;
         keymaps.addFile = "<leader>a";
         keymaps.toggleQuickMenu = "<C-e>";
         keymaps.navFile = {
@@ -296,7 +290,6 @@ in
         cmp_luasnip
         lspkind-nvim
         crates-nvim
-        harpoon
         trouble-nvim
         luasnip
         friendly-snippets

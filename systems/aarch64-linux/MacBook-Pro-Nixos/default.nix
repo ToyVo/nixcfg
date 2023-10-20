@@ -1,19 +1,4 @@
-{ inputs, ... }:
-let
-  system = "aarch64-linux";
-in
-inputs.nixpkgs.lib.nixosSystem {
-  inherit system;
-  specialArgs = { inherit inputs; };
-  modules = [
-    ({ lib, ... }: {
-      imports = [
-        inputs.apple-silicon-support.nixosModules.apple-silicon-support
-        ../../../modules/nixos/cd-nixos
-        ../../../modules/nixos/users/toyvo
-      ];
-      home-manager.extraSpecialArgs = { inherit inputs system; };
-      nixpkgs.hostPlatform = lib.mkDefault system;
+{ lib, ... }: {
       powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
       networking.hostName = "MacBook-Pro-Nixos";
       boot = {
@@ -29,6 +14,4 @@ inputs.nixpkgs.lib.nixosSystem {
         desktops.gnome.enable = true;
       };
       hardware.asahi.peripheralFirmwareDirectory = ./firmware;
-    })
-  ];
-}
+    }

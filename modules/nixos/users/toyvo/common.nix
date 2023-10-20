@@ -47,17 +47,6 @@ in
         nix-direnv.enable = true;
       };
       imports = [
-        ../../../home/packages/bat
-        ../../../home/packages/eza
-        ../../../home/packages/git
-        ../../../home/packages/gpg
-        ../../../home/packages/ssh
-        ../../../home/packages/wezterm
-        ../../../home/packages/zellij
-        ../../../home/packages/zsh
-        ../../../home/packages/vscode
-        ../../../home/packages/helix
-        ../../../home/packages/rio
         {
           cd.packages = {
             bat.enable = true;

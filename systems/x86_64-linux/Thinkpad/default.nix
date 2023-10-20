@@ -1,18 +1,4 @@
-{ inputs, ... }:
-let
-  system = "x86_64-linux";
-in
-inputs.nixpkgs.lib.nixosSystem {
-  inherit system;
-  specialArgs = { inherit inputs; };
-  modules = [
-    ({ pkgs, lib, ... }: {
-      imports = [
-        ../../../modules/nixos/cd-nixos
-        ../../../modules/nixos/users/toyvo
-      ];
-      home-manager.extraSpecialArgs = { inherit inputs system; };
-      nixpkgs.hostPlatform = lib.mkDefault system;
+{ pkgs, lib, ... }: {
       hardware.cpu.amd.updateMicrocode = true;
       networking.hostName = "Thinkpad";
       boot = {
@@ -28,7 +14,6 @@ inputs.nixpkgs.lib.nixosSystem {
           enable = true;
           extraHomeManagerModules = [
             inputs.hyprland.homeManagerModules.default
-            ../../../modules/home/hyprland
             {
               cd.desktops.hyprland.enable = true;
             }
@@ -50,6 +35,4 @@ inputs.nixpkgs.lib.nixosSystem {
         driSupport = true;
         driSupport32Bit = true;
       };
-    })
-  ];
-}
+    }

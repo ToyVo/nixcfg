@@ -5,15 +5,7 @@ in
 {
   imports = [
     inputs.nixpkgs.nixosModules.notDetected
-    inputs.home-manager.nixosModules.home-manager
     ./common.nix
-    ../desktops/gnome
-    ../desktops/xfce
-    ../desktops/hyprland
-    ../desktops/plasma
-    ../filesystems/boot
-    ../filesystems/btrfs
-    ../neovim
   ];
 
   config = lib.mkIf cfg.defaults.enable {

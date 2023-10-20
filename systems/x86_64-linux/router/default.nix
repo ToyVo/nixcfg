@@ -1,18 +1,4 @@
-{ inputs, ... }:
-let
-  system = "x86_64-linux";
-in
-inputs.nixpkgs.lib.nixosSystem {
-  inherit system;
-  specialArgs = { inherit inputs; };
-  modules = [
-    ({ lib, ... }: {
-      imports = [
-        ../../../modules/nixos/cd-nixos
-        ../../../modules/nixos/users/toyvo
-      ];
-      home-manager.extraSpecialArgs = { inherit inputs system; };
-      nixpkgs.hostPlatform = lib.mkDefault system;
+{ lib, ... }: {
       hardware.cpu.intel.updateMicrocode = true;
       powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
       networking = {
@@ -129,6 +115,4 @@ inputs.nixpkgs.lib.nixosSystem {
           bootstrap_dns = [ "9.9.9.9" ];
         };
       };
-    })
-  ];
-}
+    }
