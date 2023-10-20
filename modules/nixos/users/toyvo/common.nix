@@ -37,9 +37,6 @@ in
       xdg.configFile."nix/nix.conf".text = ''
         experimental-features = nix-command flakes
       '';
-      xdg.configFile."nixpkgs/config.nix".text = ''
-        { allowUnfree = true; }
-      '';
       programs.home-manager.enable = true;
       programs.starship.enable = true;
       programs.direnv = {

@@ -10,7 +10,6 @@ in
 
   config = lib.mkIf cfg.defaults.enable {
     programs.zsh.enable = true;
-    nixpkgs.config.allowUnfree = true;
     nix.extraOptions = ''
       experimental-features = nix-command flakes
     '';
