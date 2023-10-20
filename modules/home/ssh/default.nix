@@ -1,13 +1,13 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.cdcfg.ssh;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.ssh.enable = lib.mkEnableOption "Enable ssh" // {
+  options.cd.ssh.enable = lib.mkEnableOption "Enable ssh" // {
     default = true;
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.ssh.enable {
     programs.ssh = {
       enable = true;
       matchBlocks."10.1.0.*" = {

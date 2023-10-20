@@ -1,13 +1,13 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.cdcfg.gpg;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.gpg.enable = lib.mkEnableOption "Enable gpg" // {
+  options.cd.gpg.enable = lib.mkEnableOption "Enable gpg" // {
     default = true;
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.gpg.enable {
     programs.gpg = {
       enable = true;
       publicKeys = [{

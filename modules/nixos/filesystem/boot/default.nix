@@ -1,11 +1,11 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.cdcfg.fs.boot;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.fs.boot.enable = lib.mkEnableOption "boot partition";
+  options.cd.fs.boot.enable = lib.mkEnableOption "boot partition";
 
-  config = lib.mkIf (pkgs.stdenv.isLinux && cfg.enable) {
+  config = lib.mkIf cfg.fs.boot.enable {
     fileSystems."/boot" =
       {
         device = "/dev/disk/by-label/BOOT";

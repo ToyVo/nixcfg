@@ -1,13 +1,13 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.cdcfg.zellij;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.zellij.enable = lib.mkEnableOption "Enable zellij" // {
+  options.cd.zellij.enable = lib.mkEnableOption "Enable zellij" // {
     default = true;
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.zellij.enable {
     programs.zsh.initExtra = ''
       if [ -z "$SSH_TTY" ] && [ -z "$SSH_CLIENT" ] && [ -z "$SSH_CONNECTION" ] && \
           ([ -z "$TERMINAL_EMULATOR" ] || [ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]) && \

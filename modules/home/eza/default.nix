@@ -1,13 +1,13 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.cdcfg.eza;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.eza.enable = lib.mkEnableOption "Enable eza" // {
+  options.cd.eza.enable = lib.mkEnableOption "Enable eza" // {
     default = true;
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.eza.enable {
     programs.eza = {
       enable = true;
       enableAliases = true;

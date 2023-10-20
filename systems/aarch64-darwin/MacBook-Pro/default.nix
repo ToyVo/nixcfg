@@ -7,13 +7,12 @@ inputs.darwin.lib.darwinSystem {
   specialArgs = { inherit inputs; };
   modules = [
     inputs.home-manager.darwinModules.home-manager
-    inputs.nixvim.nixDarwinModules.nixvim
-../../../modules/darwin/cd-darwin
-../../../modules/nixos/toyvo
-
+    ../../../modules/darwin/cd-darwin
+    ../../../modules/darwin/toyvo
     ({ pkgs, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
-      cdcfg.users.toyvo.enable = true;
+      cd.users.toyvo.enable = true;
+
       environment.systemPackages = with pkgs; [
         openscad
       ];

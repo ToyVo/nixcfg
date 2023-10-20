@@ -1,13 +1,13 @@
 { lib, config, ... }:
 let
-  cfg = config.cdcfg.wezterm;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.wezterm.enable = lib.mkEnableOption "Enable wezterm" // {
+  options.cd.wezterm.enable = lib.mkEnableOption "Enable wezterm" // {
     default = true;
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.wezterm.enable {
     programs.wezterm.enable = true;
     programs.wezterm.extraConfig = ''
       local wezterm = require("wezterm");

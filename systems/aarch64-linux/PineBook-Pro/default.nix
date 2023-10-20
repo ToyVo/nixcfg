@@ -9,18 +9,15 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.nixpkgs.nixosModules.notDetected
     inputs.nixos-hardware.nixosModules.pine64-pinebook-pro
     inputs.home-manager.nixosModules.home-manager
-    inputs.nixvim.nixosModules.nixvim
-../../../modules/nixos/cd-nixos
-
-../../../modules/nixos/toyvo
-
+    ../../../modules/nixos/cd-nixos
+    ../../../modules/nixos/toyvo
     ({ lib, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
       nixpkgs.hostPlatform = lib.mkDefault system;
       networking.hostName = "PineBook-Pro";
       boot.loader.systemd-boot.enable = true;
-      cdcfg = {
+      cd = {
         users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;

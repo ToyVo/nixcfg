@@ -1,9 +1,9 @@
 { pkgs, ... }: {
-imports = [
-../../nixos/cd-nixos/common.nix
-../../nixos/neovim/common.nix
-../alias-system-apps
-];
+  imports = [
+    ../../nixos/cd-nixos/common.nix
+    ../neovim
+    ../alias-system-apps
+  ];
 
   services.nix-daemon.enable = true;
   security.pam.enableSudoTouchIdAuth = true;

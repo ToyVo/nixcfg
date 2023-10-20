@@ -1,11 +1,11 @@
 { lib, config, ... }:
 let
-  cfg = config.cdcfg.hyprland;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.hyprland.enable = lib.mkEnableOption "Enable Hyprland";
+  options.cd.hyprland.enable = lib.mkEnableOption "Enable Hyprland";
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.hyprland.enable {
     programs.hyprland.enable = true;
   };
 }

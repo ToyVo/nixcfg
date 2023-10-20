@@ -1,13 +1,13 @@
 { pkgs, lib, config, ... }:
 let
-  cfg = config.cdcfg.hyprland;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.hyprland.enable = lib.mkEnableOption "Enable hyprland" // {
+  options.cd.hyprland.enable = lib.mkEnableOption "Enable hyprland" // {
     default = true;
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.hyprland.enable {
     home.packages = with pkgs; [ cinnamon.nemo hyprpaper ];
     programs.wofi = {
       enable = true;

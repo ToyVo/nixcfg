@@ -1,13 +1,13 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.cdcfg.zsh;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.zsh.enable = lib.mkEnableOption "Enable zsh" // {
+  options.cd.zsh.enable = lib.mkEnableOption "Enable zsh" // {
     default = true;
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.zsh.enable {
     programs.zsh = {
       enable = true;
       enableAutosuggestions = true;

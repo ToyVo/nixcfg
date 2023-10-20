@@ -9,11 +9,8 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.nixpkgs.nixosModules.notDetected
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
     inputs.home-manager.nixosModules.home-manager
-    inputs.nixvim.nixosModules.nixvim
-../../../modules/nixos/cd-nixos
-
-../../../modules/nixos/toyvo
-
+    ../../../modules/nixos/cd-nixos
+    ../../../modules/nixos/toyvo
     ({ lib, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
@@ -25,12 +22,11 @@ inputs.nixpkgs.lib.nixosSystem {
         loader.systemd-boot.enable = true;
         initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
       };
-      cdcfg = {
+      cd = {
         users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;
       };
-
       hardware.raspberry-pi."4".fkms-3d.enable = true;
     })
   ];

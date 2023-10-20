@@ -7,12 +7,9 @@ inputs.nixpkgs.lib.nixosSystem {
   specialArgs = { inherit inputs; };
   modules = [
     inputs.nixpkgs.nixosModules.notDetected
-    inputs.nixvim.nixosModules.nixvim
     inputs.home-manager.nixosModules.home-manager
-../../../modules/nixos/cd-nixos
-
-../../../modules/nixos/toyvo
-
+    ../../../modules/nixos/cd-nixos
+    ../../../modules/nixos/toyvo
     ({ lib, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;
@@ -50,12 +47,11 @@ inputs.nixpkgs.lib.nixosSystem {
         ];
         kernelModules = [ "kvm-intel" ];
       };
-      cdcfg = {
+      cd = {
         users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;
       };
-
       systemd.network = {
         enable = true;
         networks."10-wan0" = {

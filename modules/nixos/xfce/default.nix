@@ -1,11 +1,11 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.cdcfg.xfce;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.xfce.enable = lib.mkEnableOption "Enable Xfce";
+  options.cd.xfce.enable = lib.mkEnableOption "Enable Xfce";
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.xfce.enable {
     services.xserver = {
       enable = true;
       displayManager.lightdm.enable = true;

@@ -1,13 +1,13 @@
 { lib, config, ... }:
 let
-  cfg = config.cdcfg.helix;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.helix.enable = lib.mkEnableOption "Enable helix" // {
+  options.cd.helix.enable = lib.mkEnableOption "Enable helix" // {
     default = true;
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.helix.enable {
     programs.helix = {
       enable = true;
       settings = {

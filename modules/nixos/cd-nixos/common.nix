@@ -1,13 +1,13 @@
 { pkgs, config, lib, inputs, ... }:
 let
-  cfg = config.cdcfg;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.packages.gui.enable = lib.mkEnableOption "GUI Applications" // {
+  options.cd.packages.gui.enable = lib.mkEnableOption "GUI Applications" // {
     default = true;
   };
 
-  options.cdcfg.packages.rust.enable = lib.mkEnableOption "Rust toolchain" // {
+  options.cd.packages.rust.enable = lib.mkEnableOption "Rust toolchain" // {
     default = true;
   };
 
@@ -47,6 +47,8 @@ in
       wget
       jq
       nixpkgs-fmt
+      git-crypt
+
     ]
     ++ lib.optionals cfg.packages.gui.enable [
       element-desktop

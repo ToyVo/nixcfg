@@ -7,15 +7,11 @@ inputs.darwin.lib.darwinSystem {
   specialArgs = { inherit inputs; };
   modules = [
     inputs.home-manager.darwinModules.home-manager
-    inputs.nixvim.nixDarwinModules.nixvim
-../../../modules/darwin/cd-darwin
-
-../../../modules/nixos/toyvo
-
+    ../../../modules/darwin/cd-darwin
+    ../../../modules/darwin/toyvo
     {
       home-manager.extraSpecialArgs = { inherit inputs system; };
-      cdcfg.users.toyvo.enable = true;
-
+      cd.users.toyvo.enable = true;
       homebrew.casks = [
         { name = "prusaslicer"; greedy = true; }
         { name = "google-chrome"; greedy = true; }

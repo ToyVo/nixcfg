@@ -1,13 +1,13 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.cdcfg.bat;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.bat.enable = lib.mkEnableOption "Enable bat" // {
+  options.cd.bat.enable = lib.mkEnableOption "Enable bat" // {
     default = true;
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.bat.enable {
     programs.bat = {
       enable = true;
       config.theme = "gruvbox-dark";

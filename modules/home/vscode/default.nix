@@ -1,13 +1,13 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.cdcfg.vscode;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.vscode.enable = lib.mkEnableOption "Enable vscode" // {
+  options.cd.vscode.enable = lib.mkEnableOption "Enable vscode" // {
     default = true;
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.vscode.enable {
     programs.vscode = {
       enable = true;
       extensions = with pkgs.vscode-extensions; [

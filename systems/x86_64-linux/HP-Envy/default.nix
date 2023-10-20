@@ -7,12 +7,9 @@ inputs.nixpkgs.lib.nixosSystem {
   specialArgs = { inherit inputs; };
   modules = [
     inputs.nixpkgs.nixosModules.notDetected
-    inputs.nixvim.nixosModules.nixvim
     inputs.home-manager.nixosModules.home-manager
-../../../modules/nixos/cd-nixos
-
-../../../modules/nixos/toyvo
-
+    ../../../modules/nixos/cd-nixos
+    ../../../modules/nixos/toyvo
     ({ lib, pkgs, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;
@@ -25,13 +22,12 @@ inputs.nixpkgs.lib.nixosSystem {
           [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
         kernelModules = [ "kvm-amd" "amdgpu" ];
       };
-      cdcfg = {
+      cd = {
         users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;
         gnome.enable = true;
       };
-
       services.xserver.videoDrivers = [ "amdgpu" ];
       hardware.opengl = {
         extraPackages = with pkgs; [

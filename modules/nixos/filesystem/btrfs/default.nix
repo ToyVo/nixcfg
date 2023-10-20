@@ -1,11 +1,11 @@
 { lib, config, ... }:
 let
-  cfg = config.cdcfg.fs.btrfs;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.fs.btrfs.enable = lib.mkEnableOption "root btrfs partition";
+  options.cd.fs.btrfs.enable = lib.mkEnableOption "root btrfs partition";
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.fs.btrfs.enable {
     fileSystems."/" =
       {
         device = "/dev/disk/by-label/NIXOS";

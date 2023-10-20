@@ -1,13 +1,13 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.cdcfg.git;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.git.enable = lib.mkEnableOption "Enable git" // {
+  options.cd.git.enable = lib.mkEnableOption "Enable git" // {
     default = true;
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.git.enable {
     programs.git = {
       enable = true;
       delta.enable = true;

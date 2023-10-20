@@ -7,13 +7,10 @@ inputs.nixpkgs.lib.nixosSystem {
   specialArgs = { inherit inputs; };
   modules = [
     inputs.nixpkgs.nixosModules.notDetected
-    inputs.nixvim.nixosModules.nixvim
     inputs.home-manager.nixosModules.home-manager
     inputs.jovian.nixosModules.jovian
-../../../modules/nixos/cd-nixos
-
-../../../modules/nixos/toyvo
-
+    ../../../modules/nixos/cd-nixos
+    ../../../modules/nixos/toyvo
     ({ lib, pkgs, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;
@@ -26,13 +23,13 @@ inputs.nixpkgs.lib.nixosSystem {
         initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
         kernelModules = [ "kvm-amd" ];
       };
-      cdcfg = {
+      cd = {
+
         users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;
         plasma.enable = true;
       };
-
       fileSystems."/mnt/POOL" = {
         device = "/dev/disk/by-label/POOL";
         fsType = "btrfs";

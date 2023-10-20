@@ -8,7 +8,8 @@
     ../plasma
     ../filesystem/boot
     ../filesystem/btrfs
-    ../neovim/common.nix
+    ../neovim
+
   ];
   networking.networkmanager.enable = true;
   time.timeZone = "America/Chicago";

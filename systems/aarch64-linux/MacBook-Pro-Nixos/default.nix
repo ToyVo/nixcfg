@@ -9,11 +9,8 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.apple-silicon-support.nixosModules.apple-silicon-support
     inputs.nixpkgs.nixosModules.notDetected
     inputs.home-manager.nixosModules.home-manager
-    inputs.nixvim.nixosModules.nixvim
-../../../modules/nixos/cd-nixos
-
-../../../modules/nixos/toyvo
-
+    ../../../modules/nixos/cd-nixos
+    ../../../modules/nixos/toyvo
     ({ lib, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;
@@ -24,13 +21,12 @@ inputs.nixpkgs.lib.nixosSystem {
         loader.efi.canTouchEfiVariables = false;
         initrd.availableKernelModules = [ "usb_storage" "sdhci_pci" ];
       };
-      cdcfg = {
+      cd = {
         users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;
         gnome.enable = true;
       };
-
       hardware.asahi.peripheralFirmwareDirectory = ./firmware;
     })
   ];

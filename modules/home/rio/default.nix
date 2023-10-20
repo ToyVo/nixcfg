@@ -1,23 +1,23 @@
-{ lib, config, pkgs,... }:
+{ lib, config, pkgs, ... }:
 let
-  cfg = config.cdcfg.rio;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.rio.enable = lib.mkEnableOption "Enable rio" // {
+  options.cd.rio.enable = lib.mkEnableOption "Enable rio" // {
     default = true;
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.rio.enable {
     # the nixos rio package doesn't work on darwin and the home manager config file is generated in ~/Library rather than ~/.config
     programs.rio = {
       enable = !pkgs.stdenv.hostPlatform.isDarwin;
     };
 
     xdg.configFile."rio/config.toml".text = ''
-        theme = 'gruvbox'
-        [window]
-        width = 1200
-        height = 800
+      theme = 'gruvbox'
+      [window]
+      width = 1200
+      height = 800
     '';
 
     xdg.configFile."rio/themes/gruvbox.toml".text = ''

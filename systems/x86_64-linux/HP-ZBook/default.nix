@@ -8,11 +8,8 @@ inputs.nixpkgs.lib.nixosSystem {
   modules = [
     inputs.nixpkgs.nixosModules.notDetected
     inputs.home-manager.nixosModules.home-manager
-    inputs.nixvim.nixosModules.nixvim
-../../../modules/nixos/cd-nixos
-
-../../../modules/nixos/toyvo
-
+    ../../../modules/nixos/cd-nixos
+    ../../../modules/nixos/toyvo
     ({ lib, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
       nixpkgs.hostPlatform = lib.mkDefault system;
@@ -26,7 +23,7 @@ inputs.nixpkgs.lib.nixosSystem {
           [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
         kernelModules = [ "kvm-intel" ];
       };
-      cdcfg = {
+      cd = {
         users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;

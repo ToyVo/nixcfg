@@ -1,12 +1,12 @@
 { lib, config, ... }:
 let
-  cfg = config.cdcfg.plasma;
+  cfg = config.cd;
 in
 {
-  options.cdcfg.plasma.enable = lib.mkEnableOption "Enable Plasma";
-  options.cdcfg.plasma.mobile.enable = lib.mkEnableOption "Enable Plasma Mobile";
+  options.cd.plasma.enable = lib.mkEnableOption "Enable Plasma";
+  options.cd.plasma.mobile.enable = lib.mkEnableOption "Enable Plasma Mobile";
 
-  config = lib.mkIf (cfg.enable || cfg.mobile.enable) {
+  config = lib.mkIf (cfg.plasma.enable || cfg.plasma.mobile.enable) {
     services.xserver = {
       enable = true;
       displayManager.sddm.enable = true;
