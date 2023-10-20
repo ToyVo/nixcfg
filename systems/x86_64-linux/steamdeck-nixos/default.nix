@@ -10,7 +10,8 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.nixvim.nixosModules.nixvim
     inputs.home-manager.nixosModules.home-manager
     inputs.jovian.nixosModules.jovian
-    ../../../nixos
+../../../modules/nixos/cd-nixos
+
     ../../../home/toyvo
     ({ lib, pkgs, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };

@@ -9,7 +9,8 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.nixpkgs.nixosModules.notDetected
     inputs.nixvim.nixosModules.nixvim
     inputs.home-manager.nixosModules.home-manager
-    ../../../nixos
+../../../modules/nixos/cd-nixos
+
     ../../../home/toyvo
     ({ lib, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };

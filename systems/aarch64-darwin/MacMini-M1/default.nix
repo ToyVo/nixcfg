@@ -8,7 +8,8 @@ inputs.darwin.lib.darwinSystem {
   modules = [
     inputs.home-manager.darwinModules.home-manager
     inputs.nixvim.nixDarwinModules.nixvim
-    ../../../darwin
+../../../modules/darwin/cd-darwin
+
     ../../../home/toyvo
     {
       home-manager.extraSpecialArgs = { inherit inputs system; };

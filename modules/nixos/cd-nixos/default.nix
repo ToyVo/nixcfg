@@ -1,13 +1,14 @@
 { pkgs, ... }: {
   imports = [
-    ../common
-    ./gnome.nix
-    ./xfce.nix
-    ./hyprland.nix
-    ./gui.nix
-    ./plasma.nix
-    ./filesystem/boot.nix
-    ./filesystem/btrfs.nix
+    ./common.nix
+    ../gnome
+    ../xfce
+    ../hyprland
+    ../gui
+    ../plasma
+    ../filesystem/boot
+    ../filesystem/btrfs
+    ../neovim/common.nix
   ];
   networking.networkmanager.enable = true;
   time.timeZone = "America/Chicago";

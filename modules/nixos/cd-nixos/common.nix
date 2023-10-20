@@ -3,8 +3,6 @@ let
   cfg = config.cdcfg;
 in
 {
-  imports = [ ./neovim.nix ];
-
   options.cdcfg.packages.gui.enable = lib.mkEnableOption "GUI Applications" // {
     default = true;
   };

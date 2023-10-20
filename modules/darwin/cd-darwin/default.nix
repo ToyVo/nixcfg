@@ -1,5 +1,10 @@
 { pkgs, ... }: {
-  imports = [ ../common ./alias-system-apps.nix ];
+imports = [
+../../nixos/cd-nixos/common.nix
+../../nixos/neovim/common.nix
+../alias-system-apps
+];
+
   services.nix-daemon.enable = true;
   security.pam.enableSudoTouchIdAuth = true;
   fonts.fontDir.enable = true;
@@ -42,5 +47,5 @@
     # required for neovide
     "libuv"
   ];
-  home-manager.sharedModules = [ ./alias-home-apps.nix ];
+  home-manager.sharedModules = [ ../../home/alias-home-apps ];
 }
