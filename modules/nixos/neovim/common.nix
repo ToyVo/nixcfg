@@ -3,9 +3,7 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.packages.neovim.enable = lib.mkEnableOption "Custom Neovim" // {
-    default = true;
-  };
+  options.cd.packages.neovim.enable = lib.mkEnableOption "Custom Neovim";
 
   config = lib.mkIf cfg.packages.neovim.enable {
     programs.nixvim = {

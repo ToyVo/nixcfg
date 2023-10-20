@@ -3,9 +3,7 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.packages.git.enable = lib.mkEnableOption "Enable git" // {
-    default = true;
-  };
+  options.cd.packages.git.enable = lib.mkEnableOption "Enable git";
 
   config = lib.mkIf cfg.packages.git.enable {
     programs.git = {

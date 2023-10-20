@@ -11,6 +11,7 @@ inputs.darwin.lib.darwinSystem {
     ../../../modules/darwin/users/toyvo
     ({ pkgs, ... }: {
       home-manager.extraSpecialArgs = { inherit inputs system; };
+      cd.defaults.enable = true;
       cd.users.toyvo.enable = true;
       environment.systemPackages = with pkgs; [
         openscad

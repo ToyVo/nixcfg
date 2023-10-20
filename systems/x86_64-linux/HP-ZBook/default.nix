@@ -24,10 +24,11 @@ inputs.nixpkgs.lib.nixosSystem {
         kernelModules = [ "kvm-intel" ];
       };
       cd = {
+        defaults.enable = true;
         users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;
-        gnome.enable = true;
+        desktops.gnome.enable = true;
       };
     })
   ];

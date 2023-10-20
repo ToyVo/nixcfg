@@ -3,9 +3,7 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.packages.helix.enable = lib.mkEnableOption "Enable helix" // {
-    default = true;
-  };
+  options.cd.packages.helix.enable = lib.mkEnableOption "Enable helix";
 
   config = lib.mkIf cfg.packages.helix.enable {
     programs.helix = {

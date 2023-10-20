@@ -3,9 +3,7 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.packages.bat.enable = lib.mkEnableOption "Enable bat" // {
-    default = true;
-  };
+  options.cd.packages.bat.enable = lib.mkEnableOption "Enable bat";
 
   config = lib.mkIf cfg.packages.bat.enable {
     programs.bat = {

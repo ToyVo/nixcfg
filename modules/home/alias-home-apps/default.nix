@@ -9,9 +9,7 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.darwin.aliasHomeApplications = lib.mkEnableOption "Alias Home Manager Applications in ~/Applications/Home Manager Apps" // {
-    default = pkgs.stdenv.isDarwin;
-  };
+  options.cd.darwin.aliasHomeApplications = lib.mkEnableOption "Alias Home Manager Applications in ~/Applications/Home Manager Apps";
 
   config = lib.mkIf cfg.darwin.aliasHomeApplications {
     home.file."Applications/Home Manager Apps".enable = false;

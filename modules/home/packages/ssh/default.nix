@@ -3,9 +3,7 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.packages.ssh.enable = lib.mkEnableOption "Enable ssh" // {
-    default = true;
-  };
+  options.cd.packages.ssh.enable = lib.mkEnableOption "Enable ssh";
 
   config = lib.mkIf cfg.packages.ssh.enable {
     programs.ssh = {

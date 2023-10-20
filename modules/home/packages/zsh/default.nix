@@ -3,9 +3,7 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.packages.zsh.enable = lib.mkEnableOption "Enable zsh" // {
-    default = true;
-  };
+  options.cd.packages.zsh.enable = lib.mkEnableOption "Enable zsh";
 
   config = lib.mkIf cfg.packages.zsh.enable {
     programs.zsh = {

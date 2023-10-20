@@ -22,10 +22,11 @@ inputs.nixpkgs.lib.nixosSystem {
         initrd.availableKernelModules = [ "usb_storage" "sdhci_pci" ];
       };
       cd = {
+        defaults.enable = true;
         users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;
-        gnome.enable = true;
+        desktops.gnome.enable = true;
       };
       hardware.asahi.peripheralFirmwareDirectory = ./firmware;
     })

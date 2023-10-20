@@ -4,9 +4,7 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.darwin.aliasSystemApplications = lib.mkEnableOption "Alias system applications" // {
-    default = true;
-  };
+  options.cd.darwin.aliasSystemApplications = lib.mkEnableOption "Alias system applications";
 
   config = lib.mkIf cfg.darwin.aliasSystemApplications {
     system.activationScripts.applications.text = lib.mkForce ''

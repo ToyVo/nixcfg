@@ -3,9 +3,9 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.hyprland.enable = lib.mkEnableOption "Enable Hyprland";
+  options.cd.desktops.hyprland.enable = lib.mkEnableOption "Enable Hyprland";
 
-  config = lib.mkIf cfg.hyprland.enable {
+  config = lib.mkIf cfg.desktops.hyprland.enable {
     programs.hyprland.enable = true;
     cd.packages.gui.enable = true;
   };

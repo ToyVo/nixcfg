@@ -3,9 +3,7 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.packages.zellij.enable = lib.mkEnableOption "Enable zellij" // {
-    default = true;
-  };
+  options.cd.packages.zellij.enable = lib.mkEnableOption "Enable zellij";
 
   config = lib.mkIf cfg.packages.zellij.enable {
     programs.zsh.initExtra = ''

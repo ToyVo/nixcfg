@@ -18,10 +18,11 @@ inputs.nixpkgs.lib.nixosSystem {
       networking.hostName = "PineBook-Pro";
       boot.loader.systemd-boot.enable = true;
       cd = {
+        defaults.enable = true;
         users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;
-        xfce.enable = true;
+        desktops.xfce.enable = true;
       };
     })
   ];

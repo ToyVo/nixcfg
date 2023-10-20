@@ -24,10 +24,11 @@ inputs.nixpkgs.lib.nixosSystem {
         kernelModules = [ "kvm-amd" ];
       };
       cd = {
+        defaults.enable = true;
         users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;
-        plasma.enable = true;
+        desktops.plasma.enable = true;
       };
       fileSystems."/mnt/POOL" = {
         device = "/dev/disk/by-label/POOL";

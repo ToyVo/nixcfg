@@ -3,9 +3,7 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.packages.rio.enable = lib.mkEnableOption "Enable rio" // {
-    default = true;
-  };
+  options.cd.packages.rio.enable = lib.mkEnableOption "Enable rio";
 
   config = lib.mkIf cfg.packages.rio.enable {
     # the nixos rio package doesn't work on darwin and the home manager config file is generated in ~/Library rather than ~/.config

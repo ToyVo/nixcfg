@@ -11,6 +11,7 @@ inputs.darwin.lib.darwinSystem {
     ../../../modules/darwin/users/toyvo
     {
       home-manager.extraSpecialArgs = { inherit inputs system; };
+      cd.defaults.enable = true;
       cd.users.toyvo.enable = true;
       homebrew.casks = [
         { name = "prusaslicer"; greedy = true; }

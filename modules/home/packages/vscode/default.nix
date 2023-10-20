@@ -3,9 +3,7 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.packages.vscode.enable = lib.mkEnableOption "Enable vscode" // {
-    default = true;
-  };
+  options.cd.packages.vscode.enable = lib.mkEnableOption "Enable vscode";
 
   config = lib.mkIf cfg.packages.vscode.enable {
     programs.vscode = {

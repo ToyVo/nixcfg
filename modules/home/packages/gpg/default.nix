@@ -3,9 +3,7 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.packages.gpg.enable = lib.mkEnableOption "Enable gpg" // {
-    default = true;
-  };
+  options.cd.packages.gpg.enable = lib.mkEnableOption "Enable gpg";
 
   config = lib.mkIf cfg.packages.gpg.enable {
     programs.gpg = {

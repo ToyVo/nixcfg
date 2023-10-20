@@ -23,6 +23,7 @@ inputs.nixpkgs.lib.nixosSystem {
         initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
       };
       cd = {
+        defaults.enable = true;
         users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;

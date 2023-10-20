@@ -55,6 +55,21 @@ in
         ../../../home/packages/vscode
         ../../../home/packages/helix
         ../../../home/packages/rio
+        {
+          cd.packages = {
+            bat.enable = true;
+            eza.enable = true;
+            git.enable = true;
+            gpg.enable = true;
+            helix.enable = true;
+            rio.enable = cfg.packages.gui.enable;
+            ssh.enable = true;
+            vscode.enable = cfg.packages.gui.enable;
+            wezterm.enable = cfg.packages.gui.enable;
+            zellij.enable = true;
+            zsh.enable = true;
+          };
+        }
       ] ++ cfg.users.toyvo.extraHomeManagerModules;
     };
   };

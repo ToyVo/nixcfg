@@ -3,9 +3,7 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.desktops.hyprland.enable = lib.mkEnableOption "Enable hyprland" // {
-    default = true;
-  };
+  options.cd.desktops.hyprland.enable = lib.mkEnableOption "Enable hyprland";
 
   config = lib.mkIf cfg.desktops.hyprland.enable {
     home.packages = with pkgs; [ cinnamon.nemo hyprpaper ];

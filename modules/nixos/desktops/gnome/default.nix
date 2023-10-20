@@ -3,9 +3,9 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.gnome.enable = lib.mkEnableOption "Enable Gnome";
+  options.cd.desktops.gnome.enable = lib.mkEnableOption "Enable Gnome";
 
-  config = lib.mkIf cfg.gnome.enable {
+  config = lib.mkIf cfg.desktops.gnome.enable {
     services.xserver = {
       enable = true;
       displayManager.gdm.enable = true;

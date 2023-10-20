@@ -3,9 +3,9 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.xfce.enable = lib.mkEnableOption "Enable Xfce";
+  options.cd.desktops.xfce.enable = lib.mkEnableOption "Enable Xfce";
 
-  config = lib.mkIf cfg.xfce.enable {
+  config = lib.mkIf cfg.desktops.xfce.enable {
     services.xserver = {
       enable = true;
       displayManager.lightdm.enable = true;

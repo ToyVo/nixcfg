@@ -26,6 +26,7 @@ inputs.nixpkgs.lib.nixosSystem {
         kernelModules = [ "kvm-amd" ];
       };
       cd = {
+        defaults.enable = true;
         users.toyvo.enable = true;
         fs.boot.enable = true;
         fs.btrfs.enable = true;

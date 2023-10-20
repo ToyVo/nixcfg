@@ -52,6 +52,13 @@ in
       # required for neovide
       "libuv"
     ];
-    home-manager.sharedModules = [ ../../home/alias-home-apps ];
+    home-manager.sharedModules = [
+      ../../home/alias-home-apps
+      {
+        cd.darwin.aliasHomeApplications = true;
+      }
+    ];
+    cd.darwin.aliasSystemApplications = true;
+    cd.packages.gui.enable = true;
   };
 }

@@ -3,9 +3,7 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.packages.wezterm.enable = lib.mkEnableOption "Enable wezterm" // {
-    default = true;
-  };
+  options.cd.packages.wezterm.enable = lib.mkEnableOption "Enable wezterm";
 
   config = lib.mkIf cfg.packages.wezterm.enable {
     programs.wezterm.enable = true;

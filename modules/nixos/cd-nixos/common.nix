@@ -4,12 +4,8 @@ let
 in
 {
   options.cd = {
-    packages.gui.enable = lib.mkEnableOption "GUI Applications" // {
-      default = true;
-    };
-    defaults.enable = lib.mkEnableOption "Enable Defaults" // {
-      default = true;
-    };
+    packages.gui.enable = lib.mkEnableOption "GUI Applications";
+    defaults.enable = lib.mkEnableOption "Enable Defaults";
   };
 
   config = lib.mkIf cfg.defaults.enable {
@@ -57,5 +53,6 @@ in
       element-desktop
       gimp
     ];
+    cd.packages.neovim.enable = true;
   };
 }

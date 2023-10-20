@@ -24,17 +24,21 @@ inputs.nixpkgs.lib.nixosSystem {
         kernelModules = [ "kvm-amd" "amdgpu" ];
       };
       cd = {
+        defaults.enable = true;
         users.toyvo = {
           enable = true;
           extraHomeManagerModules = [
             inputs.hyprland.homeManagerModules.default
             ../../../modules/home/hyprland
+            {
+              cd.desktops.hyprland.enable = true;
+            }
           ];
         };
         fs.boot.enable = true;
         fs.btrfs.enable = true;
-        gnome.enable = true;
-        hyprland.enable = true;
+        desktops.gnome.enable = true;
+        desktops.hyprland.enable = true;
       };
       services.xserver.videoDrivers = [ "amdgpu" ];
       hardware.opengl = {
