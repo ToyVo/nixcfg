@@ -1,9 +1,11 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, inputs, ... }:
 let
   cfg = config.cd;
 in
 {
   imports = [
+    inputs.nixpkgs.nixosModules.notDetected
+    inputs.home-manager.nixosModules.home-manager
     ./common.nix
     ../desktops/gnome
     ../desktops/xfce

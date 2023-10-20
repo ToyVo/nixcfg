@@ -6,9 +6,6 @@ inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
-    inputs.nixpkgs.nixosModules.notDetected
-    inputs.home-manager.nixosModules.home-manager
-    inputs.hyprland.nixosModules.default
     ../../../modules/nixos/cd-nixos
     ../../../modules/nixos/users/toyvo
     ({ pkgs, lib, ... }: {

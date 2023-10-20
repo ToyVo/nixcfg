@@ -7,8 +7,6 @@ inputs.nixpkgs.lib.nixosSystem {
   specialArgs = { inherit inputs; };
   modules = [
     inputs.apple-silicon-support.nixosModules.apple-silicon-support
-    inputs.nixpkgs.nixosModules.notDetected
-    inputs.home-manager.nixosModules.home-manager
     ../../../modules/nixos/cd-nixos
     ../../../modules/nixos/users/toyvo
     ({ lib, ... }: {

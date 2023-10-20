@@ -6,9 +6,7 @@ inputs.nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = { inherit inputs; };
   modules = [
-    inputs.nixpkgs.nixosModules.notDetected
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
-    inputs.home-manager.nixosModules.home-manager
     ../../../modules/nixos/cd-nixos
     ../../../modules/nixos/users/toyvo
     ({ lib, ... }: {

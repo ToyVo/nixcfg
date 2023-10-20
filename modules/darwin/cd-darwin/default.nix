@@ -1,9 +1,10 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, lib, inputs, ... }:
 let
   cfg = config.cd;
 in
 {
   imports = [
+    inputs.home-manager.darwinModules.home-manager
     ../../nixos/cd-nixos/common.nix
     ../neovim
     ../alias-system-apps
