@@ -1,11 +1,15 @@
-{ lib, config, pkgs, ... }: {
+{ lib, config, pkgs, ... }:
+let
+  cfg = config.cd.remote-builds;
+in
+{
   options.cd.remote-builds = {
     server.enable = lib.mkEnableOption "Enable remote-builds server";
     client.enable = lib.mkEnableOption "Enable remote-builds client";
   };
 
   config = {
-    users.users.nixremote = lib.mkIf config.cd.remote-builds.server.enable {
+    users.users.nixremote = lib.mkIf cfg.server.enable {
       name = "nixremote";
       home = "/home/nixremote";
       shell = pkgs.zsh;
@@ -13,9 +17,9 @@
       isNormalUser = true;
     };
 
-    cd.users.root.enable = config.cd.remote-builds.client.enable;
+    cd.users.root.enable = (cfg.client.enable || cfg.server.enable);
 
-    home-manager.users.root.programs.ssh = lib.mkIf config.cd.remote-builds.client.enable {
+    home-manager.users.root.programs.ssh = lib.mkIf cfg.client.enable {
       enable = lib.mkDefault true;
       matchBlocks."builder" = {
         user = "nixremote";
@@ -25,8 +29,8 @@
       };
     };
 
-    nix.trustedUsers = lib.mkIf config.cd.remote-builds.server.enable [ "nixremote" ];
-    nix.buildMachines = lib.mkIf config.cd.remote-builds.client.enable [
+    nix.settings.trustedUsers = lib.mkIf cfg.server.enable [ "nixremote" ];
+    nix.buildMachines = lib.mkIf cfg.client.enable [
       {
         hostName = "builder";
         system = "x86_64-linux";
@@ -37,8 +41,8 @@
         mandatoryFeatures = [ ];
       }
     ];
-    nix.distributedBuilds = config.cd.remote-builds.client.enable;
-    nix.extraOptions = lib.mkIf config.cd.remote-builds.client.enable ''
+    nix.distributedBuilds = cfg.client.enable;
+    nix.extraOptions = lib.mkIf cfg.client.enable ''
       builders-use-substitutes = true
     '';
   };
