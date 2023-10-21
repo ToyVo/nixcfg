@@ -1,12 +1,12 @@
 { pkgs, lib, inputs, system, config, ... }:
 let
+  cfg = config.cd;
   mkalias = inputs.mkAlias.outputs.apps.${system}.default.program;
   apps = pkgs.buildEnv {
     name = "home-manager-applications";
     paths = config.home.packages;
     pathsToLink = "/Applications";
   };
-  cfg = config.cd;
 in
 {
   options.cd.darwin.aliasHomeApplications = lib.mkEnableOption "Alias Home Manager Applications in ~/Applications/Home Manager Apps";
