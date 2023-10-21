@@ -31,7 +31,7 @@ in
       };
     };
 
-    nix.settings.trustedUsers = lib.mkIf cfg.server.enable [ "nixremote" ];
+    nix.settings.trusted-users = lib.mkIf cfg.server.enable [ "nixremote" ];
     nix.buildMachines = lib.mkIf cfg.client.enable [
       {
         hostName = "builder";
