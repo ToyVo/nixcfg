@@ -51,9 +51,21 @@ in
     services.udev.packages = with pkgs; [ yubikey-personalization ];
     system = {
       stateVersion = "23.05";
-      autoUpgrade.enable = true;
-      autoUpgrade.flake = "github:toyvo/dotfiles";
-      autoUpgrade.persistent = true;
+      autoUpgrade = {
+        enable = true;
+        flake = inputs.self.outPath;
+        persistent = true;
+        allowReboot = true;
+        rebootWindow = {
+          lower = "01:00";
+          upper = "05:00";
+        };
+        randomizedDelaySec = "45min";
+          flags = [
+          "--update-input"
+          "nixpkgs"
+        ];
+      };
     };
     services.printing.enable = cfg.packages.gui.enable;
     security.rtkit.enable = true;
