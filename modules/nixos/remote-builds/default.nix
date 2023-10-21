@@ -1,4 +1,4 @@
-{ lib, config, ... }: {
+{ lib, config, pkgs, ... }: {
   options.cd.remote-builds = {
     server.enable = lib.mkEnableOption "Enable remote-builds server";
     client.enable = lib.mkEnableOption "Enable remote-builds client";
