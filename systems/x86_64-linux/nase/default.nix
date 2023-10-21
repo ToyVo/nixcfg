@@ -16,6 +16,7 @@
     users.toyvo.enable = true;
     fs.boot.enable = true;
     fs.btrfs.enable = true;
+    remote-builds.server.enable = true;
   };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";

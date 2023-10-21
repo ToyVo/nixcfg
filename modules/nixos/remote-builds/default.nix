@@ -39,7 +39,7 @@
     ];
     nix.distributedBuilds = config.cd.remote-builds.client.enable;
     nix.extraOptions = lib.mkIf config.cd.remote-builds.client.enable ''
-      builders-use-substitutes = false
+      builders-use-substitutes = true
     '';
   };
 }
