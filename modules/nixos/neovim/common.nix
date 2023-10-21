@@ -110,59 +110,53 @@ in
           event = [ "FileType" ];
           pattern = [ "gitcommit" "markdown" ];
           callback = {
-            __raw = ''function() 
-
-          vim.opt_local.wrap = true
-          vim.opt_local.spell = true
-        end'';
+            __raw = ''
+              function() 
+                vim.opt_local.wrap = true
+                vim.opt_local.spell = true
+              end
+            '';
           };
         }
         {
           event = [ "TextYankPost" ];
           pattern = [ "*" ];
           callback = {
-            __raw = ''function() 
-
-            vim.highlight.on_yank() 
-        end'';
+            __raw = ''
+              function() 
+                vim.highlight.on_yank() 
+              end
+            '';
           };
           group = "YankHighlight";
         }
         {
           event = [ "LspAttach" ];
           callback = {
-            __raw = ''function(ev) 
-          vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = ev.buf })
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = ev.buf })
-          vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = ev.buf })
-          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = ev.buf })
-          vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, { buffer = ev.buf })
-          vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { buffer = ev.buf })
-          vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { buffer = ev.buf })
-          vim.keymap.set("n", "<leader>wl", function()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-          end, { buffer = ev.buf })
-          vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, { buffer = ev.buf })
-          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = ev.buf })
-          vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = ev.buf })
-          vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = ev.buf })
-          vim.keymap.set("n", "<leader>f", function()
-            vim.lsp.buf.format({ async = true })
-          end, { buffer = ev.buf })
-          if vim.lsp.buf.range_code_action then
-            vim.keymap.set("n", "<leader>ca", function()
-              vim.lsp.buf.code_action()
-              end, { buffer = ev.buf })
-            vim.keymap.set("x", "<leader>ca", function()
-              vim.lsp.buf.range_code_action()
-              end, { buffer = ev.buf })
-          else
-            vim.keymap.set({ "n", "x" }, "<leader>ca", function()
-              vim.lsp.buf.code_action()
-              end, { buffer = ev.buf })
-          end
-        end'';
+            __raw = ''
+              function(ev) 
+                vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+                vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = ev.buf })
+                vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = ev.buf })
+                vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = ev.buf })
+                vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = ev.buf })
+                vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, { buffer = ev.buf })
+                vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { buffer = ev.buf })
+                vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { buffer = ev.buf })
+                vim.keymap.set("n", "<leader>wl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, { buffer = ev.buf })
+                vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, { buffer = ev.buf })
+                vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = ev.buf })
+                vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = ev.buf })
+                vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = ev.buf })
+                vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, { buffer = ev.buf })
+                if vim.lsp.buf.range_code_action then
+                  vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, { buffer = ev.buf })
+                  vim.keymap.set("x", "<leader>ca", function() vim.lsp.buf.range_code_action() end, { buffer = ev.buf })
+                else
+                  vim.keymap.set({ "n", "x" }, "<leader>ca", function() vim.lsp.buf.code_action() end, { buffer = ev.buf })
+                end
+              end
+            '';
           };
           group = "UserLspConfig";
         }
@@ -302,157 +296,152 @@ in
         gruvbox-nvim
       ];
       extraConfigLua = ''
-                do
-                  -- When I open neovide from an application launcher, it opens in /, so I change it to ~
-                  -- this means I can't do `neovide /` in the shell
-                  local gruvbox = require("gruvbox");
-                  if vim.g.neovide then
-                    vim.g.neovide_transparency = 0.9;
-                    if vim.fn.getcwd() == "/" then
-                      vim.cmd("cd ~");
-                    end
-                    gruvbox.setup();
-                  else
-                    gruvbox.setup({
-                      transparent_mode = true;
-                    });
-                  end
-                  vim.cmd("colorscheme gruvbox")
-                end
         do
-          local
-          cmp = require("cmp");
-        cmp.setup.filetype("gitcommit", {
-        sources = cmp.config.sources({
-        { name = "cmp_git" },
-        { name = "buffer" },
-        }),
-        })
-        cmp.setup.cmdline ({
-          "/", "?" }, {
-          mapping = cmp.mapping.preset.cmdline (),
-            sources = {
-          { name = "buffer" },
-          },
-          })
-        cmp.setup.cmdline (":", {
-          mapping = cmp.mapping.preset.cmdline (),
-            sources = cmp.config.sources({
-          { name = "path" },
-          { name = "cmdline" },
-          }),
-          })
-        cmp.event:on ("confirm_done", require ("nvim-autopairs.completion.cmp").on_confirm_done ())
+          -- When I open neovide from an application launcher, it opens in /, so I change it to ~
+          -- this means I can't do `neovide /` in the shell
+          local gruvbox = require("gruvbox");
+          if vim.g.neovide then
+            vim.g.neovide_transparency = 0.9;
+            if vim.fn.getcwd() == "/" then
+              vim.cmd("cd ~");
+            end
+            gruvbox.setup();
+          else
+            gruvbox.setup({
+              transparent_mode = true;
+            });
           end
-        do
-          require
-          ("telescope").load_extension
-          ("ui-select");
-        require("telescope").load_extension("dap");
+          vim.cmd("colorscheme gruvbox")
         end
+
         do
-          require
-          ("nvim-treesitter.configs").setup
-          ({
+          local cmp = require("cmp");
+          cmp.setup.filetype("gitcommit", {
+            sources = cmp.config.sources({
+              { name = "cmp_git" },
+              { name = "buffer" },
+            }),
+          });
+          cmp.setup.cmdline ({ "/", "?" }, {
+            mapping = cmp.mapping.preset.cmdline (),
+            sources = { { name = "buffer" } },
+          });
+          cmp.setup.cmdline (":", {
+            mapping = cmp.mapping.preset.cmdline (),
+            sources = cmp.config.sources({
+              { name = "path" },
+              { name = "cmdline" },
+            }),
+          });
+          cmp.event:on ("confirm_done", require ("nvim-autopairs.completion.cmp").on_confirm_done ())
+        end
+
+        do
+          require ("telescope").load_extension("ui-select");
+          require("telescope").load_extension("dap");
+        end
+
+        do
+          require("nvim-treesitter.configs").setup({
             highlight = {
               enable = true,
               additional_vim_regex_highlighting = false,
-              },
+            },
               incremental_selection = {
               enable = true,
               keymaps = {
-              init_selection = "gnn",
-              node_incremental = "grn",
-              scope_incremental = "grc",
-              node_decremental = "grm",
+                init_selection = "gnn",
+                node_incremental = "grn",
+                scope_incremental = "grc",
+                node_decremental = "grm",
               },
-              },
-              indent = {
+            },
+            indent = {
               enable = true,
-              },
-              context_commentstring = {
+            },
+            context_commentstring = {
               enable = true,
-              },
-              autotag = {
+            },
+            autotag = {
               enable = true,
-              },
-              textobjects = {
+            },
+            textobjects = {
               select = {
-              enable = true,
-              -- Automatically jump forward to textobj, similar to targets.vim
-              lookahead = true,
-              keymaps = {
-              -- You can use the capture groups defined in textobjects.scm
-              ["af"] = "@function.outer",
-              ["if"] = "@function.inner",
-              ["ac"] = "@class.outer",
-              -- You can optionally set descriptions to the mappings (used in the desc parameter of
-              -- nvim_buf_set_keymap) which plugins like which-key display
-              ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-              },
-              -- You can choose the select mode (default is charwise 'v')
-              --
-              -- Can also be a function which gets passed a table with the keys
-              -- * query_string: eg '@function.inner'
-              -- * method: eg 'v' or 'o'
-              -- and should return the mode ('v', 'V', or '<c-v>') or a table
-              -- mapping query_strings to modes.
-              selection_modes = {
-              ["@parameter.outer"] = "v", -- charwise
-              ["@function.outer"] = "V", -- linewise
-              ["@class.outer"] = "<c-v>", -- blockwise
-              },
-              -- If you set this to `true` (default is `false`) then any textobject is
-              -- extended to include preceding or succeeding whitespace. Succeeding
-              -- whitespace has priority in order to act similarly to eg the built-in
-              -- `ap`.
-              --
-              -- Can also be a function which gets passed a table with the keys
-              -- * query_string: eg '@function.inner'
-              -- * selection_mode: eg 'v'
-              -- and should return true of false
-              include_surrounding_whitespace = true,
+                enable = true,
+                -- Automatically jump forward to textobj, similar to targets.vim
+                lookahead = true,
+                keymaps = {
+                  -- You can use the capture groups defined in textobjects.scm
+                  ["af"] = "@function.outer",
+                  ["if"] = "@function.inner",
+                  ["ac"] = "@class.outer",
+                  -- You can optionally set descriptions to the mappings (used in the desc parameter of
+                  -- nvim_buf_set_keymap) which plugins like which-key display
+                  ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+                },
+                -- You can choose the select mode (default is charwise 'v')
+                --
+                -- Can also be a function which gets passed a table with the keys
+                -- * query_string: eg '@function.inner'
+                -- * method: eg 'v' or 'o'
+                -- and should return the mode ('v', 'V', or '<c-v>') or a table
+                -- mapping query_strings to modes.
+                selection_modes = {
+                  ["@parameter.outer"] = "v", -- charwise
+                  ["@function.outer"] = "V", -- linewise
+                  ["@class.outer"] = "<c-v>", -- blockwise
+                },
+                -- If you set this to `true` (default is `false`) then any textobject is
+                -- extended to include preceding or succeeding whitespace. Succeeding
+                -- whitespace has priority in order to act similarly to eg the built-in
+                -- `ap`.
+                --
+                -- Can also be a function which gets passed a table with the keys
+                -- * query_string: eg '@function.inner'
+                -- * selection_mode: eg 'v'
+                -- and should return true of false
+                include_surrounding_whitespace = true,
               },
               swap = {
-              enable = true,
-              swap_next = {
-              ["<leader>sn"] = "@parameter.inner",
-              },
-              swap_previous = {
-              ["<leader>sp"] = "@parameter.inner",
-              },
+                enable = true,
+                swap_next = {
+                  ["<leader>sn"] = "@parameter.inner",
+                },
+                swap_previous = {
+                  ["<leader>sp"] = "@parameter.inner",
+                },
               },
               move = {
-              enable = true,
-              set_jumps = true, -- whether to set jumps in the jumplist
-              goto_next_start = {
-              ["]m"] = "@function.outer",
-              ["]]"] = { query = "@class.outer", desc = "Next class start" },
-              },
-              goto_next_end = {
-              ["]M"] = "@function.outer",
-              ["]["] = "@class.outer",
-              },
-              goto_previous_start = {
-              ["[m"] = "@function.outer",
-              ["[["] = "@class.outer",
-              },
-              goto_previous_end = {
-              ["[M"] = "@function.outer",
-              ["[]"] = "@class.outer",
-              },
+                enable = true,
+                set_jumps = true, -- whether to set jumps in the jumplist
+                goto_next_start = {
+                  ["]m"] = "@function.outer",
+                  ["]]"] = { query = "@class.outer", desc = "Next class start" },
+                },
+                goto_next_end = {
+                  ["]M"] = "@function.outer",
+                  ["]["] = "@class.outer",
+                },
+                goto_previous_start = {
+                  ["[m"] = "@function.outer",
+                  ["[["] = "@class.outer",
+                },
+                goto_previous_end = {
+                  ["[M"] = "@function.outer",
+                  ["[]"] = "@class.outer",
+                },
               },
               lsp_interop = {
-              enable = true,
-              border = "none",
-              peek_definition_code = {
-              ["<leader>df"] = "@function.outer",
-              ["<leader>dF"] = "@class.outer",
+                enable = true,
+                border = "none",
+                peek_definition_code = {
+                  ["<leader>df"] = "@function.outer",
+                  ["<leader>dF"] = "@class.outer",
+                },
               },
-              },
-              },
-              })
-              end
+            },
+          });
+        end
       '';
     };
   };

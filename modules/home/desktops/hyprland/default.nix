@@ -45,73 +45,73 @@ in
         @define-color grey2 #9da9a0;
 
         * {
-            font-family: FiraCode Nerd Font, Font Awesome 6 Free;
-            font-size: 16px;
-            border-radius: 8px;
-            border: none;
+          font-family: FiraCode Nerd Font, Font Awesome 6 Free;
+          font-size: 16px;
+          border-radius: 8px;
+          border: none;
         }
 
         window {
-            margin: 0px;
-            background-color: @fg;
-            color: @bg0;
+          margin: 0px;
+          background-color: @fg;
+          color: @bg0;
 
-        	  border-radius: 16px;
+        	border-radius: 16px;
 
-            border-bottom-width: 4px;
-            border-bottom-color: #7d6a40;
-            border-bottom-style: solid;
+          border-bottom-width: 4px;
+          border-bottom-color: #7d6a40;
+          border-bottom-style: solid;
         }
 
         #outer-box {
-            margin: 0px;
-            border-radius: 0px;
+          margin: 0px;
+          border-radius: 0px;
         }
 
         #input {
-            background-color: @green;
-            color: @bg0;
+          background-color: @green;
+          color: @bg0;
 
-            margin: 16px;
-            padding: 8px;
-            border: none;
+          margin: 16px;
+          padding: 8px;
+          border: none;
 
-            border-bottom-width: 4px;
-            border-bottom-color: #556a35;
-            border-bottom-style: solid;
+          border-bottom-width: 4px;
+          border-bottom-color: #556a35;
+          border-bottom-style: solid;
         }
 
         #inner-box {
-            margin: 24px;
-            padding: 0px;
-            border-radius: 0px;
-            background-color: #00000000;
+          margin: 24px;
+          padding: 0px;
+          border-radius: 0px;
+          background-color: #00000000;
         }
 
         #scroll {
-            margin: 0px;
-            padding: 0px;
-            border: none;
+          margin: 0px;
+          padding: 0px;
+          border: none;
         }
 
         #text {
-            margin-left: 16px;
-            margin-right: 16px;
+          margin-left: 16px;
+          margin-right: 16px;
         }
 
         #entry {
-            border: none;
-            padding: 8px;
-            margin: 0px;
+          border: none;
+          padding: 8px;
+          margin: 0px;
         }
 
         #entry:selected {
-            background-color: @bg0;
-            color: @fg;
+          background-color: @bg0;
+          color: @fg;
 
-            border-bottom-width: 4px;
-            border-bottom-color: #161a1d;
-            border-bottom-style: solid;
+          border-bottom-width: 4px;
+          border-bottom-color: #161a1d;
+          border-bottom-style: solid;
         }
       '';
     };
@@ -145,71 +145,71 @@ in
         # Apply themes
 
         general {
-            gaps_in = 10
-            gaps_out = 20
+          gaps_in = 10
+          gaps_out = 20
 
-            border_size = 4
-            col.active_border = $fg
-            col.inactive_border = $bg5
+          border_size = 4
+          col.active_border = $fg
+          col.inactive_border = $bg5
 
-            layout = dwindle
+          layout = dwindle
 
-            col.group_border = $fg
-            col.group_border_active = $bg5
+          col.group_border = $fg
+          col.group_border_active = $bg5
 
-            resize_on_border = true
+          resize_on_border = true
         }
 
         decoration {
-            rounding = 10
+          rounding = 10
 
-            blur = no
-            blur_size = 3
-            blur_passes = 4
-            blur_new_optimizations = on
-            blur_xray = true
-            blur_ignore_opacity = true
+          blur = no
+          blur_size = 3
+          blur_passes = 4
+          blur_new_optimizations = on
+          blur_xray = true
+          blur_ignore_opacity = true
 
-            drop_shadow = yes
-            shadow_range = 0
-            shadow_render_power = 4
-            col.shadow = rgb(7d6a40)
-            col.shadow_inactive = rgb(2b312f)
-            shadow_scale = 1.0
-            shadow_offset = 0 10
+          drop_shadow = yes
+          shadow_range = 0
+          shadow_render_power = 4
+          col.shadow = rgb(7d6a40)
+          col.shadow_inactive = rgb(2b312f)
+          shadow_scale = 1.0
+          shadow_offset = 0 10
 
-            dim_inactive = false
-            dim_strength = 0.1
+          dim_inactive = false
+          dim_strength = 0.1
 
-            dim_around = 0.0
+          dim_around = 0.0
 
-            multisample_edges = true
+          multisample_edges = true
         }
 
         animations {
-            enabled = yes
+          enabled = yes
 
-            bezier = myBezier, 0.05, 0.9, 0.1, 1.05
-            bezier = myBezier2, 0.65, 0, 0.35, 1
-            bezier = linear, 0, 0, 1, 1
+          bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+          bezier = myBezier2, 0.65, 0, 0.35, 1
+          bezier = linear, 0, 0, 1, 1
 
-            bezier=slow,0,0.85,0.3,1
-            bezier=overshot,0.7,0.6,0.1,1.1
-            bezier=bounce,1,1.6,0.1,0.85
-            bezier=slingshot,1,-1,0.15,1.25
-            bezier=nice,0,6.9,0.5,-4.20
+          bezier=slow,0,0.85,0.3,1
+          bezier=overshot,0.7,0.6,0.1,1.1
+          bezier=bounce,1,1.6,0.1,0.85
+          bezier=slingshot,1,-1,0.15,1.25
+          bezier=nice,0,6.9,0.5,-4.20
 
-            animation = windows,1,5,bounce,popin
-            animation = border,1,20,default
-            animation = fade, 1, 5, overshot
-            animation = workspaces, 1, 6, overshot, slidevert
-            animation = windowsIn,1,5,slow,popin
-            animation = windowsMove,1,5,default
+          animation = windows,1,5,bounce,popin
+          animation = border,1,20,default
+          animation = fade, 1, 5, overshot
+          animation = workspaces, 1, 6, overshot, slidevert
+          animation = windowsIn,1,5,slow,popin
+          animation = windowsMove,1,5,default
         }
 
         dwindle {
-            pseudotile = yes # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-            preserve_split = yes # you probably want this
+          pseudotile = yes # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+          preserve_split = yes # you probably want this
         }
 
         $mainMod = SUPER
@@ -266,56 +266,55 @@ in
         exec-once = sleep 3 && /usr/lib/kdeconnectd
 
         general {
-            cursor_inactive_timeout = 0
+          cursor_inactive_timeout = 0
         }
 
         input {
-            kb_layout = us
-            kb_variant = multix
-            kb_model =
-            kb_options = ctrl:nocaps
-            kb_rules =
-            numlock_by_default=true
+          kb_layout = us
+          kb_variant = multix
+          kb_model =
+          kb_options = ctrl:nocaps
+          kb_rules =
+          numlock_by_default=true
 
-            follow_mouse = 1
+          follow_mouse = 1
 
-            touchpad {
-                natural_scroll = yes
-            }
+          touchpad {
+            natural_scroll = yes
+          }
 
-            sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+          sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
         }
 
         gestures {
-            workspace_swipe=1
-            workspace_swipe_distance=400
-            workspace_swipe_invert=1
-            workspace_swipe_min_speed_to_force=30
-            workspace_swipe_cancel_ratio=0.5
-            workspace_swipe_create_new=0
-            workspace_swipe_forever=1
+          workspace_swipe=1
+          workspace_swipe_distance=400
+          workspace_swipe_invert=1
+          workspace_swipe_min_speed_to_force=30
+          workspace_swipe_cancel_ratio=0.5
+          workspace_swipe_create_new=0
+          workspace_swipe_forever=1
         }
 
         master {
-            new_is_master = true
+          new_is_master = true
         }
 
         gestures {
-            workspace_swipe = on
+          workspace_swipe = on
         }
 
         device:epic mouse V1 {
-            sensitivity = -0.5
+          sensitivity = -0.5
         }
 
         binds {
         	workspace_back_and_forth = true
-
         }
 
         misc {
         	layers_hog_keyboard_focus = true
-            focus_on_activate = true
+          focus_on_activate = true
         }
 
         layerrule = noanim,selection
@@ -357,7 +356,6 @@ in
         bind = $mainMod, U, layoutmsg, swapwithmaster
         bind = ALT, F10, pass, ^(com\.obsproject\.Studio)$
         bind = ALT, Tab, focuscurrentorlast
-
 
         # Hardware controls using function keys
         bind = , XF86MonBrightnessDown, exec, brightnessctl set 10%-
