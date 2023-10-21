@@ -47,28 +47,29 @@
   };
 
   outputs = inputs:
-  let
-    lib = inputs.snowfall-lib.mkLib {
-      inherit inputs;
-      src = ./.;
+    let
+      lib = inputs.snowfall-lib.mkLib {
+        inherit inputs;
+        src = ./.;
+      };
+    in
+    lib.mkFlake {
+      channels-config.allowUnfree = true;
+      systems.hosts = {
+        MacBook-Pro-Nixos.modules = [
+          inputs.apple-silicon-support.nixosModules.apple-silicon-support
+        ];
+        PineBook-Pro.modules = [
+          inputs.nixos-hardware.nixosModules.pine64-pinebook-pro
+        ];
+        rpi4b8a.modules = [
+          inputs.nixos-hardware.nixosModules.raspberry-pi-4
+        ];
+        steamdeck-nixos.modules = [
+          inputs.jovian.nixosModules.jovian
+        ];
+      };
     };
-  in lib.mkFlake {
-    channels-config.allowUnfree = true;
-    systems.hosts = {
-      MacBook-Pro-Nixos.modules = [
-        inputs.apple-silicon-support.nixosModules.apple-silicon-support
-      ];
-      PineBook-Pro.modules = [
-        inputs.nixos-hardware.nixosModules.pine64-pinebook-pro
-      ];
-      rpi4b8a.modules = [
-        inputs.nixos-hardware.nixosModules.raspberry-pi-4
-      ];
-      steamdeck-nixos.modules = [
-        inputs.jovian.nixosModules.jovian
-      ];
-    };
-  };
 
   nixConfig = {
     extra-substituters = [
