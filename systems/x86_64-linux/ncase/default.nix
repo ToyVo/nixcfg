@@ -1,4 +1,4 @@
-{ lib, ... }: {
+{ ... }: {
   hardware.cpu.amd.updateMicrocode = true;
   networking = {
     hostName = "ncase";
