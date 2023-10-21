@@ -14,6 +14,7 @@
     fs.boot.enable = true;
     fs.btrfs.enable = true;
     desktops.plasma.enable = true;
+    remote-builds.client.enable = true;
   };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
