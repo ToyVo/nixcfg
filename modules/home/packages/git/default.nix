@@ -23,7 +23,7 @@ in
         core.eol = "lf";
         core.autocrlf = "input";
         init.defaultBranch = "main";
-        url."ssh://git@github.com/".pushInsteadOf = "https://github.com/";
+        url."git@github.com:".pushInsteadOf = "https://github.com/";
       };
       signing.signByDefault = true;
       userName = "Collin Diekvoss";
