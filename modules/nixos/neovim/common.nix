@@ -243,7 +243,7 @@ in
         enable = true;
         checkTs = true;
       };
-      plugins.null-ls = {
+      plugins.none-ls = {
         enable = true;
         sources.formatting.stylua.enable = true;
         sources.formatting.prettier.enable = true;
