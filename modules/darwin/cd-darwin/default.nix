@@ -35,7 +35,7 @@ in
       { name = "protonmail-bridge"; greedy = true; }
       { name = "jetbrains-toolbox"; greedy = true; }
       { name = "bruno"; greedy = true; }
-      { name = "libreoffice"; greedy = true; }
+      { name = "onlyoffice"; greedy = true; }
       { name = "keybase"; greedy = true; }
       { name = "grammarly"; greedy = true; }
       { name = "rio"; greedy = true; }
