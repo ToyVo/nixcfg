@@ -19,6 +19,7 @@ in
       rectangle
       utm
       wezterm
+      pinentry_mac
     ];
     homebrew = {
       enable = true;
@@ -39,6 +40,7 @@ in
       { name = "keybase"; greedy = true; }
       { name = "grammarly"; greedy = true; }
       { name = "rio"; greedy = true; }
+      { name = "logseq"; greedy = true; }
       # nix package doesn't provide an app bundle
       { name = "neovide"; greedy = true; }
       # must be installed at /Applications, nix-darwin installs it at /Applications/nix apps
