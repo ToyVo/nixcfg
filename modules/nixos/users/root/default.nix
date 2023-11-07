@@ -1,13 +1,12 @@
 { lib, pkgs, config, ... }: {
   options.cd.users.root = {
-    enable = lib.mkEnableOption "root user";
     extraHomeManagerModules = lib.mkOption {
       type = lib.types.listOf lib.types.raw;
       default = [ ];
     };
   };
 
-  config = lib.mkIf config.cd.users.root.enable {
+  config = {
     users.users.root = {
       name = "root";
       home = "/root";

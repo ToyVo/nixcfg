@@ -19,8 +19,6 @@ in
       isNormalUser = true;
     };
 
-    cd.users.root.enable = (cfg.client.enable || cfg.server.enable);
-
     home-manager.users.root.programs.ssh = lib.mkIf cfg.client.enable {
       enable = lib.mkDefault true;
       matchBlocks."builder" = {
