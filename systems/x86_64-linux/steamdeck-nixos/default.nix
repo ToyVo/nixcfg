@@ -14,7 +14,7 @@
     fs.boot.enable = true;
     fs.btrfs.enable = true;
     desktops.plasma.enable = true;
-    remote-builds.client.enable = true;
+    # remote-builds.client.enable = true;
   };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
@@ -26,7 +26,7 @@
     steam.enable = true;
     steam.autoStart = true;
     steam.user = "toyvo";
-    steam.desktopSession = "plasma-wayland";
+    steam.desktopSession = "plasmawayland";
   };
   environment.systemPackages = [
     pkgs.steam
