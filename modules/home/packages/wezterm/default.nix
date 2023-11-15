@@ -10,7 +10,7 @@ in
     programs.wezterm.extraConfig = ''
       local wezterm = require("wezterm");
       local config = wezterm.config_builder();
-      config.font = wezterm.font("FiraCode Nerd Font");
+      config.font = wezterm.font_with_fallback({"Monaspace Neon", "Symbols Nerd Font"});
       config.color_scheme = "Gruvbox Dark (Gogh)";
       config.initial_rows = 30;
       config.initial_cols = 120;

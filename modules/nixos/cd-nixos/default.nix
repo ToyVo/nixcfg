@@ -76,6 +76,6 @@ in
       alsa.support32Bit = cfg.packages.gui.enable;
       pulse.enable = cfg.packages.gui.enable;
     };
-    fonts.packages = with pkgs; lib.mkIf cfg.packages.gui.enable [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) font-awesome ];
+    fonts.packages = with pkgs; lib.mkIf cfg.packages.gui.enable [ monaspace (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; }) ];
   };
 }

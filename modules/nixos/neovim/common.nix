@@ -21,6 +21,7 @@ in
         { key = "<C-j>"; action = "<C-w>j"; mode = "n"; }
         { key = "<C-k>"; action = "<C-w>k"; mode = "n"; }
         { key = "<C-l>"; action = "<C-w>l"; mode = "n"; }
+        { key = "<leader>h"; action = "<cmd>nohlsearch<cr>"; mode = "n"; options.desc = "Clear highlight"; }
         { key = "<leader>pf"; action = "<cmd>Telescope find_files<cr>"; mode = "n"; options.desc = "Project Files"; }
         { key = "<leader>ps"; action = "<cmd>Telescope live_grep<cr>"; mode = "n"; options.desc = "Project Search"; }
         { key = "<leader>vh"; action = "<cmd>Telescope help_tags<cr>"; mode = "n"; options.desc = "Help Tags"; }
@@ -88,7 +89,8 @@ in
         showmode = false;
         showtabline = 2;
         cursorline = true;
-        guifont = "FiraCode Nerd Font:h16";
+        guifont = "Monaspace Neon:h16";
+        guifontwide = "Symbols Nerd Font:h16";
         foldmethod = "expr";
         foldexpr = "nvim_treesitter#foldexpr()";
         foldenable = false;
@@ -98,6 +100,7 @@ in
         isfname = "@,48-57,/,.,-,_,+,,,#,$,%,~,=,@-@";
         iskeyword = "@,48-57,_,192-255,-";
         listchars = "tab:> ,trail:-,nbsp:+,space:⋅,eol:↴";
+        shiftround = true;
       };
       globals = {
         mapleader = " ";
@@ -259,6 +262,7 @@ in
       };
       plugins.rust-tools.enable = true;
       plugins.gitsigns.enable = true;
+      # consider alternative of commentary
       plugins.comment-nvim.enable = true;
       plugins.nvim-tree.enable = true;
       plugins.copilot-cmp.enable = true;

@@ -45,7 +45,7 @@ in
         @define-color grey2 #9da9a0;
 
         * {
-          font-family: FiraCode Nerd Font, Font Awesome 6 Free;
+          font-family: Monaspace Neon, Symbols Nerd Font;
           font-size: 16px;
           border-radius: 8px;
           border: none;
@@ -586,7 +586,7 @@ in
         @define-color grey2 #9da9a0;
 
         * {
-          font-family: FiraCode Nerd Font, Font Awesome 6 Free;
+          font-family: Monaspace Neon, Symbols Nerd Font;
           font-size: 16px;
           font-weight: bold;
         }

@@ -31,7 +31,7 @@ in
         "prettier.singleQuote" = true;
         "editor.fontSize" = 14;
         "editor.fontLigatures" = true;
-        "editor.fontFamily" = "'FiraCode Nerd Font' ,'Font Awesome 6 Free'";
+        "editor.fontFamily" = "'Monaspace Neon', 'Symbols Nerd Font'";
         "[javascript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[json]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
