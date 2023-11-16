@@ -1,8 +1,8 @@
-{ ... }: {
+{ pkgs, ... }: {
   hardware.cpu.amd.updateMicrocode = true;
   networking = {
     hostName = "ncase";
-    firewall.allowedTCPPorts = [ 5357 ];
+    firewall.allowedTCPPorts = [ 5357 80 443 ];
     firewall.allowedUDPPorts = [ 3702 ];
   };
   boot = {
@@ -78,6 +78,17 @@
         "force group" = "users";
         "valid users" = "chloe";
       };
+    };
+  };
+  environment.etc."nextcloud-admin-pass".text = "test123";
+  services.nextcloud = {
+    enable = true;
+    package = pkgs.nextcloud27;
+    hostName = "nextcloud.diekvoss.net";
+    home = "/mnt/POOL/nextcloud";
+    config = {
+      extraTrustedDomains = ["10.1.0.3"];
+      adminpassFile = "/etc/nextcloud-admin-pass";
     };
   };
 }
