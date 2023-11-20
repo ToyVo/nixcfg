@@ -62,9 +62,6 @@
         PineBook-Pro.modules = [
           inputs.nixos-hardware.nixosModules.pine64-pinebook-pro
         ];
-        rpi4b8a.modules = [
-          inputs.nixos-hardware.nixosModules.raspberry-pi-4
-        ];
         steamdeck-nixos.modules = [
           inputs.jovian.nixosModules.jovian
         ];
