@@ -11,8 +11,8 @@ in
       delta.enable = true;
       delta.options = {
         syntax-theme = "gruvbox-dark";
-        minus-style = ''syntax "#cc241d"'';
-        plus-style = ''syntax "#689d6a"'';
+        minus-style = ''syntax "#4b0003"'';
+        plus-style = ''syntax "#1b3224"'';
         side-by-side = true;
         line-numbers = true;
       };
