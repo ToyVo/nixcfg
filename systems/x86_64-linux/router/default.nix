@@ -13,7 +13,7 @@
     nat.internalInterfaces = [ "enp3s0" "cdiot" ];
     firewall = {
       enable = true;
-      interfaces.enp3s0.allowedTCPPorts = [ 53 22 3000 ];
+      interfaces.enp3s0.allowedTCPPorts = [ 53 22 80 3000 ];
       interfaces.enp3s0.allowedUDPPorts = [ 53 67 68 ];
       interfaces.cdiot.allowedTCPPorts = [ 53 ];
       interfaces.cdiot.allowedUDPPorts = [ 53 67 68 ];
@@ -81,6 +81,13 @@
             MACAddress = "c4:ac:59:a6:63:33";
           };
         }
+        # HP Printer
+        {
+          dhcpServerStaticLeaseConfig = {
+            Address = "10.1.0.5";
+            MACAddress = "7c:4d:8f:91:d3:9f";
+          };
+        }
       ];
       linkConfig.RequiredForOnline = "no";
     };
@@ -129,6 +136,14 @@
     };
     nginx = {
       enable = true;
+      virtualHosts = {
+        "omada.diekvoss.net" = {
+          locations."/".proxyPass = "http://10.1.0.2:80";
+        };
+        "nextcloud.diekvoss.net" = {
+          locations."/".proxyPass = "http://10.1.0.3:80";
+        };
+      };
     };
   };
 }
