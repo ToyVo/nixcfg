@@ -13,7 +13,7 @@
     nat.internalInterfaces = [ "enp3s0" "cdiot" ];
     firewall = {
       enable = true;
-      interfaces.enp3s0.allowedTCPPorts = [ 53 22 80 3000 ];
+      interfaces.enp3s0.allowedTCPPorts = [ 53 22 80 443 3000 ];
       interfaces.enp3s0.allowedUDPPorts = [ 53 67 68 ];
       interfaces.cdiot.allowedTCPPorts = [ 53 ];
       interfaces.cdiot.allowedUDPPorts = [ 53 67 68 ];
@@ -139,6 +139,7 @@
       virtualHosts = {
         "omada.diekvoss.net" = {
           useACMEHost = "diekvoss.net";
+          forceSSL = true;
           locations."/" = {
             proxyPass = "http://10.1.0.2:80";
             recommendedProxySettings = true;
@@ -146,6 +147,7 @@
         };
         "nextcloud.diekvoss.net" = {
           useACMEHost = "diekvoss.net";
+          forceSSL = true;
           locations."/" = {
             proxyPass = "http://10.1.0.3:80";
             recommendedProxySettings = true;
