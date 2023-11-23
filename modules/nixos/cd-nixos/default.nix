@@ -4,7 +4,6 @@ let
 in
 {
   imports = [
-    inputs.nixpkgs.nixosModules.notDetected
     ./common.nix
   ];
 

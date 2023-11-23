@@ -115,4 +115,13 @@
       bootstrap_dns = [ "9.9.9.9" ];
     };
   };
+  services.cfdyndns = {
+    enable = true;
+    email = "collin@diekvoss.com";
+    records = [
+      "*.diekvoss.net"
+    ];
+    apikeyFile = ./cfapikey;
+    apiTokenFile = ./cfapitoken;
+  };
 }
