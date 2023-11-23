@@ -121,7 +121,7 @@
     records = [
       "*.diekvoss.net"
     ];
-    apikeyFile = ./cfapikey;
-    apiTokenFile = ./cfapitoken;
+    apikeyFile = "${./cfapikey}";
+    apiTokenFile = "${./cfapitoken}";
   };
 }
