@@ -47,6 +47,8 @@ in
       rustup
       cargo-watch
       cargo-generate
+      xz
+      zstd
     ]
     ++ lib.optionals cfg.packages.gui.enable [
       element-desktop

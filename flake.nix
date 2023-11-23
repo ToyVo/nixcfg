@@ -2,7 +2,8 @@
   description = "Collin Diekvoss Dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,7 +28,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     jovian = {
-      url = "github:Jovian-Experiments/Jovian-NixOS?rev=9e6bc6f4abb495563bdcb5bf4336401787df5902";
+      url = "github:Jovian-Experiments/Jovian-NixOS";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
