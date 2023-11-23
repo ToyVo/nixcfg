@@ -138,7 +138,7 @@
       enable = true;
       virtualHosts = {
         "omada.diekvoss.net" = {
-          locations."/".proxyPass = "http://10.1.0.2:80";
+          locations."/".proxyPass = "https://10.1.0.2:443";
         };
         "nextcloud.diekvoss.net" = {
           locations."/".proxyPass = "http://10.1.0.3:80";
