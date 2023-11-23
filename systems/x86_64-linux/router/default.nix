@@ -140,7 +140,16 @@
         "omada.diekvoss.net" = {
           locations."/" = {
             proxyPass = "https://10.1.0.2:443";
-            recommendedProxySettings = true;
+            # Customized reccommendedProxySettings
+            extraConfig = ''
+              proxy_set_header        Host $http_host:8043;
+              proxy_set_header        X-Real-IP $remote_addr;
+              proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header        X-Forwarded-Proto $scheme;
+              proxy_set_header        X-Forwarded-Host $host;
+              proxy_set_header        X-Forwarded-Server $host;
+              proxy_redirect https://$http_host:8043/login https://$http_host/login;
+            '';
           };
         };
         "nextcloud.diekvoss.net" = {

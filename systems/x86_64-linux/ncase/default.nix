@@ -80,7 +80,6 @@
       };
     };
   };
-  environment.etc."nextcloud-admin-pass".text = "test123";
   services.nextcloud = {
     enable = true;
     package = pkgs.nextcloud27;
@@ -88,7 +87,7 @@
     home = "/mnt/POOL/nextcloud";
     config = {
       extraTrustedDomains = ["10.1.0.3"];
-      adminpassFile = "/etc/nextcloud-admin-pass";
+      adminpassFile = "${./adminpass}";
     };
   };
 }
