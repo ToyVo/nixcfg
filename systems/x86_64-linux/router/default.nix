@@ -138,10 +138,16 @@
       enable = true;
       virtualHosts = {
         "omada.diekvoss.net" = {
-          locations."/".proxyPass = "https://10.1.0.2:443";
+          locations."/" = {
+            proxyPass = "https://10.1.0.2:443";
+            recommendedProxySettings = true;
+          };
         };
         "nextcloud.diekvoss.net" = {
-          locations."/".proxyPass = "http://10.1.0.3:80";
+          locations."/" = {
+            proxyPass = "http://10.1.0.3:80";
+            recommendedProxySettings = true;
+          };
         };
       };
     };
