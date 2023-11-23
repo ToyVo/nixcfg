@@ -1,4 +1,4 @@
-{ lib, ... }: {
+{ lib, pkgs, ... }: {
   hardware.cpu.intel.updateMicrocode = true;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   networking = {
