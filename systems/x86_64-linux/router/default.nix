@@ -154,10 +154,22 @@
       };
     };
   };
-  security.acme.certs = {
-    "diekvoss.net" = {
-      email = "collin@diekvoss.com";
-      extraDomainNames = [ "*.diekvoss.net" ];
+  security.acme = {
+    acceptTerms = true;
+    certs = {
+      "diekvoss.net" = {
+        email = "collin@diekvoss.com";
+        extraDomainNames = [ "*.diekvoss.net" ];
+        dnsProvider = "cloudflare";
+        credentialFiles = {
+          "CF_API_EMAIL_FILE" = "${pkgs.writeText "cfemail" ''
+            collin@diekvoss.com
+          ''}";
+          "CF_API_KEY_FILE" = "${./cfapikey}";
+          "CF_DNS_API_TOKEN_FILE" = "${./cfapitoken}";
+        };
+      };
     };
   };
+  users.users.nginx.extraGroups = [ "acme" ];
 }
