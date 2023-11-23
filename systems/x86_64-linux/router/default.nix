@@ -10,13 +10,17 @@
     nameservers = [ "127.0.1.53" ];
     nat.enable = true;
     nat.externalInterface = "enp2s0";
-    nat.internalInterfaces = [ "enp3s0" "cdiot" ];
+    nat.internalInterfaces = [ "enp3s0" "cdnet" "cdiot" "cdguest" ];
     firewall = {
       enable = true;
       interfaces.enp3s0.allowedTCPPorts = [ 53 22 80 443 3000 ];
       interfaces.enp3s0.allowedUDPPorts = [ 53 67 68 ];
+      interfaces.cdnet.allowedTCPPorts = [ 53 22 80 443 3000 ];
+      interfaces.cdnet.allowedUDPPorts = [ 53 67 68 ];
       interfaces.cdiot.allowedTCPPorts = [ 53 ];
       interfaces.cdiot.allowedUDPPorts = [ 53 67 68 ];
+      interfaces.cdguest.allowedTCPPorts = [ 53 ];
+      interfaces.cdguest.allowedUDPPorts = [ 53 67 68 ];
     };
   };
   boot = {
@@ -52,7 +56,7 @@
     networks."20-lan" = {
       matchConfig.Name = "enp3s0";
       address = [ "10.1.0.1/24" ];
-      vlan = [ "cdiot" ];
+      vlan = [ "cdnet" "cdiot" "cdguest" ];
       networkConfig = {
         DHCPServer = true;
         IPMasquerade = "ipv4";
@@ -68,6 +72,7 @@
           };
         }
         # NCase
+        # if changing ip, change A record on cloudflare
         {
           dhcpServerStaticLeaseConfig = {
             Address = "10.1.0.3";
@@ -91,16 +96,50 @@
       ];
       linkConfig.RequiredForOnline = "no";
     };
-    netdevs."25-cdiot" = {
+    netdevs."21-cdnet" = {
+      netdevConfig = {
+        Name = "cdnet";
+        Kind = "vlan";
+      };
+      vlanConfig.Id = 10;
+    };
+    netdevs."22-cdiot" = {
       netdevConfig = {
         Name = "cdiot";
         Kind = "vlan";
       };
       vlanConfig.Id = 20;
     };
-    networks."25-cdiot" = {
+    netdevs."23-cdguest" = {
+      netdevConfig = {
+        Name = "cdguest";
+        Kind = "vlan";
+      };
+      vlanConfig.Id = 30;
+    };
+    networks."21-cdnet" = {
+      matchConfig.Name = "cdnet";
+      address = [ "10.1.10.1/24" ];
+      networkConfig = {
+        DHCPServer = true;
+        IPMasquerade = "ipv4";
+      };
+      dhcpServerConfig.DNS = [ "10.1.0.1" ];
+      linkConfig.RequiredForOnline = "no";
+    };
+    networks."22-cdiot" = {
       matchConfig.Name = "cdiot";
       address = [ "10.1.20.1/24" ];
+      networkConfig = {
+        DHCPServer = true;
+        IPMasquerade = "ipv4";
+      };
+      dhcpServerConfig.DNS = [ "10.1.0.1" ];
+      linkConfig.RequiredForOnline = "no";
+    };
+    networks."23-cdguest" = {
+      matchConfig.Name = "cdguest";
+      address = [ "10.1.30.1/24" ];
       networkConfig = {
         DHCPServer = true;
         IPMasquerade = "ipv4";
