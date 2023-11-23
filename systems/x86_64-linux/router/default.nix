@@ -138,18 +138,26 @@
       enable = true;
       virtualHosts = {
         "omada.diekvoss.net" = {
+          useACMEHost = "*.diekvoss.net";
           locations."/" = {
             proxyPass = "http://10.1.0.2:80";
             recommendedProxySettings = true;
           };
         };
         "nextcloud.diekvoss.net" = {
+          useACMEHost = "*.diekvoss.net";
           locations."/" = {
             proxyPass = "http://10.1.0.3:80";
             recommendedProxySettings = true;
           };
         };
       };
+    };
+  };
+  security.acme.certs = {
+    "diekvoss.net" = {
+      email = "collin@diekvoss.com";
+      extraDomainNames = [ "*.diekvoss.net" ];
     };
   };
 }
