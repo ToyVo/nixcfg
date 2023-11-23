@@ -102,26 +102,33 @@
       linkConfig.RequiredForOnline = "no";
     };
   };
-  services.openssh.openFirewall = false;
-  services.resolved.enable = true;
-  services.resolved.extraConfig = ''
-    DNSStubListenerExtra=10.1.0.1
-  '';
-  services.adguardhome = {
-    enable = true;
-    mutableSettings = false;
-    settings.dns = {
-      bind_hosts = [ "127.0.1.53" ];
-      bootstrap_dns = [ "9.9.9.9" ];
+  services = {
+    openssh.openFirewall = false;
+    resolved = {
+      enable = true;
+      extraConfig = ''
+        DNSStubListenerExtra=10.1.0.1
+      '';
     };
-  };
-  services.cfdyndns = {
-    enable = true;
-    email = "collin@diekvoss.com";
-    records = [
-      "*.diekvoss.net"
-    ];
-    apikeyFile = "${./cfapikey}";
-    apiTokenFile = "${./cfapitoken}";
+    adguardhome = {
+      enable = true;
+      mutableSettings = false;
+      settings.dns = {
+        bind_hosts = [ "127.0.1.53" ];
+        bootstrap_dns = [ "9.9.9.9" ];
+      };
+    };
+    cfdyndns = {
+      enable = true;
+      email = "collin@diekvoss.com";
+      records = [
+        "*.diekvoss.net"
+      ];
+      apikeyFile = "${./cfapikey}";
+      apiTokenFile = "${./cfapitoken}";
+    };
+    nginx = {
+      enable = true;
+    };
   };
 }
