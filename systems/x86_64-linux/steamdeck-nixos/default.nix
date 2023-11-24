@@ -1,5 +1,4 @@
-{ lib, pkgs, inputs, ... }: {
-  nixpkgs.overlays = [ inputs.jovian.overlays.jovian ];
+{ lib, pkgs, ... }: {
   hardware.cpu.amd.updateMicrocode = true;
   networking.hostName = "steamdeck-nixos";
   boot = {
