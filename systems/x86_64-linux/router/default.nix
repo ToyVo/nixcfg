@@ -13,9 +13,9 @@
     nat.internalInterfaces = [ "enp3s0" "cdnet" "cdiot" "cdguest" ];
     firewall = {
       enable = true;
-      interfaces.enp3s0.allowedTCPPorts = [ 53 22 80 443 3000 ];
+      interfaces.enp3s0.allowedTCPPorts = [ 53 22 80 443 ];
       interfaces.enp3s0.allowedUDPPorts = [ 53 67 68 ];
-      interfaces.cdnet.allowedTCPPorts = [ 53 22 80 443 3000 ];
+      interfaces.cdnet.allowedTCPPorts = [ 53 22 80 443 ];
       interfaces.cdnet.allowedUDPPorts = [ 53 67 68 ];
       interfaces.cdiot.allowedTCPPorts = [ 53 ];
       interfaces.cdiot.allowedUDPPorts = [ 53 67 68 ];
@@ -189,6 +189,14 @@
           forceSSL = true;
           locations."/" = {
             proxyPass = "http://10.1.0.3:80";
+            recommendedProxySettings = true;
+          };
+        };
+        "adguard.diekvoss.net" = {
+          useACMEHost = "diekvoss.net";
+          forceSSL = true;
+          locations."/" = {
+            proxyPass = "http://10.1.0.1:3000";
             recommendedProxySettings = true;
           };
         };
