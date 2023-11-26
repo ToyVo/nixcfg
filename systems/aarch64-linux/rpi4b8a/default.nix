@@ -1,6 +1,9 @@
 { lib, pkgs, ... }: {
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
-  networking.hostName = "rpi4b8a";
+  networking = {
+    hostName = "rpi4b8a";
+    firewall.allowedTCPPorts = [ 5000 ];
+  };
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
     loader.grub.enable = false;
