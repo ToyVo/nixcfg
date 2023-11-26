@@ -246,6 +246,10 @@
           locations."/" = {
             proxyPass = "http://10.1.0.7:5000";
             recommendedProxySettings = true;
+            proxyWebsockets = true;
+          };
+          locations."/webcam/" = {
+            proxyPass = "http://10.1.0.7:8080";
           };
         };
       };
