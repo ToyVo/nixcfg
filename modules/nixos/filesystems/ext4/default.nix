@@ -6,7 +6,7 @@ in
   options.cd.fs.sd.enable = lib.mkEnableOption "root partition";
   options.cd.fs.ext4.enable = lib.mkEnableOption "root ext4 partition";
   options.cd.fs.ext4.label = lib.mkOption {
-    type = types.string;
+    type = lib.types.string;
     default = "NIXOS";
     internal = true;
   };
