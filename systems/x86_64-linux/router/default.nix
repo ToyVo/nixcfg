@@ -244,7 +244,7 @@
           useACMEHost = "diekvoss.net";
           forceSSL = true;
           locations."/" = {
-            proxyPass = "http://10.1.0.6:5000";
+            proxyPass = "http://10.1.0.7:5000";
             recommendedProxySettings = true;
           };
         };

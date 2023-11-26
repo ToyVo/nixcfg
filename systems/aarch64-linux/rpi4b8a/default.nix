@@ -12,4 +12,5 @@
     users.toyvo.enable = true;
     fs.sd.enable = true;
   };
+  services.octoprint.enable = true;
 }
