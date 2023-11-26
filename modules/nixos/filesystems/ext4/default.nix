@@ -9,10 +9,10 @@ in
     type = lib.types.str;
     default = "NIXOS";
     internal = true;
+    visible = false;
   };
 
   config = {
-
     cd.fs.ext4 = lib.mkIf cfg.fs.sd.enable {
       enable = true;
       label = "NIXOS_SD";
