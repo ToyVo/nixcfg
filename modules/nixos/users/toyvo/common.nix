@@ -60,6 +60,7 @@ in
             wezterm.enable = cfg.packages.gui.enable;
             zellij.enable = true;
             zsh.enable = true;
+            bash.enable = true;
           };
         }
       ] ++ cfg.users.toyvo.extraHomeManagerModules;

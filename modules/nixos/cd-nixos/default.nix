@@ -40,6 +40,7 @@ in
       yubikey-manager-qt
       yubioath-flutter
     ];
+    programs.bash.blesh.enable = true;
     programs.ssh.startAgent = false;
     programs.gnupg.agent = {
       enable = true;
