@@ -28,6 +28,7 @@ in
       xkbOptions = "ctrl:nocaps";
     };
     environment.systemPackages = with pkgs; [
+      coreutils
       yubikey-manager
       yubikey-personalization
       yubico-piv-tool

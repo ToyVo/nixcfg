@@ -29,7 +29,6 @@ in
     environment.systemPackages = with pkgs; [
       broot
       bun
-      coreutils
       curl
       dig
       dogdns

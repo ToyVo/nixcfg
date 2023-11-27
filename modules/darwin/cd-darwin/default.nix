@@ -21,6 +21,15 @@ in
       wezterm
       pinentry_mac
     ];
+    programs = {
+      bash = {
+        enable = true;
+        enableCompletion = true;
+        interactiveShellInit = ''
+          [ -n "$PS1" ] && source ${pkgs.blesh}/share/blesh/ble.sh
+        '';
+      };
+    };
     homebrew = {
       enable = true;
       onActivation = {
