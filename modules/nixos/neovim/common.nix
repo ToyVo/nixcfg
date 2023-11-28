@@ -8,6 +8,7 @@ in
   config = lib.mkIf cfg.packages.neovim.enable {
     programs.nixvim = {
       enable = true;
+      enableMan = false;
       luaLoader.enable = true;
       viAlias = true;
       vimAlias = true;
