@@ -48,7 +48,11 @@ in
       };
       imports = [
         {
-          cd.packages = {
+          options.cd.username = lib.mkOption {
+            type = lib.types.str;
+            default = cfg.users.toyvo.name;
+          };
+          config.cd.packages = {
             bat.enable = true;
             eza.enable = true;
             git.enable = true;
@@ -61,6 +65,7 @@ in
             zellij.enable = true;
             zsh.enable = true;
             bash.enable = true;
+            nushell.enable = true;
           };
         }
       ] ++ cfg.users.toyvo.extraHomeManagerModules;

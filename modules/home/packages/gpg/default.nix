@@ -41,5 +41,9 @@ in
       GPG_TTY = "$(tty)";
       SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
     };
+    programs.nushell.envFile.text = ''
+      $env.GPG_TTY = (echo (tty))
+      $env.SSH_AUTH_SOCK = (gpgconf --list-dirs agent-ssh-socket)
+    '';
   };
 }

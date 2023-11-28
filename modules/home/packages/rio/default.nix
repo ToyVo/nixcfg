@@ -16,6 +16,9 @@ in
       [window]
       width = 1200
       height = 800
+      [shell]
+      program = '${pkgs.nushell}/bin/nu'
+      args = []
     '';
 
     xdg.configFile."rio/themes/gruvbox.toml".text = ''
