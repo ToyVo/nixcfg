@@ -2,7 +2,7 @@
   hardware.cpu.amd.updateMicrocode = true;
   networking = {
     hostName = "ncase";
-    firewall.allowedTCPPorts = [ 5357 80 443 ];
+    firewall.allowedTCPPorts = [ 5357 80 443 8080 ];
     firewall.allowedUDPPorts = [ 3702 ];
   };
   boot = {
@@ -17,6 +17,7 @@
     fs.boot.enable = true;
     fs.btrfs.enable = true;
     remote-builds.server.enable = true;
+    homer = true;
   };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
