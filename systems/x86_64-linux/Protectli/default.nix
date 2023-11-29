@@ -49,15 +49,6 @@
           PoolSize = 100;
           PoolOffset = 20;
         };
-        dhcpServerStaticLeases = [
-          # Omada Controller
-          {
-            dhcpServerStaticLeaseConfig = {
-              Address = "192.168.0.2";
-              MACAddress = "10:27:f5:bd:04:97";
-            };
-          }
-        ];
         vlan = [ "cdwifi" "cdiot" "cdguest" ];
       };
       "30-cdwifi" = {
@@ -69,36 +60,6 @@
           PoolSize = 100;
           PoolOffset = 20;
         };
-        dhcpServerStaticLeases = [
-          # Proxmox
-          {
-            dhcpServerStaticLeaseConfig = {
-              Address = "192.168.10.3";
-              MACAddress = "70:85:c2:8a:53:5b";
-            };
-          }
-          # TrueNAS VM (Proxmox)
-          {
-            dhcpServerStaticLeaseConfig = {
-              Address = "192.168.10.4";
-              MACAddress = "e2:8b:29:5e:56:ca";
-            };
-          }
-          # Canon Printer
-          {
-            dhcpServerStaticLeaseConfig = {
-              Address = "192.168.10.4";
-              MACAddress = "c4:ac:59:a6:63:33";
-            };
-          }
-          # Docker VM (Proxmox)
-          {
-            dhcpServerStaticLeaseConfig = {
-              Address = "192.168.10.6";
-              MACAddress = "7a:8d:bd:a3:66:ba";
-            };
-          }
-        ];
       };
       "30-cdiot" = {
         matchConfig.Name = "cdiot";
