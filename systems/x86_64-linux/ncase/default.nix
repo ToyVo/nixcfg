@@ -31,7 +31,7 @@
       isNormalUser = true;
     };
   };
-  virtualization.docker = {
+  virtualisation.docker = {
     enable = true;
     storageDriver = "btrfs";
   };
