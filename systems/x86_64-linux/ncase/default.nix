@@ -31,6 +31,10 @@
       isNormalUser = true;
     };
   };
+  virtualization.docker = {
+    enable = true;
+    storageDriver = "btrfs";
+  };
   services.samba-wsdd.enable = true;
   services.samba = {
     enable = true;

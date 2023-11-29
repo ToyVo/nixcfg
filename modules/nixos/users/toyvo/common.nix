@@ -33,6 +33,9 @@ in
         EDITOR = "nvim";
       };
       home.sessionPath = [ "$HOME/.local/bin" ];
+      home.packages = with pkgs; [
+        lazygit
+      ];
       xdg.configFile."ideavim/ideavimrc".source = ./ideavimrc;
       xdg.configFile."nix/nix.conf".text = ''
         experimental-features = nix-command flakes
@@ -41,7 +44,13 @@ in
         { allowUnfree = true; }
       '';
       programs.home-manager.enable = true;
-      programs.starship.enable = true;
+      programs.starship = {
+        enable = true;
+        settings = {
+          right_format = "$time";
+          time.disabled = false;
+        };
+      };
       programs.direnv = {
         enable = true;
         nix-direnv.enable = true;

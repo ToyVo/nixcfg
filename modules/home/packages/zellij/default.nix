@@ -19,5 +19,18 @@ in
         theme = "gruvbox-dark";
       };
     };
+    programs.nushell.configFile.text = ''
+      if "ZELLIJ" not-in $env and "SSH_TTY" not-in $env and "SSH_CLIENT" not-in $env and "SSH_CONNECTION" not-in $env and $env.TERMINAL_EMULATOR? != "JetBrains-JediTerm" and $env.TERM_PROGRAM? != "vscode" {
+        if $env.ZELLIJ_AUTO_ATTACH? == "true" {
+          ${pkgs.zellij}/bin/zellij options --default-shell ${pkgs.nushell}/bin/nu attach -c 
+        } else {
+          ${pkgs.zellij}/bin/zellij options --default-shell ${pkgs.nushell}/bin/nu
+        }
+
+        if $env.ZELLIJ_AUTO_EXIT? == "true" {
+          exit
+        }
+      }
+    '';
   };
 }

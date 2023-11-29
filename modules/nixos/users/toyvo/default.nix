@@ -8,7 +8,7 @@ in
   config = lib.mkIf cfg.users.toyvo.enable {
     users.users.${cfg.users.toyvo.name} = {
       isNormalUser = true;
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" "docker" ];
       initialHashedPassword = "$y$j9T$tkZ4b5vK1fCsRP0oWUb0e1$w0QbUEv9swXir33ivvM70RYTYflQszeLBi3vubYTqd8";
     };
   };
