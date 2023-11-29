@@ -14,7 +14,7 @@ in
       oci-containers.containers = {
         homer = {
           image = "b4bz/homer:latest";
-          ports = [ "0.0.0.0:8080:8080" ];
+          ports = [ "127.0.0.1:8080:8080" ];
           volumes = [ "/etc/homer:/www/assets" ];
         };
       };
