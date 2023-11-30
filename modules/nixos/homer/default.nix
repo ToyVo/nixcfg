@@ -10,6 +10,7 @@ in
       image = "b4bz/homer:latest";
       ports = [ "127.0.0.1:8081:8080" ];
       volumes = [ "/etc/homer:/www/assets" ];
+      autoStart = true;
     };
     environment.etc."homer/config.yml".text = ''
       ---
