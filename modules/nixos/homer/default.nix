@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, pkgs, lib, ... }:
 let
   cfg = config.cd;
 in
@@ -6,13 +6,8 @@ in
   options.cd.homer = lib.mkEnableOption "Enable Homer container";
 
   config = lib.mkIf cfg.homer {
-    virtualisation.oci-containers.containers.homer = {
-      image = "b4bz/homer:latest";
-      ports = [ "127.0.0.1:8081:8080" ];
-      volumes = [ "/etc/homer:/www/assets" ];
-      autoStart = true;
-    };
-    environment.etc."homer/config.yml".text = ''
+    services.static-web-server = let
+      config = ''
       ---
       # Homepage configuration
       # See https://fontawesome.com/v5/search for icons options
@@ -144,6 +139,19 @@ in
               subtitle: "Another application"
               tag: "awesome-list"
               url: "https://github.com/awesome-selfhosted/awesome-selfhosted"
-    '';
+      '';
+      homer = pkgs.stdenv.mkDerivation rec {
+        name = "homer";
+        src = pkgs.fetchzip {
+          url = "https://github.com/bastienwirtz/homer/releases/download/v23.10.1/homer.zip";
+          hash = "1111111111111111111111111111111111111111111111111111";
+        };
+        configurePhase = ''
+          echo "${config}" >> $src/assets/config.yml
+      };
+    in {
+      enable = true;
+      root = homer
+    };
   };
 }

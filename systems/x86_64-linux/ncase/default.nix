@@ -23,17 +23,6 @@
     device = "/dev/disk/by-label/POOL";
     fsType = "btrfs";
   };
-  virtualisation = {
-    oci-containers.backend = "docker";
-    docker = {
-      enable = true;
-      rootless = {
-        enable = true;
-        setSocketVariable = true;
-      };
-      storageDriver = "btrfs";
-    };
-  };
   users.users = {
     chloe = {
       isNormalUser = true;
