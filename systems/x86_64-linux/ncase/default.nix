@@ -17,7 +17,10 @@
     fs.boot.enable = true;
     fs.btrfs.enable = true;
     remote-builds.server.enable = true;
-    homer = true;
+    homer = {
+      enable = true;
+      openFirewall = true;
+    };
   };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";

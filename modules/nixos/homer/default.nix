@@ -3,9 +3,12 @@ let
   cfg = config.cd;
 in
 {
-  options.cd.homer = lib.mkEnableOption "Enable Homer container";
+  options.cd.homer = {
+    enable = lib.mkEnableOption "Enable Homer dashboard";
+    openFirewall = lib.mkEnableOption "Enable Homer dashboard";
+  };
 
-  config = lib.mkIf cfg.homer {
+  config = lib.mkIf cfg.homer.enable {
     services.static-web-server = let
       config = pkgs.writeText "config.yml" ''
       ---
@@ -154,6 +157,6 @@ in
       enable = true;
       root = homer;
     };
-    networking.firewall.allowedTCPPorts = [ 8787 ];
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.homer.openFirewall [ 8787 ];
   };
 }
