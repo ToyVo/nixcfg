@@ -216,11 +216,11 @@
     nginx = {
       enable = true;
       virtualHosts = {
-        "omada.diekvoss.net" = {
+        "adguard.diekvoss.net" = {
           useACMEHost = "diekvoss.net";
           forceSSL = true;
           locations."/" = {
-            proxyPass = "http://10.1.0.2:80";
+            proxyPass = "http://10.1.0.1:3000";
             recommendedProxySettings = true;
           };
         };
@@ -229,14 +229,6 @@
           forceSSL = true;
           locations."/" = {
             proxyPass = "http://10.1.0.3:80";
-            recommendedProxySettings = true;
-          };
-        };
-        "adguard.diekvoss.net" = {
-          useACMEHost = "diekvoss.net";
-          forceSSL = true;
-          locations."/" = {
-            proxyPass = "http://10.1.0.1:3000";
             recommendedProxySettings = true;
           };
         };
@@ -250,6 +242,22 @@
           };
           locations."/webcam/" = {
             proxyPass = "http://10.1.0.7:8080";
+          };
+        };
+        "omada.diekvoss.net" = {
+          useACMEHost = "diekvoss.net";
+          forceSSL = true;
+          locations."/" = {
+            proxyPass = "http://10.1.0.2:80";
+            recommendedProxySettings = true;
+          };
+        };
+        "portal.diekvoss.net" = {
+          useACMEHost = "diekvoss.net";
+          forceSSL = true;
+          locations."/" = {
+            proxyPass = "http://10.1.0.3:8787";
+            recommendedProxySettings = true;
           };
         };
       };
