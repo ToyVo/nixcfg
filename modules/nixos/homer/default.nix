@@ -7,7 +7,7 @@ in
 
   config = lib.mkIf cfg.homer {
     services.static-web-server = let
-      config = ''
+      config = pkgs.writeText "config.yml" ''
       ---
       # Homepage configuration
       # See https://fontawesome.com/v5/search for icons options
@@ -140,15 +140,16 @@ in
               tag: "awesome-list"
               url: "https://github.com/awesome-selfhosted/awesome-selfhosted"
       '';
-      homer = pkgs.stdenv.mkDerivation rec {
-        name = "homer";
-        src = pkgs.fetchzip {
-          url = "https://github.com/bastienwirtz/homer/releases/download/v23.10.1/homer.zip";
-          hash = "1111111111111111111111111111111111111111111111111111";
-        };
-        configurePhase = ''
-          echo "${config}" >> $src/assets/config.yml
+      src = pkgs.fetchzip {
+        url = "https://github.com/bastienwirtz/homer/releases/download/v23.10.1/homer.zip";
+        hash = "";
+        stripRoot = false;
       };
+      homer = pkgs.runCommand "homer" {} ''
+        mkdir -p $out/assets
+        cp ${config} $out/assets/config.yml
+        cp -r ${src}/* $out
+      '';
     in {
       enable = true;
       root = homer
