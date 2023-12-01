@@ -154,5 +154,6 @@ in
       enable = true;
       root = homer;
     };
+    firewall.allowedTCPPorts = [ 8787 ];
   };
 }
