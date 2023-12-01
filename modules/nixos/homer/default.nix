@@ -152,7 +152,7 @@ in
       '';
     in {
       enable = true;
-      root = homer
+      root = homer;
     };
   };
 }
