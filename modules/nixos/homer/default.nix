@@ -142,7 +142,7 @@ in
       '';
       src = pkgs.fetchzip {
         url = "https://github.com/bastienwirtz/homer/releases/download/v23.10.1/homer.zip";
-        hash = "";
+        hash = "sha256-KUEqrjO9LAoigZsQGLy5JrtsXx+HDXaz4Y4Vpba0uNw=";
         stripRoot = false;
       };
       homer = pkgs.runCommand "homer" {} ''
