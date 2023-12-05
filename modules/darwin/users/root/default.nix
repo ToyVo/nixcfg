@@ -10,7 +10,6 @@ in
     users.users.root.home = lib.mkForce "/var/root";
     home-manager.users.root = {
       home.homeDirectory = lib.mkForce /var/root;
-      home.sessionPath = [ "/opt/homebrew/bin" ];
       home.file.".hushlogin".text = "";
     };
   };

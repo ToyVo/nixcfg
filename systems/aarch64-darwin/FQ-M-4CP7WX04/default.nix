@@ -20,6 +20,13 @@
           zsh.profileExtra = ''
             export PATH="$VOLTA_HOME/bin:$PATH"
           '';
+          fish.shellInit = ''
+            set PATH $VOLTA_HOME/bin $PATH
+          '';
+          nushell.envFile.text = ''
+            $env.VOLTA_HOME = $'($env.HOME)/.volta'
+            $env.PATH = ($env.PATH | prepend $'($env.VOLTA_HOME)/bin')
+          '';
         };
         home.packages = with pkgs;
           [

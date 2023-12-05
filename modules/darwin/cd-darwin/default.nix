@@ -62,6 +62,17 @@ in
     home-manager.sharedModules = [
       {
         cd.darwin.aliasHomeApplications = true;
+        programs = {
+          zsh.profileExtra = ''
+            export PATH="$PATH:/opt/homebrew/bin"
+          '';
+          fish.shellInit = ''
+            set PATH $PATH /opt/homebrew/bin
+          '';
+          nushell.envFile.text = ''
+            $env.PATH = ($env.PATH | append '/opt/homebrew/bin')
+          '';
+        };
       }
     ];
     cd.darwin.aliasSystemApplications = true;

@@ -15,12 +15,10 @@ in
         }
         $env.PATH = [
           $'($env.HOME)/.local/bin'
-          $'($env.HOME)/.volta/bin'
           $'($env.HOME)/.nix-profile/bin'
           /etc/profiles/per-user/${cfg.username}/bin
           /run/current-system/sw/bin
           /nix/var/nix/profiles/default/bin
-          /opt/homebrew/bin
           /usr/local/bin
           /usr/bin
           /bin
