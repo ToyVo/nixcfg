@@ -71,9 +71,11 @@ in
             ssh.enable = true;
             vscode.enable = cfg.packages.gui.enable;
             wezterm.enable = cfg.packages.gui.enable;
+            kitty.enable = cfg.packages.gui.enable;
             zellij.enable = true;
             zsh.enable = true;
             bash.enable = true;
+            fish.enable = true;
             nushell.enable = true;
           };
         }

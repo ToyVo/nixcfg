@@ -14,10 +14,10 @@ in
       }];
     };
     programs.zsh.initExtra = ''
-      gpgconf --launch gpg-agent
+      ${pkgs.gnupg}/bin/gpgconf --launch gpg-agent
     '';
     programs.zsh.profileExtra = ''
-      export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+      export SSH_AUTH_SOCK="$(${pkgs.gnupg}/bin/gpgconf --list-dirs agent-ssh-socket)"
     '';
     services.gpg-agent = lib.mkIf pkgs.stdenv.isLinux {
       enable = true;
@@ -39,11 +39,11 @@ in
     };
     home.sessionVariables = {
       GPG_TTY = "$(tty)";
-      SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
+      SSH_AUTH_SOCK = "$(${pkgs.gnupg}/bin/gpgconf --list-dirs agent-ssh-socket)";
     };
     programs.nushell.envFile.text = ''
       $env.GPG_TTY = (echo (tty))
-      $env.SSH_AUTH_SOCK = (gpgconf --list-dirs agent-ssh-socket)
+      $env.SSH_AUTH_SOCK = (${pkgs.gnupg}/bin/gpgconf --list-dirs agent-ssh-socket)
     '';
   };
 }
