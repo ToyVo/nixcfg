@@ -18,6 +18,7 @@ in
       eza.enable = true;
       bash.shellAliases = aliases;
       zsh.shellAliases = aliases;
+      fish.shellAliases = aliases;
       nushell.shellAliases = {
         ll = "ls -l";
         la = "ls -a";
