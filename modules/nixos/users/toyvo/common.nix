@@ -55,6 +55,7 @@ in
         enable = true;
         nix-direnv.enable = true;
       };
+      programs.zoxide.enable = true;
       imports = [
         {
           options.cd.username = lib.mkOption {
