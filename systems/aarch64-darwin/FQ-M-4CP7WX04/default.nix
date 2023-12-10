@@ -41,6 +41,16 @@
       }
     ];
   };
+  environment.systemPackages = with pkgs; [
+    ollama
+    (python3.withPackages(ps: with ps; [
+      jupyter
+      virtualenv
+      pip
+      openai
+      python-dotenv
+    ]))
+  ];
   homebrew = {
     brews = [
       "mongosh"
