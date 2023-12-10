@@ -27,8 +27,9 @@
     steam.user = "toyvo";
     steam.desktopSession = "plasmawayland";
   };
-  environment.systemPackages = [
-    pkgs.steam
+  environment.systemPackages = with pkgs; [
+    steam
+    discord
   ];
   services.xserver.displayManager.sddm.enable = lib.mkForce false;
 }
