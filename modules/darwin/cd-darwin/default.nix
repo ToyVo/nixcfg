@@ -6,6 +6,7 @@ in
   imports = [ ../../nixos/cd-nixos/common.nix ];
 
   config = lib.mkIf cfg.defaults.enable {
+    programs.bash.enable = true;
     services.nix-daemon.enable = true;
     security.pam.enableSudoTouchIdAuth = true;
     fonts.fontDir.enable = true;

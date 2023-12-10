@@ -9,7 +9,6 @@ in
   };
 
   config = lib.mkIf cfg.defaults.enable {
-    programs.bash.enable = true;
     programs.zsh.enable = true;
     programs.fish.enable = true;
     environment.shells = with pkgs; [
