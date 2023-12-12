@@ -1,5 +1,6 @@
 { lib, pkgs, ... }: {
   hardware.cpu.amd.updateMicrocode = true;
+  hardware.bluetooth.enable = true;
   networking.hostName = "steamdeck-nixos";
   boot = {
     loader.systemd-boot.enable = true;
