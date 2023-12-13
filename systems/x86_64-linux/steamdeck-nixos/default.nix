@@ -31,6 +31,7 @@
   environment.systemPackages = with pkgs; [
     steam
     discord
+    r2modman
   ];
   services.xserver.displayManager.sddm.enable = lib.mkForce false;
 }
