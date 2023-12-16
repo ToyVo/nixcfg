@@ -13,7 +13,7 @@
     users.toyvo.enable = true;
     fs.boot.enable = true;
     fs.btrfs.enable = true;
-    desktops.plasma.enable = true;
+    desktops.gnome.enable = true;
     # remote-builds.client.enable = true;
   };
   fileSystems."/mnt/POOL" = {
@@ -26,12 +26,12 @@
     steam.enable = true;
     steam.autoStart = true;
     steam.user = "toyvo";
-    steam.desktopSession = "plasmawayland";
+    steam.desktopSession = "gnome";
   };
   environment.systemPackages = with pkgs; [
     steam
     discord
     r2modman
   ];
-  services.xserver.displayManager.sddm.enable = lib.mkForce false;
+  services.xserver.displayManager.gdm.enable = lib.mkForce false;
 }
