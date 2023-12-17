@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, system, inputs, ... }: {
   hardware.cpu.amd.updateMicrocode = true;
   hardware.bluetooth.enable = true;
   networking.hostName = "steamdeck-nixos";
@@ -31,7 +31,7 @@
   environment.systemPackages = with pkgs; [
     steam
     discord
-    inputs.nixpkgs-unstable.legacyPackages.r2modman
+    inputs.nixpkgs-unstable.legacyPackages.${system}.r2modman
   ];
   services.xserver.displayManager.gdm.enable = lib.mkForce false;
 }
