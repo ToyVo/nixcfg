@@ -31,7 +31,7 @@
   environment.systemPackages = with pkgs; [
     steam
     discord
-    r2modman
+    inputs.nixpkgs-unstable.legacyPackages.r2modman
   ];
   services.xserver.displayManager.gdm.enable = lib.mkForce false;
 }
