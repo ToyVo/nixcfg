@@ -32,8 +32,11 @@
     steam
     discord
     inputs.nixpkgs-unstable.legacyPackages.${system}.r2modman
-    obs-studio
-    obs-studio-plugins.obs-gstreamer
+    (pkgs.wrapOBS {
+      plugins = with pkgs.obs-studio-plugins; [
+        obs-gstreamer
+      ];
+    })
   ];
   services.xserver.displayManager.gdm.enable = lib.mkForce false;
 }
