@@ -35,6 +35,8 @@
     (pkgs.wrapOBS {
       plugins = with pkgs.obs-studio-plugins; [
         obs-gstreamer
+        obs-vkcapture
+        obs-vaapi
       ];
     })
   ];
