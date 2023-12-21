@@ -25,6 +25,10 @@
     };
   };
   programs.zoxide.enable = true;
+  programs.bash.initExtra = ''
+    if [ -e /home/deck/.nix-profile/etc/profile.d/nix.sh ]; then . /home/deck/.nix-profile/etc/profile.d/nix.sh; fi
+    if [ -e /home/deck/.nix-profile/etc/profile.d/hm-session-vars.sh ]; then . /home/deck/.nix-profile/etc/profile.d/hm-session-vars.sh; fi
+  '';
   imports = [
     {
       options.cd.username = lib.mkOption {
