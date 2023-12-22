@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, inputs, ... }:
 {
   home.username = "deck";
   home.homeDirectory = "/home/deck";
@@ -8,7 +8,14 @@
   };
   home.sessionPath = [ "$HOME/.local/bin" ];
   home.packages = with pkgs; [
-    obs-studio-plugins.obs-vkcapture
+    inputs.nixpkgs-unstable.legacyPackages.${system}.r2modman
+    (pkgs.wrapOBS {
+      plugins = with pkgs.obs-studio-plugins; [
+        obs-gstreamer
+        obs-vkcapture
+        obs-vaapi
+      ];
+    })
   ];
   xdg.configFile."nix/nix.conf".text = ''
     experimental-features = nix-command flakes
