@@ -4,6 +4,7 @@
   };
 
   config = {
+    users.groups.ollama = {};
     users.users.ollama = {
       name = "ollama";
       home = "/usr/share/ollama";
