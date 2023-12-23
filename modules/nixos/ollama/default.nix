@@ -1,7 +1,7 @@
 { lib, pkgs, config, ... }: {
   options.services.ollama = {
     enable = lib.mkEnableOption "Enable ollama startup service";
-    openFirewall = lib.mkEnableOptions "Open firewall" // {
+    openFirewall = lib.mkEnableOption "Open firewall" // {
       default = true;
     };
   };
