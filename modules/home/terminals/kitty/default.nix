@@ -15,7 +15,7 @@ in
         size = 14;
       };
       settings = {
-        shell = "${pkgs.fish}/bin/fish";
+        shell = "${pkgs.zsh}/bin/zsh";
       };
     };
   };

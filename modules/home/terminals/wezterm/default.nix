@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 let
   cfg = config.cd;
 in
@@ -18,6 +18,7 @@ in
       config.hide_tab_bar_if_only_one_tab = true;
       config.audible_bell = "Disabled";
       config.enable_kitty_keyboard = true;
+      config.default_prog = { '${pkgs.fish}/bin/fish' };
       return config;
     '';
   };

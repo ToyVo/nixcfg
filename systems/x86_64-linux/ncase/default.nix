@@ -94,4 +94,5 @@
       adminpassFile = "${./adminpass}";
     };
   };
+  services.ollama.enable = true;
 }
