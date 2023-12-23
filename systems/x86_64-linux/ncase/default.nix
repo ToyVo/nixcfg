@@ -86,7 +86,7 @@
   };
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud27;
+    package = pkgs.nextcloud28;
     hostName = "nextcloud.diekvoss.net";
     home = "/mnt/POOL/nextcloud";
     config = {
