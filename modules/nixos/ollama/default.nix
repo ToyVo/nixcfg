@@ -1,6 +1,9 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, config, ... }: {
   options.services.ollama = {
     enable = lib.mkEnableOption "Enable ollama startup service";
+    openFirewall = lib.mkEnableOptions "Open firewall" // {
+      default = true;
+    };
   };
 
   config = {
@@ -25,5 +28,7 @@
         ExecStart = "${pkgs.ollama}/bin/ollama serve";
       };
     };
+
+    networking.firewall.allowedTCPPorts = lib.mkIf config.services.ollama.openFirewall [ 11434 ];
   };
 }
