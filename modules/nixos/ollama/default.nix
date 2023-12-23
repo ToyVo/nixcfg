@@ -7,7 +7,7 @@
     users.groups.ollama = {};
     users.users.ollama = {
       name = "ollama";
-      home = "/var/lib/ollama";
+      home = "/home/ollama";
       shell = "/bin/false";
       isSystemUser = true;
       group = "ollama";
