@@ -25,10 +25,13 @@ in
         cursorline = true;
         autoread = true;
         tabstop = 2;
+        softtabstop = 2;
         shiftwidth = 2;
         shiftround = true;
         expandtab = true;
         termguicolors = true;
+        number = true;
+        relativenumber = true;
       };
       plugins = {
         # Flie Tree
@@ -40,7 +43,7 @@ in
         # Status Line
         lualine = {
           enable = true;
-          sections.lualine_a = [{
+          sections.lualine_c = [{
             name = "filename";
             extraConfig.path = 1;
           }];
@@ -48,6 +51,7 @@ in
 
         treesitter = {
           enable = true;
+          indent = true;
         };
         telescope = {
           enable = true;
@@ -58,6 +62,15 @@ in
         };
         which-key = {
           enable = true;
+        };
+
+        lsp = {
+          enable = true;
+          servers = {
+            tsserver.enable = true;
+            rnix-lsp.enable = true;
+            lua-ls.enable = true;
+          };
         };
         
         # Completion
@@ -102,13 +115,17 @@ in
       autoCmd = [
       ];
       keymaps = [
+        { mode = "n"; key = "<c-h>"; action = "<cmd>wincmd h<cr>"; options.desc = "Window left"; }
+        { mode = "n"; key = "<c-j>"; action = "<cmd>wincmd j<cr>"; options.desc = "Window down"; }
+        { mode = "n"; key = "<c-k>"; action = "<cmd>wincmd k<cr>"; options.desc = "Window up"; }
+        { mode = "n"; key = "<c-l>"; action = "<cmd>wincmd l<cr>"; options.desc = "Window right"; }
         { mode = "n"; key = "<leader>H"; action = "<cmd>nohlsearch<cr>"; options.desc = "Clear Highlight"; }
         { mode = "n"; key = "<leader>t"; action = "<cmd>Neotree toggle<cr>"; options.desc = "Toggle neo-tree"; }
         { mode = "n"; key = "<leader><space>"; action = "<cmd>Telescope oldfiles<cr>"; options.desc = "Open recent files"; }
         # Helix inspired keybindings
         { mode = "n"; key = "<leader>f"; action = "<cmd>Telescope find_files<cr>"; options.desc = "Open file picker"; }
         { mode = "n"; key = "<leader>F"; action = ""; options.desc = "Open file picker at current working directory"; }
-        { mode = "n"; key = "<leader>b"; action = ""; options.desc = "Open buffer picker"; }
+        { mode = "n"; key = "<leader>b"; action = "<cmd>Telescope buffers<cr>"; options.desc = "Open buffer picker"; }
         { mode = "n"; key = "<leader>j"; action = ""; options.desc = "Open jumplist picker"; }
         { mode = "n"; key = "<leader>g"; action = ""; options.desc = "Debug (experimental)"; }
         { mode = "n"; key = "<leader>k"; action = ""; options.desc = "Show documentation for item under cursor in a popup (LSP)"; }
@@ -130,8 +147,14 @@ in
         { mode = "n"; key = "<leader>?"; action = "<cmd>Telescope help_tags<cr>"; options.desc = "Open command palette"; }
       ];
       extraPlugins = with pkgs.vimPlugins; [
+        gruvbox-nvim
+        telescope-ui-select-nvim
       ];
       extraConfigLua = ''
+        require("gruvbox").setup({
+          transparent_mode = true,
+        });
+        vim.cmd("colorscheme gruvbox");
       '';
     };
   };

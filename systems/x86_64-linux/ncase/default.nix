@@ -1,5 +1,6 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, system, ... }: {
   hardware.cpu.amd.updateMicrocode = true;
+  hardware.bluetooth.enable = true;
   networking = {
     hostName = "ncase";
     firewall.allowedTCPPorts = [ 5357 80 443 ];
@@ -21,6 +22,7 @@
       enable = true;
       openFirewall = true;
     };
+    desktops.gnome.enable = true;
   };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
@@ -95,4 +97,16 @@
     };
   };
   services.ollama.enable = true;
+  environment.systemPackages = with pkgs; [
+    steam
+    discord
+    inputs.nixpkgs-unstable.legacyPackages.${system}.r2modman
+    (pkgs.wrapOBS {
+      plugins = with pkgs.obs-studio-plugins; [
+        obs-gstreamer
+        obs-vkcapture
+        obs-vaapi
+      ];
+    })
+  ];
 }
