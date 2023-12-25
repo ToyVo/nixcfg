@@ -64,18 +64,73 @@ in
           enable = true;
         };
 
+        noice.enable = true;
+
         lsp = {
           enable = true;
           servers = {
-            tsserver.enable = true;
-            rnix-lsp.enable = true;
+            cssls.enable = true;
+            eslint.enable = true;
+            html.enable = true;
+            jsonls.enable = true;
             lua-ls.enable = true;
+            nil_ls.enable = true;
+            rust-analyzer = {
+              enable = true;
+              installCargo = true;
+              installRustc = true;
+            };
+            tsserver.enable = true;
+          };
+          keymaps = {
+            diagnostic = {
+              "[d" = "goto_prev";
+              "]d" = "goto_next";
+            };
+            lspBuf = {
+              "gD" = "declaration";
+              "gd" = "definition";
+              "K" = "hover";
+              "gi" = "implementation";
+              "<C-k>" = "signature_help";
+              "<space>D" = "type_definition";
+              "<space>rn" = "rename";
+              "<space>ca" = "code_action";
+              "gr" = "references";
+              "<space>f" = "format";
+            };
           };
         };
+
+        lspkind.enable = true;
         
         # Completion
         nvim-cmp = {
           enable = true;
+          mappingPresets = [ "insert" "cmdline" ];
+          mapping = {
+            "<C-Space>" = "cmp.mapping.complete()";
+            "<C-e>" = "cmp.mapping.abort()";
+            "<CR>" = "cmp.mapping.confirm({ select = true })";
+            "<Tab>" = {
+              modes = ["i" "s"];
+              action = ''
+                function(fallback)
+                  if cmp.visible() then
+                    cmp.select_next_item()
+                  elseif luasnip.expandable() then
+                    luasnip.expand()
+                  elseif luasnip.expand_or_jumpable() then
+                    luasnip.expand_or_jump()
+                  elseif check_backspace() then
+                    fallback()
+                  else
+                    fallback()
+                  end
+                end
+              '';
+            };
+          };
           sources = [
             {
               name = "nvim_lsp";
@@ -147,8 +202,6 @@ in
         { mode = "n"; key = "<leader>?"; action = "<cmd>Telescope help_tags<cr>"; options.desc = "Open command palette"; }
       ];
       extraPlugins = with pkgs.vimPlugins; [
-        gruvbox-nvim
-        telescope-ui-select-nvim
       ];
       extraConfigLua = ''
         require("gruvbox").setup({
