@@ -84,20 +84,22 @@ in
           };
           keymaps = {
             diagnostic = {
-              "[d" = "goto_prev";
-              "]d" = "goto_next";
+              "[d" = { action = "goto_prev"; desc = "Goto Previous Diagnostic"; };
+              "]d" = { action = "goto_next"; desc = "Goto Next Diagnostic"; };
+              "<space>d" = { action = "open_float"; desc = "Open Diagnostic Float"; };
             };
             lspBuf = {
-              "gD" = "declaration";
-              "gd" = "definition";
-              "K" = "hover";
-              "gi" = "implementation";
-              "<C-k>" = "signature_help";
-              "<space>D" = "type_definition";
-              "<space>rn" = "rename";
-              "<space>ca" = "code_action";
-              "gr" = "references";
-              "<space>f" = "format";
+              "gD" = { action = "declaration"; desc = "Goto Declaration"; };
+              "gd" = { action = "definition"; desc = "Goto Definition"; };
+              "K" = { action = "hover"; desc = "Hover"; };
+              "gi" = { action = "implementation"; desc = "Goto Implementation"; };
+              "<C-k>" = { action = "signature_help"; desc = "Signature Help"; };
+              "<space>D" = { action = "type_definition"; desc = "Goto Type Definition"; };
+              "<space>r" = { action = "rename"; desc = "Rename"; };
+              "<space>a" = { action = "code_action"; desc = "Code Action"; };
+              "gr" = { action = "references"; desc = "Goto References"; };
+              "<space>f" = { action = "format"; desc = "Format"; };
+              "<space>S" = { action = "workspace_symbol"; desc = "Open workspace symbol picker"; };
             };
           };
         };
@@ -165,10 +167,6 @@ in
           ];
         };
       };
-      autoGroups = {
-      };
-      autoCmd = [
-      ];
       keymaps = [
         { mode = "n"; key = "<c-h>"; action = "<cmd>wincmd h<cr>"; options.desc = "Window left"; }
         { mode = "n"; key = "<c-j>"; action = "<cmd>wincmd j<cr>"; options.desc = "Window down"; }
@@ -179,29 +177,11 @@ in
         { mode = "n"; key = "<leader><space>"; action = "<cmd>Telescope oldfiles<cr>"; options.desc = "Open recent files"; }
         # Helix inspired keybindings
         { mode = "n"; key = "<leader>f"; action = "<cmd>Telescope find_files<cr>"; options.desc = "Open file picker"; }
-        { mode = "n"; key = "<leader>F"; action = ""; options.desc = "Open file picker at current working directory"; }
+        { mode = "n"; key = "<leader>F"; action = "<cmd>Neotree filesystem reveal left"; options.desc = "Open neo-tree at current file"; }
         { mode = "n"; key = "<leader>b"; action = "<cmd>Telescope buffers<cr>"; options.desc = "Open buffer picker"; }
-        { mode = "n"; key = "<leader>j"; action = ""; options.desc = "Open jumplist picker"; }
-        { mode = "n"; key = "<leader>g"; action = ""; options.desc = "Debug (experimental)"; }
-        { mode = "n"; key = "<leader>k"; action = ""; options.desc = "Show documentation for item under cursor in a popup (LSP)"; }
-        { mode = "n"; key = "<leader>s"; action = ""; options.desc = "Open document symbol picker (LSP)"; }
-        { mode = "n"; key = "<leader>S"; action = ""; options.desc = "Open workspace symbol picker (LSP)"; }
-        { mode = "n"; key = "<leader>d"; action = ""; options.desc = "Open document diagnostics picker (LSP)"; }
-        { mode = "n"; key = "<leader>D"; action = ""; options.desc = "Open workspace diagnostics picker (LSP)"; }
-        { mode = "n"; key = "<leader>r"; action = ""; options.desc = "Rename symbol (LSP)"; }
-        { mode = "n"; key = "<leader>a"; action = ""; options.desc = "Apply code action (LSP)"; }
-        { mode = "n"; key = "<leader>h"; action = ""; options.desc = "Select symbol references (LSP)"; }
-        { mode = "n"; key = "<leader>'"; action = ""; options.desc = "Open last fuzzy picker"; }
-        { mode = "n"; key = "<leader>w"; action = ""; options.desc = "Enter window mode"; }
-        { mode = "n"; key = "<leader>p"; action = ""; options.desc = "Paste system clipboard after selections"; }
-        { mode = "n"; key = "<leader>P"; action = ""; options.desc = "Paste system clipboard before selections"; }
-        { mode = "n"; key = "<leader>y"; action = ""; options.desc = "Yank selections to clipboard"; }
-        { mode = "n"; key = "<leader>Y"; action = ""; options.desc = "Yank main selection to clipboard"; }
-        { mode = "n"; key = "<leader>R"; action = ""; options.desc = "Replace selections by clipboard contents"; }
+        { mode = "n"; key = "<leader>'"; action = "<cmd>Telescope pickers"; options.desc = "Open last fuzzy picker"; }
         { mode = "n"; key = "<leader>/"; action = "<cmd>Telescope live_grep<cr>"; options.desc = "Global search in workspace folder"; }
         { mode = "n"; key = "<leader>?"; action = "<cmd>Telescope help_tags<cr>"; options.desc = "Open command palette"; }
-      ];
-      extraPlugins = with pkgs.vimPlugins; [
       ];
       extraConfigLua = ''
         require("gruvbox").setup({
