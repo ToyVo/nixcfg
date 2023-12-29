@@ -58,11 +58,7 @@ in
       programs.zoxide.enable = true;
       imports = [
         {
-          options.cd.username = lib.mkOption {
-            type = lib.types.str;
-            default = cfg.users.toyvo.name;
-          };
-          config.cd.packages = {
+          cd.packages = {
             bat.enable = true;
             eza.enable = true;
             git.enable = true;

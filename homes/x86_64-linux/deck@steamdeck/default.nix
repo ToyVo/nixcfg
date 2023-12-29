@@ -1,4 +1,4 @@
-{ lib, pkgs, inputs, ... }:
+{ pkgs, inputs, ... }:
 {
   home.username = "deck";
   home.homeDirectory = "/home/deck";
@@ -38,11 +38,7 @@
   '';
   imports = [
     {
-      options.cd.username = lib.mkOption {
-        type = lib.types.str;
-        default = "deck";
-      };
-      config.cd.packages = {
+      cd.packages = {
         bat.enable = true;
         eza.enable = true;
         git.enable = true;

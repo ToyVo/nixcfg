@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, ... }:
 let
   cfg = config.cd;
 in
@@ -16,7 +16,7 @@ in
         $env.PATH = [
           $'($env.HOME)/.local/bin'
           $'($env.HOME)/.nix-profile/bin'
-          /etc/profiles/per-user/${cfg.username}/bin
+          $'/etc/profiles/per-user/($env.USER)/bin'
           /run/current-system/sw/bin
           /nix/var/nix/profiles/default/bin
           /usr/local/bin
