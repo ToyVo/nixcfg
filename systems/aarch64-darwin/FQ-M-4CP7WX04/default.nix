@@ -10,11 +10,11 @@
           ssh.matchBlocks."github-emu" = {
             hostname = "github.com";
             identitiesOnly = true;
-            identityFile = "${./ssh_emu.pub}";
+            identityFile = "~/.ssh/ykA_ed25519_sk";
             extraOptions.AddKeysToAgent = "yes";
           };
           gpg.publicKeys = [{
-            source = ./gpg_emu.pub;
+            source = ../../../secrets/gpg_emu.pub;
             trust = 5;
           }];
           zsh.profileExtra = ''

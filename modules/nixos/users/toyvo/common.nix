@@ -2,7 +2,6 @@
 let
   cfg = config.cd;
   homeDirectory = "/home/${cfg.users.toyvo.name}";
-  key = lib.fileContents ../../../home/packages/ssh/ssh_yubikey.pub;
 in
 {
   options.cd.users.toyvo = {
@@ -23,7 +22,10 @@ in
       description = "Collin Diekvoss";
       home = homeDirectory;
       shell = pkgs.zsh;
-      openssh.authorizedKeys.keys = [ key ];
+      openssh.authorizedKeys.keys = [ 
+        (lib.fileContents ../../../../secrets/ykA_ed25519_sk.pub)
+        (lib.fileContents ../../../../secrets/ykC_ed25519_sk.pub)
+      ];
     };
     home-manager.users.${cfg.users.toyvo.name} = {
       home.username = cfg.users.toyvo.name;
