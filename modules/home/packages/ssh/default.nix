@@ -27,13 +27,24 @@ in
         };
       };
       zsh.initExtra = ''
-        eval $(ssh-agent -s)
+        ! (echo "$SSH_AUTH_SOCK" | rg ssh-\[a-zA-Z0-9\]+\/agent\.\\d+$) >/dev/null && eval $(ssh-agent -s) >/dev/null
       '';
       bash.initExtra = ''
-        eval $(ssh-agent -s)
+        ! (echo "$SSH_AUTH_SOCK" | rg ssh-\[a-zA-Z0-9\]+\/agent\.\\d+$) >/dev/null && eval $(ssh-agent -s) >/dev/null
       '';
       fish.interactiveShellInit = ''
-        eval $(ssh-agent -c)
+        ! echo "$SSH_AUTH_SOCK" | rg ssh-\[a-zA-Z0-9\]+\/agent\.\\d+\$ >/dev/null; and eval $(ssh-agent -c) >/dev/null
+      '';
+      nushell.configFile.text = ''
+        if (echo $env.SSH_AUTH_SOCK | rg ssh-[a-zA-Z0-9]+/agent\.\d+$) == "" {
+          ^ssh-agent -c
+              | lines
+              | first 2
+              | parse "setenv {name} {value};"
+              | transpose -r
+              | into record
+              | load-env
+        }
       '';
     };
   };
