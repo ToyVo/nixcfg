@@ -15,7 +15,6 @@ in
             "~/.ssh/ykC_ed25519_sk"
             "~/.ssh/ykA_ed25519_sk"
           ];
-          extraOptions.AddKeysToAgent = "yes";
         };
         matchBlocks."github.com" = {
           identitiesOnly = true;
@@ -23,7 +22,6 @@ in
             "~/.ssh/ykC_ed25519_sk"
             "~/.ssh/ykA_ed25519_sk"
           ];
-          extraOptions.AddKeysToAgent = "yes";
         };
       };
       zsh.initExtra = ''

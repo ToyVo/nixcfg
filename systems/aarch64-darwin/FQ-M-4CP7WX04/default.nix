@@ -10,8 +10,7 @@
           ssh.matchBlocks."github-emu" = {
             hostname = "github.com";
             identitiesOnly = true;
-            identityFile = "~/.ssh/ykA_ed25519_sk";
-            extraOptions.AddKeysToAgent = "yes";
+            identityFile = "~/.ssh/ykW_ed25519_sk";
           };
           gpg.publicKeys = [{
             source = ../../../secrets/gpg_emu.pub;
