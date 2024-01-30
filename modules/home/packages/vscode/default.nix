@@ -30,8 +30,8 @@ in
         "prettier.tabWidth" = 4;
         "prettier.singleQuote" = true;
         "editor.fontSize" = 14;
-        "editor.fontLigatures" = true;
-        "editor.fontFamily" = "'Monaspace Neon', 'Symbols Nerd Font'";
+        "editor.fontLigatures" = "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'";
+        "editor.fontFamily" = "'MonaspiceNe Nerd Font'";
         "[javascript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[json]"."editor.defaultFormatter" = "esbenp.prettier-vscode";

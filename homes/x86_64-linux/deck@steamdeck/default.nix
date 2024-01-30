@@ -1,14 +1,14 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 {
   home.username = "deck";
   home.homeDirectory = "/home/deck";
-  home.stateVersion = "23.11";
+  home.stateVersion = "24.05";
   home.sessionVariables = {
     EDITOR = "nvim";
   };
   home.sessionPath = [ "$HOME/.local/bin" ];
   home.packages = with pkgs; [
-    inputs.nixpkgs-unstable.legacyPackages.${system}.r2modman
+    r2modman
     (pkgs.wrapOBS {
       plugins = with pkgs.obs-studio-plugins; [
         obs-gstreamer

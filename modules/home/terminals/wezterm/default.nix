@@ -10,7 +10,10 @@ in
     programs.wezterm.extraConfig = ''
       local wezterm = require("wezterm");
       local config = wezterm.config_builder();
-      config.font = wezterm.font_with_fallback({"Monaspace Neon", "Symbols Nerd Font"});
+      config.font = wezterm.font {
+        family = "MonaspiceNe Nerd Font",
+        harfbuzz_features = {'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'},
+      };
       config.color_scheme = "Gruvbox Dark (Gogh)";
       config.initial_rows = 30;
       config.initial_cols = 120;

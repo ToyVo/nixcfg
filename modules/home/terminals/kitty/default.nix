@@ -10,13 +10,15 @@ in
       enable = true;
       theme = "Gruvbox Dark";
       font = {
-        package = pkgs.monaspace;
-        name = "Monaspace Neon";
+        name = "MonaspiceNe Nerd Font Mono Regular";
         size = 14;
       };
       settings = {
         shell = "${pkgs.zsh}/bin/zsh";
       };
+      extraConfig = ''
+        font_features MonaspiceNeNFM-Regular +ss01 +ss02 +ss03 +ss04 +ss05 +ss06 +ss07 +ss08 +calt +dlig
+      '';
     };
   };
 }

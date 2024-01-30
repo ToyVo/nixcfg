@@ -1,6 +1,10 @@
-{ pkgs, config, lib, inputs, ... }:
+{ pkgs, config, lib, inputs, system, ... }:
 let
   cfg = config.cd;
+  pkgs = import inputs.nixpkgs {
+    inherit system;
+    overlays = [ (import inputs.rust-overlay) ];
+  };
 in
 {
   options.cd = {
@@ -33,6 +37,7 @@ in
     };
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
+    nixpkgs.overlays = [ inputs.rust-overlay.overlays.default ];
     environment.systemPackages = with pkgs; [
       broot
       bun
@@ -50,11 +55,16 @@ in
       jq
       nixpkgs-fmt
       git-crypt
-      rustup
+      (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
+        extensions = [ "rust-src" ];
+        targets = [ "wasm32-unknown-unknown" ];
+      }))
+      rust-analyzer
       cargo-watch
       cargo-generate
       xz
       zstd
+      pipenv
     ]
     ++ lib.optionals cfg.packages.gui.enable [
       element-desktop

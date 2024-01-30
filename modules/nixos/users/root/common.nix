@@ -15,7 +15,7 @@
     home-manager.users.root = {
       home.username = "root";
       home.homeDirectory = "/root";
-      home.stateVersion = "23.05";
+      home.stateVersion = "24.05";
       xdg.configFile."nix/nix.conf".text = ''
         experimental-features = nix-command flakes
       '';

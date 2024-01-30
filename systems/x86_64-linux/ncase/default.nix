@@ -1,4 +1,4 @@
-{ pkgs, inputs, system, ... }: {
+{ pkgs, ... }: {
   hardware.cpu.amd.updateMicrocode = true;
   hardware.bluetooth.enable = true;
   networking = {
@@ -29,6 +29,7 @@
     fsType = "btrfs";
   };
   users.users = {
+    toyvo.extraGroups = [ "libvirtd" ];
     chloe = {
       isNormalUser = true;
       description = "Chloe Diekvoss";
@@ -37,6 +38,7 @@
       isNormalUser = true;
     };
   };
+  services.xserver.displayManager.gdm.autoSuspend = false;
   services.samba-wsdd.enable = true;
   services.samba = {
     enable = true;
@@ -97,10 +99,12 @@
     };
   };
   services.ollama.enable = true;
+  packages.steam.enable = true;
+  packages.dconf.enable = true;
   environment.systemPackages = with pkgs; [
-    steam
+    steamPackages.steamcmd
     discord
-    inputs.nixpkgs-unstable.legacyPackages.${system}.r2modman
+    r2modman
     (pkgs.wrapOBS {
       plugins = with pkgs.obs-studio-plugins; [
         obs-gstreamer
@@ -108,5 +112,25 @@
         obs-vaapi
       ];
     })
+    virt-manager
+    virt-viewer
+    spice
+    spice-gtk
+    spice-protocol
+    win-virtio
+    win-spice
+    gnome.adwaita-icon-theme
   ];
+  virtualisation = {
+    libvirtd = {
+        enable = true;
+        qemu = {
+            swtpm.enable = true;
+            ovmf.enable = true;
+            ovmf.packages = [ pkgs.OVMFFull.fd ];
+        };
+    };
+    spiceUSBRedirection.enable = true;
+  };
+  services.spice-vdagentd.enable = true;
 }

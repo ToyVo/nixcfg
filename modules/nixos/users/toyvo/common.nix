@@ -30,7 +30,7 @@ in
     home-manager.users.${cfg.users.toyvo.name} = {
       home.username = cfg.users.toyvo.name;
       home.homeDirectory = homeDirectory;
-      home.stateVersion = "23.05";
+      home.stateVersion = "24.05";
       home.sessionVariables = {
         EDITOR = "nvim";
       };

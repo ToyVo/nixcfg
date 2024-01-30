@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.cd;
 in
@@ -30,8 +30,7 @@ in
         colorcolumn = "80,100";
         cursorline = true;
         expandtab = true;
-        guifont = "Monaspace Neon:h16";
-        guifontwide = "Symbols Nerd Font:h16";
+        guifont = "MonaspiceNe Nerd Font:h16";
         ignorecase = true;
         list = true;
         mouse = "a";

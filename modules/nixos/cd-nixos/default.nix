@@ -51,7 +51,7 @@ in
     services.pcscd.enable = true;
     services.udev.packages = with pkgs; [ yubikey-personalization ];
     system = {
-      stateVersion = "23.05";
+      stateVersion = "24.05";
       autoUpgrade = {
         enable = true;
         flake = inputs.self.outPath;
@@ -77,7 +77,7 @@ in
       alsa.support32Bit = cfg.packages.gui.enable;
       pulse.enable = cfg.packages.gui.enable;
     };
-    fonts.packages = with pkgs; lib.mkIf cfg.packages.gui.enable [ monaspace (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; }) ];
+    fonts.packages = with pkgs; lib.mkIf cfg.packages.gui.enable [ monaspace (nerdfonts.override { fonts = [ "Monaspace" "NerdFontsSymbolsOnly" ]; }) ];
     boot.binfmt.registrations.appimage = {
       wrapInterpreterInShell = false;
       interpreter = "${pkgs.appimage-run}/bin/appimage-run";

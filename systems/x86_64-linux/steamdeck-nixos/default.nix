@@ -1,4 +1,4 @@
-{ lib, pkgs, system, inputs, ... }: {
+{ lib, pkgs, ... }: {
   hardware.cpu.amd.updateMicrocode = true;
   hardware.bluetooth.enable = true;
   networking.hostName = "steamdeck-nixos";
@@ -31,7 +31,7 @@
   environment.systemPackages = with pkgs; [
     steam
     discord
-    inputs.nixpkgs-unstable.legacyPackages.${system}.r2modman
+    r2modman
     (pkgs.wrapOBS {
       plugins = with pkgs.obs-studio-plugins; [
         obs-gstreamer
