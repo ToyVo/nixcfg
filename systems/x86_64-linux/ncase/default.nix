@@ -89,7 +89,7 @@
     };
   };
   services.nextcloud = {
-    enable = true;
+    enable = false;
     package = pkgs.nextcloud28;
     hostName = "nextcloud.diekvoss.net";
     home = "/mnt/POOL/nextcloud";
@@ -99,8 +99,8 @@
     };
   };
   services.ollama.enable = true;
-  packages.steam.enable = true;
-  packages.dconf.enable = true;
+  programs.steam.enable = true;
+  programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [
     steamPackages.steamcmd
     discord
@@ -123,12 +123,12 @@
   ];
   virtualisation = {
     libvirtd = {
-        enable = true;
-        qemu = {
-            swtpm.enable = true;
-            ovmf.enable = true;
-            ovmf.packages = [ pkgs.OVMFFull.fd ];
-        };
+      enable = true;
+      qemu = {
+        swtpm.enable = true;
+        ovmf.enable = true;
+        ovmf.packages = [ pkgs.OVMFFull.fd ];
+      };
     };
     spiceUSBRedirection.enable = true;
   };
