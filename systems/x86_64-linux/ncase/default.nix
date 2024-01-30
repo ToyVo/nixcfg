@@ -93,10 +93,8 @@
     package = pkgs.nextcloud28;
     hostName = "nextcloud.diekvoss.net";
     home = "/mnt/POOL/nextcloud";
-    config = {
-      extraTrustedDomains = ["10.1.0.3"];
-      adminpassFile = "${./adminpass}";
-    };
+    settings.trusted_domains = ["10.1.0.3"];
+    config.adminpassFile = "${./adminpass}";
   };
   services.ollama.enable = true;
   programs.steam.enable = true;
