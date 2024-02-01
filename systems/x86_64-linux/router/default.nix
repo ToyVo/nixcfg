@@ -273,8 +273,8 @@
           "CF_API_EMAIL_FILE" = "${pkgs.writeText "cfemail" ''
             collin@diekvoss.com
           ''}";
-          "CF_API_KEY_FILE" = "${./cfapikey}";
-          "CF_DNS_API_TOKEN_FILE" = "${./cfapitoken}";
+          "CF_API_KEY_FILE" = "${../../../secrets/cfapikey}";
+          "CF_DNS_API_TOKEN_FILE" = "${../../../secrets/cfapitoken}";
         };
       };
     };
