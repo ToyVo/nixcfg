@@ -7,7 +7,10 @@
     firewall.allowedUDPPorts = [ 3702 ];
   };
   boot = {
-    loader.systemd-boot.enable = true;
+    loader.systemd-boot = {
+      enable = true;
+      configurationLimit = 5;
+    };
     loader.efi.canTouchEfiVariables = true;
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
     kernelModules = [ "kvm-amd" ];

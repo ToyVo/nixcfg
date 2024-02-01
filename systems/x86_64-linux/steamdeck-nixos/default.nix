@@ -3,7 +3,10 @@
   hardware.bluetooth.enable = true;
   networking.hostName = "steamdeck-nixos";
   boot = {
-    loader.systemd-boot.enable = true;
+    loader.systemd-boot = {
+      enable = true;
+      configurationLimit = 5;
+    };
     loader.efi.canTouchEfiVariables = true;
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
     kernelModules = [ "kvm-amd" ];

@@ -19,7 +19,10 @@
     firewall.interfaces.cdguest.allowedUDPPorts = [ 53 67 ];
   };
   boot = {
-    loader.systemd-boot.enable = true;
+    loader.systemd-boot = {
+      enable = true;
+      configurationLimit = 5;
+    };
     loader.efi.canTouchEfiVariables = true;
     initrd.availableKernelModules =
       [ "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
