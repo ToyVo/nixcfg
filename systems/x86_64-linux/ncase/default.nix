@@ -23,6 +23,10 @@
       openFirewall = true;
     };
     desktops.gnome.enable = true;
+    containers = {
+      enable = true;
+      nextcloud.enable = true;
+    };
   };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
@@ -93,7 +97,6 @@
     package = pkgs.nextcloud28;
     hostName = "nextcloud.diekvoss.net";
     home = "/mnt/POOL/nextcloud";
-
     settings.trusted_domains = [ "10.1.0.3" ];
     config.adminpassFile = "${./adminpass}";
   };
