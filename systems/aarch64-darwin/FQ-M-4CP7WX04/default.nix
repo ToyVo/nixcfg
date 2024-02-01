@@ -42,7 +42,7 @@
   };
   environment.systemPackages = with pkgs; [
     ollama
-    (python3.withPackages(ps: with ps; [
+    (python3.withPackages (ps: with ps; [
       jupyter
       virtualenv
       pip

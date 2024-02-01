@@ -8,7 +8,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    virtualization.oci-containers.containers.nextcloud = {
+    virtualisation.oci-containers.containers.nextcloud = {
       image = "nextcloud/all-in-one:latest";
       autoStart = true;
     };

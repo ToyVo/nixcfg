@@ -95,7 +95,7 @@
     package = pkgs.nextcloud28;
     hostName = "nextcloud.diekvoss.net";
     home = "/mnt/POOL/nextcloud";
-    settings.trusted_domains = ["10.1.0.3"];
+    settings.trusted_domains = [ "10.1.0.3" ];
     config.adminpassFile = "${./adminpass}";
   };
   services.ollama.enable = true;

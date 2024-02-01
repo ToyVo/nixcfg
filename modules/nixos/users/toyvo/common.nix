@@ -22,7 +22,7 @@ in
       description = "Collin Diekvoss";
       home = homeDirectory;
       shell = pkgs.zsh;
-      openssh.authorizedKeys.keys = [ 
+      openssh.authorizedKeys.keys = [
         (lib.fileContents ../../../../secrets/ykA_ed25519_sk.pub)
         (lib.fileContents ../../../../secrets/ykC_ed25519_sk.pub)
       ];
