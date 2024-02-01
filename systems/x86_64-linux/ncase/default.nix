@@ -23,6 +23,8 @@
       openFirewall = true;
     };
     desktops.gnome.enable = true;
+    containers.enable = true;
+    containers.nextcloud.enable = true;
   };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
