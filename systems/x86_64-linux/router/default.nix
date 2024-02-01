@@ -210,8 +210,8 @@
       records = [
         "*.diekvoss.net"
       ];
-      apikeyFile = "${./cfapikey}";
-      apiTokenFile = "${./cfapitoken}";
+      apikeyFile = "${../../../secrets/cfapikey}";
+      apiTokenFile = "${../../../secrets/cfapitoken}";
     };
     nginx = {
       enable = true;
