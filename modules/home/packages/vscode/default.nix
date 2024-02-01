@@ -9,18 +9,18 @@ in
     programs.vscode = {
       enable = true;
       extensions = with pkgs.vscode-extensions; [
-        vscodevim.vim
-        rust-lang.rust-analyzer
-        tamasfe.even-better-toml
-        dbaeumer.vscode-eslint
-        esbenp.prettier-vscode
-        jdinhlife.gruvbox
-        usernamehw.errorlens
-        eamodio.gitlens
+        # vadimcn.vscode-lldb # Can be uncommented when merged https://github.com/NixOS/nixpkgs/pull/211321
         serayuzgur.crates
+        usernamehw.errorlens
+        dbaeumer.vscode-eslint
+        tamasfe.even-better-toml
         github.copilot
-        # Can be added to the above when merged https://github.com/NixOS/nixpkgs/pull/211321
-        # vadimcn.vscode-lldb
+        eamodio.gitlens
+        jdinhlife.gruvbox
+        jnoortheen.nix-ide
+        esbenp.prettier-vscode
+        rust-lang.rust-analyzer
+        vscodevim.vim
       ];
       userSettings = {
         "workbench.colorTheme" = "Gruvbox Dark Medium";
@@ -36,6 +36,9 @@ in
         "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[json]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "git.autofetch" = true;
+        "nix.enableLanguageServer" = true;
+        "nix.serverPath" = "nixd";
+        "nix.serverSettings"."nixd"."formatting"."command" = [ "nixpkgs-fmt" ];
       };
     };
   };

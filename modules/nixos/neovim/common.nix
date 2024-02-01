@@ -6,6 +6,10 @@ in
   options.cd.packages.neovim.enable = lib.mkEnableOption "Custom Neovim";
 
   config = lib.mkIf cfg.packages.neovim.enable {
+    environment.systemPackages = with pkgs; [
+      nixd
+      nixpkgs-fmt
+    ];
     programs.nixvim = {
       enable = true;
       enableMan = false;
@@ -88,7 +92,7 @@ in
             html.enable = true;
             jsonls.enable = true;
             lua-ls.enable = true;
-            nil_ls.enable = true;
+            nixd.enable = true;
             rust-analyzer = {
               enable = true;
               installCargo = true;
