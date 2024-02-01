@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ lib, config, ... }:
 let
   cfg = config.cd;
 in
@@ -11,7 +11,7 @@ in
       extraGroups = [ "networkmanager" "wheel" ];
       initialHashedPassword = "$y$j9T$tkZ4b5vK1fCsRP0oWUb0e1$w0QbUEv9swXir33ivvM70RYTYflQszeLBi3vubYTqd8";
     };
-    users.extraGroups.docker.memebers = [ cfg.users.toyvo.name ];
+    users.extraGroups.docker.members = [ cfg.users.toyvo.name ];
     cd.users.toyvo.extraHomeManagerModules = [
       {
         services.easyeffects.enable = true;
