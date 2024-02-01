@@ -11,13 +11,15 @@ in
 
   config = lib.mkIf cfg.enable {
     virtualisation = {
-      podman = {
+      docker = {
         enable = true;
-        dockerCompat = true;
-        defaultNetwork.settings.dns_enabled = true;
+        rootless = {
+          enable = true;
+          setSocketVariable = true;
+        };
       };
 
-      oci-containers.backend = "podman";
+      oci-containers.backend = "docker";
     };
   };
 }
