@@ -35,6 +35,7 @@
     steam
     discord
     r2modman
+    prismlauncher
     (pkgs.wrapOBS {
       plugins = with pkgs.obs-studio-plugins; [
         obs-gstreamer

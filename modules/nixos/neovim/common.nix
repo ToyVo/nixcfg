@@ -66,8 +66,14 @@ in
           command = "silent! lua vim.highlight.on_yank()";
           group = "YankHighlight";
         }
+        {
+          event = "BufWritePre";
+          command = "%s/\\s\\+$//e";
+          group = "FixUp";
+        }
       ];
       autoGroups.YankHighlight.clear = true;
+      autoGroups.FixUp.clear = true;
 
       plugins = {
         barbar.enable = true;
@@ -102,9 +108,10 @@ in
           };
           keymaps = {
             diagnostic = {
+              "<leader>e" = { action = "open_float"; desc = "Open Diagnostic Float"; };
               "[d" = { action = "goto_prev"; desc = "Goto Previous Diagnostic"; };
               "]d" = { action = "goto_next"; desc = "Goto Next Diagnostic"; };
-              "<space>d" = { action = "open_float"; desc = "Open Diagnostic Float"; };
+              "<leader>q" = { action = "setloclist"; };
             };
             lspBuf = {
               "gD" = { action = "declaration"; desc = "Goto Declaration"; };
@@ -112,12 +119,15 @@ in
               "K" = { action = "hover"; desc = "Hover"; };
               "gi" = { action = "implementation"; desc = "Goto Implementation"; };
               "<C-k>" = { action = "signature_help"; desc = "Signature Help"; };
-              "<space>D" = { action = "type_definition"; desc = "Goto Type Definition"; };
-              "<space>rn" = { action = "rename"; desc = "Rename"; };
-              "<space>ca" = { action = "code_action"; desc = "Code Action"; };
+              "<leader>wa" = { action = "add_workspace_folder"; desc = "Add Workspace Folder"; };
+              "<leader>wr" = { action = "remove_workspace_folder"; desc = "Remove Workspace Folder"; };
+              "<leader>wl" = { action = "list_workspace_folders"; desc = "List Workspace Folders"; };
+              "<leader>D" = { action = "type_definition"; desc = "Goto Type Definition"; };
+              "<leader>rn" = { action = "rename"; desc = "Rename"; };
+              "<leader>ca" = { action = "code_action"; desc = "Code Action"; };
               "gr" = { action = "references"; desc = "Goto References"; };
-              "<space>f" = { action = "format"; desc = "Format"; };
-              "<space>S" = { action = "workspace_symbol"; desc = "Open workspace symbol picker"; };
+              "<leader>f" = { action = "format"; desc = "Format"; };
+              "<leader>ws" = { action = "workspace_symbol"; desc = "Open workspace symbol picker"; };
             };
           };
         };
@@ -255,16 +265,6 @@ in
         };
       };
       keymaps = [
-        # Control hjkl to move between windows including terminal
-        { mode = "n"; key = "<c-h>"; action = "<cmd>wincmd h<cr>"; options.desc = "Window left"; }
-        { mode = "n"; key = "<c-j>"; action = "<cmd>wincmd j<cr>"; options.desc = "Window down"; }
-        { mode = "n"; key = "<c-k>"; action = "<cmd>wincmd k<cr>"; options.desc = "Window up"; }
-        { mode = "n"; key = "<c-l>"; action = "<cmd>wincmd l<cr>"; options.desc = "Window right"; }
-        { key = "<C-h>"; action = "<C-\\><C-n><C-w>h"; mode = "t"; }
-        { key = "<C-j>"; action = "<C-\\><C-n><C-w>j"; mode = "t"; }
-        { key = "<C-k>"; action = "<C-\\><C-n><C-w>k"; mode = "t"; }
-        { key = "<C-l>"; action = "<C-\\><C-n><C-w>l"; mode = "t"; }
-
         # Shift HL to change buffers
         { key = "<S-h>"; action = "<cmd>bprevious<cr>"; mode = "n"; }
         { key = "<S-l>"; action = "<cmd>bnext<cr>"; mode = "n"; }
