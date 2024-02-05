@@ -23,9 +23,9 @@ in
       LC_TIME = "en_US.UTF-8";
     };
     console.useXkbConfig = true;
-    services.xserver = {
+    services.xserver.xkb = {
       layout = "us";
-      xkbOptions = "ctrl:nocaps";
+      options = "ctrl:nocaps";
     };
     environment.systemPackages = with pkgs; [
       coreutils
