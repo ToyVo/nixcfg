@@ -117,7 +117,6 @@ in
     };
     wayland.windowManager.hyprland = {
       enable = true;
-      recommendedEnvironment = true;
       extraConfig = ''
         $bg_dim = 0xff232a2e
         $bg0 = 0xff2d353b
