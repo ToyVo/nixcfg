@@ -136,6 +136,14 @@
             MACAddress = "dc:a6:32:09:ce:25";
           };
         }
+        # Mac Mini m1 (Wifi)
+        {
+          dhcpServerStaticLeaseConfig = {
+            Address = "10.1.0.11";
+            # ethernet port ends with 24
+            MACAddress = "4c:20:b8:df:d1:5b";
+          };
+        }
       ];
       linkConfig.RequiredForOnline = "no";
     };
