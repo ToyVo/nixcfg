@@ -235,6 +235,14 @@
             recommendedProxySettings = true;
           };
         };
+        "canon.diekvoss.net" = {
+          useACMEHost = "diekvoss.net";
+          forceSSL = true;
+          locations."/" = {
+            proxyPass = "http://10.1.0.4:443";
+            recommendedProxySettings = true;
+          };
+        };
         "nextcloud.diekvoss.net" = {
           useACMEHost = "diekvoss.net";
           locations."/" = {
