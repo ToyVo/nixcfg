@@ -1,11 +1,17 @@
 { pkgs, config, lib, inputs, ... }:
 let
-  cfg = config.cd;
+  cfg = config.profiles.defaults;
 in
 {
-  imports = [ ../../nixos/cd-nixos/common.nix ];
+  imports = [ 
+    ../../nixos/common/common.nix
+    inputs.nixvim.nixDarwinModules.nixvim
+    ../../nixos/neovim/common.nix
+    ../../nixos/users/root/common.nix 
+    ../../nixos/users/toyvo/common.nix 
+   ];
 
-  config = lib.mkIf cfg.defaults.enable {
+  config = lib.mkIf cfg.enable {
     services.nix-daemon.enable = true;
     security.pam.enableSudoTouchIdAuth = true;
     fonts.fontDir.enable = true;
@@ -75,7 +81,8 @@ in
         };
       }
     ];
-    cd.darwin.aliasSystemApplications = true;
-    cd.packages.gui.enable = true;
+    system.defaults.finder.AliasSystemApplications = true;
+    profiles.gui.enable = true;
   };
 }
+

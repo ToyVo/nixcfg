@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.cd.remote-builds;
+  cfg = config.services.remote-builds;
 in
 {
-  options.cd.remote-builds = {
+  options.services.remote-builds = {
     server.enable = lib.mkEnableOption "Enable remote-builds server";
     client.enable = lib.mkEnableOption "Enable remote-builds client";
   };

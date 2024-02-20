@@ -1,6 +1,6 @@
 { pkgs, ... }: {
-  cd.defaults.enable = true;
-  cd.users.toyvo = {
+  profiles.defaults.enable = true;
+  users.presets.toyvo = {
     enable = true;
     name = "CollinDie";
     extraHomeManagerModules = [

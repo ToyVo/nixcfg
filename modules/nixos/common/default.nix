@@ -1,6 +1,6 @@
 { pkgs, lib, config, inputs, ... }:
 let
-  cfg = config.cd;
+  cfg = config.profiles;
 in
 {
   imports = [
@@ -33,7 +33,7 @@ in
       yubikey-personalization
       yubico-piv-tool
     ]
-    ++ lib.optionals cfg.packages.gui.enable [
+    ++ lib.optionals cfg.gui.enable [
       firefox
       neovide
       _1password
@@ -68,16 +68,16 @@ in
         ];
       };
     };
-    services.printing.enable = cfg.packages.gui.enable;
+    services.printing.enable = cfg.gui.enable;
     security.rtkit.enable = true;
     hardware.pulseaudio.enable = lib.mkForce false;
     services.pipewire = {
-      enable = cfg.packages.gui.enable;
-      alsa.enable = cfg.packages.gui.enable;
-      alsa.support32Bit = cfg.packages.gui.enable;
-      pulse.enable = cfg.packages.gui.enable;
+      enable = cfg.gui.enable;
+      alsa.enable = cfg.gui.enable;
+      alsa.support32Bit = cfg.gui.enable;
+      pulse.enable = cfg.gui.enable;
     };
-    fonts.packages = with pkgs; lib.mkIf cfg.packages.gui.enable [ monaspace (nerdfonts.override { fonts = [ "Monaspace" "NerdFontsSymbolsOnly" ]; }) ];
+    fonts.packages = with pkgs; lib.mkIf cfg.gui.enable [ monaspace (nerdfonts.override { fonts = [ "Monaspace" "NerdFontsSymbolsOnly" ]; }) ];
     boot.binfmt.registrations.appimage = {
       wrapInterpreterInShell = false;
       interpreter = "${pkgs.appimage-run}/bin/appimage-run";

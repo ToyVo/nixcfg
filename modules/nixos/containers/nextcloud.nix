@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.cd.containers.nextcloud;
+  cfg = config.containerPresets.nextcloud;
 in
 {
-  options.cd.containers.nextcloud = {
+  options.containerPresets.nextcloud = {
     enable = lib.mkEnableOption "Enable nextcloud container";
   };
 

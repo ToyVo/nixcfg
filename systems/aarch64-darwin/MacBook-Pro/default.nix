@@ -1,6 +1,6 @@
 { pkgs, ... }: {
-  cd.defaults.enable = true;
-  cd.users.toyvo.enable = true;
+  profiles.defaults.enable = true;
+  users.presets.toyvo.enable = true;
   environment.systemPackages = with pkgs; [
     openscad
   ];

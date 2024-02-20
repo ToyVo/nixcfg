@@ -16,9 +16,8 @@
     users.toyvo = {
       enable = true;
       extraHomeManagerModules = [
-        inputs.hyprland.homeManagerModules.default
         {
-          cd.desktops.hyprland.enable = true;
+          programs.hyprland.enable = true;
         }
       ];
     };

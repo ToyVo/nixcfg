@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.cd;
+  cfg = config.programs.nvim;
 in
 {
-  options.cd.packages.neovim.enable = lib.mkEnableOption "Custom Neovim";
+  options.programs.nvim.enable = lib.mkEnableOption "Enable nixvim";
 
-  config = lib.mkIf cfg.packages.neovim.enable {
+  config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       nixd
       nixpkgs-fmt

@@ -1,17 +1,14 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.cd;
+  cfg = config.services.xserver.desktopManager.xfce;
 in
 {
-  options.cd.desktops.xfce.enable = lib.mkEnableOption "Enable Xfce";
-
-  config = lib.mkIf cfg.desktops.xfce.enable {
+  config = lib.mkIf cfg.enable {
     services.xserver = {
       enable = true;
       displayManager.lightdm.enable = true;
-      desktopManager.xfce.enable = true;
       libinput.enable = true;
     };
-    cd.packages.gui.enable = true;
+    profiles.gui.enable = true;
   };
 }

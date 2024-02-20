@@ -1,14 +1,11 @@
 { lib, config, inputs, ... }:
 let
-  cfg = config.cd;
+  cfg = config.programs.hyprland;
 in
 {
   imports = [ inputs.hyprland.nixosModules.default ];
 
-  options.cd.desktops.hyprland.enable = lib.mkEnableOption "Enable Hyprland";
-
-  config = lib.mkIf cfg.desktops.hyprland.enable {
-    programs.hyprland.enable = true;
-    cd.packages.gui.enable = true;
+  config = lib.mkIf cfg.enable {
+    profiles.gui.enable = true;
   };
 }

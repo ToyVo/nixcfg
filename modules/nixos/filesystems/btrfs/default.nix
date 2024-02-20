@@ -1,11 +1,11 @@
 { lib, config, ... }:
 let
-  cfg = config.cd;
+  cfg = config.fileSystemPresets;
 in
 {
-  options.cd.fs.btrfs.enable = lib.mkEnableOption "root btrfs partition";
+  options.fileSystemPresets.btrfs.enable = lib.mkEnableOption "root btrfs partition";
 
-  config = lib.mkIf cfg.fs.btrfs.enable {
+  config = lib.mkIf cfg.btrfs.enable {
     virtualisation.docker.storageDriver = "btrfs";
     fileSystems = {
       "/" = {

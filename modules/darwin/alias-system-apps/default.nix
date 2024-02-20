@@ -1,13 +1,13 @@
 { pkgs, lib, inputs, system, config, ... }:
 let
-  cfg = config.cd;
+  cfg = config.system.defaults.finder;
   mkalias = inputs.mkAlias.outputs.apps.${system}.default.program;
   apps = config.system.build.applications;
 in
 {
-  options.cd.darwin.aliasSystemApplications = lib.mkEnableOption "Alias system applications";
+  options.system.defaults.finder.AliasSystemApplications = lib.mkEnableOption "Alias system applications";
 
-  config = lib.mkIf cfg.darwin.aliasSystemApplications {
+  config = lib.mkIf cfg.AliasSystemApplications {
     system.activationScripts.applications.text = lib.mkForce ''
       ${pkgs.coreutils}/bin/echo "setting up /Applications/Nix Apps..." >&2
       app_path="/Applications/Nix Apps"

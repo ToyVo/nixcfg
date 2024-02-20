@@ -1,18 +1,17 @@
 { pkgs, config, lib, inputs, system, ... }:
 let
-  cfg = config.cd;
   pkgs = import inputs.nixpkgs {
     inherit system;
     overlays = [ (import inputs.rust-overlay) ];
   };
 in
 {
-  options.cd = {
-    packages.gui.enable = lib.mkEnableOption "GUI Applications";
+  options.profiles = {
+    gui.enable = lib.mkEnableOption "GUI Applications";
     defaults.enable = lib.mkEnableOption "Enable Defaults";
   };
 
-  config = lib.mkIf cfg.defaults.enable {
+  config = lib.mkIf config.profiles.defaults.enable {
     programs.zsh.enable = true;
     programs.fish.enable = true;
     environment.shells = with pkgs; [
@@ -66,10 +65,10 @@ in
       zstd
       pipenv
     ]
-    ++ lib.optionals cfg.packages.gui.enable [
+    ++ lib.optionals config.profiles.gui.enable [
       element-desktop
       gimp
     ];
-    cd.packages.neovim.enable = true;
+    programs.nvim.enable = true;
   };
 }

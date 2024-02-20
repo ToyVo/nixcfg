@@ -1,25 +1,29 @@
 { lib, config, pkgs, ... }:
 let
-  cfg = config.cd;
+  cfg = config.fileSystemPresets;
 in
 {
-  options.cd.fs.sd.enable = lib.mkEnableOption "root partition";
-  options.cd.fs.ext4.enable = lib.mkEnableOption "root ext4 partition";
-  options.cd.fs.ext4.label = lib.mkOption {
-    type = lib.types.str;
-    default = "NIXOS";
-    internal = true;
-    visible = false;
+  options.fileSystemPresets = {
+    sd.enable = lib.mkEnableOption "root partition";
+    ext4 = {
+      enable = lib.mkEnableOption "root ext4 partition";
+      label = lib.mkOption {
+        type = lib.types.str;
+        default = "NIXOS";
+        internal = true;
+        visible = false;
+      };
+    };
   };
 
   config = {
-    cd.fs.ext4 = lib.mkIf cfg.fs.sd.enable {
+    fileSystemPresets.ext4 = lib.mkIf cfg.sd.enable {
       enable = true;
       label = "NIXOS_SD";
     };
 
-    fileSystems."/" = lib.mkIf cfg.fs.ext4.enable {
-      device = "/dev/disk/by-label/${cfg.fs.ext4.label}";
+    fileSystems."/" = lib.mkIf cfg.ext4.enable {
+      device = "/dev/disk/by-label/${cfg.ext4.label}";
       fsType = "ext4";
     };
   };

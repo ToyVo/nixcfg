@@ -1,11 +1,11 @@
 { lib, config, ... }:
 let
-  cfg = config.cd.containers;
+  cfg = config.containerPresets;
 in
 {
   imports = [ ./nextcloud.nix ];
 
-  options.cd.containers = {
+  options.containerPresets = {
     enable = lib.mkEnableOption "Enable container runtime";
   };
 

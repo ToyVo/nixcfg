@@ -1,14 +1,14 @@
 { config, pkgs, lib, ... }:
 let
-  cfg = config.cd;
+  cfg = config.programs.homer;
 in
 {
-  options.cd.homer = {
+  options.programs.homer = {
     enable = lib.mkEnableOption "Enable Homer dashboard";
     openFirewall = lib.mkEnableOption "Enable Homer dashboard";
   };
 
-  config = lib.mkIf cfg.homer.enable {
+  config = lib.mkIf cfg.enable {
     services.static-web-server =
       let
         config = pkgs.writeText "config.yml" ''
@@ -159,6 +159,6 @@ in
         enable = true;
         root = homer;
       };
-    networking.firewall.allowedTCPPorts = lib.mkIf cfg.homer.openFirewall [ 8787 ];
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ 8787 ];
   };
 }
