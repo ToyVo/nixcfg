@@ -61,7 +61,7 @@ in
     ];
     home-manager.sharedModules = [
       {
-        cd.darwin.aliasHomeApplications = true;
+        targets.darwin.aliasHomeApplications = true;
         programs = {
           zsh.profileExtra = ''
             export PATH="$PATH:/opt/homebrew/bin"

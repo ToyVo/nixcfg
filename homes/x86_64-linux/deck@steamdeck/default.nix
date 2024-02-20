@@ -36,21 +36,15 @@
     if [ -e /home/deck/.nix-profile/etc/profile.d/nix.sh ]; then . /home/deck/.nix-profile/etc/profile.d/nix.sh; fi
     if [ -e /home/deck/.nix-profile/etc/profile.d/hm-session-vars.sh ]; then . /home/deck/.nix-profile/etc/profile.d/hm-session-vars.sh; fi
   '';
-  imports = [
-    {
-      cd.packages = {
-        bat.enable = true;
-        eza.enable = true;
-        git.enable = true;
-        gpg.enable = true;
-        helix.enable = true;
-        ssh.enable = true;
-        zellij.enable = true;
-        zsh.enable = true;
-        bash.enable = true;
-        fish.enable = true;
-        nushell.enable = true;
-      };
-    }
-  ];
+  programs.bat.enable = true;
+  programs.eza.enable = true;
+  programs.git.enable = true;
+  programs.gpg.enable = true;
+  programs.helix.enable = true;
+  programs.ssh.enable = true;
+  programs.zellij.enable = true;
+  programs.zsh.enable = true;
+  programs.bash.enable = true;
+  programs.fish.enable = true;
+  programs.nushell.enable = true;
 }

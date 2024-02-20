@@ -1,6 +1,6 @@
 { pkgs, lib, inputs, system, config, ... }:
 let
-  cfg = config.cd;
+  cfg = config.targets.darwin;
   mkalias = inputs.mkAlias.outputs.apps.${system}.default.program;
   apps = pkgs.buildEnv {
     name = "home-manager-applications";
@@ -9,9 +9,9 @@ let
   };
 in
 {
-  options.cd.darwin.aliasHomeApplications = lib.mkEnableOption "Alias Home Manager Applications in ~/Applications/Home Manager Apps";
+  options.targets.darwin.aliasHomeApplications = lib.mkEnableOption "Alias Home Manager Applications in ~/Applications/Home Manager Apps";
 
-  config = lib.mkIf cfg.darwin.aliasHomeApplications {
+  config = lib.mkIf cfg.aliasHomeApplications {
     home.file."Applications/Home Manager Apps".enable = false;
     home.activation.aliasApplications = lib.home-manager.hm.dag.entryAfter [ "linkGeneration" ] ''
       ${pkgs.coreutils}/bin/echo "setting up ~/Applications/Home Manager Apps..." >&2

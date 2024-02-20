@@ -58,27 +58,22 @@ in
         nix-direnv.enable = true;
       };
       programs.zoxide.enable = true;
-      imports = [
-        {
-          cd.packages = {
-            bat.enable = true;
-            eza.enable = true;
-            git.enable = true;
-            gpg.enable = true;
-            helix.enable = true;
-            rio.enable = cfg.packages.gui.enable;
-            ssh.enable = true;
-            vscode.enable = cfg.packages.gui.enable;
-            wezterm.enable = cfg.packages.gui.enable;
-            kitty.enable = cfg.packages.gui.enable;
-            zellij.enable = true;
-            zsh.enable = true;
-            bash.enable = true;
-            fish.enable = true;
-            nushell.enable = true;
-          };
-        }
-      ] ++ cfg.users.toyvo.extraHomeManagerModules;
+      programs.bat.enable = true;
+      programs.eza.enable = true;
+      programs.git.enable = true;
+      programs.gpg.enable = true;
+      programs.helix.enable = true;
+      programs.rio.enable = cfg.packages.gui.enable;
+      programs.ssh.enable = true;
+      programs.vscode.enable = cfg.packages.gui.enable;
+      programs.wezterm.enable = cfg.packages.gui.enable;
+      programs.kitty.enable = cfg.packages.gui.enable;
+      programs.zellij.enable = true;
+      programs.zsh.enable = true;
+      programs.bash.enable = true;
+      programs.fish.enable = true;
+      programs.nushell.enable = true;
+      imports = [] ++ cfg.users.toyvo.extraHomeManagerModules;
     };
   };
 }

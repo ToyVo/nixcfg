@@ -10,7 +10,6 @@ in
     users.users.${cfg.users.toyvo.name}.home = lib.mkForce homeDirectory;
     home-manager.users.${cfg.users.toyvo.name} = {
       home.homeDirectory = lib.mkForce homeDirectory;
-      home.file.".hushlogin".text = "";
     };
   };
 }

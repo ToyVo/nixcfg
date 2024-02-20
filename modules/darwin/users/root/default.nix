@@ -1,16 +1,14 @@
 { lib, config, ... }:
 let
   cfg = config.cd;
-  homeDirectory = "/var/root";
 in
 {
   imports = [ ../../../nixos/users/root/common.nix ];
 
-  config = lib.mkIf cfg.users.toyvo.enable {
+  config = {
     users.users.root.home = lib.mkForce "/var/root";
     home-manager.users.root = {
       home.homeDirectory = lib.mkForce /var/root;
-      home.file.".hushlogin".text = "";
     };
   };
 }

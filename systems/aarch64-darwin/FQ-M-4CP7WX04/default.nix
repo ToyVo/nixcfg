@@ -16,32 +16,15 @@
             source = ../../../secrets/gpg_emu.pub;
             trust = 5;
           }];
-          zsh.profileExtra = ''
-            export PATH="$VOLTA_HOME/bin:$PATH"
-          '';
-          fish.shellInit = ''
-            set PATH $VOLTA_HOME/bin $PATH
-          '';
-          nushell.envFile.text = ''
-            $env.VOLTA_HOME = $'($env.HOME)/.volta'
-            $env.PATH = ($env.PATH | prepend $'($env.VOLTA_HOME)/bin')
-          '';
-        };
-        home.packages = with pkgs;
-          [
-            awscli2
-            volta
-          ];
-        home.sessionVariables = {
-          VOLTA_HOME = "$HOME/.volta";
-          NODE_ENV = "development";
-          RUN_ENV = "local";
+          volta.enable = true;
         };
       }
     ];
   };
   environment.systemPackages = with pkgs; [
     ollama
+    poetry
+    awscli2
     (python3.withPackages (ps: with ps; [
       jupyter
       virtualenv

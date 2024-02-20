@@ -27,8 +27,7 @@
       programs.bash.enable = true;
       programs.zsh.enable = true;
 
-      imports = [
-      ] ++ config.cd.users.root.extraHomeManagerModules;
+      imports = [] ++ config.cd.users.root.extraHomeManagerModules;
     };
   };
 }
