@@ -13,6 +13,8 @@ in
         zstyle ':completion:*' matcher-list ''' '+m:{a-zA-Z}={A-Za-z}' '+r:|[._-]=* r:|=*' '+l:|=* r:|=*'
       '';
     };
-    home.file.".hushlogin".text = lib.mkIf pkgs.stdenv.isDarwin "";
+    home.file.".hushlogin" = lib.mkIf pkgs.stdenv.isDarwin {
+      text = "";
+    };
   };
 }
