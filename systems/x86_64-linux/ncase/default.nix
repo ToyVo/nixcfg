@@ -6,8 +6,8 @@
   networking = {
     hostName = "ncase";
     firewall = {
-      allowedTCPPorts = [ 5357 80 443 ];
-      allowedUDPPorts = [ 3702 ];
+      allowedTCPPorts = [ 80 443 ];
+      allowedUDPPorts = [ 443 ];
     };
   };
   boot = {
@@ -30,7 +30,10 @@
       openFirewall = true;
     };
     xserver.displayManager.gdm.autoSuspend = false;
-    samba-wsdd.enable = true;
+    samba-wsdd = {
+      enable = true;
+      openFirewall = true;
+    };
     samba = {
       enable = true;
       openFirewall = true;

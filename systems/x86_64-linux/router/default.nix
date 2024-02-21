@@ -14,9 +14,9 @@
     firewall = {
       enable = true;
       interfaces.enp3s0.allowedTCPPorts = [ 53 22 80 443 ];
-      interfaces.enp3s0.allowedUDPPorts = [ 53 67 68 ];
+      interfaces.enp3s0.allowedUDPPorts = [ 53 67 68 443 ];
       interfaces.cdnet.allowedTCPPorts = [ 53 22 80 443 ];
-      interfaces.cdnet.allowedUDPPorts = [ 53 67 68 ];
+      interfaces.cdnet.allowedUDPPorts = [ 53 67 68 443 ];
       interfaces.cdiot.allowedTCPPorts = [ 53 ];
       interfaces.cdiot.allowedUDPPorts = [ 53 67 68 ];
       interfaces.cdguest.allowedTCPPorts = [ 53 ];
