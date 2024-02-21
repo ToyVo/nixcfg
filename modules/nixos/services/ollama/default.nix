@@ -16,9 +16,9 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (cfg.enable && cfg.openFirewall) {
     services.ollama.listenAddress = "0.0.0.0:${toString cfg.port}";
-    networking = lib.mkIf cfg.openFirewall {
+    networking = {
       firewall = {
         allowedTCPPorts = [ cfg.port ];
       };
