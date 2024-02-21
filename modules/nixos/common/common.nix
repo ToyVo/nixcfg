@@ -12,8 +12,11 @@ in
   };
 
   config = lib.mkIf config.profiles.defaults.enable {
-    programs.zsh.enable = true;
-    programs.fish.enable = true;
+    programs = {
+      zsh.enable = true;
+      fish.enable = true;
+      nvim.enable = true;
+    };
     environment.shells = with pkgs; [
       bashInteractive
       zsh
@@ -69,6 +72,5 @@ in
       element-desktop
       gimp
     ];
-    programs.nvim.enable = true;
   };
 }

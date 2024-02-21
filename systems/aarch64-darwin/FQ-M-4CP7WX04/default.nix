@@ -3,23 +3,6 @@
   userPresets.toyvo = {
     enable = true;
     name = "CollinDie";
-    extraHomeManagerModules = [
-      ./secrets.nix
-      {
-        programs = {
-          ssh.matchBlocks."github-emu" = {
-            hostname = "github.com";
-            identitiesOnly = true;
-            identityFile = "~/.ssh/emu_ed25519";
-          };
-          gpg.publicKeys = [{
-            source = ../../../secrets/gpg_emu.pub;
-            trust = 5;
-          }];
-          volta.enable = true;
-        };
-      }
-    ];
   };
   environment.systemPackages = with pkgs; [
     ollama

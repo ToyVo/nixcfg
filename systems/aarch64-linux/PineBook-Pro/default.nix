@@ -1,10 +1,7 @@
 { lib, ... }: {
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
   networking.hostName = "PineBook-Pro";
-  boot.loader.systemd-boot = {
-    enable = true;
-    configurationLimit = 5;
-  };
+  boot.loader.systemd-boot.enable = true;
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;

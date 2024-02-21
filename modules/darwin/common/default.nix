@@ -7,25 +7,30 @@ in
     ../../nixos/common/common.nix
     inputs.nixvim.nixDarwinModules.nixvim
     ../../nixos/neovim/common.nix
-    ../../nixos/users/root/common.nix 
-    ../../nixos/users/toyvo/common.nix 
+    ../../nixos/users/common.nix 
    ];
 
   config = lib.mkIf cfg.enable {
     services.nix-daemon.enable = true;
     security.pam.enableSudoTouchIdAuth = true;
-    fonts.fontDir.enable = true;
-    fonts.fonts = with pkgs; [ monaspace (nerdfonts.override { fonts = [ "Monaspace" "NerdFontsSymbolsOnly" ]; }) ];
+    fonts = {
+      fontDir.enable = true;
+      fonts = with pkgs; [ monaspace (nerdfonts.override { fonts = [ "Monaspace" "NerdFontsSymbolsOnly" ]; }) ];
+    };
     system = {
       stateVersion = 4;
-      keyboard.enableKeyMapping = true;
-      keyboard.remapCapsLockToControl = true;
+      keyboard = {
+        enableKeyMapping = true;
+        remapCapsLockToControl = true;
+      };
+      defaults.finder.AliasSystemApplications = true;
     };
     environment.systemPackages = with pkgs; [
       rectangle
       utm
       wezterm
       pinentry_mac
+      rio
     ];
     programs = {
       bash = {
@@ -43,28 +48,29 @@ in
         upgrade = true;
         cleanup = "zap";
       };
+      casks = [
+        # nix package not available on darwin
+        { name = "arc"; greedy = true; }
+        { name = "firefox"; greedy = true; }
+        { name = "thunderbird"; greedy = true; }
+        { name = "jetbrains-toolbox"; greedy = true; }
+        { name = "bruno"; greedy = true; }
+        { name = "onlyoffice"; greedy = true; }
+        { name = "keybase"; greedy = true; }
+        { name = "grammarly"; greedy = true; }
+        { name = "logseq"; greedy = true; }
+        { name = "lm-studio"; greedy = true; }
+        { name = "app-cleaner"; greedy = true; }
+        # nix package doesn't provide an app bundle
+        { name = "neovide"; greedy = true; }
+        # must be installed at /Applications, nix-darwin installs it at /Applications/nix apps
+        { name = "1password"; greedy = true; }
+      ];
+      brews = [
+        # required for neovide
+        "libuv"
+      ];
     };
-    homebrew.casks = [
-      # nix package not available on darwin
-      { name = "firefox"; greedy = true; }
-      { name = "thunderbird"; greedy = true; }
-      { name = "protonmail-bridge"; greedy = true; }
-      { name = "jetbrains-toolbox"; greedy = true; }
-      { name = "bruno"; greedy = true; }
-      { name = "onlyoffice"; greedy = true; }
-      { name = "keybase"; greedy = true; }
-      { name = "grammarly"; greedy = true; }
-      { name = "rio"; greedy = true; }
-      { name = "logseq"; greedy = true; }
-      # nix package doesn't provide an app bundle
-      { name = "neovide"; greedy = true; }
-      # must be installed at /Applications, nix-darwin installs it at /Applications/nix apps
-      { name = "1password"; greedy = true; }
-    ];
-    homebrew.brews = [
-      # required for neovide
-      "libuv"
-    ];
     home-manager.sharedModules = [
       {
         targets.darwin.aliasHomeApplications = true;
@@ -81,7 +87,6 @@ in
         };
       }
     ];
-    system.defaults.finder.AliasSystemApplications = true;
     profiles.gui.enable = true;
   };
 }

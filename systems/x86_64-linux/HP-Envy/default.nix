@@ -2,10 +2,7 @@
   hardware.cpu.amd.updateMicrocode = true;
   networking.hostName = "HP-Envy";
   boot = {
-    loader.systemd-boot = {
-      enable = true;
-      configurationLimit = 5;
-    };
+    loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     initrd.availableKernelModules =
       [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];

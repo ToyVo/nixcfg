@@ -6,7 +6,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.gpg = {
       publicKeys = [{
-        source = ../../../secrets/gpg_yubikey.pub;
+        source = ./gpg_yubikey.pub;
         trust = 5;
       }];
     };

@@ -9,6 +9,7 @@ in
     };
     home.sessionVariables = {
       MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+      MANROFFOPT = "-c";
     };
     home.shellAliases = {
       cat = "bat -pp";

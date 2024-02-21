@@ -2,10 +2,7 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
   networking.hostName = "MacBook-Pro-Nixos";
   boot = {
-    loader.systemd-boot = {
-      enable = true;
-      configurationLimit = 5;
-    };
+    loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = false;
     initrd.availableKernelModules = [ "usb_storage" "sdhci_pci" ];
   };

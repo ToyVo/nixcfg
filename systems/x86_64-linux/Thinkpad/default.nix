@@ -2,24 +2,14 @@
   hardware.cpu.amd.updateMicrocode = true;
   networking.hostName = "Thinkpad";
   boot = {
-    loader.systemd-boot = {
-      enable = true;
-      configurationLimit = 5;
-    };
+    loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     initrd.availableKernelModules =
       [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
     kernelModules = [ "kvm-amd" "amdgpu" ];
   };
   profiles.defaults.enable = true;
-  userPresets.toyvo = {
-    enable = true;
-    extraHomeManagerModules = [
-      {
-        programs.hyprland.enable = true;
-      }
-    ];
-  };
+  userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;
   services.xserver.desktopManager.gnome.enable = true;

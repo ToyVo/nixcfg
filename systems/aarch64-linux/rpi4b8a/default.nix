@@ -9,7 +9,7 @@
     loader.grub.enable = false;
     loader.generic-extlinux-compatible = {
       enable = true;
-      configurationLimit = 5;
+
     };
     initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
   };

@@ -10,23 +10,14 @@ in
   config = lib.mkIf cfg.defaults.enable {
     networking.networkmanager.enable = true;
     time.timeZone = "America/Chicago";
-    i18n.defaultLocale = "en_US.UTF-8";
-    i18n.extraLocaleSettings = {
-      LC_ADDRESS = "en_US.UTF-8";
-      LC_IDENTIFICATION = "en_US.UTF-8";
-      LC_MEASUREMENT = "en_US.UTF-8";
-      LC_MONETARY = "en_US.UTF-8";
-      LC_NAME = "en_US.UTF-8";
-      LC_NUMERIC = "en_US.UTF-8";
-      LC_PAPER = "en_US.UTF-8";
-      LC_TELEPHONE = "en_US.UTF-8";
-      LC_TIME = "en_US.UTF-8";
+    i18n = {
+      defaultLocale = "en_US.UTF-8";
+      extraLocaleSettings = {
+        LC_MEASUREMENT = "C.UTF-8";
+        LC_TIME = "C.UTF-8";
+      };
     };
     console.useXkbConfig = true;
-    services.xserver.xkb = {
-      layout = "us";
-      options = "ctrl:nocaps";
-    };
     environment.systemPackages = with pkgs; [
       coreutils
       yubikey-manager
@@ -41,15 +32,30 @@ in
       yubikey-manager-qt
       yubioath-flutter
     ];
-    programs.bash.blesh.enable = true;
-    programs.ssh.startAgent = false;
-    programs.gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
+    programs = {
+      bash.blesh.enable = true;
+      ssh.startAgent = false;
+      gnupg.agent = {
+        enable = true;
+        enableSSHSupport = true;
+      };
     };
-    services.openssh.enable = true;
-    services.pcscd.enable = true;
-    services.udev.packages = with pkgs; [ yubikey-personalization ];
+    services = {
+      xserver.xkb = {
+        layout = "us";
+        options = "ctrl:nocaps";
+      };
+      openssh.enable = true;
+      pcscd.enable = true;
+      udev.packages = with pkgs; [ yubikey-personalization ];
+      printing.enable = cfg.gui.enable;
+      pipewire = lib.mkIf cfg.gui.enable {
+        enable = true;
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
+      };
+    };
     system = {
       stateVersion = "24.05";
       autoUpgrade = {
@@ -68,23 +74,19 @@ in
         ];
       };
     };
-    services.printing.enable = cfg.gui.enable;
     security.rtkit.enable = true;
     hardware.pulseaudio.enable = lib.mkForce false;
-    services.pipewire = {
-      enable = cfg.gui.enable;
-      alsa.enable = cfg.gui.enable;
-      alsa.support32Bit = cfg.gui.enable;
-      pulse.enable = cfg.gui.enable;
-    };
     fonts.packages = with pkgs; lib.mkIf cfg.gui.enable [ monaspace (nerdfonts.override { fonts = [ "Monaspace" "NerdFontsSymbolsOnly" ]; }) ];
-    boot.binfmt.registrations.appimage = {
-      wrapInterpreterInShell = false;
-      interpreter = "${pkgs.appimage-run}/bin/appimage-run";
-      recognitionType = "magic";
-      offset = 0;
-      mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
-      magicOrExtension = ''\x7fELF....AI\x02'';
+    boot = {
+      loader.systemd-boot.configurationLimit = lib.mkIf config.boot.loader.systemd-boot.enable 3;
+      binfmt.registrations.appimage = {
+        wrapInterpreterInShell = false;
+        interpreter = "${pkgs.appimage-run}/bin/appimage-run";
+        recognitionType = "magic";
+        offset = 0;
+        mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
+        magicOrExtension = ''\x7fELF....AI\x02'';
+      };
     };
   };
 }
