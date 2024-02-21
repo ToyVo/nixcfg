@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   profiles.defaults.enable = true;
-  users.presets.toyvo = {
+  userPresets.toyvo = {
     enable = true;
     name = "CollinDie";
     extraHomeManagerModules = [

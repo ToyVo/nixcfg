@@ -8,6 +8,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    containerPresets.enable = lib.mkDefault true;
     virtualisation.oci-containers.containers.nextcloud-aio-mastercontainer = {
       image = "nextcloud/all-in-one:latest";
       autoStart = true;

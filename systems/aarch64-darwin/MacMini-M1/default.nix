@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   profiles.defaults.enable = true;
-  users.presets.toyvo.enable = true;
+  userPresets.toyvo.enable = true;
   homebrew.casks = [
     { name = "prusaslicer"; greedy = true; }
     { name = "google-chrome"; greedy = true; }

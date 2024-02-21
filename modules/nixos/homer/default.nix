@@ -1,9 +1,9 @@
 { config, pkgs, lib, ... }:
 let
-  cfg = config.programs.homer;
+  cfg = config.services.homer;
 in
 {
-  options.programs.homer = {
+  options.services.homer = {
     enable = lib.mkEnableOption "Enable Homer dashboard";
     openFirewall = lib.mkEnableOption "Enable Homer dashboard";
   };

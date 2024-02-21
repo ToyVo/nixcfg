@@ -28,12 +28,10 @@
       [ "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
     kernelModules = [ "kvm-intel" ];
   };
-  cd = {
-    defaults.enable = true;
-    users.toyvo.enable = true;
-    fs.boot.enable = true;
-    fs.btrfs.enable = true;
-  };
+  profiles.defaults.enable = true;
+  userPresets.toyvo.enable = true;
+  fileSystemPresets.boot.enable = true;
+  fileSystemPresets.btrfs.enable = true;
   systemd.network = {
     enable = true;
     networks = {

@@ -9,12 +9,10 @@
     loader.efi.canTouchEfiVariables = false;
     initrd.availableKernelModules = [ "usb_storage" "sdhci_pci" ];
   };
-  cd = {
-    defaults.enable = true;
-    users.toyvo.enable = true;
-    fs.boot.enable = true;
-    fs.btrfs.enable = true;
-    desktops.gnome.enable = true;
-  };
+  profiles.defaults.enable = true;
+  userPresets.toyvo.enable = true;
+  fileSystemPresets.boot.enable = true;
+  fileSystemPresets.btrfs.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
   hardware.asahi.peripheralFirmwareDirectory = ./firmware;
 }

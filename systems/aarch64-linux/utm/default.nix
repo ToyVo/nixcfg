@@ -9,11 +9,9 @@
     loader.efi.canTouchEfiVariables = true;
     initrd.availableKernelModules = [ "xhci_pci" "virtio_pci" "usbhid" "usb_storage" "sr_mod" ];
   };
-  cd = {
-    defaults.enable = true;
-    users.toyvo.enable = true;
-    fs.boot.enable = true;
-    fs.ext4.enable = true;
-    desktops.cosmic.enable = true;
-  };
+  profiles.defaults.enable = true;
+  userPresets.toyvo.enable = true;
+  fileSystemPresets.boot.enable = true;
+  fileSystemPresets.ext4.enable = true;
+  services.xserver.desktopManager.cosmic.enable = true;
 }

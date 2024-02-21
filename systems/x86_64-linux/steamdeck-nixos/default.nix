@@ -11,14 +11,12 @@
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
     kernelModules = [ "kvm-amd" ];
   };
-  cd = {
-    defaults.enable = true;
-    users.toyvo.enable = true;
-    fs.boot.enable = true;
-    fs.btrfs.enable = true;
-    desktops.gnome.enable = true;
-    # remote-builds.client.enable = true;
-  };
+  profiles.defaults.enable = true;
+  userPresets.toyvo.enable = true;
+  fileSystemPresets.boot.enable = true;
+  fileSystemPresets.btrfs.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+  # services.remote-builds.client.enable = true;
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
     fsType = "btrfs";

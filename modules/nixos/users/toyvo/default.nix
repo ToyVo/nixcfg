@@ -1,6 +1,6 @@
 { lib, config, ... }:
 let
-  cfg = config.users.presets.toyvo;
+  cfg = config.userPresets.toyvo;
 in
 {
   imports = [ ./common.nix ];
@@ -12,7 +12,7 @@ in
       initialHashedPassword = "$y$j9T$tkZ4b5vK1fCsRP0oWUb0e1$w0QbUEv9swXir33ivvM70RYTYflQszeLBi3vubYTqd8";
     };
     users.extraGroups.docker.members = [ cfg.name ];
-    users.presets.toyvo.extraHomeManagerModules = [
+    userPresets.toyvo.extraHomeManagerModules = [
       {
         services.easyeffects.enable = true;
       }

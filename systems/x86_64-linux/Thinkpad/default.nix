@@ -11,21 +11,19 @@
       [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
     kernelModules = [ "kvm-amd" "amdgpu" ];
   };
-  cd = {
-    defaults.enable = true;
-    users.toyvo = {
-      enable = true;
-      extraHomeManagerModules = [
-        {
-          programs.hyprland.enable = true;
-        }
-      ];
-    };
-    fs.boot.enable = true;
-    fs.btrfs.enable = true;
-    desktops.gnome.enable = true;
-    desktops.hyprland.enable = true;
+  profiles.defaults.enable = true;
+  userPresets.toyvo = {
+    enable = true;
+    extraHomeManagerModules = [
+      {
+        programs.hyprland.enable = true;
+      }
+    ];
   };
+  fileSystemPresets.boot.enable = true;
+  fileSystemPresets.btrfs.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+  programs.hyprland.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
   hardware.opengl = {
     extraPackages = with pkgs; [

@@ -1,13 +1,13 @@
 { lib, pkgs, config, ... }:
 let
-  cfg = config.users.presets.toyvo;
+  cfg = config.userPresets.toyvo;
   homeDirectory = if pkgs.stdenv.isDarwin then 
     "/Users/${cfg.name}" else 
     "/home/${cfg.name}";
   enableGui = config.profiles.gui.enable;
 in
 {
-  options.users.presets.toyvo = {
+  options.userPresets.toyvo = {
     enable = lib.mkEnableOption "toyvo user";
     name = lib.mkOption {
       type = lib.types.str;

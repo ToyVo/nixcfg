@@ -15,22 +15,17 @@
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
     kernelModules = [ "kvm-amd" ];
   };
-  cd = {
-    defaults.enable = true;
-    users.toyvo.enable = true;
-    fs.boot.enable = true;
-    fs.btrfs.enable = true;
-    remote-builds.server.enable = true;
-    homer = {
-      enable = true;
-      openFirewall = true;
-    };
-    desktops.gnome.enable = true;
-    containers = {
-      enable = true;
-      nextcloud.enable = true;
-    };
+  profiles.defaults.enable = true;
+  userPresets.toyvo.enable = true;
+  fileSystemPresets.boot.enable = true;
+  fileSystemPresets.btrfs.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+  services.remote-builds.server.enable = true;
+  services.homer = {
+    enable = true;
+    openFirewall = true;
   };
+  containerPresets.nextcloud.enable = true;
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
     fsType = "btrfs";

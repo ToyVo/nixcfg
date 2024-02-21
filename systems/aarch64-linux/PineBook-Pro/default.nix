@@ -5,11 +5,9 @@
     enable = true;
     configurationLimit = 5;
   };
-  cd = {
-    defaults.enable = true;
-    users.toyvo.enable = true;
-    fs.boot.enable = true;
-    fs.btrfs.enable = true;
-    desktops.xfce.enable = true;
-  };
+  profiles.defaults.enable = true;
+  userPresets.toyvo.enable = true;
+  fileSystemPresets.boot.enable = true;
+  fileSystemPresets.btrfs.enable = true;
+  services.xserver.desktopManager.xfce.enable = true;
 }

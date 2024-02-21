@@ -13,10 +13,8 @@
     };
     initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
   };
-  cd = {
-    defaults.enable = true;
-    users.toyvo.enable = true;
-    fs.sd.enable = true;
-  };
+  profiles.defaults.enable = true;
+  userPresets.toyvo.enable = true;
+  fileSystemPresets.sd.enable = true;
   services.octoprint.enable = true;
 }

@@ -1,10 +1,10 @@
 { lib, pkgs, config, ... }: 
 let
-  cfg = config.users.presets.root;
+  cfg = config.userPresets.root;
   homeDirectory = if pkgs.stdenv.isDarwin then "/var/root" else "/root";
 in
 {
-  options.users.presets.root = {
+  options.userPresets.root = {
     extraHomeManagerModules = lib.mkOption {
       type = lib.types.listOf lib.types.raw;
       default = [ ];
