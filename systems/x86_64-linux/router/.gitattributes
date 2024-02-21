@@ -1,0 +1,2 @@
+cfapikey filter=git-crypt diff=git-crypt
+cfapitoken filter=git-crypt diff=git-crypt

@@ -26,8 +26,8 @@ in
         home = "${homePath}/${cfg.toyvo.name}";
         shell = pkgs.zsh;
         openssh.authorizedKeys.keys = [
-          (lib.fileContents ../../../secrets/ykA_ed25519_sk.pub)
-          (lib.fileContents ../../../secrets/ykC_ed25519_sk.pub)
+          (lib.fileContents ./ykA_ed25519_sk.pub)
+          (lib.fileContents ./ykC_ed25519_sk.pub)
         ];
       };
       root = {

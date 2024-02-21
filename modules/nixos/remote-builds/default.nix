@@ -14,7 +14,7 @@ in
       home = "/home/nixremote";
       shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [
-        (lib.fileContents ../../../secrets/nixremote_ed25519.pub)
+        (lib.fileContents ./nixremote_ed25519.pub)
       ];
       isNormalUser = true;
     };

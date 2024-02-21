@@ -1,4 +1,5 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, inputs, ... }: {
+  imports = [ inputs.jovian.nixosModules.jovian ];
   hardware.cpu.amd.updateMicrocode = true;
   hardware.bluetooth.enable = true;
   networking.hostName = "steamdeck-nixos";

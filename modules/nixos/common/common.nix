@@ -22,23 +22,28 @@ in
       zsh
       fish
       nushell
+      powershell
     ];
-    nix.extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-    nix.settings = {
-      substituters = config.nix.settings.trusted-substituters;
-      trusted-substituters = [
-        "https://nix-community.cachix.org"
-        "https://hyprland.cachix.org"
-      ];
-      trusted-public-keys = [
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-      ];
+    nix = {
+      extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
+      settings = {
+        substituters = config.nix.settings.trusted-substituters;
+        trusted-substituters = [
+          "https://nix-community.cachix.org"
+          "https://hyprland.cachix.org"
+        ];
+        trusted-public-keys = [
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+          "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+        ];
+      };
     };
-    home-manager.useGlobalPkgs = true;
-    home-manager.useUserPackages = true;
+    home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+    };
     nixpkgs.overlays = [ inputs.rust-overlay.overlays.default ];
     environment.systemPackages = with pkgs; [
       broot

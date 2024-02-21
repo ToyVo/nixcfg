@@ -59,22 +59,6 @@
     in
     lib.mkFlake {
       channels-config.allowUnfree = true;
-      systems = {
-        modules.nixos = with inputs; [
-          nixpkgs.nixosModules.notDetected
-        ];
-        hosts = {
-          MacBook-Pro-Nixos.modules = with inputs; [
-            apple-silicon-support.nixosModules.apple-silicon-support
-          ];
-          PineBook-Pro.modules = with inputs; [
-            nixos-hardware.nixosModules.pine64-pinebook-pro
-          ];
-          steamdeck-nixos.modules = with inputs; [
-            jovian.nixosModules.jovian
-          ];
-        };
-      };
     };
 
   nixConfig = {

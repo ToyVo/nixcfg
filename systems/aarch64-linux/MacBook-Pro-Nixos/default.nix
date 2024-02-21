@@ -1,4 +1,5 @@
-{ lib, ... }: {
+{ lib, inputs, ... }: {
+  imports = [ inputs.apple-silicon-support.nixosModules.apple-silicon-support ];
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
   networking.hostName = "MacBook-Pro-Nixos";
   boot = {
