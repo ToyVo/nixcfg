@@ -1,6 +1,11 @@
 { lib, config, pkgs, ... }:
 let
   cfg = config.containerPresets.nextcloud;
+  Caddyfile = pkgs.writeText "Caddyfile" ''
+    https://0.0.0.0:443 {
+      reverse_proxy localhost:11000
+    }
+  '';
   compose = pkgs.writeText "docker-compose.yml" ''
     services:
       nextcloud-aio-mastercontainer:
@@ -15,7 +20,7 @@ let
           - 80:80 # Can be removed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
           - 8080:8080
           - 8443:8443 # Can be removed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
-          - 11000:11000
+          - 443:443
         environment:
           # - AIO_DISABLE_BACKUP_SECTION=false # Setting this to true allows to hide the backup section in the AIO interface. See https://github.com/nextcloud/all-in-one#how-to-disable-the-backup-section
           - APACHE_PORT=11000
@@ -38,6 +43,18 @@ let
         # # Uncomment the following line when using SELinux
         # security_opt: ["label:disable"]
 
+      caddy:
+        image: caddy:alpine
+        restart: always
+        container_name: caddy
+        volumes:
+          - ${Caddyfile}:/etc/caddy/Caddyfile
+          - ./certs:/certs
+          - ./config:/config
+          - ./data:/data
+          - ./sites:/srv
+        network_mode: "host"
+
     volumes:
       nextcloud_aio_mastercontainer:
         name: nextcloud_aio_mastercontainer
@@ -59,7 +76,7 @@ in
       after = ["docker.service" "docker.socket"];
     };
     networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedTCPPorts = [ 80 443 3478 8443 11000 ];
+      allowedTCPPorts = [ 80 443 3478 8443 ];
       allowedUDPPorts = [ 443 ];
     };
   };
