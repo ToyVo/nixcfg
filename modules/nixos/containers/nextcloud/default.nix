@@ -3,27 +3,47 @@ let
   cfg = config.containerPresets.nextcloud;
   compose = pkgs.writeText "docker-compose.yml" ''
     services:
-      nextcloud-aio-mastercontainer:
-        image: nextcloud/all-in-one:latest
-        init: true
+      db:
+        image: postgres:alpine
         restart: always
-        container_name: nextcloud-aio-mastercontainer
         volumes:
-          - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
-          - /var/run/docker.sock:/var/run/docker.sock:ro
+          - db:/var/lib/postgresql/data:Z
+        env_file:
+          - ${./db.env}
+
+      redis:
+        image: redis:alpine
+        restart: always
+
+      app:
+        image: nextcloud:apache
+        restart: always
         ports:
-          - 80:80
-          - 8080:8080
-          - 8443:8443
-        # environment:
-          # - APACHE_PORT=11000
-          # - APACHE_IP_BINDING=0.0.0.0
-          # I use Cloudflare for my DNS, so I need to set the following to true
-          # - SKIP_DOMAIN_VALIDATION=true
+          - 0.0.0.0:8080:80
+        volumes:
+          - nextcloud:/var/www/html:z
+        environment:
+          - POSTGRES_HOST=db
+          - REDIS_HOST=redis
+        env_file:
+          - ${./db.env}
+        depends_on:
+          - db
+          - redis
+
+      cron:
+        image: nextcloud:apache
+        restart: always
+        volumes:
+          - nextcloud:/var/www/html:z
+        entrypoint: /cron.sh
+        depends_on:
+          - db
+          - redis
 
     volumes:
-      nextcloud_aio_mastercontainer:
-        name: nextcloud_aio_mastercontainer
+      db:
+      nextcloud:
   '';
 in
 {
@@ -42,8 +62,7 @@ in
       after = ["docker.service" "docker.socket"];
     };
     networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedTCPPorts = [ 80 443 3478 8080 8443 11000 ];
-      allowedUDPPorts = [ 443 ];
+      allowedTCPPorts = [ 8080 ];
     };
   };
 }

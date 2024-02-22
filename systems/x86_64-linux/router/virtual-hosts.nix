@@ -12,14 +12,9 @@
         reverse_proxy https://10.1.0.4:443
       '';
     };
-    "http://nextcloud.diekvoss.net:80" = {
-      extraConfig = ''
-        reverse_proxy http://10.1.0.3:80
-      '';
-    };
     "https://nextcloud.diekvoss.net:443" = {
       extraConfig = ''
-        reverse_proxy https://10.1.0.3:8443
+        reverse_proxy http://10.1.0.3:8080
       '';
     };
     "https://octoprint.diekvoss.net:443" = {
