@@ -15,7 +15,7 @@ let
           - 80:80
           - 8080:8080
           - 8443:8443
-        environment:
+        # environment:
           # - APACHE_PORT=11000
           # - APACHE_IP_BINDING=0.0.0.0
           # I use Cloudflare for my DNS, so I need to set the following to true
