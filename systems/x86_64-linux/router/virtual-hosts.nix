@@ -19,7 +19,7 @@
     };
     "https://nextcloud.diekvoss.net:443" = {
       extraConfig = ''
-        reverse_proxy https://10.1.0.3:11000
+        reverse_proxy https://10.1.0.3:8443
       '';
     };
     "https://octoprint.diekvoss.net:443" = {
