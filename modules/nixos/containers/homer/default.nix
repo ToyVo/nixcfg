@@ -32,7 +32,7 @@ in
     containerPresets.docker.enable = lib.mkDefault true;
     systemd.services.homer = {
       script = ''
-        ${pkgs.docker-compose}/bin/docker-compose -f ${compose}
+        docker-compose -f ${compose}
       '';
       wantedBy = ["multi-user.target"];
       after = ["docker.service" "docker.socket"];

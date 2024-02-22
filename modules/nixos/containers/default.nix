@@ -8,6 +8,9 @@ in
   };
 
   config = lib.mkIf cfg.docker.enable {
+    environment.systemPackages = with lib; [
+      docker-compose
+    ];
     virtualisation = {
       docker = {
         enable = true;
