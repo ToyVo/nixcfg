@@ -145,7 +145,10 @@
       apikeyFile = "${./cfapikey}";
       apiTokenFile = "${./cfapitoken}";
     };
-    nginx.enable = true;
+    nginx = {
+      enable = true;
+      proxyTimeout = "1500s";
+    };
   };
   security.acme = {
     acceptTerms = true;

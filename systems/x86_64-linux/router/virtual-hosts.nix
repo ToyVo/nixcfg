@@ -56,7 +56,6 @@
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://10.1.0.3:11434";
-        proxyTimeout = "1500s";
         recommendedProxySettings = true;
       };
     };
