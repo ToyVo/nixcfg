@@ -9,50 +9,55 @@ in
   };
 
   config = lib.mkIf config.profiles.toyvo.enable {
-    home.stateVersion = "24.05";
-    home.sessionVariables = {
-      EDITOR = "nvim";
-    };
-    home.sessionPath = [ "$HOME/.local/bin" ];
-    home.packages = with pkgs; [
-      lazygit
-    ];
-    xdg.configFile."ideavim/ideavimrc".source = ./ideavimrc;
-    xdg.configFile."nix/nix.conf".text = ''
-      experimental-features = nix-command flakes
-    '';
-    xdg.configFile."nixpkgs/config.nix".text = ''
-      { allowUnfree = true; }
-    '';
-    programs.home-manager.enable = true;
-    programs.starship = {
-      enable = true;
-      settings = {
-        right_format = "$time";
-        time.disabled = false;
+    home = {
+      stateVersion = "24.05";
+      sessionVariables = {
+        EDITOR = "nvim";
       };
+      sessionPath = [ "$HOME/.local/bin" ];
     };
-    programs.direnv = {
+    xdg.configFile = {
+      "ideavim/ideavimrc".source = ./ideavimrc;
+      "nix/nix.conf".text = ''
+        experimental-features = nix-command flakes
+      '';
+      "nixpkgs/config.nix".text = ''
+        { allowUnfree = true; }
+      '';
+    };
+    programs = {
+      home-manager.enable = true;
+      starship = {
+        enable = true;
+        settings = {
+          right_format = "$time";
+          time.disabled = false;
+        };
+      };
+      direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+      };
+      rio.enable = enableGui;
+      vscode.enable = enableGui;
+      wezterm.enable = enableGui;
+      kitty.enable = enableGui;
+      zoxide.enable = true;
+      bat.enable = true;
+      eza.enable = true;
+      git.enable = true;
+      gpg.enable = true;
+      helix.enable = true;
+      ssh.enable = true;
+      zellij.enable = true;
+      zsh.enable = true;
+      bash.enable = true;
+      fish.enable = true;
+      nushell.enable = true;
+    };
+    services.easyeffects = lib.mkIf pkgs.stdenv.isLinux {
       enable = true;
-      nix-direnv.enable = true;
     };
-    programs.rio.enable = enableGui;
-    programs.vscode.enable = enableGui;
-    programs.wezterm.enable = enableGui;
-    programs.kitty.enable = enableGui;
-    programs.zoxide.enable = true;
-    programs.bat.enable = true;
-    programs.eza.enable = true;
-    programs.git.enable = true;
-    programs.gpg.enable = true;
-    programs.helix.enable = true;
-    programs.ssh.enable = true;
-    programs.zellij.enable = true;
-    programs.zsh.enable = true;
-    programs.bash.enable = true;
-    programs.fish.enable = true;
-    programs.nushell.enable = true;
-    services.easyeffects.enable = lib.mkIf pkgs.stdenv.isLinux true;
   };
 }
 

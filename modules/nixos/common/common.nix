@@ -72,6 +72,7 @@ in
       xz
       zstd
       pipenv
+      lazygit
     ]
     ++ lib.optionals config.profiles.gui.enable [
       element-desktop

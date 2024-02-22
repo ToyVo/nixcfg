@@ -8,6 +8,7 @@ let
     la = "eza -a";
     lt = "eza -T";
     lla = "eza -la";
+    lta = "eza -Ta";
   };
 in
 {
@@ -21,6 +22,7 @@ in
         la = "ls -a";
         lla = "ls -la";
         lt = "eza -T";
+        lta = "eza -Ta";
       };
     };
   };
