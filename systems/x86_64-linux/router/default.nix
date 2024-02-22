@@ -18,6 +18,7 @@
     nat.internalInterfaces = [ "enp3s0" "cdnet" "cdiot" "cdguest" ];
     firewall = {
       enable = true;
+      # Port 53 is for DNS, 22 is for SSH, 67/68 is for DHCP, 80 is for HTTP, 443 is for HTTPS
       interfaces.enp3s0.allowedTCPPorts = [ 53 22 80 443 ];
       interfaces.enp3s0.allowedUDPPorts = [ 53 67 68 443 ];
       interfaces.cdnet.allowedTCPPorts = [ 53 22 80 443 ];

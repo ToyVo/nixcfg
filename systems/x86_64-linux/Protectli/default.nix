@@ -9,6 +9,7 @@
     nat.enableIPv6 = true;
     nat.externalInterface = "enp1s0";
     nat.internalInterfaces = [ "enp2s0" "enp3s0" "enp4s0" ];
+    # Port 53 is for DNS, 22 is for SSH, 67 is for DHCP
     firewall.interfaces.enp2s0.allowedTCPPorts = [ 53 22 ];
     firewall.interfaces.enp2s0.allowedUDPPorts = [ 53 67 ];
     firewall.interfaces.cdwifi.allowedTCPPorts = [ 53 22 ];

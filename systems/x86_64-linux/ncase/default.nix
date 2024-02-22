@@ -5,13 +5,7 @@
     cpu.amd.updateMicrocode = true;
     bluetooth.enable = true;
   };
-  networking = {
-    hostName = "ncase";
-    firewall = {
-      allowedTCPPorts = [ 80 443 ];
-      allowedUDPPorts = [ 443 ];
-    };
-  };
+  networking.hostName = "ncase";
   boot = {
     loader = {
       systemd-boot.enable = true;
@@ -95,6 +89,7 @@
         ovmf.enable = true;
         ovmf.packages = [ pkgs.OVMFFull.fd ];
       };
+      docker.daemon.settings.data-root = "/mnt/POOL/containers";
     };
     spiceUSBRedirection.enable = true;
   };
