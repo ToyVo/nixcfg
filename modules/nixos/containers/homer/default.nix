@@ -11,7 +11,7 @@ let
         volumes:
           - ${./assets}:/www/assets
         ports:
-          - ${cfg.port}:8080
+          - ${toString cfg.port}:8080
         user: 1000:1000 # default
         environment:
           - INIT_ASSETS=1 # default
