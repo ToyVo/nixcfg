@@ -16,8 +16,8 @@ let
           - 8080:8080
           - 8443:8443
         environment:
-          - APACHE_PORT=11000
-          - APACHE_IP_BINDING=0.0.0.0
+          # - APACHE_PORT=11000
+          # - APACHE_IP_BINDING=0.0.0.0
           # I use Cloudflare for my DNS, so I need to set the following to true
           # - SKIP_DOMAIN_VALIDATION=true
 
