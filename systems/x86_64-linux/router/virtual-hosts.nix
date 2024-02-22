@@ -9,7 +9,11 @@
     "https://canon.diekvoss.net:443" = {
       useACMEHost = "diekvoss.net";
       extraConfig = ''
-        reverse_proxy https://10.1.0.4:443
+        reverse_proxy https://10.1.0.4:443 {
+          transport http {
+            tls_insecure_skip_verify
+          }
+        }
       '';
     };
     "https://nextcloud.diekvoss.net:443" = {
