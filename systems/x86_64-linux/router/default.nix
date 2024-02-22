@@ -146,10 +146,9 @@
       apikeyFile = "${./cfapikey}";
       apiTokenFile = "${./cfapitoken}";
     };
-    nginx = {
+    caddy = {
       enable = true;
-      proxyTimeout = "1500s";
-      package = pkgs.nginxMainline;
+      email = "collin@diekvoss.com";
     };
   };
   security.acme = {

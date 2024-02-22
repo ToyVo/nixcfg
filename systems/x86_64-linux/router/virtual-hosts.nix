@@ -1,64 +1,46 @@
 { ... }: {
-  services.nginx.virtualHosts = {
+  services.caddy.virtualHosts = {
     "adguard.diekvoss.net" = {
       useACMEHost = "diekvoss.net";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://10.1.0.1:3000";
-        recommendedProxySettings = true;
-      };
+      extraConfig = ''
+        reverse_proxy http://10.1.0.1:3000
+      '';
     };
     "canon.diekvoss.net" = {
       useACMEHost = "diekvoss.net";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "https://10.1.0.4:443";
-        recommendedProxySettings = true;
-      };
+      extraConfig = ''
+        reverse_proxy https://10.1.0.4:443
+      '';
     };
     "nextcloud.diekvoss.net" = {
       useACMEHost = "diekvoss.net";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "https://10.1.0.3:12000";
-        recommendedProxySettings = true;
-      };
+      extraConfig = ''
+        reverse_proxy https://10.1.0.3:12000
+      '';
     };
     "octoprint.diekvoss.net" = {
       useACMEHost = "diekvoss.net";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://10.1.0.7:5000";
-        recommendedProxySettings = true;
-        proxyWebsockets = true;
-      };
-      locations."/webcam/" = {
-        proxyPass = "http://10.1.0.7:8080";
-      };
+      extraConfig = ''
+        reverse_proxy http://10.1.0.7:5000
+      '';
     };
     "omada.diekvoss.net" = {
       useACMEHost = "diekvoss.net";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://10.1.0.2:80";
-        recommendedProxySettings = true;
-      };
+      extraConfig = ''
+        reverse_proxy http://10.1.0.2:80
+      '';
     };
     "portal.diekvoss.net" = {
       useACMEHost = "diekvoss.net";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://10.1.0.3:8787";
-        recommendedProxySettings = true;
-      };
+      extraConfig = ''
+        reverse_proxy http://10.1.0.3:8787
+      '';
     };
     "ollama.diekvoss.net" = {
       useACMEHost = "diekvoss.net";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://10.1.0.3:11434";
-        recommendedProxySettings = true;
-      };
+      extraConfig = ''
+        reverse_proxy http://10.1.0.3:11434
+      '';
     };
   };
 }
