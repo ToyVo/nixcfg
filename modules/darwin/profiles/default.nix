@@ -51,6 +51,7 @@ in
       casks = [
         # nix package not available on darwin
         { name = "arc"; greedy = true; }
+        { name = "warp"; greedy = true; }
         { name = "firefox"; greedy = true; }
         { name = "thunderbird"; greedy = true; }
         { name = "jetbrains-toolbox"; greedy = true; }
