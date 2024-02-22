@@ -17,7 +17,7 @@ let
           - 8443:8443 #
           - 443:443
           - 3478:3478
-          - 11000:11000
+          # - 11000:11000
         environment:
           # - AIO_DISABLE_BACKUP_SECTION=false # Setting this to true allows to hide the backup section in the AIO interface. See https://github.com/nextcloud/all-in-one#how-to-disable-the-backup-section
           - APACHE_PORT=11000
