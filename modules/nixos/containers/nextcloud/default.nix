@@ -15,10 +15,11 @@ let
           - 80:80 # Can be removed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
           - 8080:8080
           - 8443:8443 # Can be removed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
-        # environment: # Is needed when using any of the options below
+          - 11000:11000
+        environment:
           # - AIO_DISABLE_BACKUP_SECTION=false # Setting this to true allows to hide the backup section in the AIO interface. See https://github.com/nextcloud/all-in-one#how-to-disable-the-backup-section
-          # - APACHE_PORT=11000 # Is needed when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else). See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
-          # - APACHE_IP_BINDING=127.0.0.1 # Should be set when running behind a web server or reverse proxy (like Apache, Nginx, Cloudflare Tunnel and else) that is running on the same host. See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
+          - APACHE_PORT=11000
+          - APACHE_IP_BINDING=0.0.0.0
           # - BORG_RETENTION_POLICY=--keep-within=7d --keep-weekly=4 --keep-monthly=6 # Allows to adjust borgs retention policy. See https://github.com/nextcloud/all-in-one#how-to-adjust-borgs-retention-policy
           # - COLLABORA_SECCOMP_DISABLED=false # Setting this to true allows to disable Collabora's Seccomp feature. See https://github.com/nextcloud/all-in-one#how-to-disable-collaboras-seccomp-feature
           # - NEXTCLOUD_DATADIR=/mnt/ncdata # Allows to set the host directory for Nextcloud's datadir. ⚠️⚠️⚠️ Warning: do not set or adjust this value after the initial Nextcloud installation is done! See https://github.com/nextcloud/all-in-one#how-to-change-the-default-location-of-nextclouds-datadir
@@ -36,20 +37,6 @@ let
           # - WATCHTOWER_DOCKER_SOCKET_PATH=/var/run/docker.sock # Needs to be specified if the docker socket on the host is not located in the default '/var/run/docker.sock'. Otherwise mastercontainer updates will fail. For macos it needs to be '/var/run/docker.sock'
         # # Uncomment the following line when using SELinux
         # security_opt: ["label:disable"]
-
-      # # Optional: Caddy reverse proxy. See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
-      # # You can find further examples here: https://github.com/nextcloud/all-in-one/discussions/588
-      # caddy:
-      #   image: caddy:alpine
-      #   restart: always
-      #   container_name: caddy
-      #   volumes:
-      #     - ./Caddyfile:/etc/caddy/Caddyfile
-      #     - ./certs:/certs
-      #     - ./config:/config
-      #     - ./data:/data
-      #     - ./sites:/srv
-      #   network_mode: "host"
 
     volumes:
       nextcloud_aio_mastercontainer:
@@ -72,7 +59,7 @@ in
       after = ["docker.service" "docker.socket"];
     };
     networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedTCPPorts = [ 80 443 3478 8443 ];
+      allowedTCPPorts = [ 80 443 3478 8443 11000 ];
       allowedUDPPorts = [ 443 ];
     };
   };

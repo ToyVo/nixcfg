@@ -18,8 +18,9 @@
     };
     "nextcloud.diekvoss.net" = {
       useACMEHost = "diekvoss.net";
+      forceSSL = true;
       locations."/" = {
-        proxyPass = "https://10.1.0.3:443";
+        proxyPass = "https://10.1.0.3:11000";
         recommendedProxySettings = true;
       };
     };
