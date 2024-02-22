@@ -40,7 +40,10 @@
     spice-vdagentd.enable = true;
   };
   containerPresets = {
-    nextcloud.enable = true;
+    nextcloud = {
+      enable = true;
+      openFirewall = true;
+    };
     homer = {
       enable = true;
       openFirewall = true;

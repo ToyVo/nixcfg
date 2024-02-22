@@ -5,7 +5,7 @@ let
     ---
     version: "2"
     services:
-      homer:
+      nextcloud-aio-mastercontainer:
         image: nextcloud/all-in-one:latest
         container_name: nextcloud-aio-mastercontainer
         volumes:
