@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 let
   cfg = config.containerPresets;
 in
@@ -8,7 +8,7 @@ in
   };
 
   config = lib.mkIf cfg.docker.enable {
-    environment.systemPackages = with lib; [
+    environment.systemPackages = with pkgs; [
       docker-compose
     ];
     virtualisation = {
