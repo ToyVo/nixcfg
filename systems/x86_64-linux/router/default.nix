@@ -149,6 +149,7 @@
     nginx = {
       enable = true;
       proxyTimeout = "1500s";
+      package = pkgs.nginxMainline;
     };
   };
   security.acme = {
