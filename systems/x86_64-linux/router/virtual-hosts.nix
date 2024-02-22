@@ -1,42 +1,42 @@
 { ... }: {
   services.caddy.virtualHosts = {
-    "adguard.diekvoss.net" = {
+    "https://adguard.diekvoss.net:443" = {
       useACMEHost = "diekvoss.net";
       extraConfig = ''
         reverse_proxy http://10.1.0.1:3000
       '';
     };
-    "canon.diekvoss.net" = {
+    "https://canon.diekvoss.net:443" = {
       useACMEHost = "diekvoss.net";
       extraConfig = ''
         reverse_proxy https://10.1.0.4:443
       '';
     };
-    "nextcloud.diekvoss.net" = {
+    "https://nextcloud.diekvoss.net:443" = {
       useACMEHost = "diekvoss.net";
       extraConfig = ''
-        reverse_proxy https://10.1.0.3:12000
+        reverse_proxy https://10.1.0.3:11000
       '';
     };
-    "octoprint.diekvoss.net" = {
+    "https://octoprint.diekvoss.net:443" = {
       useACMEHost = "diekvoss.net";
       extraConfig = ''
         reverse_proxy http://10.1.0.7:5000
       '';
     };
-    "omada.diekvoss.net" = {
+    "https://omada.diekvoss.net:443" = {
       useACMEHost = "diekvoss.net";
       extraConfig = ''
         reverse_proxy http://10.1.0.2:80
       '';
     };
-    "portal.diekvoss.net" = {
+    "https://portal.diekvoss.net:443" = {
       useACMEHost = "diekvoss.net";
       extraConfig = ''
         reverse_proxy http://10.1.0.3:8787
       '';
     };
-    "ollama.diekvoss.net" = {
+    "https://ollama.diekvoss.net:443" = {
       useACMEHost = "diekvoss.net";
       extraConfig = ''
         reverse_proxy http://10.1.0.3:11434

@@ -17,10 +17,10 @@ let
           # - 8443:8443 #
           - 443:443
           # - 3478:3478
-          # - 12000:12000
+          # - 11000:11000
         environment:
           # - AIO_DISABLE_BACKUP_SECTION=false # Setting this to true allows to hide the backup section in the AIO interface. See https://github.com/nextcloud/all-in-one#how-to-disable-the-backup-section
-          - APACHE_PORT=12000
+          - APACHE_PORT=11000
           - APACHE_IP_BINDING=0.0.0.0
           # - BORG_RETENTION_POLICY=--keep-within=7d --keep-weekly=4 --keep-monthly=6 # Allows to adjust borgs retention policy. See https://github.com/nextcloud/all-in-one#how-to-adjust-borgs-retention-policy
           # - COLLABORA_SECCOMP_DISABLED=false # Setting this to true allows to disable Collabora's Seccomp feature. See https://github.com/nextcloud/all-in-one#how-to-disable-collaboras-seccomp-feature
@@ -61,7 +61,7 @@ in
       after = ["docker.service" "docker.socket"];
     };
     networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedTCPPorts = [ 80 443 3478 8080 8443 12000 ];
+      allowedTCPPorts = [ 80 443 3478 8080 8443 11000 ];
       allowedUDPPorts = [ 443 ];
     };
   };
