@@ -22,14 +22,6 @@
     xserver.desktopManager.gnome.enable = true;
     remote-builds.server.enable = true;
     xserver.displayManager.gdm.autoSuspend = false;
-    nextcloud = {
-      enable = false;
-      package = pkgs.nextcloud28;
-      hostName = "nextcloud.diekvoss.net";
-      home = "/mnt/POOL/nextcloud";
-      settings.trusted_domains = [ "10.1.0.3" ];
-      config.adminpassFile = "${./adminpass}";
-    };
     ollama.enable = true;
     spice-vdagentd.enable = true;
   };
