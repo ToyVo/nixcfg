@@ -64,7 +64,7 @@ in
 
   config = lib.mkIf cfg.enable {
     containerPresets.docker.enable = lib.mkDefault true;
-    systemd.services.homer = {
+    systemd.services.nextcloud = {
       script = ''
         ${pkgs.docker-compose}/bin/docker-compose -f ${compose} up
       '';
