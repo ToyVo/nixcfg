@@ -73,6 +73,7 @@ in
       zstd
       pipenv
       lazygit
+      powershell
     ]
     ++ lib.optionals config.profiles.gui.enable [
       element-desktop
