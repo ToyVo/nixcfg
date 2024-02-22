@@ -18,6 +18,7 @@ in
           enable = true;
           setSocketVariable = true;
         };
+        daemon.settings.dns = [ "10.1.0.1" ];
       };
 
       oci-containers.backend = "docker";
