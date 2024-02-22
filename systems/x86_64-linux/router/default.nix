@@ -168,5 +168,5 @@
       };
     };
   };
-  users.users.nginx.extraGroups = [ "acme" ];
+  users.users.caddy.extraGroups = [ "acme" ];
 }
