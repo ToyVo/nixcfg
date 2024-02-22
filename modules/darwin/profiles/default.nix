@@ -4,9 +4,9 @@ let
 in
 {
   imports = [ 
-    ../../nixos/common/common.nix
+    ../../nixos/profiles/common.nix
     inputs.nixvim.nixDarwinModules.nixvim
-    ../../nixos/neovim/common.nix
+    ../../nixos/programs/neovim/common.nix
     ../../nixos/users/common.nix 
    ];
 

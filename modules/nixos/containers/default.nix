@@ -3,13 +3,11 @@ let
   cfg = config.containerPresets;
 in
 {
-  imports = [ ./nextcloud.nix ];
-
   options.containerPresets = {
-    enable = lib.mkEnableOption "Enable container runtime";
+    docker.enable = lib.mkEnableOption "Enable container runtime";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.docker.enable {
     virtualisation = {
       docker = {
         enable = true;

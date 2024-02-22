@@ -48,6 +48,16 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Misc sources
+    trim-generations = {
+      url = "file+https://gist.githubusercontent.com/MaxwellDupre/3077cd229490cf93ecab08ef2a79c852/raw/ccb39ba6304ee836738d4ea62999f4451fbc27f7/trim-generations.sh";
+      flake = false;
+    };
+    pymobiledevice3 = {
+      url = "file+https://files.pythonhosted.org/packages/7c/f2/070be3672904106664d5048d52a709b4ef0204772179c202419c57365c59/pymobiledevice3-2.30.0-py3-none-any.whl";
+      flake = false;
+    };
   };
 
   outputs = inputs:
@@ -55,6 +65,13 @@
       lib = inputs.snowfall-lib.mkLib {
         inherit inputs;
         src = ./.;
+        snowfall = {
+          namespace = "cd";
+          meta = {
+            name = "cd-dotfiles";
+            title = "Collin Diekvoss Dotfiles";
+          };
+        };
       };
     in
     lib.mkFlake {

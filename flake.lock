@@ -556,6 +556,18 @@
         "type": "github"
       }
     },
+    "pymobiledevice3": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-iivLaFAhWmSLl7N5+zuVbM305r2ITR4oGT8QNnbbglo=",
+        "type": "file",
+        "url": "https://files.pythonhosted.org/packages/7c/f2/070be3672904106664d5048d52a709b4ef0204772179c202419c57365c59/pymobiledevice3-2.30.0-py3-none-any.whl"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://files.pythonhosted.org/packages/7c/f2/070be3672904106664d5048d52a709b4ef0204772179c202419c57365c59/pymobiledevice3-2.30.0-py3-none-any.whl"
+      }
+    },
     "root": {
       "inputs": {
         "apple-silicon-support": "apple-silicon-support",
@@ -568,8 +580,10 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
+        "pymobiledevice3": "pymobiledevice3",
         "rust-overlay": "rust-overlay_2",
-        "snowfall-lib": "snowfall-lib"
+        "snowfall-lib": "snowfall-lib",
+        "trim-generations": "trim-generations"
       }
     },
     "rust-overlay": {
@@ -689,6 +703,18 @@
         "owner": "nix-systems",
         "repo": "default",
         "type": "github"
+      }
+    },
+    "trim-generations": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-mOnA4fLvcrgSdIHGMRgci3otI3MPNRdy8ro3FaT4xu8=",
+        "type": "file",
+        "url": "https://gist.githubusercontent.com/MaxwellDupre/3077cd229490cf93ecab08ef2a79c852/raw/ccb39ba6304ee836738d4ea62999f4451fbc27f7/trim-generations.sh"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://gist.githubusercontent.com/MaxwellDupre/3077cd229490cf93ecab08ef2a79c852/raw/ccb39ba6304ee836738d4ea62999f4451fbc27f7/trim-generations.sh"
       }
     },
     "wlroots": {

@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;
   homebrew.casks = [
@@ -10,10 +10,7 @@
       pname = "pymobiledevice3 ";
       version = "2.30.0";
       format = "wheel";
-      src = fetchurl {
-        url = "https://files.pythonhosted.org/packages/7c/f2/070be3672904106664d5048d52a709b4ef0204772179c202419c57365c59/pymobiledevice3-2.30.0-py3-none-any.whl";
-        sha256 = "sha256-X9Gs7HM5N9KdyndO3+sROxyfp8PcCdN5N48cwLd0HR4=";
-      };
+      src = inputs.pymobiledevice3;
     };
   in [
     openssl

@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, ... }: {
+{ pkgs, lib, inputs, config, ... }: {
   hardware.cpu.amd.updateMicrocode = true;
   networking.hostName = "Thinkpad";
   boot = {
@@ -13,7 +13,6 @@
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-  programs.hyprland.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
   hardware.opengl = {
     extraPackages = with pkgs; [
@@ -25,4 +24,6 @@
     driSupport = true;
     driSupport32Bit = true;
   };
+  programs.hyprland.enable = true;
+  home-manager.users.${config.userPresets.toyvo.name}.programs.hyprland.enable = true;
 }

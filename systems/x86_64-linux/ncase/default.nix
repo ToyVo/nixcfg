@@ -27,10 +27,6 @@
   services = {
     xserver.desktopManager.gnome.enable = true;
     remote-builds.server.enable = true;
-    homer = {
-      enable = true;
-      openFirewall = true;
-    };
     xserver.displayManager.gdm.autoSuspend = false;
     nextcloud = {
       enable = false;
@@ -43,7 +39,13 @@
     ollama.enable = true;
     spice-vdagentd.enable = true;
   };
-  containerPresets.nextcloud.enable = true;
+  containerPresets = {
+    nextcloud.enable = true;
+    homer = {
+      enable = true;
+      openFirewall = true;
+    };
+  };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
     fsType = "btrfs";
