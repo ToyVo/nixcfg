@@ -17,7 +17,7 @@ let
           - APACHE_PORT=11000
           - APACHE_IP_BINDING=0.0.0.0
           # I use Cloudflare for my DNS, so I need to set the following to true
-          - SKIP_DOMAIN_VALIDATION=true
+          # - SKIP_DOMAIN_VALIDATION=true
 
     volumes:
       nextcloud_aio_mastercontainer:
