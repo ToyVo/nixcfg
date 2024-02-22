@@ -14,7 +14,7 @@
     };
     "http://nextcloud.diekvoss.net:80" = {
       extraConfig = ''
-        reverse_proxy https://10.1.0.3:80
+        reverse_proxy http://10.1.0.3:80
       '';
     };
     "https://nextcloud.diekvoss.net:443" = {
