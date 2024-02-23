@@ -21,7 +21,7 @@
       extraConfig = ''
         redir /.well-known/carddav /remote.php/dav 301
         redir /.well-known/caldav /remote.php/dav 301
-        header Strict-Transport-Security "max-age=15552000; includeSubDomains"
+        header Strict-Transport-Security "max-age=15552000; includeSubDomains; preload"
         reverse_proxy http://10.1.0.3:8080
       '';
     };
