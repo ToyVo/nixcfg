@@ -27,6 +27,7 @@ let
           - REDIS_HOST=redis
           - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.diekvoss.net
           - TRUSTED_PROXIES=10.1.0.1
+          - MAINTENANCE_WINDOW_START=1
         env_file:
           - ${./db.env}
         depends_on:
