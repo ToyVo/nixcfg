@@ -10,11 +10,11 @@ in
 
   config = lib.mkIf (cfg.docker.enable || cfg.podman.enable) {
     environment.systemPackages = with pkgs; []
-      ++ lib.mkIf cfg.docker.enable [
+      ++ lib.optionals cfg.docker.enable [
         docker
         docker-compose
       ]
-      ++ lib.mkIf cfg.podman.enable [
+      ++ lib.optionals cfg.podman.enable [
         podman
         podman-compose
       ];

@@ -29,13 +29,13 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    containerPresets.docker.enable = lib.mkDefault true;
+    containerPresets.podman.enable = lib.mkDefault true;
     systemd.services.homer = {
       script = ''
-        ${pkgs.docker-compose}/bin/docker-compose -f ${compose} up
+        ${pkgs.podman-compose}/bin/podman-compose -f ${compose} up
       '';
       wantedBy = ["multi-user.target"];
-      after = ["docker.service" "docker.socket"];
+      after = ["podman.service" "podman.socket"];
     };
     networking.firewall = lib.mkIf cfg.openFirewall {
       allowedTCPPorts = [ cfg.port ];
