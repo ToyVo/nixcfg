@@ -4,15 +4,22 @@ let
 in
 {
   options.containerPresets = {
-    docker.enable = lib.mkEnableOption "Enable container runtime";
+    docker.enable = lib.mkEnableOption "Enable docker runtime";
+    podman.enable = lib.mkEnableOption "Enable podman runtime";
   };
 
-  config = lib.mkIf cfg.docker.enable {
-    environment.systemPackages = with pkgs; [
-      docker-compose
-    ];
+  config = lib.mkIf (cfg.docker.enable || cfg.podman.enable) {
+    environment.systemPackages = with pkgs; []
+      ++ lib.mkIf cfg.docker.enable [
+        docker
+        docker-compose
+      ]
+      ++ lib.mkIf cfg.podman.enable [
+        podman
+        podman-compose
+      ];
     virtualisation = {
-      docker = {
+      docker = lib.mkIf cfg.docker.enable {
         enable = true;
         rootless = {
           enable = true;
@@ -20,8 +27,12 @@ in
         };
         daemon.settings.dns = [ "10.1.0.1" ];
       };
+      podman = lib.mkIf cfg.podman.enable {
+        enable = true;
+        defaultNetwork.settings.dns_enabled = true;
+      };
 
-      oci-containers.backend = "docker";
+      oci-containers.backend = if cfg.docker.enable then "docker" else "podman";
     };
   };
 }

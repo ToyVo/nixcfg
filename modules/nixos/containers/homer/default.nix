@@ -1,7 +1,7 @@
 { config, pkgs, lib, inputs, ... }:
 let
   cfg = config.containerPresets.homer;
-  compose = pkgs.writeText "docker-compose.yml" ''
+  compose = pkgs.writeText "compose.yml" ''
     ---
     version: "2"
     services:

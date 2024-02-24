@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 let
   cfg = config.containerPresets.nextcloud;
-  compose = pkgs.writeText "docker-compose.yml" ''
+  compose = pkgs.writeText "compose.yml" ''
     services:
       db:
         image: postgres:alpine
