@@ -8,7 +8,7 @@
     ollama
     poetry
     awscli2
-    (python3.withPackages (ps: with ps; [
+    (python311.withPackages (ps: with ps; [
       jupyter
       virtualenv
       pip

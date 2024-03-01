@@ -39,6 +39,8 @@ in
         "nix.serverSettings"."nixd"."formatting"."command" = [ "nixpkgs-fmt" ];
         "CodeGPT.apiKey" = "Ollama";
         "CodeGPT.Autocomplete.provider" = "Ollama - deepseek-coder:base";
+        "terminal.integrated.defaultProfile.osx" = "fish";
+        "terminal.integrated.defaultProfile.linux" = "fish";
       };
     };
   };

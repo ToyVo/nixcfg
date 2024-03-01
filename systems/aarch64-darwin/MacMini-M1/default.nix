@@ -6,7 +6,7 @@
     { name = "google-chrome"; greedy = true; }
   ];
   environment.systemPackages = with pkgs; let
-    pymobiledevice3 = python3Packages.buildPythonPackage {
+    pymobiledevice3 = python311Packages.buildPythonPackage {
       pname = "pymobiledevice3 ";
       version = "2.30.0";
       format = "wheel";
@@ -14,7 +14,7 @@
     };
   in [
     openssl
-    (python3.withPackages (ps: [
+    (python311.withPackages (ps: [
       pymobiledevice3
     ]))
   ];

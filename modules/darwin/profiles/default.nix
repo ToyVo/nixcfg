@@ -71,6 +71,9 @@ in
         # required for neovide
         "libuv"
       ];
+      taps = [
+        "homebrew/cask"
+      ];
     };
     home-manager.sharedModules = [
       {

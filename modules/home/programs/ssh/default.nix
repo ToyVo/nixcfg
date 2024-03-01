@@ -5,21 +5,17 @@ in
 {
   config = lib.mkIf cfg.enable {
     programs = {
-      ssh = {
-        matchBlocks."10.1.0.*" = {
+      ssh = let 
+        identityConfig = {
           identitiesOnly = true;
           identityFile = [
             "~/.ssh/ykC_ed25519_sk"
             "~/.ssh/ykA_ed25519_sk"
           ];
         };
-        matchBlocks."github.com" = {
-          identitiesOnly = true;
-          identityFile = [
-            "~/.ssh/ykC_ed25519_sk"
-            "~/.ssh/ykA_ed25519_sk"
-          ];
-        };
+      in {
+        matchBlocks."10.1.0.*" = identityConfig;
+        matchBlocks."github.com" = identityConfig;
       };
       zsh.initExtra = ''
         ! (echo "$SSH_AUTH_SOCK" | rg ssh-\[a-zA-Z0-9\]+\/agent\.\\d+$) >/dev/null && eval $(ssh-agent -s) >/dev/null
