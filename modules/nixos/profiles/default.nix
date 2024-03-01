@@ -78,6 +78,7 @@ in
     security.rtkit.enable = true;
     hardware.pulseaudio.enable = lib.mkForce false;
     fonts.packages = with pkgs; lib.mkIf cfg.gui.enable [ monaspace (nerdfonts.override { fonts = [ "Monaspace" "NerdFontsSymbolsOnly" ]; }) ];
+    nix.optimise.automatic = true;
     boot = {
       loader.systemd-boot.configurationLimit = lib.mkIf config.boot.loader.systemd-boot.enable 3;
       binfmt.registrations.appimage = {
