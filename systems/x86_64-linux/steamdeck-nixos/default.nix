@@ -11,9 +11,9 @@
   };
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;
-  fileSystemPresets.boot.enable = true;
+  fileSystemPresets.efi.enable = true;
   fileSystemPresets.btrfs.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
   # services.remote-builds.client.enable = true;
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
@@ -25,7 +25,7 @@
     steam.enable = true;
     steam.autoStart = true;
     steam.user = "toyvo";
-    steam.desktopSession = "gnome";
+    steam.desktopSession = "plasmawayland";
   };
   environment.systemPackages = with pkgs; [
     steam
@@ -41,4 +41,5 @@
     })
   ];
   services.xserver.displayManager.gdm.enable = lib.mkForce false;
+  services.xserver.displayManager.sddm.enable = lib.mkForce false;
 }
