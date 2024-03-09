@@ -10,13 +10,14 @@
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
+      efi.efiSysMountPoint = "/boot/efi";
     };
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
     kernelModules = [ "kvm-amd" ];
   };
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;
-  fileSystemPresets.boot.enable = true;
+  fileSystemPresets.efi.enable = true;
   fileSystemPresets.btrfs.enable = true;
   services = {
     xserver.desktopManager.gnome.enable = true;
@@ -46,9 +47,11 @@
       description = "Chloe Diekvoss";
     };
     share = {
-      isNormalUser = true;
+      isSystemUser = true;
+      group = "share";
     };
   };
+  users.groups.share = {};
   programs = {
     steam.enable = true;
     dconf.enable = true;
