@@ -13,7 +13,7 @@
   userPresets.toyvo.enable = true;
   fileSystemPresets.efi.enable = true;
   fileSystemPresets.btrfs.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.desktopManager.plasma6.enable = true;
   # services.remote-builds.client.enable = true;
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
@@ -25,7 +25,7 @@
     steam.enable = true;
     steam.autoStart = true;
     steam.user = "toyvo";
-    steam.desktopSession = "plasmawayland";
+    steam.desktopSession = "plasma";
   };
   environment.systemPackages = with pkgs; [
     steam

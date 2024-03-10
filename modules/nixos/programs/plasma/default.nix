@@ -1,9 +1,9 @@
 { lib, config, ... }:
 let
-  cfg = config.services.xserver.desktopManager.plasma5;
+  cfg = config.services.xserver.desktopManager;
 in
 {
-  config = lib.mkIf (cfg.enable || cfg.mobile.enable) {
+  config = lib.mkIf (cfg.plasma6.enable || cfg.plasma5.enable || cfg.plasma5.mobile.enable) {
     services.xserver = {
       enable = true;
       displayManager.sddm.enable = true;
