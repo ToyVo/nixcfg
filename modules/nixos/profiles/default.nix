@@ -32,6 +32,7 @@ in
       _1password-gui
       yubikey-manager-qt
       yubioath-flutter
+      element-desktop
     ];
     programs = {
       bash.blesh.enable = true;

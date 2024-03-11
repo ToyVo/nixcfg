@@ -5,17 +5,15 @@
     { name = "prusaslicer"; greedy = true; }
     { name = "google-chrome"; greedy = true; }
   ];
-  environment.systemPackages = with pkgs; let
-    pymobiledevice3 = python311Packages.buildPythonPackage {
+  environment.pythonPackages = [
+    (pkgs.python311Packages.buildPythonPackage {
       pname = "pymobiledevice3 ";
       version = "2.30.0";
       format = "wheel";
       src = inputs.pymobiledevice3;
-    };
-  in [
+    })
+  ];
+  environment.systemPackages = with pkgs; [
     openssl
-    (python311.withPackages (ps: [
-      pymobiledevice3
-    ]))
   ];
 }

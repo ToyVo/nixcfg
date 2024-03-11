@@ -28,7 +28,6 @@ in
     environment.systemPackages = with pkgs; [
       rectangle
       utm
-      wezterm
       pinentry_mac
       rio
     ];
@@ -70,9 +69,6 @@ in
       brews = [
         # required for neovide
         "libuv"
-      ];
-      taps = [
-        "homebrew/cask"
       ];
     };
     home-manager.sharedModules = [

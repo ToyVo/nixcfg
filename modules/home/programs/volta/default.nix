@@ -3,7 +3,14 @@ let
   cfg = config.programs.volta;
 in
 {
-  options.programs.volta.enable = lib.mkEnableOption "Enable volta";
+  options.programs.volta = {
+    enable = lib.mkEnableOption "Enable volta";
+    package = lib.mkOption {
+      type = lib.types.package;
+      default = pkgs.volta;
+      description = "The volta package to use";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     programs = {
@@ -15,7 +22,7 @@ in
         $env.PATH = ($env.PATH | prepend $'($env.VOLTA_HOME)/bin')
       '';
     };
-    home.packages = [ pkgs.volta ];
+    home.packages = [ cfg.package ];
     home.sessionVariables = {
       VOLTA_HOME = "$HOME/.volta";
       NODE_ENV = "development";

@@ -5,6 +5,7 @@ in
 {
   config = lib.mkIf cfg.enable {
     programs.git = {
+      lfs.enable = true;
       delta.enable = true;
       delta.options = {
         syntax-theme = "gruvbox-dark";

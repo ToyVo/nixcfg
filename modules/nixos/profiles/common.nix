@@ -4,26 +4,37 @@ let
     inherit system;
     overlays = [ (import inputs.rust-overlay) ];
   };
+  myPython = pkgs.python311.withPackages (ps: with ps; [ 
+    pip
+    virtualenv
+    python-dotenv
+    jupyter
+  ] ++ config.environment.pythonPackages);
 in
 {
-  options.profiles = {
-    gui.enable = lib.mkEnableOption "GUI Applications";
-    defaults.enable = lib.mkEnableOption "Enable Defaults";
+  options = {
+    profiles = {
+      gui.enable = lib.mkEnableOption "GUI Applications";
+      defaults.enable = lib.mkEnableOption "Enable Defaults";
+    };
+    environment.pythonPackages = lib.mkOption {
+      type = lib.types.listOf lib.types.package;
+      default = [];
+    };
   };
 
   config = lib.mkIf config.profiles.defaults.enable {
     programs = {
       zsh.enable = true;
+      zsh.shellInit = ''
+        export PATH="${myPython}/bin:$PATH"
+      '';
       fish.enable = true;
+      fish.shellInit = ''
+        set PATH ${myPython}/bin $PATH
+      '';
       nvim.enable = true;
     };
-    environment.shells = with pkgs; [
-      bashInteractive
-      zsh
-      fish
-      nushell
-      powershell
-    ];
     nix = {
       extraOptions = ''
         experimental-features = nix-command flakes
@@ -49,39 +60,51 @@ in
       useUserPackages = true;
     };
     nixpkgs.overlays = [ inputs.rust-overlay.overlays.default ];
-    environment.systemPackages = with pkgs; [
-      broot
-      bun
-      curl
-      dig
-      dogdns
-      fd
-      gping
-      helix
-      lsof
-      openssh
-      ripgrep
-      rsync
-      wget
-      jq
-      nixpkgs-fmt
-      git-crypt
-      (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
-        extensions = [ "rust-src" ];
-        targets = [ "wasm32-unknown-unknown" ];
-      }))
-      rust-analyzer
-      cargo-watch
-      cargo-generate
-      xz
-      zstd
-      pipenv
-      lazygit
-      powershell
-    ]
-    ++ lib.optionals config.profiles.gui.enable [
-      element-desktop
-      gimp
-    ];
+    environment = {
+      extraInit = ''
+        export PATH="${myPython}/bin:$PATH"
+      '';
+      shells = with pkgs; [
+        bashInteractive
+        zsh
+        fish
+        nushell
+        powershell
+      ];
+      systemPackages = with pkgs; [
+        broot
+        bun
+        curl
+        dig
+        dogdns
+        fd
+        gping
+        helix
+        lsof
+        openssh
+        ripgrep
+        rsync
+        wget
+        jq
+        nixpkgs-fmt
+        git-crypt
+        (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
+          extensions = [ "rust-src" ];
+          targets = [ "wasm32-unknown-unknown" ];
+        }))
+        rust-analyzer
+        cargo-watch
+        cargo-generate
+        xz
+        zstd
+        pipenv
+        lazygit
+        powershell
+        myPython
+      ]
+      ++ lib.optionals config.profiles.gui.enable [
+        gimp
+      ];
+    };
   };
 }

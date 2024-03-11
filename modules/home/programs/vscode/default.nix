@@ -19,28 +19,34 @@ in
         esbenp.prettier-vscode
         rust-lang.rust-analyzer
         vscodevim.vim
+        ms-toolsai.jupyter
+        ms-toolsai.vscode-jupyter-slideshow
+        ms-toolsai.vscode-jupyter-cell-tags
+        ms-toolsai.jupyter-renderers
+        ms-toolsai.jupyter-keymap
       ];
       userSettings = {
-        "workbench.colorTheme" = "Gruvbox Dark Medium";
+        "CodeGPT.Autocomplete.provider" = "Ollama - deepseek-coder:base";
+        "CodeGPT.apiKey" = "Ollama";
+        "[javascript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+        "[json]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+        "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+        "editor.fontFamily" = "'MonaspiceNe Nerd Font'";
+        "editor.fontLigatures" = "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'";
+        "editor.fontSize" = 14;
         "editor.formatOnSave" = true;
         "editor.formatOnSaveMode" = "modificationsIfAvailable";
         "files.autoSave" = "onFocusChange";
-        "prettier.tabWidth" = 4;
-        "prettier.singleQuote" = true;
-        "editor.fontSize" = 14;
-        "editor.fontLigatures" = "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'";
-        "editor.fontFamily" = "'MonaspiceNe Nerd Font'";
-        "[javascript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
-        "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
-        "[json]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "git.autofetch" = true;
         "nix.enableLanguageServer" = true;
         "nix.serverPath" = "nixd";
         "nix.serverSettings"."nixd"."formatting"."command" = [ "nixpkgs-fmt" ];
-        "CodeGPT.apiKey" = "Ollama";
-        "CodeGPT.Autocomplete.provider" = "Ollama - deepseek-coder:base";
-        "terminal.integrated.defaultProfile.osx" = "fish";
+        "prettier.singleQuote" = true;
+        "prettier.tabWidth" = 4;
         "terminal.integrated.defaultProfile.linux" = "fish";
+        "terminal.integrated.defaultProfile.osx" = "fish";
+        "workbench.colorTheme" = "Gruvbox Dark Medium";
+        "jupyter.askForKernelRestart" = false;
       };
     };
   };

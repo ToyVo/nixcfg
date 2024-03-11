@@ -8,13 +8,20 @@
     ollama
     poetry
     awscli2
-    (python311.withPackages (ps: with ps; [
-      jupyter
-      virtualenv
-      pip
-      openai
-      python-dotenv
-    ]))
+  ];
+  environment.pythonPackages = with pkgs.python311Packages; [
+    boto3
+    typer
+    openai
+    sagemaker
+    huggingface-hub
+    datasets
+    transformers
+    torch
+    # tensorflow
+    jax
+    # s3fs
+    # bitsandbytes
   ];
   homebrew = {
     brews = [

@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [ ./secrets.nix ];
 
@@ -12,6 +12,9 @@
       source = ./gpg_emu.pub;
       trust = 5;
     }];
-    volta.enable = true;
+    volta = {
+      enable = true;
+      package = pkgs.emptyDirectory;
+    };
   };
 }
