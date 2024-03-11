@@ -1,5 +1,5 @@
 {
-  description = "Collin Diekvoss Dotfiles";
+  description = "Collin Diekvoss Nix Configurations";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
