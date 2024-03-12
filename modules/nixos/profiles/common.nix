@@ -33,7 +33,7 @@ in
       fish.shellInit = ''
         set PATH ${myPython}/bin $PATH
       '';
-      nvim.enable = true;
+      # nvim.enable = true;
     };
     nix = {
       extraOptions = ''

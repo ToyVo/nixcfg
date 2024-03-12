@@ -28,6 +28,7 @@
     steam.desktopSession = "plasma";
   };
   environment.systemPackages = with pkgs; [
+    maliit-keyboard
     steam
     discord
     r2modman
