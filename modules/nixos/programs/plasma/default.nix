@@ -10,7 +10,7 @@ in
       displayManager.sddm.enable = true;
       libinput.enable = true;
     };
-    programs.gnupg.agent.pinentryProgram = pkgs.pinentry-qt;
+    programs.gnupg.agent.pinentryPackage = pkgs.pinentry-qt;
     profiles.gui.enable = true;
     environment.systemPackages = with pkgs; [
       kate
