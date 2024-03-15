@@ -58,6 +58,7 @@ in
         pulse.enable = true;
       };
     };
+    sound.enable = cfg.gui.enable;
     system = {
       stateVersion = "24.05";
       autoUpgrade = {

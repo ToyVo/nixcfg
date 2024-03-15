@@ -36,10 +36,8 @@ in
       # nvim.enable = true;
     };
     nix = {
-      extraOptions = ''
-        experimental-features = nix-command flakes
-      '';
       settings = {
+        experimental-features = [ "nix-command" "flakes" ];
         substituters = config.nix.settings.trusted-substituters;
         trusted-substituters = [
           "https://nix-community.cachix.org"

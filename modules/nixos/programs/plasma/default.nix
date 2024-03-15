@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 let
   cfg = config.services.xserver.desktopManager;
   plasma6 = config.services.desktopManager.plasma6;
