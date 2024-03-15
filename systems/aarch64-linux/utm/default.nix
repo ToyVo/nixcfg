@@ -9,6 +9,6 @@
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;
-  fileSystemPresets.ext4.enable = true;
-  services.xserver.desktopManager.cosmic.enable = true;
+  fileSystemPresets.btrfs.enable = true;
+  services.desktopManager.plasma6.enable = true;
 }
