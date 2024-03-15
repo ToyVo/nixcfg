@@ -5,7 +5,7 @@ in
 {
   config = lib.mkIf cfg.enable {
     programs.zsh = {
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       defaultKeymap = "viins";
       initExtra = ''
