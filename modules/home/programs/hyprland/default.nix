@@ -555,13 +555,6 @@ in
         clock = { format = " {:%H:%M}"; };
 
         "clock#date" = { format = " {:%A, %B %d, %Y}"; };
-
-        "custom/powermenu" = {
-          format = "";
-          on-click =
-            "pkill wofi || sh .config/wofi/scripts/powermenu.sh 'gruvbox-light' '--height=17% -o $MAIN_DISPLAY'";
-          tooltip = false;
-        };
       }];
       style = ''
         @define-color bg_dim #232a2e;

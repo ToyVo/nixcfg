@@ -6,7 +6,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.zellij = {
       settings = {
-        theme = "gruvbox-dark";
+        theme = "catppuccin-frappe";
       };
     };
     programs = {

@@ -17,7 +17,7 @@ in
     ];
     programs.helix = {
       settings = {
-        theme = "gruvbox";
+        theme = "catppuccin_frappe";
         editor = {
           line-number = "relative";
           bufferline = "always";

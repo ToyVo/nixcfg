@@ -52,12 +52,16 @@
     };
 
     # Misc sources
-    trim-generations = {
-      url = "file+https://gist.githubusercontent.com/MaxwellDupre/3077cd229490cf93ecab08ef2a79c852/raw/ccb39ba6304ee836738d4ea62999f4451fbc27f7/trim-generations.sh";
+    catppuccin-bat = {
+      url = "github:catppuccin/bat";
       flake = false;
     };
-    pymobiledevice3 = {
-      url = "file+https://files.pythonhosted.org/packages/7c/f2/070be3672904106664d5048d52a709b4ef0204772179c202419c57365c59/pymobiledevice3-2.30.0-py3-none-any.whl";
+    catppuccin-delta = {
+      url = "github:catppuccin/delta";
+      flake = false;
+    };
+    catppuccin-rio = {
+      url = "github:catppuccin/rio";
       flake = false;
     };
   };

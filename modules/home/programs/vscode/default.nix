@@ -14,7 +14,8 @@ in
         github.copilot
         github.copilot-chat
         eamodio.gitlens
-        jdinhlife.gruvbox
+        catppuccin.catppuccin-vsc
+        catppuccin.catppuccin-vsc-icons
         jnoortheen.nix-ide
         esbenp.prettier-vscode
         rust-lang.rust-analyzer
@@ -45,7 +46,7 @@ in
         "prettier.tabWidth" = 4;
         "terminal.integrated.defaultProfile.linux" = "fish";
         "terminal.integrated.defaultProfile.osx" = "fish";
-        "workbench.colorTheme" = "Gruvbox Dark Medium";
+        "workbench.colorTheme" = "Catppuccin Frappé";
         "jupyter.askForKernelRestart" = false;
       };
     };

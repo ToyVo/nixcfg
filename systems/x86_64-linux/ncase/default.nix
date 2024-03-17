@@ -19,9 +19,8 @@
   fileSystemPresets.efi.enable = true;
   fileSystemPresets.btrfs.enable = true;
   services = {
-    xserver.desktopManager.gnome.enable = true;
+    desktopManager.plasma6.enable = true;
     remote-builds.server.enable = true;
-    xserver.displayManager.gdm.autoSuspend = false;
     ollama.enable = true;
     spice-vdagentd.enable = true;
   };
@@ -73,7 +72,7 @@
     spice-protocol
     win-virtio
     win-spice
-    gnome.adwaita-icon-theme
+    # gnome.adwaita-icon-theme
   ];
   virtualisation = {
     libvirtd = {

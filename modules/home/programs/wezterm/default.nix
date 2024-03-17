@@ -11,7 +11,7 @@ in
         family = "MonaspiceNe Nerd Font",
         harfbuzz_features = {'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'},
       };
-      config.color_scheme = "Gruvbox Dark (Gogh)";
+      config.color_scheme = "Catppuccin Frappe";
       config.initial_rows = 30;
       config.initial_cols = 120;
       config.window_background_opacity = 0.9;

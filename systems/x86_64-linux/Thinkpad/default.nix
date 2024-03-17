@@ -12,7 +12,7 @@
   userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.desktopManager.plasma6.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
   hardware.opengl = {
     extraPackages = with pkgs; [

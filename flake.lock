@@ -24,6 +24,54 @@
         "type": "github"
       }
     },
+    "catppuccin-bat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1710456315,
+        "narHash": "sha256-POoW2sEM6jiymbb+W/9DKIjDM1Buu1HAmrNP0yC2JPg=",
+        "owner": "catppuccin",
+        "repo": "bat",
+        "rev": "b19bea35a85a32294ac4732cad5b0dc6495bed32",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "bat",
+        "type": "github"
+      }
+    },
+    "catppuccin-delta": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1708029563,
+        "narHash": "sha256-0QQLkfLBVuB2re6tjtPNuOQZNK0MDBAIFgNGHZM8afs=",
+        "owner": "catppuccin",
+        "repo": "delta",
+        "rev": "21b37ac3138268d92cee71dfc8539d134817580a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "delta",
+        "type": "github"
+      }
+    },
+    "catppuccin-rio": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1701812339,
+        "narHash": "sha256-bT789sEDJl3wQh/yfbmjD/J7XNr2ejOd0UsASguyCQo=",
+        "owner": "catppuccin",
+        "repo": "rio",
+        "rev": "a8d3d3c61f828da5f3d6d02d7d489108f6428178",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "rio",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -612,21 +660,12 @@
         "type": "github"
       }
     },
-    "pymobiledevice3": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-iivLaFAhWmSLl7N5+zuVbM305r2ITR4oGT8QNnbbglo=",
-        "type": "file",
-        "url": "https://files.pythonhosted.org/packages/7c/f2/070be3672904106664d5048d52a709b4ef0204772179c202419c57365c59/pymobiledevice3-2.30.0-py3-none-any.whl"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://files.pythonhosted.org/packages/7c/f2/070be3672904106664d5048d52a709b4ef0204772179c202419c57365c59/pymobiledevice3-2.30.0-py3-none-any.whl"
-      }
-    },
     "root": {
       "inputs": {
         "apple-silicon-support": "apple-silicon-support",
+        "catppuccin-bat": "catppuccin-bat",
+        "catppuccin-delta": "catppuccin-delta",
+        "catppuccin-rio": "catppuccin-rio",
         "darwin": "darwin",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
@@ -636,10 +675,8 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
-        "pymobiledevice3": "pymobiledevice3",
         "rust-overlay": "rust-overlay",
-        "snowfall-lib": "snowfall-lib",
-        "trim-generations": "trim-generations"
+        "snowfall-lib": "snowfall-lib"
       }
     },
     "rust-overlay": {
@@ -773,18 +810,6 @@
         "owner": "nix-systems",
         "repo": "default",
         "type": "github"
-      }
-    },
-    "trim-generations": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-mOnA4fLvcrgSdIHGMRgci3otI3MPNRdy8ro3FaT4xu8=",
-        "type": "file",
-        "url": "https://gist.githubusercontent.com/MaxwellDupre/3077cd229490cf93ecab08ef2a79c852/raw/ccb39ba6304ee836738d4ea62999f4451fbc27f7/trim-generations.sh"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://gist.githubusercontent.com/MaxwellDupre/3077cd229490cf93ecab08ef2a79c852/raw/ccb39ba6304ee836738d4ea62999f4451fbc27f7/trim-generations.sh"
       }
     },
     "wlroots": {

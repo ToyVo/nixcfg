@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, inputs, ... }:
 let
   cfg = config.programs.git;
 in
@@ -6,14 +6,9 @@ in
   config = lib.mkIf cfg.enable {
     programs.git = {
       lfs.enable = true;
+      includes = [ { path = "${inputs.catppuccin-delta}/themes/frappe.gitconfig"; } ];
       delta.enable = true;
-      delta.options = {
-        syntax-theme = "gruvbox-dark";
-        minus-style = ''syntax "#4b0003"'';
-        plus-style = ''syntax "#1b3224"'';
-        side-by-side = true;
-        line-numbers = true;
-      };
+      delta.options.features = "catppuccin-frappe";
       extraConfig = {
         pull.rebase = "true";
         rebase.autostash = "true";

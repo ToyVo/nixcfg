@@ -18,12 +18,14 @@ in
       vimAlias = true;
       wrapRc = true;
       clipboard.register = "unnamedplus";
-      colorschemes.gruvbox.enable = true;
+      colorschemes.catppuccin.enable = true;
+      colorschemes.catppuccin.flavor = "frappe";
       globals = {
         mapleader = " ";
         maplocalleader = " ";
         loaded_netrw = 1;
         loaded_netrwPlugin = 1;
+        neovide_transparency = 0.9;
       };
       options = {
         autoread = true;
@@ -74,22 +76,6 @@ in
       ];
       autoGroups.YankHighlight.clear = true;
       autoGroups.FixUp.clear = true;
-
-      extraConfigLua = ''
-        if vim.g.neovide then
-          vim.g.neovide_transparency = 0.9;
-          -- When I open neovide from an application launcher, it opens in /, so I change it to ~
-          -- this means I can't do `neovide /` in the shell
-          if vim.fn.getcwd() == "/" then
-            vim.cmd("cd ~");
-          end
-        else
-          require("gruvbox").setup({
-            transparent_mode = true,
-          });
-          vim.cmd("colorscheme gruvbox");
-        end
-      '';
     };
   };
 }

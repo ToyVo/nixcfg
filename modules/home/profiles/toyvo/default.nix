@@ -11,9 +11,6 @@ in
     profiles.defaults.enable = lib.mkDefault true;
     home = {
       sessionVariables.EDITOR = "nvim";
-      packages = with pkgs; [
-        cd.trim-generations
-      ];
     };
     programs = {
       direnv = {

@@ -5,7 +5,7 @@ in
 {
   config = lib.mkIf cfg.enable {
     programs.kitty = {
-      theme = "Gruvbox Dark";
+      theme = "Catppuccin-Frappe";
       font = {
         name = "MonaspiceNe Nerd Font Mono Regular";
         size = 14;
