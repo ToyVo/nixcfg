@@ -4,7 +4,7 @@ let
     inherit system;
     overlays = [ (import inputs.rust-overlay) ];
   };
-  myPython = pkgs.python311.withPackages (ps: with ps; [ 
+  myPython = pkgs.python311.withPackages (ps: with ps; [
     pip
     virtualenv
     python-dotenv
@@ -33,7 +33,7 @@ in
       fish.shellInit = ''
         set PATH ${myPython}/bin $PATH
       '';
-      # nvim.enable = true;
+      nvim.enable = true;
     };
     nix = {
       settings = {

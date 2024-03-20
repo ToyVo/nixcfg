@@ -3,11 +3,11 @@ let
   cfg = config.profiles.defaults;
 in
 {
-  imports = [ 
+  imports = [
     ../../nixos/profiles/common.nix
     inputs.nixvim.nixDarwinModules.nixvim
     ../../nixos/programs/neovim/common.nix
-    ../../nixos/users/common.nix 
+    ../../nixos/users/common.nix
    ];
 
   config = lib.mkIf cfg.enable {
@@ -90,4 +90,3 @@ in
     profiles.gui.enable = true;
   };
 }
-

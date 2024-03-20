@@ -6,7 +6,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.vscode = {
       extensions = with pkgs.vscode-extensions; [
-        # vadimcn.vscode-lldb # Can be uncommented when merged https://github.com/NixOS/nixpkgs/pull/211321
+        # vadimcn.vscode-lldb # Can be uncommented when fixed https://github.com/NixOS/nixpkgs/issues/202507 or merged https://github.com/NixOS/nixpkgs/pull/211321
         serayuzgur.crates
         usernamehw.errorlens
         dbaeumer.vscode-eslint

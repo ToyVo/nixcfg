@@ -19,7 +19,7 @@ in
       wrapRc = true;
       clipboard.register = "unnamedplus";
       colorschemes.catppuccin.enable = true;
-      colorschemes.catppuccin.flavor = "frappe";
+      colorschemes.catppuccin.flavour = "frappe";
       globals = {
         mapleader = " ";
         maplocalleader = " ";
