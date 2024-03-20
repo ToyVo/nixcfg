@@ -14,5 +14,7 @@ in
     environment.systemPackages = with pkgs; [
       kate
     ];
+    # TODO: Can be removed when reaching nixos-unstable https://nixpk.gs/pr-tracker.html?pr=296866
+    programs.gnupg.agent.pinentryPackage = lib.mkForce pkgs.pinentry-qt;
   };
 }
