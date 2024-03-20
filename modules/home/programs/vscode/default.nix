@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, system, ... }:
 let
   cfg = config.programs.vscode;
 in
@@ -6,7 +6,6 @@ in
   config = lib.mkIf cfg.enable {
     programs.vscode = {
       extensions = with pkgs.vscode-extensions; [
-        # vadimcn.vscode-lldb # Can be uncommented when fixed https://github.com/NixOS/nixpkgs/issues/202507 or merged https://github.com/NixOS/nixpkgs/pull/211321
         serayuzgur.crates
         usernamehw.errorlens
         dbaeumer.vscode-eslint
@@ -25,6 +24,8 @@ in
         ms-toolsai.vscode-jupyter-cell-tags
         ms-toolsai.jupyter-renderers
         ms-toolsai.jupyter-keymap
+      ] ++ lib.optionals (system != "aarch64-darwin") [
+        vadimcn.vscode-lldb # Can be moved above when fixed https://github.com/NixOS/nixpkgs/issues/202507 or merged https://github.com/NixOS/nixpkgs/pull/211321
       ];
       userSettings = {
         "CodeGPT.Autocomplete.provider" = "Ollama - deepseek-coder:base";

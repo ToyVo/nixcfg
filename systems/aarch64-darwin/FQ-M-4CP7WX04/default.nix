@@ -18,8 +18,8 @@
     datasets
     transformers
     torch
-    # tensorflow
     jax
+    # tensorflow
     # s3fs
     # bitsandbytes
   ];

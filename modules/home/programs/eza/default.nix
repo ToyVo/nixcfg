@@ -17,6 +17,7 @@ in
       bash.shellAliases = aliases;
       zsh.shellAliases = aliases;
       fish.shellAliases = aliases;
+      powershell.shellAliases = aliases;
       nushell.shellAliases = {
         ll = "ls -l";
         la = "ls -a";

@@ -26,13 +26,7 @@ in
   config = lib.mkIf config.profiles.defaults.enable {
     programs = {
       zsh.enable = true;
-      zsh.shellInit = ''
-        export PATH="${myPython}/bin:$PATH"
-      '';
       fish.enable = true;
-      fish.shellInit = ''
-        set PATH ${myPython}/bin $PATH
-      '';
       nvim.enable = true;
     };
     nix = {
@@ -59,9 +53,6 @@ in
     };
     nixpkgs.overlays = [ inputs.rust-overlay.overlays.default ];
     environment = {
-      extraInit = ''
-        export PATH="${myPython}/bin:$PATH"
-      '';
       shells = with pkgs; [
         bashInteractive
         zsh
@@ -104,5 +95,28 @@ in
         gimp
       ];
     };
+    home-manager.sharedModules = [
+      {
+        programs = {
+          # Make sure that the python package provided by nix is used instead of the system one
+          bash.initExtra = ''
+            export PATH="${myPython}/bin:$PATH"
+          '';
+          zsh.initExtra = ''
+            export PATH="${myPython}/bin:$PATH"
+          '';
+          fish.shellInit = ''
+            set PATH ${myPython}/bin $PATH
+          '';
+          nushell.extraEnv = ''
+            $env.PATH = ($env.PATH | prepend '${myPython}/bin')
+          '';
+          powershell.profileExtra = ''
+            $PATH = "${myPython}/bin" + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable("PATH")
+            [Environment]::SetEnvironmentVariable("PATH", $PATH)
+          '';
+        };
+      }
+    ];
   };
 }

@@ -17,9 +17,15 @@ in
       fish.shellInit = ''
         set PATH $VOLTA_HOME/bin $PATH
       '';
-      nushell.envFile.text = ''
+      nushell.extraEnv = ''
         $env.VOLTA_HOME = $'($env.HOME)/.volta'
         $env.PATH = ($env.PATH | prepend $'($env.VOLTA_HOME)/bin')
+      '';
+      powershell.profileExtra = ''
+        $VOLTA_HOME = [Environment]::GetEnvironmentVariable("HOME") + "/.volta"
+        [Environment]::SetEnvironmentVariable("VOLTA_HOME", $VOLTA_HOME)
+        $PATH = $VOLTA_HOME + "/bin" + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable("PATH")
+        [Environment]::SetEnvironmentVariable("PATH", $PATH)
       '';
     };
     home.packages = [ cfg.package ];

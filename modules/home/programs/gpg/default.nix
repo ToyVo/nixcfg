@@ -32,7 +32,7 @@ in
     home.sessionVariables = {
       GPG_TTY = "$(tty)";
     };
-    programs.nushell.envFile.text = ''
+    programs.nushell.extraEnv = ''
       $env.GPG_TTY = (echo (tty))
     '';
   };

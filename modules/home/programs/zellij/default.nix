@@ -16,9 +16,9 @@ in
         if [ -z "$ZELLIJ" ] && [ -z "$SSH_CONNECTION" ] && [ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ] &&
            [ "$TERM_PROGRAM" != "vscode" ] && [ "$ZED_TERM" != "true" ] && [ "$TERM_PROGRAM" != "WarpTerminal" ]; then
           if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
-            ${pkgs.zellij}/bin/zellij options --default-shell ${pkgs.zsh}/bin/bash attach -c
+            ${pkgs.zellij}/bin/zellij options --default-shell ${pkgs.bashInteractive}/bin/bash attach -c
           else
-            ${pkgs.zellij}/bin/zellij options --default-shell ${pkgs.zsh}/bin/bash
+            ${pkgs.zellij}/bin/zellij options --default-shell ${pkgs.bashInteractive}/bin/bash
           fi
 
           if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then

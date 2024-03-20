@@ -13,6 +13,7 @@ in
         if test -e $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
           ${pkgs.babelfish}/bin/babelfish < $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh | source
         end
+        fish_vi_key_bindings
       '';
     };
   };

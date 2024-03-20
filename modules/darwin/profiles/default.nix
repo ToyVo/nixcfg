@@ -75,14 +75,14 @@ in
       {
         targets.darwin.aliasHomeApplications = true;
         programs = {
+          bash.profileExtra = ''
+            export PATH="$PATH:/opt/homebrew/bin"
+          '';
           zsh.profileExtra = ''
             export PATH="$PATH:/opt/homebrew/bin"
           '';
           fish.shellInit = ''
             set PATH $PATH /opt/homebrew/bin
-          '';
-          nushell.envFile.text = ''
-            $env.PATH = ($env.PATH | append '/opt/homebrew/bin')
           '';
         };
       }
