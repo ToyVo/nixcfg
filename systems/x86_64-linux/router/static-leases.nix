@@ -33,7 +33,7 @@
     {
       dhcpServerStaticLeaseConfig = {
         Address = "10.1.0.6";
-        # other ethernet ports end with f1, f2, f3
+        # other ethernet ports 00:e0:67:2c:15:f1, 00:e0:67:2c:15:f2, 00:e0:67:2c:15:f3
         MACAddress = "00:e0:67:2c:15:f0";
       };
     }
@@ -41,7 +41,7 @@
     {
       dhcpServerStaticLeaseConfig = {
         Address = "10.1.0.7";
-        # ethernet port ends with 3b
+        # ethernet port e4:5f:01:ad:81:3b
         MACAddress = "e4:5f:01:ad:81:3d";
       };
     }
@@ -49,7 +49,7 @@
     {
       dhcpServerStaticLeaseConfig = {
         Address = "10.1.0.8";
-        # ethernet port ends with da
+        # ethernet port e4:5f:01:ad:a0:da
         MACAddress = "e4:5f:01:ad:a0:db";
       };
     }
@@ -57,7 +57,7 @@
     {
       dhcpServerStaticLeaseConfig = {
         Address = "10.1.0.9";
-        # ethernet port ends with 27
+        # ethernet port e4:5f:01:ad:9f:27
         MACAddress = "e4:5f:01:ad:9f:28";
       };
     }
@@ -65,7 +65,7 @@
     {
       dhcpServerStaticLeaseConfig = {
         Address = "10.1.0.10";
-        # ethernet port ends with 24
+        # ethernet port dc:a6:32:09:ce:24
         MACAddress = "dc:a6:32:09:ce:25";
       };
     }
@@ -73,7 +73,7 @@
     {
       dhcpServerStaticLeaseConfig = {
         Address = "10.1.0.11";
-        # ethernet port ends with 24
+        # ethernet port 4c:20:b8:de:e4:01
         MACAddress = "4c:20:b8:df:d1:5b";
       };
     }

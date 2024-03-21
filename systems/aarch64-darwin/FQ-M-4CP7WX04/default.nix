@@ -19,9 +19,6 @@
     transformers
     torch
     jax
-    # tensorflow
-    # s3fs
-    # bitsandbytes
   ];
   homebrew = {
     brews = [

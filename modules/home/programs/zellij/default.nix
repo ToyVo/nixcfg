@@ -73,6 +73,19 @@ in
           }
         }
       '';
+      powershell.profileExtra = ''
+        if (-not [Environment]::GetEnvironmentVariable("ZELLIJ") -and -not [Environment]::GetEnvironmentVariable("SSH_CONNECTION") -and [Environment]::GetEnvironmentVariable("TERMINAL_EMULATOR") -ne "JetBrains-JediTerm" -and [Environment]::GetEnvironmentVariable("TERM_PROGRAM") -ne "vscode" -and [Environment]::GetEnvironmentVariable("ZED_TERM") -ne "true") {
+          if ([Environment]::GetEnvironmentVariable("ZELLIJ_AUTO_ATTACH") -eq "true") {
+            ${pkgs.zellij}/bin/zellij options --default-shell ${pkgs.powershell}/bin/pwsh attach -c
+          } else {
+            ${pkgs.zellij}/bin/zellij options --default-shell ${pkgs.powershell}/bin/pwsh
+          }
+
+          if ([Environment]::GetEnvironmentVariable("ZELLIJ_AUTO_EXIT") -eq "true") {
+            exit
+          }
+        }
+      '';
     };
   };
 }
