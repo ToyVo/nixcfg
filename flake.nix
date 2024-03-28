@@ -50,6 +50,7 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix.url = "github:Mic92/sops-nix";
 
     # Misc sources
     catppuccin-bat = {
