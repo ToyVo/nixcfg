@@ -1,4 +1,4 @@
-{ lib, config, system, ... }:
+{ lib, config, ... }:
 let
   cfg = config.programs.nushell;
 in
@@ -11,26 +11,11 @@ in
             show_banner: false
             edit_mode: vi
           }
-          $env.PATH = [
-            $'($env.HOME)/.local/bin'
-            /run/wrappers/bin
-            $'($env.HOME)/.nix-profile/bin'
-            /nix/profile/bin
-            $'($env.HOME)/.local/state/nix/profile/bin
-            $'/etc/profiles/per-user/($env.USER)/bin'
-            /nix/var/nix/profiles/default/bin
-            /run/current-system/sw/bin'')
-        (lib.mkIf (system == "aarch64-darwin") ''
-            /opt/homebrew/bin
-            /opt/homebrew/sbin'')
-        # TODO: should only be set if not nixos
-        (''
-            /usr/local/bin
-            /usr/bin
-            /usr/sbin
-            /bin
-            /sbin
-          ]
+          ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "$env.${name} = \"${value}\"") config.home.sessionVariables)}
+          let nix_paths = [${lib.concatStringsSep " " config.home.sessionPath}] | where ($it | path exists)
+          let pre_paths = $env.PATH | split row ":" | where ($it | path exists) | where ($it not-in $nix_paths)
+          let export_paths = [$pre_paths $nix_paths] | flatten
+          $env.PATH = $export_paths
         '')
       ];
     };

@@ -10,31 +10,20 @@ in
       default = pkgs.volta;
       description = "The volta package to use";
     };
+    voltaHome = lib.mkOption {
+      type = lib.types.str;
+      default = "${config.home.homeDirectory}/.volta";
+      description = "The directory where volta does its thing";
+    };
   };
 
   config = lib.mkIf cfg.enable {
-    programs = {
-      fish.shellInit = ''
-        set PATH $VOLTA_HOME/bin $PATH
-      '';
-      nushell.extraEnv = ''
-        $env.VOLTA_HOME = $'($env.HOME)/.volta'
-        $env.PATH = ($env.PATH | prepend $'($env.VOLTA_HOME)/bin')
-      '';
-      powershell.profileExtra = ''
-        $VOLTA_HOME = [Environment]::GetEnvironmentVariable("HOME") + "/.volta"
-        [Environment]::SetEnvironmentVariable("VOLTA_HOME", $VOLTA_HOME)
-        $PATH = $VOLTA_HOME + "/bin" + [IO.Path]::PathSeparator + [Environment]::GetEnvironmentVariable("PATH")
-        [Environment]::SetEnvironmentVariable("PATH", $PATH)
-      '';
-    };
     home.packages = [ cfg.package ];
     home.sessionVariables = {
-      VOLTA_HOME = "$HOME/.volta";
+      VOLTA_HOME = cfg.voltaHome;
       NODE_ENV = "development";
       RUN_ENV = "local";
     };
-    home.sessionPath = [ "$VOLTA_HOME/bin" ];
   };
 }
 

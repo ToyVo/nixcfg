@@ -1,4 +1,4 @@
-{ lib, config, system, ... }:
+{ lib, config, ... }:
 let
   cfg = config.programs;
   starship = config.programs.starship;
@@ -32,30 +32,28 @@ in
   };
 
   config = lib.mkIf cfg.powershell.enable {
-    xdg.configFile."powershell/Microsoft.PowerShell_profile.ps1" = lib.mkIf (cfg.starship.enable && cfg.starship.enablePowerShellIntegration) {
+    xdg.configFile."powershell/Microsoft.PowerShell_profile.ps1" = {
       text = lib.mkMerge [
         (''
-          $PATH = [Environment]::GetEnvironmentVariable("HOME") + "/.local/bin" + [IO.Path]::PathSeparator `
-          + "/run/wrappers/bin" + [IO.Path]::PathSeparator `
-          + [Environment]::GetEnvironmentVariable("HOME") + "/.nix-profile/bin" + [IO.Path]::PathSeparator `
-          + "/nix/profile/bin" + [IO.Path]::PathSeparator `
-          + [Environment]::GetEnvironmentVariable("HOME") + "/.local/state/nix/profile/bin" + [IO.Path]::PathSeparator `
-          + "/etc/profiles/per-user/" + [Environment]::GetEnvironmentVariable("USER") + "/bin" + [IO.Path]::PathSeparator `
-          + "/nix/var/nix/profiles/default/bin" + [IO.Path]::PathSeparator `
-          + "/run/current-system/sw/bin" + [IO.Path]::PathSeparator `'')
-        (lib.mkIf (system == "aarch64-darwin") ''
-          + "/opt/homebrew/bin" + [IO.Path]::PathSeparator `
-          + "/opt/homebrew/sbin" + [IO.Path]::PathSeparator `'')
-        # TODO: should only be set if not nixos
-        (''
-          + "/usr/local/bin" + [IO.Path]::PathSeparator `
-          + "/usr/bin" + [IO.Path]::PathSeparator `
-          + "/usr/sbin" + [IO.Path]::PathSeparator `
-          + "/bin" + [IO.Path]::PathSeparator `
-          + "/sbin"
-          [Environment]::SetEnvironmentVariable("PATH", $PATH)
+          ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "[Environment]::SetEnvironmentVariable(\"${name}\", \"${value}\")") config.home.sessionVariables)}
+          $pre_paths = [Environment]::GetEnvironmentVariable('PATH').split([IO.Path]::PathSeparator)
+          $nix_paths = "${lib.concatStringsSep "\", \"" config.home.sessionPath}"
+          $paths_to_export = @()
+          foreach ($path in $pre_paths) {
+              if (Test-Path $path -PathType Container) {
+                  if ($nix_paths -notcontains $path) {
+                      $paths_to_export += $path
+                  }
+              }
+          }
+          foreach ($path in $nix_paths) {
+              if (Test-Path $path -PathType Container) {
+                  $paths_to_export += $path
+              }
+          }
+          [Environment]::SetEnvironmentVariable('PATH', $paths_to_export -join [IO.Path]::PathSeparator)
+          ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "Function nixalias${name} { param([Parameter(ValueFromRemainingArguments=$true)] [string[]]$Arguments) ${value} $Arguments}\nSet-Alias -Name ${name} -Value nixalias${name}") cfg.powershell.shellAliases)}
         '')
-        (lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "Function nixalias${name} {${value}}\nSet-Alias -Name ${name} -Value nixalias${name}") cfg.powershell.shellAliases))
         (lib.mkIf (starship.enable && starship.enablePowerShellIntegration) ''
           Invoke-Expression (&starship init powershell)
         '')

@@ -15,6 +15,21 @@ in
         end
         fish_vi_key_bindings
       '';
+      shellInit = ''
+        set nix_paths ${lib.concatStringsSep " " config.home.sessionPath}
+        set paths_to_export
+        for path in $PATH
+          if test -d $path && not contains $path $nix_paths
+            set paths_to_export $paths_to_export $path
+          end
+        end
+        for path in $nix_paths
+          if test -d $path
+            set paths_to_export $paths_to_export $path
+          end
+        end
+        set -x PATH $paths_to_export
+      '';
     };
   };
 }

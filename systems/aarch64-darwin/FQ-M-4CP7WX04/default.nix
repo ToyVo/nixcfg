@@ -19,6 +19,7 @@
     transformers
     torch
     jax
+    pipx
   ];
   homebrew = {
     brews = [

@@ -74,17 +74,6 @@ in
     home-manager.sharedModules = [
       {
         targets.darwin.aliasHomeApplications = true;
-        programs = {
-          bash.profileExtra = ''
-            export PATH="$PATH:/opt/homebrew/bin"
-          '';
-          zsh.profileExtra = ''
-            export PATH="$PATH:/opt/homebrew/bin"
-          '';
-          fish.shellInit = ''
-            set PATH $PATH /opt/homebrew/bin
-          '';
-        };
       }
     ];
     profiles.gui.enable = true;
