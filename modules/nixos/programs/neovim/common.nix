@@ -26,7 +26,7 @@ in
         mapleader = " ";
         maplocalleader = " ";
       };
-      options = {
+      opts = {
         number = true;
         mouse = "a";
         showmode = false;
@@ -45,7 +45,7 @@ in
         cursorline = true;
         scrolloff = 10;
         hlsearch = true;
-	foldenable = false;
+	      foldenable = false;
       };
       autoCmd = [
         {
@@ -352,14 +352,11 @@ in
           options.desc = "Debug: Set Breakpoint";
         }
       ];
-      extraPlugins = with pkgs.vimPlugins; [
-        vim-sleuth
-      ];
       plugins = {
-        comment-nvim.enable = true;
+        comment.enable = true;
         gitsigns = {
           enable = true;
-          signs = {
+          settings.signs = {
             add.text = "+";
             change.text = "~";
             delete.text = "_";
@@ -521,6 +518,7 @@ in
           };
           autoCmd.event = [ "BufEnter" "BufWritePost" "InsertLeave" ];
         };
+        sleuth.enable = true;
       };
     };
   };
