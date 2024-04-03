@@ -13,4 +13,5 @@
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;
   fileSystemPresets.sd.enable = true;
+  services.openssh.enable = true;
 }

@@ -52,7 +52,6 @@ in
         layout = "us";
         options = "ctrl:nocaps";
       };
-      openssh.enable = true;
       pcscd.enable = true;
       udev.packages = with pkgs; [ yubikey-personalization ];
       printing.enable = cfg.gui.enable;

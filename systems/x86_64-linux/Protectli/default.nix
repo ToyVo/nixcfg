@@ -105,4 +105,5 @@
       };
     };
   };
+  services.openssh.enable = true;
 }

@@ -13,8 +13,15 @@
   userPresets.toyvo.enable = true;
   fileSystemPresets.efi.enable = true;
   fileSystemPresets.btrfs.enable = true;
-  services.desktopManager.plasma6.enable = true;
-  # services.remote-builds.client.enable = true;
+  services = {
+    openssh.enable = true;
+    desktopManager.plasma6.enable = true;
+    # remote-builds.client.enable = true;
+    xserver.displayManager = {
+      gdm.enable = lib.mkForce false;
+      sddm.enable = lib.mkForce false;
+    };
+  };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
     fsType = "btrfs";
@@ -41,6 +48,4 @@
       ];
     })
   ];
-  services.xserver.displayManager.gdm.enable = lib.mkForce false;
-  services.xserver.displayManager.sddm.enable = lib.mkForce false;
 }

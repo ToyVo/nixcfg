@@ -14,8 +14,11 @@
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;
   fileSystemPresets.sd.enable = true;
-  services.octoprint = {
-    enable = true;
-    openFirewall = true;
+  services = {
+    openssh.enable = true;
+    octoprint = {
+      enable = true;
+      openFirewall = true;
+    };
   };
 }

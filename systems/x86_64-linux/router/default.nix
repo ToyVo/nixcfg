@@ -122,7 +122,10 @@
     };
   };
   services = {
-    openssh.openFirewall = false;
+    openssh = {
+      enable = true;
+      openFirewall = false;
+    };
     resolved = {
       enable = true;
       extraConfig = ''

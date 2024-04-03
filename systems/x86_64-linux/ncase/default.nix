@@ -19,6 +19,7 @@
   fileSystemPresets.efi.enable = true;
   fileSystemPresets.btrfs.enable = true;
   services = {
+    openssh.enable = true;
     desktopManager.plasma6.enable = true;
     remote-builds.server.enable = true;
     ollama.enable = true;
