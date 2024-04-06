@@ -1,4 +1,4 @@
-{ lib, config, pkgs, system, ... }:
+{ lib, config, pkgs, ... }:
 let
   cfg = config.programs.vscode;
 in
@@ -24,7 +24,7 @@ in
         ms-toolsai.vscode-jupyter-cell-tags
         ms-toolsai.jupyter-renderers
         ms-toolsai.jupyter-keymap
-      ] ++ lib.optionals (system != "aarch64-darwin") [
+      ] ++ lib.optionals (!pkgs.stdenv.isDarwin) [
         # Can be moved above when fixed https://github.com/NixOS/nixpkgs/issues/202507 
         # or merged https://github.com/NixOS/nixpkgs/pull/211321
         vadimcn.vscode-lldb 
