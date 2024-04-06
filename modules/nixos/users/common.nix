@@ -36,6 +36,9 @@ in
         shell = pkgs.zsh;
       };
     };
+    nix.settings.trusted-users = [
+      cfg.toyvo.name
+    ];
     home-manager.users = {
       ${cfg.toyvo.name} = lib.mkIf cfg.toyvo.enable {
         home.username = cfg.toyvo.name;
