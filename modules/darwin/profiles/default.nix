@@ -29,7 +29,9 @@ in
       rectangle
       utm
       pinentry_mac
-      rio
+      warp-terminal
+      appcleaner
+      neovide
     ];
     programs = {
       bash = {
@@ -48,27 +50,20 @@ in
         cleanup = "zap";
       };
       casks = [
-        # nix package not available on darwin
+        # Nix package doesn't exist
         { name = "arc"; greedy = true; }
-        { name = "warp"; greedy = true; }
+        { name = "grammarly"; greedy = true; }
+        { name = "proton-drive"; greedy = true; }
+        # Nix package exists but unavailable on darwin
+        { name = "protonvpn"; greedy = true; }
+        { name = "proton-mail"; greedy = true; }
         { name = "firefox"; greedy = true; }
-        { name = "thunderbird"; greedy = true; }
         { name = "jetbrains-toolbox"; greedy = true; }
         { name = "bruno"; greedy = true; }
         { name = "onlyoffice"; greedy = true; }
         { name = "keybase"; greedy = true; }
-        { name = "grammarly"; greedy = true; }
         { name = "logseq"; greedy = true; }
         { name = "lm-studio"; greedy = true; }
-        { name = "app-cleaner"; greedy = true; }
-        # nix package doesn't provide an app bundle
-        { name = "neovide"; greedy = true; }
-        # must be installed at /Applications, nix-darwin installs it at /Applications/nix apps
-        { name = "1password"; greedy = true; }
-      ];
-      brews = [
-        # required for neovide
-        "libuv"
       ];
     };
     home-manager.sharedModules = [
