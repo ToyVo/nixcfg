@@ -31,6 +31,7 @@ in
       pinentry_mac
       warp-terminal
       appcleaner
+    ] ++ lib.optionals (system == "aarch64-darwin") [
       neovide
     ];
     programs = {
