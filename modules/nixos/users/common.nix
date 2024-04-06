@@ -37,6 +37,7 @@ in
       };
     };
     nix.settings.trusted-users = [
+      "root"
       cfg.toyvo.name
     ];
     home-manager.users = {
