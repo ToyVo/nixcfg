@@ -1,4 +1,4 @@
-{ pkgs, config, lib, inputs, ... }:
+{ pkgs, config, lib, inputs, system, ... }:
 let
   cfg = config.profiles.defaults;
 in
