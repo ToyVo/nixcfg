@@ -64,6 +64,7 @@ in
         { name = "onlyoffice"; greedy = true; }
         { name = "keybase"; greedy = true; }
         { name = "logseq"; greedy = true; }
+      ] ++ lib.optionals (system == "aarch64-darwin") [
         { name = "lm-studio"; greedy = true; }
       ];
     };
