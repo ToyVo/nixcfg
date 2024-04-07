@@ -40,6 +40,7 @@
     discord
     r2modman
     prismlauncher
+    pwvucontrol
     (pkgs.wrapOBS {
       plugins = with pkgs.obs-studio-plugins; [
         obs-gstreamer

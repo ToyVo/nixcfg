@@ -77,5 +77,13 @@
         MACAddress = "4c:20:b8:df:d1:5b";
       };
     }
+    # Mac Mini Intel (Wifi)
+    {
+      dhcpServerStaticLeaseConfig = {
+        Address = "10.1.0.12";
+        # ethernet port 14:c2:13:ed:e6:ed
+        MACAddress = "f0:18:98:8a:6d:ee";
+      };
+    }
   ];
 }
