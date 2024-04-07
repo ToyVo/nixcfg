@@ -28,8 +28,6 @@ in
     ++ lib.optionals cfg.gui.enable [
       firefox
       neovide
-      _1password
-      _1password-gui
       yubikey-manager-qt
       yubioath-flutter
       element-desktop
