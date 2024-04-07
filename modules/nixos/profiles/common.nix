@@ -30,6 +30,7 @@ in
       nvim.enable = true;
     };
     nix = {
+      package = pkgs.nixVersions.nix_2_19;
       settings = {
         experimental-features = [ "nix-command" "flakes" ];
         substituters = config.nix.settings.trusted-substituters;

@@ -22,8 +22,8 @@ in
         "/nix/profile/bin"
         "${config.home.homeDirectory}/.local/state/nix/profile/bin"
         "/etc/profiles/per-user/${config.home.username}/bin"
-        "/nix/var/nix/profiles/default/bin"
         "/run/current-system/sw/bin"
+        "/nix/var/nix/profiles/default/bin"
       ] ++ lib.optionals (system == "aarch64-darwin") [
         "/opt/homebrew/bin"
         "/opt/homebrew/sbin"
