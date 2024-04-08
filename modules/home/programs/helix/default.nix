@@ -16,8 +16,11 @@ in
       lldb
     ];
     programs.helix = {
+      catppuccin = {
+        enable = true;
+        flavour = config.catppuccin.flavour;
+      };
       settings = {
-        theme = "catppuccin_frappe";
         editor = {
           line-number = "relative";
           bufferline = "always";

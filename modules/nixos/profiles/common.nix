@@ -88,7 +88,6 @@ in
         xz
         zstd
         pipenv
-        lazygit
         powershell
         myPython
       ]

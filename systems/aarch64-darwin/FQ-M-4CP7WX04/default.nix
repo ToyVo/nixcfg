@@ -8,6 +8,7 @@
     ollama
     poetry
     awscli2
+    llama-cpp
   ];
   environment.pythonPackages = with pkgs.python311Packages; [
     boto3

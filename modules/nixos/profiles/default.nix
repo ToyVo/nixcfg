@@ -5,6 +5,7 @@ in
 {
   imports = [
     inputs.nixpkgs.nixosModules.notDetected
+    inputs.catppuccin.nixosModules.catppuccin
     ./common.nix
   ];
 
@@ -18,7 +19,14 @@ in
         LC_TIME = "C.UTF-8";
       };
     };
-    console.useXkbConfig = true;
+    catppuccin.flavour = "frappe";
+    console = {
+      useXkbConfig = true;
+      catppuccin = {
+        enable = true;
+        flavour = config.catppuccin.flavour;
+      };
+    };
     environment.systemPackages = with pkgs; [
       coreutils
       yubikey-manager

@@ -53,14 +53,7 @@
     sops-nix.url = "github:Mic92/sops-nix";
 
     # Misc sources
-    catppuccin-bat = {
-      url = "github:catppuccin/bat";
-      flake = false;
-    };
-    catppuccin-delta = {
-      url = "github:catppuccin/delta";
-      flake = false;
-    };
+    catppuccin.url = "github:catppuccin/nix";
     catppuccin-rio = {
       url = "github:catppuccin/rio";
       flake = false;

@@ -1,8 +1,12 @@
-{ pkgs, lib, config, system, ... }:
+{ pkgs, lib, config, system, inputs, ... }:
 let 
   cfg = config.profiles;
 in 
 {
+  imports = [
+    inputs.catppuccin.homeManagerModules.catppuccin
+  ];
+
   options.profiles = {
     defaults.enable = lib.mkEnableOption "Enable toyvo profile";
     gui.enable = lib.mkEnableOption "Enable GUI applications";
@@ -75,6 +79,23 @@ in
     };
     services.easyeffects = lib.mkIf (pkgs.stdenv.isLinux && cfg.gui.enable) {
       enable = true;
+    };
+    catppuccin = {
+      flavour = "frappe";
+      accent = "red";
+    };
+    gtk = lib.mkIf (pkgs.stdenv.isLinux && cfg.gui.enable) {
+      enable = true;
+      catppuccin = {
+        enable = true;
+        flavour = config.catppuccin.flavour;
+        accent = config.catppuccin.accent;
+        cursor = {
+          enable = true;
+          flavour = config.catppuccin.flavour;
+          accent = config.catppuccin.accent;
+        };
+      };
     };
   };
 }

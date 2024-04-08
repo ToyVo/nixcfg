@@ -24,35 +24,18 @@
         "type": "github"
       }
     },
-    "catppuccin-bat": {
-      "flake": false,
+    "catppuccin": {
       "locked": {
-        "lastModified": 1710456315,
-        "narHash": "sha256-POoW2sEM6jiymbb+W/9DKIjDM1Buu1HAmrNP0yC2JPg=",
+        "lastModified": 1712482981,
+        "narHash": "sha256-LJOOpTey9Y29C/TK4h9KP7v4HvqDL3mLyT9hSWCfFlI=",
         "owner": "catppuccin",
-        "repo": "bat",
-        "rev": "b19bea35a85a32294ac4732cad5b0dc6495bed32",
+        "repo": "nix",
+        "rev": "4043beb6c792a40e9c513aa261f4ba10601a4457",
         "type": "github"
       },
       "original": {
         "owner": "catppuccin",
-        "repo": "bat",
-        "type": "github"
-      }
-    },
-    "catppuccin-delta": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1711225340,
-        "narHash": "sha256-GA0n9obZlD0Y2rAbGMjcdJ5I0ij1NEPBFC7rv7J49QI=",
-        "owner": "catppuccin",
-        "repo": "delta",
-        "rev": "765eb17d0268bf07c20ca439771153f8bc79444f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "catppuccin",
-        "repo": "delta",
+        "repo": "nix",
         "type": "github"
       }
     },
@@ -675,8 +658,7 @@
     "root": {
       "inputs": {
         "apple-silicon-support": "apple-silicon-support",
-        "catppuccin-bat": "catppuccin-bat",
-        "catppuccin-delta": "catppuccin-delta",
+        "catppuccin": "catppuccin",
         "catppuccin-rio": "catppuccin-rio",
         "darwin": "darwin",
         "home-manager": "home-manager",

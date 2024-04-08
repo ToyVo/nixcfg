@@ -5,7 +5,10 @@ in
 {
   config = lib.mkIf cfg.enable {
     programs.kitty = {
-      theme = "Catppuccin-Frappe";
+      catppuccin = {
+        enable = true;
+        flavour = config.catppuccin.flavour;
+      };
       font = {
         name = "MonaspiceNe Nerd Font Mono Regular";
         size = 14;
