@@ -34,7 +34,6 @@ in
       ] ++ lib.optionals pkgs.stdenv.isDarwin [
         "/System/Cryptexes/App/usr/bin"
       ] ++ 
-      # TODO: should only be set if not nixos
       [
         "/usr/local/bin"
         "/usr/local/sbin"
