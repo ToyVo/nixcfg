@@ -84,19 +84,6 @@ in
       flavour = "frappe";
       accent = "red";
     };
-    gtk = lib.mkIf (pkgs.stdenv.isLinux && cfg.gui.enable) {
-      enable = true;
-      catppuccin = {
-        enable = true;
-        flavour = config.catppuccin.flavour;
-        accent = config.catppuccin.accent;
-        cursor = {
-          enable = true;
-          flavour = config.catppuccin.flavour;
-          accent = config.catppuccin.accent;
-        };
-      };
-    };
   };
 }
 

@@ -90,6 +90,7 @@ in
         pipenv
         powershell
         myPython
+        dotnet-sdk_8
       ]
       ++ lib.optionals config.profiles.gui.enable [
         gimp
