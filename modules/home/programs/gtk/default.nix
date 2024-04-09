@@ -17,6 +17,8 @@ let
     gtk-modules = "colorreload-gtk-module";
     gtk-xft-dpi = 98304;
   };
+  toGtk2 = value: if lib.isString value then "\"${value}\"" else toString value;
+  toGtk = value: if lib.isBool value then if value then "true" else "false" else toString value;
 in 
 {
   config = lib.mkIf (cfg.defaults.enable && cfg.gui.enable && pkgs.stdenv.isLinux) {
@@ -28,19 +30,17 @@ in
       };
       iconTheme.name = "Papirus-Dark";
       cursorTheme.size = 24;
-      gtk2.extraConfig = let 
-        toGtk2 = value: if lib.isBool value then if value then "1" else "0" else if lib.isString value then "\"${value}\"" else lib.toString value;
-      in ''
-        ${lib.mapAttrsToList (name: value: "${name}=${toGtk2 value}") gtk_2_3_attrs}
-        ${lib.mapAttrsToList (name: value: "${name}=${toGtk2 value}") gtk_2_3_4_attrs}
+      gtk2.extraConfig = ''
+        ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "${name}=${toGtk2 value}") gtk_2_3_attrs)}
+        ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "${name}=${toGtk2 value}") gtk_2_3_4_attrs)}
       '';
       gtk3.extraConfig = ''
-        ${lib.mapAttrsToList (name: value: "${name}=${value}") gtk_2_3_attrs}
-        ${lib.mapAttrsToList (name: value: "${name}=${value}") gtk_3_4_attrs}
+        ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "${name}=${toGtk value}") gtk_2_3_attrs)}
+        ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "${name}=${toGtk value}") gtk_3_4_attrs)}
       '';
       gtk4.extraConfig = ''
-        ${lib.mapAttrsToList (name: value: "${name}=${value}") gtk_2_3_attrs}
-        ${lib.mapAttrsToList (name: value: "${name}=${value}") gtk_3_4_attrs}
+        ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "${name}=${toGtk value}") gtk_2_3_attrs)}
+        ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "${name}=${toGtk value}") gtk_3_4_attrs)}
       '';
       catppuccin = {
         enable = true;
