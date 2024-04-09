@@ -39,11 +39,6 @@ in
       yubikey-manager-qt
       yubioath-flutter
       element-desktop
-      papirus-icon-theme
-      catppuccin-kde
-      catppuccin-gtk
-      catppuccin-cursors
-      catppuccin-papirus-folders
     ];
     programs = {
       bash.blesh.enable = true;
