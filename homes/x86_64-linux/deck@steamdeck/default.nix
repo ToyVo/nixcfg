@@ -13,6 +13,7 @@
         ];
       })
     ];
+    programs.kde.link = true;
   };
   profiles = {
     toyvo.enable = true;
