@@ -1,10 +1,21 @@
 { pkgs, lib, config, ... }: let 
   cfg = config.programs.kde.catppuccin;
   catppuccin-kde = (pkgs.catppuccin-kde.override {
-    flavour = cfg.flavour;
-    accents = cfg.accents;
-    winDecStyles = cfg.winDecStyles;
+    flavour = [ config.catppuccin.flavour ];
+    accents = [ config.catppuccin.accent ];
+    winDecStyles = [ "classic" ];
   });
+  listFilesRecursively = dirPath: let
+    contents = builtins.readDir dirPath;
+    files = lib.mapAttrsToList (name: value: "${dirPath}/${name}") (lib.filterAttrs (name: value: value != "directory") contents);
+    subDirectories = lib.mapAttrsToList (name: value: name) (lib.filterAttrs (name: value: value == "directory") contents);
+    subFiles = builtins.concatLists (builtins.map (subDir: listFilesRecursively "${dirPath}/${subDir}") subDirectories);
+  in
+    files ++ subFiles;
+
+  getFiles = dirPath: let in builtins.listToAttrs (map (name: let
+    fileFromLocal = ".local/${builtins.unsafeDiscardStringContext (lib.strings.removePrefix "${dirPath}/" name)}";
+  in { name = fileFromLocal; value = {source = name;}; }) (listFilesRecursively dirPath));
 in {
   options.programs.kde.catppuccin = {
     enable = lib.mkOption {
@@ -12,38 +23,12 @@ in {
       default = config.profiles.defaults.enable && config.profiles.gui.enable && pkgs.stdenv.isLinux;
       description = "Enable Catppuccin KDE theme";
     };
-    flavour = {
-      type = lib.types.listOf lib.types.str;
-      default = [ config.catppuccin.flavour ];
-      description = "Catppuccin KDE theme flavour";
-    };
-    accents = {
-      type = lib.types.listOf lib.types.str;
-      default = [ config.catppuccin.accent ];
-      description = "Catppuccin KDE theme accent";
-    };
-    winDecStyles = {
-      type = lib.types.listOf lib.types.str;
-      default = [ "classic" ];
-      description = "Catppuccin KDE theme window decoration styles";
-    };
-    link = {
-      type = lib.types.bool;
-      default = false;
-      description = "Link Catppuccin KDE theme files to ~/.local/share (for non-NixOS)";
-    };
   };
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       catppuccin-kde
     ];
-    home.file = lib.mkIf cfg.link builtins.listToAttrs (
-      builtins.concatMap (dir: map (file: {
-        name = ".local/${dir}/${file}";
-        value = { source = "${catppuccin-kde}/${dir}/${file}"; };
-      }) (builtins.listDirectory "${catppuccin-kde}/${dir}"))
-      (builtins.listDirectory catppuccin-kde)
-    );
+    home.file = getFiles catppuccin-kde;
   };
 }
