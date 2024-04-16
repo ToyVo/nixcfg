@@ -5,8 +5,6 @@ in
 {
   imports = [
     ../../nixos/profiles/common.nix
-    inputs.nixvim.nixDarwinModules.nixvim
-    ../../nixos/programs/neovim/common.nix
     ../../nixos/users/common.nix
    ];
 

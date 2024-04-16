@@ -1,19 +1,20 @@
 { lib, config, pkgs, system, ... }:
 let
   cfg = config.programs.wezterm;
+  flavour = config.catppuccin.flavour;
+  upperFlavour = with builtins; (lib.toUpper (substring 0 1 flavour)) + (substring 1 (stringLength flavour) flavour);
 in
 {
   config = lib.mkIf cfg.enable {
     programs.wezterm = {
       package = if (system == "x86_64-darwin") then pkgs.emptyDirectory else pkgs.wezterm;
       extraConfig = ''
-        local wezterm = require("wezterm");
         local config = wezterm.config_builder();
         config.font = wezterm.font {
           family = "MonaspiceNe Nerd Font",
           harfbuzz_features = {'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'},
         };
-        config.color_scheme = "Catppuccin Frappe";
+        config.color_scheme = "Catppuccin ${upperFlavour}";
         config.initial_rows = 30;
         config.initial_cols = 120;
         config.window_background_opacity = 0.9;

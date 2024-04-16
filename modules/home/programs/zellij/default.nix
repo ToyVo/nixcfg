@@ -15,7 +15,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.zellij = {
       settings = {
-        theme = "catppuccin-frappe";
+        theme = "catppuccin-${config.catppuccin.flavour}";
       };
     };
     programs = {

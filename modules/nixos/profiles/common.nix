@@ -27,7 +27,6 @@ in
     programs = {
       zsh.enable = true;
       fish.enable = true;
-      nvim.enable = true;
     };
     nix = {
       package = pkgs.nixVersions.nix_2_19;
@@ -82,6 +81,7 @@ in
           extensions = [ "rust-src" ];
           targets = [ "wasm32-unknown-unknown" ];
         }))
+        dioxus-cli
         rust-analyzer
         cargo-watch
         cargo-generate

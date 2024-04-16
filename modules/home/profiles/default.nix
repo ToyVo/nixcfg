@@ -75,6 +75,7 @@ in
       fish.enable = true;
       nushell.enable = true;
       powershell.enable = true;
+      nvim.enable = true;
     };
     services.easyeffects = lib.mkIf (pkgs.stdenv.isLinux && cfg.gui.enable) {
       enable = true;

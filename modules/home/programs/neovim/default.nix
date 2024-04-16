@@ -1,12 +1,14 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 let
   cfg = config.programs.nvim;
 in
 {
+  imports = [ inputs.nixvim.homeManagerModules.nixvim ];
+
   options.programs.nvim.enable = lib.mkEnableOption "Enable nixvim";
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
+    home.packages = with pkgs; [
       nixd
       nixpkgs-fmt
     ];
@@ -20,7 +22,7 @@ in
       clipboard.register = "unnamedplus";
       colorschemes.catppuccin = {
         enable = true;
-        flavour = "frappe";
+        flavour = config.catppuccin.flavour;
       };
       globals = {
         mapleader = " ";
