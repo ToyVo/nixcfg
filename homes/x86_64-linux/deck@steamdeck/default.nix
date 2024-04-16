@@ -14,7 +14,7 @@
       })
     ];
   };
-  programs.kde.link = true;
+  programs.kde.catppuccin.link = true;
   profiles = {
     toyvo.enable = true;
     gui.enable = true;
