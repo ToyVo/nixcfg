@@ -61,7 +61,7 @@ in
         };
       };
     };
-    home.file = getFiles config.gtk.theme.package;
+    home.file = getFiles config.gtk.theme.package // getFiles config.gtk.iconTheme.package // getFiles config.gtk.cursorTheme.package;
   };
 }
 
