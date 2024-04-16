@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   home = {
     username = "deck";
@@ -15,6 +15,10 @@
     ];
   };
   programs.kde.catppuccin.link = true;
+  catppuccin = {
+    flavour = lib.mkForce "latte";
+    accent = lib.mkForce "pink";
+  };
   profiles = {
     toyvo.enable = true;
     gui.enable = true;
