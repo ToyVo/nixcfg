@@ -15,7 +15,7 @@
 
   getFiles = dirPath: let in builtins.listToAttrs (map (name: let
     fileFromLocal = ".local/${builtins.unsafeDiscardStringContext (lib.strings.removePrefix "${dirPath}/" name)}";
-  in { name = fileFromLocal; value = {source = name;}; }) (listFilesRecursively dirPath));
+  in { name = fileFromLocal; value = {source = name; enable = cfg.link; }; }) (listFilesRecursively dirPath));
 in {
   options.programs.kde.catppuccin = {
     enable = lib.mkOption {
@@ -23,6 +23,7 @@ in {
       default = config.profiles.defaults.enable && config.profiles.gui.enable && pkgs.stdenv.isLinux;
       description = "Enable Catppuccin KDE theme";
     };
+    link = lib.mkEnableOption "Link Catppuccin KDE theme";
   };
 
   config = lib.mkIf cfg.enable {
