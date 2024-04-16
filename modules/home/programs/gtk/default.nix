@@ -17,8 +17,21 @@ let
     gtk-modules = "colorreload-gtk-module";
     gtk-xft-dpi = 98304;
   };
+  listFilesRecursively = dirPath: let
+    contents = builtins.readDir dirPath;
+    files = lib.mapAttrsToList (name: value: "${dirPath}/${name}") (lib.filterAttrs (name: value: value != "directory") contents);
+    subDirectories = lib.mapAttrsToList (name: value: name) (lib.filterAttrs (name: value: value == "directory") contents);
+    subFiles = builtins.concatLists (builtins.map (subDir: listFilesRecursively "${dirPath}/${subDir}") subDirectories);
+  in
+    files ++ subFiles;
+
+  getFiles = dirPath: let in builtins.listToAttrs (map (name: let
+    fileFromLocal = ".local/${builtins.unsafeDiscardStringContext (lib.strings.removePrefix "${dirPath}/" name)}";
+  in { name = fileFromLocal; value = {source = name; enable = config.gtk.catppuccin.link; }; }) (listFilesRecursively dirPath));
 in 
 {
+  options.gtk.catppuccin.link = lib.mkEnableOption "Link to local files";
+
   config = lib.mkIf (cfg.defaults.enable && cfg.gui.enable && pkgs.stdenv.isLinux) {
     gtk = {
       enable = true;
@@ -48,6 +61,7 @@ in
         };
       };
     };
+    home.file = getFiles config.gtk.theme.package;
   };
 }
 
