@@ -6,7 +6,7 @@
     winDecStyles = cfg.winDecStyles;
   });
 in {
-  options.kde.catppuccin = {
+  options.prgrams.kde.catppuccin = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = config.profiles.defaults.enable && config.profiles.gui.enable && pkgs.stdenv.isLinux;
