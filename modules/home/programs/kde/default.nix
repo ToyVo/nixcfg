@@ -5,17 +5,6 @@
     accents = [ config.catppuccin.accent ];
     winDecStyles = [ "classic" ];
   });
-  listFilesRecursively = dirPath: let
-    contents = builtins.readDir dirPath;
-    files = lib.mapAttrsToList (name: value: "${dirPath}/${name}") (lib.filterAttrs (name: value: value != "directory") contents);
-    subDirectories = lib.mapAttrsToList (name: value: name) (lib.filterAttrs (name: value: value == "directory") contents);
-    subFiles = builtins.concatLists (builtins.map (subDir: listFilesRecursively "${dirPath}/${subDir}") subDirectories);
-  in
-    files ++ subFiles;
-
-  getFiles = dirPath: let in builtins.listToAttrs (map (name: let
-    fileFromLocal = ".local/${builtins.unsafeDiscardStringContext (lib.strings.removePrefix "${dirPath}/" name)}";
-  in { name = fileFromLocal; value = {source = name; enable = cfg.link; }; }) (listFilesRecursively dirPath));
 in {
   options.programs.kde.catppuccin = {
     enable = lib.mkOption {
@@ -30,6 +19,6 @@ in {
     home.packages = with pkgs; [
       catppuccin-kde
     ];
-    home.file = getFiles catppuccin-kde;
+    home.file = lib.cd.getFiles { dirPath = catppuccin-kde; enableLink = cfg.link; };
   };
 }
