@@ -50,11 +50,9 @@ in
         };
       };
     };
-    home.file = lib.attrsets.mergeAttrsList [
-      (lib.cd.getFiles { dirPath = config.gtk.theme.package; enableLink = config.gtk.catppuccin.link; })
-      (lib.cd.getFiles { dirPath = config.gtk.iconTheme.package; enableLink = config.gtk.catppuccin.link; })
-      (lib.cd.getFiles { dirPath = config.gtk.cursorTheme.package; enableLink = config.gtk.catppuccin.link; })
-    ];
+    home.file = lib.cd.getFiles { dirPath = config.gtk.theme.package; enableLink = config.gtk.catppuccin.link; }
+      # // lib.cd.getFiles { dirPath = config.gtk.iconTheme.package; enableLink = config.gtk.catppuccin.link; }
+      // lib.cd.getFiles { dirPath = config.gtk.cursorTheme.package; enableLink = config.gtk.catppuccin.link; };
   };
 }
 
