@@ -18,6 +18,7 @@ in
       sessionPath = [] ++ lib.optionals config.programs.volta.enable [
         "${config.programs.volta.voltaHome}/bin"
       ] ++ [
+        "${config.home.homeDirectory}/.cargo/bin"
         "${config.home.homeDirectory}/.local/bin"
         "${config.home.homeDirectory}/.bin"
         "${config.home.homeDirectory}/bin"

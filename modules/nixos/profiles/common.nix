@@ -52,7 +52,7 @@ in
       useUserPackages = true;
     };
     nixpkgs.overlays = [ inputs.rust-overlay.overlays.default ];
-    environment = {
+    environment = let
       shells = with pkgs; [
         bashInteractive
         zsh
@@ -60,6 +60,8 @@ in
         nushell
         powershell
       ];
+    in {
+      inherit shells;
       systemPackages = with pkgs; [
         broot
         bun
@@ -78,7 +80,7 @@ in
         nixpkgs-fmt
         git-crypt
         (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
-          extensions = [ "rust-src" ];
+          extensions = [ "rust-src" "rust-std" ];
           targets = [ "wasm32-unknown-unknown" ];
         }))
         dioxus-cli
@@ -88,13 +90,13 @@ in
         xz
         zstd
         pipenv
-        powershell
         myPython
         dotnet-sdk_8
       ]
       ++ lib.optionals config.profiles.gui.enable [
         gimp
-      ];
+      ]
+      ++ shells;
     };
   };
 }
