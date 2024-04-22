@@ -37,10 +37,10 @@
         reverse_proxy http://10.1.0.2:80
       '';
     };
-    "https://portal.diekvoss.net:443" = {
+    "https://homepage.diekvoss.net:443" = {
       useACMEHost = "diekvoss.net";
       extraConfig = ''
-        reverse_proxy http://10.1.0.3:8787
+        reverse_proxy http://10.1.0.3:3000
       '';
     };
     "https://ollama.diekvoss.net:443" = {
