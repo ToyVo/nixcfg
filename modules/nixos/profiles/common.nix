@@ -64,6 +64,7 @@ in
       inherit shells;
       systemPackages = with pkgs; [
         uutils-coreutils-noprefix
+        sqlite
         broot
         bun
         deno
