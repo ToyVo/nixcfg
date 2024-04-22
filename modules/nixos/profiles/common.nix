@@ -63,8 +63,11 @@ in
     in {
       inherit shells;
       systemPackages = with pkgs; [
+        uutils-coreutils-noprefix
         broot
         bun
+        deno
+        nodejs
         curl
         dig
         dogdns
