@@ -24,7 +24,7 @@ in
         name = cfg.toyvo.name;
         description = "Collin Diekvoss";
         home = "${homePath}/${cfg.toyvo.name}";
-        shell = pkgs.zsh;
+        shell = pkgs.fish;
         openssh.authorizedKeys.keys = [
           (lib.fileContents ./ykA_ed25519_sk.pub)
           (lib.fileContents ./ykC_ed25519_sk.pub)
@@ -33,7 +33,6 @@ in
       root = {
         name = "root";
         home = rootHomeDirectory;
-        shell = pkgs.zsh;
       };
     };
     nix.settings.trusted-users = [

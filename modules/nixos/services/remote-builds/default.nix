@@ -12,7 +12,6 @@ in
     users.users.nixremote = lib.mkIf cfg.server.enable {
       name = "nixremote";
       home = "/home/nixremote";
-      shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [
         (lib.fileContents ./nixremote_ed25519.pub)
       ];
