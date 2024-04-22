@@ -30,7 +30,7 @@
       enable = true;
       openFirewall = true;
     };
-    homer = {
+    homepage = {
       enable = true;
       openFirewall = true;
     };

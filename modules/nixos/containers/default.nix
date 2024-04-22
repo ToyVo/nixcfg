@@ -32,7 +32,7 @@ in
         defaultNetwork.settings.dns_enabled = true;
       };
 
-      oci-containers.backend = if cfg.docker.enable then "docker" else "podman";
+      oci-containers.backend = if cfg.podman.enable then "podman" else "docker";
     };
   };
 }
