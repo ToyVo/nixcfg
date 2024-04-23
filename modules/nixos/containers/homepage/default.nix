@@ -23,7 +23,7 @@ in
     virtualisation.oci-containers.containers.homepage = {
       image = "ghcr.io/gethomepage/homepage:latest";
       ports = [ "${toString cfg.port}:3000"];
-      volumes = [ "${cfg.path}/config:/app/config" ];
+      volumes = [ "${cfg.path}:/app/config" ];
     };
     networking.firewall = lib.mkIf cfg.openFirewall {
       allowedTCPPorts = [ cfg.port ];
