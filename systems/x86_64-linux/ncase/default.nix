@@ -24,12 +24,14 @@
     remote-builds.server.enable = true;
     ollama.enable = true;
     spice-vdagentd.enable = true;
-  };
-  containerPresets = {
     nextcloud = {
       enable = true;
-      openFirewall = true;
+      home = "/mnt/POOL/nextcloud";
+      hostName = "nextcloud.diekvoss.net";
+      config.adminpassFile = "${./nextcloudpass.txt}";
     };
+  };
+  containerPresets = {
     homepage = {
       enable = true;
       openFirewall = true;
@@ -73,6 +75,7 @@
     spice-protocol
     win-virtio
     win-spice
+    distrobox
   ];
   virtualisation = {
     libvirtd = {

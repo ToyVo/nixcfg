@@ -18,11 +18,11 @@
     };
     "https://nextcloud.diekvoss.net:443" = {
       useACMEHost = "diekvoss.net";
+      # redir /.well-known/carddav /remote.php/dav 301
+      # redir /.well-known/caldav /remote.php/dav 301
+      # header Strict-Transport-Security "max-age=15552000; includeSubDomains; preload"
       extraConfig = ''
-        redir /.well-known/carddav /remote.php/dav 301
-        redir /.well-known/caldav /remote.php/dav 301
-        header Strict-Transport-Security "max-age=15552000; includeSubDomains; preload"
-        reverse_proxy http://10.1.0.3:11000
+        reverse_proxy http://10.1.0.3:80
       '';
     };
     "https://octoprint.diekvoss.net:443" = {
