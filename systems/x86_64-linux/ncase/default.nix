@@ -5,7 +5,10 @@
     cpu.amd.updateMicrocode = true;
     bluetooth.enable = true;
   };
-  networking.hostName = "ncase";
+  networking = {
+    hostName = "ncase";
+    firewall.allowedTCPPorts = [ 80 ];
+  };
   boot = {
     loader = {
       systemd-boot.enable = true;
