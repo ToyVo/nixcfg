@@ -28,6 +28,7 @@ in
       ];
       environment = {
         NEXTCLOUD_DATA_DIR = "${cfg.datadir}";
+        APACHE_PORT = "11000";
       };
     };
     networking.firewall = lib.mkIf cfg.openFirewall {
