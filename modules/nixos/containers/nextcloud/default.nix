@@ -15,7 +15,7 @@ in
 
   config = lib.mkIf cfg.enable {
     containerPresets.podman.enable = lib.mkDefault true;
-    virtualisation.oci-containers.containers."nextcloud-aio-mastercontainer" = {
+    virtualisation.oci-containers.containers.nextcloud-aio-mastercontainer = {
       image = "docker.io/nextcloud/all-in-one:latest";
       volumes = [
         "nextcloud_aio_mastercontainer:/mnt/docker-aio-config"
