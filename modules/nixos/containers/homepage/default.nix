@@ -10,8 +10,8 @@ in
       default = 3000;
       description = "Port to expose Homepage dashboard on";
     };
-    path = lib.mkOption {
-      type = lib.types.str;
+    datadir = lib.mkOption {
+      type = lib.types.path;
       default = "/mnt/POOL/homepage";
       description = "Path to store Homepage dashboard data";
     };
@@ -23,7 +23,10 @@ in
     virtualisation.oci-containers.containers.homepage = {
       image = "ghcr.io/gethomepage/homepage:latest";
       ports = [ "${toString cfg.port}:3000"];
-      volumes = [ "${cfg.path}:/app/config" ];
+      volumes = [
+        "${cfg.datadir}:/app/config" 
+        "/var/run/user/1000/podman/podman.sock:/var/run/docker.sock:ro"
+      ];
     };
     networking.firewall = lib.mkIf cfg.openFirewall {
       allowedTCPPorts = [ cfg.port ];
