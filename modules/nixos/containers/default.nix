@@ -30,6 +30,8 @@ in
       podman = lib.mkIf cfg.podman.enable {
         enable = true;
         defaultNetwork.settings.dns_enabled = true;
+        dockerCompat = !cfg.docker.enable;
+        dockerSocket.enable = !cfg.docker.enable;
       };
 
       oci-containers.backend = if cfg.podman.enable then "podman" else "docker";

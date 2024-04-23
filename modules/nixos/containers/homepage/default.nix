@@ -25,7 +25,7 @@ in
       ports = [ "${toString cfg.port}:3000"];
       volumes = [
         "${cfg.datadir}:/app/config" 
-        "/var/run/user/1000/podman/podman.sock:/var/run/docker.sock:ro"
+        "/var/run/podman/podman.sock:/var/run/docker.sock:ro"
       ];
     };
     networking.firewall = lib.mkIf cfg.openFirewall {

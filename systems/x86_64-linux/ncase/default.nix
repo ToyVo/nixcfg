@@ -83,7 +83,6 @@
         ovmf.packages = [ pkgs.OVMFFull.fd ];
       };
     };
-    docker.daemon.settings.data-root = "/mnt/POOL/containers";
     spiceUSBRedirection.enable = true;
   };
 }

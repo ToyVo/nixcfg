@@ -19,7 +19,7 @@ in
       image = "docker.io/nextcloud/all-in-one:latest";
       volumes = [
         "nextcloud_aio_mastercontainer:/mnt/docker-aio-config"
-        "/var/run/user/1000/podman/podman.sock:/var/run/docker.sock"
+        "/var/run/podman/podman.sock:/var/run/docker.sock"
       ];
       ports = [
         "80:80"
