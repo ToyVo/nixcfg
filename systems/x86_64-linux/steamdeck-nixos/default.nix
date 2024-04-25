@@ -17,10 +17,8 @@
     openssh.enable = true;
     desktopManager.plasma6.enable = true;
     # remote-builds.client.enable = true;
-    xserver.displayManager = {
-      gdm.enable = lib.mkForce false;
-      sddm.enable = lib.mkForce false;
-    };
+    xserver.displayManager.gdm.enable = lib.mkForce false;
+    displayManager.sddm.enable = lib.mkForce false;
   };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";

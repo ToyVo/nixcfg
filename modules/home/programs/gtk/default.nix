@@ -22,6 +22,7 @@ in
   options.gtk.catppuccin.link = lib.mkEnableOption "Link to local files";
 
   config = lib.mkIf (cfg.defaults.enable && cfg.gui.enable && pkgs.stdenv.isLinux) {
+    xdg.enable = true;
     gtk = {
       enable = true;
       font = {

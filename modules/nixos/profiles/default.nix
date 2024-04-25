@@ -33,7 +33,7 @@ in
       yubico-piv-tool
     ]
     ++ lib.optionals cfg.gui.enable [
-      firefox
+      floorp
       neovide
       yubikey-manager-qt
       yubioath-flutter

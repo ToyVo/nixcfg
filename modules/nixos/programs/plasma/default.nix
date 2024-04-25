@@ -5,10 +5,12 @@ let
 in
 {
   config = lib.mkIf (plasma6.enable || cfg.plasma5.enable || cfg.plasma5.mobile.enable) {
-    services.xserver = {
-      enable = true;
+    services = {
+      xserver = {
+        enable = true;
+        libinput.enable = true;
+      };
       displayManager.sddm.enable = true;
-      libinput.enable = true;
     };
     profiles.gui.enable = true;
     environment.systemPackages = with pkgs; [

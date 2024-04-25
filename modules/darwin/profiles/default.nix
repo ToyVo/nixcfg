@@ -77,7 +77,7 @@ in
         # Nix package exists but unavailable on darwin
         { name = "protonvpn"; greedy = true; }
         { name = "proton-mail"; greedy = true; }
-        { name = "firefox"; greedy = true; }
+        { name = "floorp"; greedy = true; }
         { name = "jetbrains-toolbox"; greedy = true; }
         { name = "bruno"; greedy = true; }
         { name = "onlyoffice"; greedy = true; }
