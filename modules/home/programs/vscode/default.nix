@@ -6,32 +6,45 @@ in
   config = lib.mkIf cfg.enable {
     programs.vscode = {
       extensions = with pkgs.vscode-extensions; [
+        # Sorting by how they appear in vscode
+        # .NET Install Tool
+        ms-python.black-formatter
+        catppuccin.catppuccin-vsc
+        catppuccin.catppuccin-vsc-icons
+        # vadimcn.vscode-lldb
+        # continue.continue
         serayuzgur.crates
         usernamehw.errorlens
         dbaeumer.vscode-eslint
         tamasfe.even-better-toml
         github.copilot
         github.copilot-chat
+        # Github issue notebooks
         eamodio.gitlens
-        catppuccin.catppuccin-vsc
-        catppuccin.catppuccin-vsc-icons
+        ms-python.isort
+        firsttris.vscode-jest-runner
+        ms-toolsai.jupyter
+        ms-toolsai.vscode-jupyter-cell-tags
+        ms-toolsai.jupyter-keymap
+        ms-toolsai.jupyter-renderers
+        # Jupyter PowerToys
+        ms-toolsai.vscode-jupyter-slideshow
+        ms-vscode.live-server
+        # Mypy Type Checker
         jnoortheen.nix-ide
+        # Polyglot notebooks
         esbenp.prettier-vscode
+        ms-python.vscode-pylance
+        ms-python.python
+        # Python Debugger
         rust-lang.rust-analyzer
         vscodevim.vim
-        ms-toolsai.jupyter
-        ms-toolsai.vscode-jupyter-slideshow
-        ms-toolsai.vscode-jupyter-cell-tags
-        ms-toolsai.jupyter-renderers
-        ms-toolsai.jupyter-keymap
       ] ++ lib.optionals (!pkgs.stdenv.isDarwin) [
         # Can be moved above when fixed https://github.com/NixOS/nixpkgs/issues/202507 
         # or merged https://github.com/NixOS/nixpkgs/pull/211321
         vadimcn.vscode-lldb 
       ];
       userSettings = {
-        "CodeGPT.Autocomplete.provider" = "Ollama - deepseek-coder:base";
-        "CodeGPT.apiKey" = "Ollama";
         "[javascript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[json]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
@@ -41,16 +54,21 @@ in
         "editor.formatOnSave" = true;
         "editor.formatOnSaveMode" = "modificationsIfAvailable";
         "files.autoSave" = "onFocusChange";
+        "files.insertFinalNewline" = true;
+        "files.trimTrailingWhitespace" = true;
         "git.autofetch" = true;
+        "jupyter.askForKernelRestart" = false;
         "nix.enableLanguageServer" = true;
         "nix.serverPath" = "nixd";
         "nix.serverSettings"."nixd"."formatting"."command" = [ "nixpkgs-fmt" ];
+        "notebook.formatOnSave.enabled" = true;
+        "notebook.insertFinalNewline" = true;
+        "notebook.lineNumbers" = "on";
         "prettier.singleQuote" = true;
         "prettier.tabWidth" = 4;
         "terminal.integrated.defaultProfile.linux" = "fish";
         "terminal.integrated.defaultProfile.osx" = "fish";
         "workbench.colorTheme" = "Catppuccin Frappé";
-        "jupyter.askForKernelRestart" = false;
       };
     };
   };

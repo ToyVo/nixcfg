@@ -22,7 +22,7 @@ in
       clipboard.register = "unnamedplus";
       colorschemes.catppuccin = {
         enable = true;
-        flavour = config.catppuccin.flavour;
+        settings.flavour = config.catppuccin.flavour;
       };
       globals = {
         mapleader = " ";
@@ -290,7 +290,7 @@ in
           options.desc = "[S]earch [/] in Open Files";
         }
         {
-          mode = "n"; 
+          mode = "n";
           key = "<leader>sn";
           action = ''
             function()
@@ -490,7 +490,7 @@ in
           extensions = {
             dap-ui = {
               enable = true;
-              icons = { 
+              icons = {
                 expanded = "▾";
                 collapsed = "▸";
                 current_frame = "*";
