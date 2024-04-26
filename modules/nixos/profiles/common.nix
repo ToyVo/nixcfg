@@ -29,7 +29,6 @@ in
       fish.enable = true;
       nh = {
         enable = true;
-        package = inputs.nh.packages.${pkgs.stdenv.hostPlatform.system}.default;
         flake = "${config.users.users.${config.userPresets.toyvo.name}.home}/nixcfg";
         clean.enable = true;
       };
