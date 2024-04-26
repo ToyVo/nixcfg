@@ -354,11 +354,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1714059309,
-        "narHash": "sha256-pTwsDIbBv+wXWNy4j7O4LVGKKgqIr5F/QCKEL0sNb4s=",
+        "lastModified": 1714084064,
+        "narHash": "sha256-WUEFYyOzgWOr6pK2/1fCohUUF77wuj1zIeP8jvPL0LU=",
         "owner": "hyprwm",
         "repo": "hyprland",
-        "rev": "9fc3cb5629bcc006603e4f2f7906c75d393798dc",
+        "rev": "1d40af64d352bd5a87c7d53a52707fc5cfc6940e",
         "type": "github"
       },
       "original": {
@@ -483,6 +483,24 @@
         "type": "github"
       }
     },
+    "nh": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1714104968,
+        "narHash": "sha256-DjpFsQiYNK7vO1VvkNclKYb5h8yMhqUfhnB3ElD7fGs=",
+        "owner": "toyvo",
+        "repo": "nh",
+        "rev": "818f58d00386f04704bc8ef8368da5d5866d5bed",
+        "type": "github"
+      },
+      "original": {
+        "owner": "toyvo",
+        "repo": "nh",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -579,16 +597,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1713895582,
-        "narHash": "sha256-cfh1hi+6muQMbi9acOlju3V1gl8BEaZBXBR9jQfQi4U=",
-        "owner": "nixos",
+        "lastModified": 1711668574,
+        "narHash": "sha256-u1dfs0ASQIEr1icTVrsKwg2xToIpn7ZXxW3RHfHxshg=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "572af610f6151fd41c212f897c71f7056e3fb518",
+        "rev": "219951b495fc2eac67b1456824cc1ec1fd2ee659",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
+        "owner": "NixOS",
+        "ref": "nixos-23.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -610,6 +628,22 @@
       }
     },
     "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1713895582,
+        "narHash": "sha256-cfh1hi+6muQMbi9acOlju3V1gl8BEaZBXBR9jQfQi4U=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "572af610f6151fd41c212f897c71f7056e3fb518",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1713596654,
         "narHash": "sha256-LJbHQQ5aX1LVth2ST+Kkse/DRzgxlVhTL1rxthvyhZc=",
@@ -640,11 +674,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1714051920,
-        "narHash": "sha256-WjIT9Rp/Tn1t1mzbdUCy4EzIHCBnRo5rY2VyuhnGnOs=",
+        "lastModified": 1714081299,
+        "narHash": "sha256-bhVFnkLB8jQUbHrUNiJtF6mGW46yl6ZfuJKCJmJ6QSY=",
         "owner": "pta2002",
         "repo": "nixvim",
-        "rev": "3981a31464bdd50fcfea7ae3176c37e33dac07da",
+        "rev": "77efb038df92ea1f42bf87a3428fef55aac73eef",
         "type": "github"
       },
       "original": {
@@ -691,9 +725,10 @@
         "hyprland": "hyprland",
         "jovian": "jovian",
         "mkAlias": "mkAlias",
+        "nh": "nh",
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "nixvim": "nixvim",
         "rust-overlay": "rust-overlay",
         "snowfall-lib": "snowfall-lib",
@@ -708,11 +743,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1714011248,
-        "narHash": "sha256-vKk9IOxZJ52Ao3uIRIjHRYYe+IpVOY6NzwToSxaO1J0=",
+        "lastModified": 1714097613,
+        "narHash": "sha256-044xbpBszupqN3nl/CGOCJtTQ4O6Aca81mJpX45i8/I=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "9a2a11479b94afaf1ecc46384b27abda0d3d5f9d",
+        "rev": "2a42c742ab04b61d9b2f1edf392842cf9f27ebfd",
         "type": "github"
       },
       "original": {
@@ -745,7 +780,7 @@
     },
     "sops-nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {

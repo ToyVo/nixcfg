@@ -27,6 +27,12 @@ in
     programs = {
       zsh.enable = true;
       fish.enable = true;
+      nh = {
+        enable = true;
+        package = inputs.nh.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        flake = "${config.users.users.${config.userPresets.toyvo.name}.home}/nixcfg";
+        clean.enable = true;
+      };
     };
     nix = {
       package = pkgs.nixVersions.nix_2_19;
@@ -41,10 +47,6 @@ in
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
         ];
-      };
-      gc = {
-        automatic = true;
-        options = "--delete-older-than 30d";
       };
     };
     home-manager = {
@@ -96,6 +98,9 @@ in
         pipenv
         myPython
         dotnet-sdk_8
+        podman
+        podman-compose
+        kubectl
       ]
       ++ lib.optionals config.profiles.gui.enable [
         gimp

@@ -30,7 +30,7 @@
       "mongodb-database-tools"
     ];
     casks = [
-      { name = "docker"; greedy = true; }
+      { name = "podman-desktop"; greedy = true; }
       { name = "mongodb-compass"; greedy = true; }
       { name = "slack"; greedy = true; }
       # must be installed at /Applications, nix-darwin installs it at /Applications/nix apps

@@ -6,6 +6,7 @@ in
   imports = [
     ../../nixos/profiles/common.nix
     ../../nixos/users/common.nix
+    inputs.nh.nixDarwinModules.default
    ];
 
   config = lib.mkIf cfg.enable {

@@ -6,7 +6,6 @@ in
   options.fileSystemPresets.btrfs.enable = lib.mkEnableOption "root btrfs partition";
 
   config = lib.mkIf cfg.btrfs.enable {
-    virtualisation.docker.storageDriver = "btrfs";
     fileSystems = {
       "/" = {
         device = "/dev/disk/by-label/NIXOS";
