@@ -76,16 +76,23 @@ in
         { name = "grammarly"; greedy = true; }
         { name = "proton-drive"; greedy = true; }
         # Nix package exists but unavailable on darwin
-        { name = "protonvpn"; greedy = true; }
-        { name = "proton-mail"; greedy = true; }
+        { name = "bruno"; greedy = true; }
         { name = "floorp"; greedy = true; }
         { name = "jetbrains-toolbox"; greedy = true; }
-        { name = "bruno"; greedy = true; }
-        { name = "onlyoffice"; greedy = true; }
         { name = "keybase"; greedy = true; }
         { name = "logseq"; greedy = true; }
+        { name = "onlyoffice"; greedy = true; }
+        { name = "podman-desktop"; greedy = true; }
+        { name = "proton-mail"; greedy = true; }
+        { name = "protonvpn"; greedy = true; }
       ] ++ lib.optionals (system == "aarch64-darwin") [
         { name = "lm-studio"; greedy = true; }
+      ];
+      taps = [
+        "cfergeau/crc"
+      ];
+      brews = [
+        "vfkit"
       ];
     };
     home-manager.sharedModules = [
