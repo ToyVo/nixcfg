@@ -6,6 +6,7 @@ in
   imports = [
     inputs.nixpkgs.nixosModules.notDetected
     inputs.catppuccin.nixosModules.catppuccin
+    inputs.nh.nixosModules.default
     ./common.nix
   ];
 
@@ -48,6 +49,13 @@ in
       };
       nix-ld = {
         enable = true;
+        libraries = with pkgs; [
+          nss
+          pcre
+          pcre2
+          pcre16
+          pcre-cpp
+        ];
       };
     };
     services = {
