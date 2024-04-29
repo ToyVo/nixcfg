@@ -39,6 +39,10 @@
       enable = true;
       openFirewall = true;
     };
+    open-webui = {
+      enable = true;
+      openFirewall = true;
+    };
   };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
