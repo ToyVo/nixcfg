@@ -488,11 +488,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1714166659,
-        "narHash": "sha256-t7FETIq431bPrggcGpkQW01+CcNsBxH/SWnvZxenPac=",
+        "lastModified": 1714406296,
+        "narHash": "sha256-pdMktdtWKaoVaRCN1IXVsJSWRYtz3+kcBO31hGMy1hI=",
         "owner": "toyvo",
         "repo": "nh",
-        "rev": "d52b700b40de2bab1a3163481d290d10b600e81c",
+        "rev": "7e252a3366f8cd4f6a6f7367aab3d67c058feca1",
         "type": "github"
       },
       "original": {

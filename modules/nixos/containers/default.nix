@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, ... }:
 let
   cfg = config.containerPresets;
 in
@@ -8,13 +8,11 @@ in
   };
 
   config = lib.mkIf cfg.podman.enable {
-    virtualisation = {
-      podman = lib.mkIf cfg.podman.enable {
-        enable = true;
-        defaultNetwork.settings.dns_enabled = true;
-        dockerCompat = true;
-        dockerSocket.enable = true;
-      };
+    virtualisation.podman = {
+      enable = true;
+      defaultNetwork.settings.dns_enabled = true;
+      dockerCompat = true;
+      dockerSocket.enable = true;
     };
   };
 }

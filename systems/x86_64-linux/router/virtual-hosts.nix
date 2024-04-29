@@ -49,5 +49,11 @@
         reverse_proxy http://10.1.0.3:11434
       '';
     };
+    "https://chat.diekvoss.net:443" = {
+      useACMEHost = "diekvoss.net";
+      extraConfig = ''
+        reverse_proxy http://10.1.0.3:11435
+      '';
+    };
   };
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, lib, ... }:
 let
   cfg = config.containerPresets.homepage;
 in
@@ -24,7 +24,7 @@ in
       image = "ghcr.io/gethomepage/homepage:latest";
       ports = [ "${toString cfg.port}:3000"];
       volumes = [
-        "${cfg.datadir}:/app/config" 
+        "${cfg.datadir}:/app/config"
         "/var/run/podman/podman.sock:/var/run/docker.sock:ro"
       ];
     };
