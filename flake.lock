@@ -39,22 +39,6 @@
         "type": "github"
       }
     },
-    "catppuccin-rio": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1701812339,
-        "narHash": "sha256-bT789sEDJl3wQh/yfbmjD/J7XNr2ejOd0UsASguyCQo=",
-        "owner": "catppuccin",
-        "repo": "rio",
-        "rev": "a8d3d3c61f828da5f3d6d02d7d489108f6428178",
-        "type": "github"
-      },
-      "original": {
-        "owner": "catppuccin",
-        "repo": "rio",
-        "type": "github"
-      }
-    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -674,15 +658,15 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1714142618,
-        "narHash": "sha256-0ijCe5k7Q569PO/hP/yryh9aB33zJyjs4NKbPQxVW8c=",
-        "owner": "pta2002",
+        "lastModified": 1714600955,
+        "narHash": "sha256-AHz9OVQeVlbhTboR5Wchjet9a2h+a8aPTDjEyVQLz/g=",
+        "owner": "nix-community",
         "repo": "nixvim",
-        "rev": "0fc190144f9acf72ae8705ea304577e90389da20",
+        "rev": "82a19581defe682ff9ca7cb8b1b980b6dc297cf2",
         "type": "github"
       },
       "original": {
-        "owner": "pta2002",
+        "owner": "nix-community",
         "repo": "nixvim",
         "type": "github"
       }
@@ -719,7 +703,6 @@
       "inputs": {
         "apple-silicon-support": "apple-silicon-support",
         "catppuccin": "catppuccin",
-        "catppuccin-rio": "catppuccin-rio",
         "darwin": "darwin",
         "home-manager": "home-manager",
         "hyprland": "hyprland",

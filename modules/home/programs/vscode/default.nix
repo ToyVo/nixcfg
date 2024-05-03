@@ -11,7 +11,7 @@ in
         ms-python.black-formatter
         catppuccin.catppuccin-vsc
         catppuccin.catppuccin-vsc-icons
-        # vadimcn.vscode-lldb
+        vadimcn.vscode-lldb
         # continue.continue
         serayuzgur.crates
         usernamehw.errorlens
@@ -30,6 +30,7 @@ in
         # Jupyter PowerToys
         ms-toolsai.vscode-jupyter-slideshow
         ms-vscode.live-server
+        ms-vscode.makefile-tools
         # Mypy Type Checker
         jnoortheen.nix-ide
         # Polyglot notebooks
@@ -39,10 +40,6 @@ in
         # Python Debugger
         rust-lang.rust-analyzer
         vscodevim.vim
-      ] ++ lib.optionals (!pkgs.stdenv.isDarwin) [
-        # Can be moved above when fixed https://github.com/NixOS/nixpkgs/issues/202507 
-        # or merged https://github.com/NixOS/nixpkgs/pull/211321
-        vadimcn.vscode-lldb 
       ];
       userSettings = {
         "[javascript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
@@ -53,6 +50,7 @@ in
         "editor.fontSize" = 14;
         "editor.formatOnSave" = true;
         "editor.formatOnSaveMode" = "modificationsIfAvailable";
+        "diffEditor.ignoreTrimWhitespace" = false;
         "files.autoSave" = "onFocusChange";
         "files.insertFinalNewline" = true;
         "files.trimTrailingWhitespace" = true;

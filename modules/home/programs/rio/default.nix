@@ -14,13 +14,11 @@ in
           program = "${pkgs.nushell}/bin/nu";
           args = [];
         };
-      } // lib.importTOML "${inputs.catppuccin-rio}/catppuccin-${config.catppuccin.flavour}.toml";
-      # when the PR for adding rio to catppuccin nix is merged https://github.com/catppuccin/nix/pull/100,
-      # we can remove the line above, uncomment the line below, and remove catppuccin-rio from flake.nix
-      # catppuccin = {
-      #   enable = true;
-      #   flavour = config.catppuccin.flavour;
-      # };
+      };
+      catppuccin = {
+        enable = true;
+        flavour = config.catppuccin.flavour;
+      };
     };
   };
 }

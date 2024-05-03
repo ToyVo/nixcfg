@@ -42,7 +42,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
-      url = "github:pta2002/nixvim";
+      url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
@@ -55,10 +55,6 @@
 
     # Misc sources
     catppuccin.url = "github:catppuccin/nix";
-    catppuccin-rio = {
-      url = "github:catppuccin/rio";
-      flake = false;
-    };
   };
 
   outputs = inputs:
