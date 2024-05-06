@@ -27,10 +27,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.rust-overlay.follows = "rust-overlay";
     };
-    jovian = {
-      url = "github:Jovian-Experiments/Jovian-NixOS";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
 
     # Applications
     hyprland = {
