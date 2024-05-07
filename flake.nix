@@ -27,19 +27,9 @@
 
     # Applications
     hyprland.url = "github:hyprwm/hyprland";
-    mkAlias = {
-      url = "github:reckenrode/mkAlias";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    mkAlias.url = "github:reckenrode/mkAlias";
+    nixvim.url = "github:nix-community/nixvim";
+    rust-overlay.url = "github:oxalica/rust-overlay";
     sops-nix.url = "github:Mic92/sops-nix";
     nh.url = "github:toyvo/nh";
 
