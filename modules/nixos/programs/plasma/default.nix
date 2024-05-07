@@ -6,10 +6,8 @@ in
 {
   config = lib.mkIf (plasma6.enable || cfg.plasma5.enable || cfg.plasma5.mobile.enable) {
     services = {
-      xserver = {
-        enable = true;
-        libinput.enable = true;
-      };
+      xserver.enable = true;
+      libinput.enable = true;
       displayManager.sddm.enable = true;
     };
     profiles.gui.enable = true;

@@ -22,18 +22,11 @@
 
     # Hardware
     nixos-hardware.url = "github:nixos/nixos-hardware";
-    apple-silicon-support = {
-      url = "github:tpwrules/nixos-apple-silicon";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.follows = "rust-overlay";
-    };
+    apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
 
     # Applications
-    hyprland = {
-      url = "github:hyprwm/hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    hyprland.url = "github:hyprwm/hyprland";
     mkAlias = {
       url = "github:reckenrode/mkAlias";
       inputs.nixpkgs.follows = "nixpkgs";

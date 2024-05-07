@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, system, ... }:
 let
   cfg = config.programs.vscode;
 in
@@ -36,10 +36,11 @@ in
         # Polyglot notebooks
         esbenp.prettier-vscode
         ms-python.vscode-pylance
-        ms-python.python
         # Python Debugger
         rust-lang.rust-analyzer
         vscodevim.vim
+      ] ++ lib.optionals (system != "aarch64-linux") [
+        ms-python.python
       ];
       userSettings = {
         "[javascript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";

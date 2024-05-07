@@ -4,9 +4,11 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    services.xserver = {
-      enable = true;
-      displayManager.lightdm.enable = true;
+    services = {
+      xserver = {
+        enable = true;
+        displayManager.lightdm.enable = true;
+      };
       libinput.enable = true;
     };
     profiles.gui.enable = true;

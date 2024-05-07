@@ -4,9 +4,11 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    services.xserver = {
-      enable = true;
-      displayManager.gdm.enable = true;
+    services = {
+      xserver = {
+        enable = true;
+        displayManager.gdm.enable = true;
+      };
       libinput.enable = true;
     };
     programs.gnupg.agent.pinentryPackage = pkgs.pinentry-gnome3;
