@@ -21,6 +21,7 @@
     torch
     jax
     pipx
+    pymongo
   ];
   homebrew = {
     brews = [

@@ -17,7 +17,7 @@
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
     kernelModules = [ "kvm-amd" ];
   };
-  profiles.defaults.enable = true;
+  profiles.gaming.enable = true;
   userPresets.toyvo.enable = true;
   fileSystemPresets.efi.enable = true;
   fileSystemPresets.btrfs.enable = true;
@@ -60,21 +60,9 @@
     };
   };
   users.groups.share = {};
-  programs = {
-    steam.enable = true;
-    dconf.enable = true;
-  };
+  programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [
-    steamPackages.steamcmd
-    discord
-    r2modman
-    (pkgs.wrapOBS {
-      plugins = with pkgs.obs-studio-plugins; [
-        obs-gstreamer
-        obs-vkcapture
-        obs-vaapi
-      ];
-    })
+    bottles
     virt-manager
     virt-viewer
     spice

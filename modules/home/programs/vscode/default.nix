@@ -12,13 +12,11 @@ in
         catppuccin.catppuccin-vsc
         catppuccin.catppuccin-vsc-icons
         vadimcn.vscode-lldb
-        # continue.continue
+        continue.continue
         serayuzgur.crates
         usernamehw.errorlens
         dbaeumer.vscode-eslint
         tamasfe.even-better-toml
-        github.copilot
-        github.copilot-chat
         # Github issue notebooks
         eamodio.gitlens
         ms-python.isort
@@ -45,6 +43,7 @@ in
       userSettings = {
         "[javascript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[json]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+        "[jsonc]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "editor.fontFamily" = "'MonaspiceNe Nerd Font'";
         "editor.fontLigatures" = "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'";

@@ -9,7 +9,7 @@
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
     kernelModules = [ "kvm-amd" ];
   };
-  profiles.defaults.enable = true;
+  profiles.gaming.enable = true;
   userPresets.toyvo.enable = true;
   fileSystemPresets.efi.enable = true;
   fileSystemPresets.btrfs.enable = true;
@@ -34,17 +34,6 @@
   };
   environment.systemPackages = with pkgs; [
     maliit-keyboard
-    steam
-    discord
-    r2modman
-    prismlauncher
     pwvucontrol
-    (pkgs.wrapOBS {
-      plugins = with pkgs.obs-studio-plugins; [
-        obs-gstreamer
-        obs-vkcapture
-        obs-vaapi
-      ];
-    })
   ];
 }
