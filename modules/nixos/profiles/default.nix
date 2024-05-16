@@ -1,4 +1,4 @@
-{ pkgs, lib, config, inputs, system, ... }:
+{ pkgs, lib, config, inputs, ... }:
 let
   cfg = config.profiles;
 in
@@ -57,7 +57,6 @@ in
           pcre-cpp
         ];
       };
-      command-not-found.dbPath = inputs.flake-programs-sqlite.packages.${system}.programs-sqlite;
     };
     services = {
       xserver.xkb = {

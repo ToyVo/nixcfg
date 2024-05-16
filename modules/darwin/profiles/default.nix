@@ -95,11 +95,9 @@ in
         "vfkit"
       ];
     };
-    home-manager.sharedModules = [
-      {
-        targets.darwin.aliasHomeApplications = true;
-      }
-    ];
+    home-manager.sharedModules = [{
+      targets.darwin.aliasHomeApplications = true;
+    }];
     profiles.gui.enable = true;
   };
 }
