@@ -7,15 +7,16 @@ in
     programs.fish = {
       interactiveShellInit = ''
         set fish_greeting
+        fish_vi_key_bindings
+      '';
+      shellInit = ''
         if test -e $HOME/.nix-profile/etc/profile.d/nix.fish
           source $HOME/.nix-profile/etc/profile.d/nix.fish
         end
         if test -e $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
           ${pkgs.babelfish}/bin/babelfish < $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh | source
         end
-        fish_vi_key_bindings
-      '';
-      shellInit = ''
+
         set nix_paths ${lib.concatStringsSep " " config.home.sessionPath}
         set paths_to_export
         for path in $PATH

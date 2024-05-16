@@ -1,4 +1,4 @@
-{ pkgs, config, lib, inputs, system, ... }:
+{ config, lib, inputs, system, ... }:
 let
   pkgs = import inputs.nixpkgs {
     inherit system;
@@ -47,6 +47,7 @@ in
           "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
         ];
       };
+      nixPath = [ "nixpkgs=${inputs.nixpkgs-unstable}" "nixos=${inputs.nixos-unstable}" ];
     };
     home-manager = {
       useGlobalPkgs = true;

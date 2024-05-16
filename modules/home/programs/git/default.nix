@@ -1,4 +1,4 @@
-{ lib, config, pkgs, inputs, ... }:
+{ lib, config, ... }:
 let
   cfg = config.programs.git;
 in

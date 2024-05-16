@@ -9,9 +9,14 @@ in
         # Sorting by how they appear in vscode
         # .NET Install Tool
         ms-python.black-formatter
+        # ms-vscode.cpptools
+        ms-vscode.cpptools-extension-pack
         catppuccin.catppuccin-vsc
         catppuccin.catppuccin-vsc-icons
+        ms-vscode.cmake-tools
+        ms-vscode-remote.remote-ssh
         vadimcn.vscode-lldb
+        ms-vscode-remote.remote-containers
         continue.continue
         serayuzgur.crates
         usernamehw.errorlens
@@ -34,11 +39,14 @@ in
         # Polyglot notebooks
         esbenp.prettier-vscode
         ms-python.vscode-pylance
-        # Python Debugger
+        # ms-python.python
+        ms-python.debugpy
         rust-lang.rust-analyzer
         vscodevim.vim
-      ] ++ lib.optionals (system != "aarch64-linux") [
+      ] ++ lib.optionals (builtins.elem system ["aarch64-darwin" "x86_64-darwin" "x86_64-linux"]) [
         ms-python.python
+      ] ++ lib.optionals (builtins.elem system ["aarch64-linux" "x86_64-linux"]) [
+        ms-vscode.cpptools
       ];
       userSettings = {
         "[javascript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";

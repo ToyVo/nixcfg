@@ -34,7 +34,7 @@ in
   config = lib.mkIf cfg.powershell.enable {
     xdg.configFile."powershell/Microsoft.PowerShell_profile.ps1" = {
       text = lib.mkMerge [
-        (''
+        ''
           ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "[Environment]::SetEnvironmentVariable(\"${name}\", \"${value}\")") config.home.sessionVariables)}
           $pre_paths = [Environment]::GetEnvironmentVariable('PATH').split([IO.Path]::PathSeparator)
           $nix_paths = "${lib.concatStringsSep "\", \"" config.home.sessionPath}"
@@ -53,7 +53,7 @@ in
           }
           [Environment]::SetEnvironmentVariable('PATH', $paths_to_export -join [IO.Path]::PathSeparator)
           ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "Function nixalias${name} { param([Parameter(ValueFromRemainingArguments=$true)] [string[]]$Arguments) ${value} $Arguments}\nSet-Alias -Name ${name} -Value nixalias${name}") cfg.powershell.shellAliases)}
-        '')
+        ''
         (lib.mkIf (starship.enable && starship.enablePowerShellIntegration) ''
           Invoke-Expression (&starship init powershell)
         '')
