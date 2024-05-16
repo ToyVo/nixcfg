@@ -7,6 +7,7 @@ in
     inputs.nixpkgs.nixosModules.notDetected
     inputs.catppuccin.nixosModules.catppuccin
     inputs.nh.nixosModules.default
+    inputs.flake-programs-sqlite.nixosModules.programs-sqlite
     ./common.nix
   ];
 
