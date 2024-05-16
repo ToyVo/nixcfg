@@ -51,6 +51,9 @@ in
         "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         "/Library/Apple/usr/bin"
       ];
+      packages = [
+        inputs.nh.packages.${system}.default
+      ];
     };
     xdg.configFile = {
       "nix/nix.conf".text = ''
