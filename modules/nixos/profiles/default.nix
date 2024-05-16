@@ -57,6 +57,7 @@ in
           pcre-cpp
         ];
       };
+      command-not-found.enable = false;
     };
     services = {
       xserver.xkb = {
