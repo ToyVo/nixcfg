@@ -1,4 +1,4 @@
-{ pkgs, lib, config, inputs, ... }:
+{ pkgs, lib, config, inputs, system, ... }:
 let
   cfg = config.profiles;
 in
@@ -7,7 +7,6 @@ in
     inputs.nixpkgs.nixosModules.notDetected
     inputs.catppuccin.nixosModules.catppuccin
     inputs.nh.nixosModules.default
-    inputs.flake-programs-sqlite.nixosModules.programs-sqlite
     ./common.nix
   ];
 
@@ -58,6 +57,7 @@ in
           pcre-cpp
         ];
       };
+      command-not-found.dbPath = inputs.flake-programs-sqlite.packages.${system}.programs-sqlite;
     };
     services = {
       xserver.xkb = {
