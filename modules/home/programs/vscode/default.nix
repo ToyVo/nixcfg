@@ -65,8 +65,8 @@ in
         "git.autofetch" = true;
         "jupyter.askForKernelRestart" = false;
         "nix.enableLanguageServer" = true;
-        "nix.serverPath" = "nixd";
-        "nix.serverSettings"."nixd"."formatting"."command" = [ "nixpkgs-fmt" ];
+        "nix.serverPath" = "nil";
+        "nix.serverSettings"."nil"."formatting"."command" = [ "nixpkgs-fmt" ];
         "notebook.formatOnSave.enabled" = true;
         "notebook.insertFinalNewline" = true;
         "notebook.lineNumbers" = "on";

@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     darwin = {
@@ -21,12 +22,14 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Hardware
     nixos-hardware.url = "github:nixos/nixos-hardware";
     apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
-
     # Applications
     hyprland.url = "github:hyprwm/hyprland";
     mkAlias.url = "github:reckenrode/mkAlias";
@@ -34,7 +37,6 @@
     rust-overlay.url = "github:oxalica/rust-overlay";
     sops-nix.url = "github:Mic92/sops-nix";
     nh.url = "github:toyvo/nh";
-
     # Misc sources
     catppuccin.url = "github:catppuccin/nix";
   };

@@ -7,6 +7,7 @@ in
     ../../nixos/profiles/common.nix
     ../../nixos/users/common.nix
     inputs.nh.nixDarwinModules.default
+    inputs.nix-index-database.darwinModules.nix-index
    ];
 
   config = lib.mkIf cfg.enable {

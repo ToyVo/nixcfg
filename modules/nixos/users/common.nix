@@ -1,11 +1,11 @@
 { lib, pkgs, config, ... }:
 let
   cfg = config.userPresets;
-  homePath = if pkgs.stdenv.isDarwin then 
-    "/Users" else 
+  homePath = if pkgs.stdenv.isDarwin then
+    "/Users" else
     "/home";
-  rootHomeDirectory = if pkgs.stdenv.isDarwin then 
-    "/var/root" else 
+  rootHomeDirectory = if pkgs.stdenv.isDarwin then
+    "/var/root" else
     "/root";
   enableGui = config.profiles.gui.enable;
 in
@@ -39,17 +39,21 @@ in
       "root"
       cfg.toyvo.name
     ];
-    home-manager.users = {
-      ${cfg.toyvo.name} = lib.mkIf cfg.toyvo.enable {
-        home.username = cfg.toyvo.name;
-        home.homeDirectory = "${homePath}/${cfg.toyvo.name}";
-        profiles.toyvo.enable = true;
-        profiles.gui.enable = enableGui;
-      };
-      root = {
-        home.username = "root";
-        home.homeDirectory = rootHomeDirectory;
-        profiles.defaults.enable = true;
+    home-manager = {
+      sharedModules = [{
+        profiles.defaults.enable = lib.mkDefault true;
+      }];
+      users = {
+        ${cfg.toyvo.name} = lib.mkIf cfg.toyvo.enable {
+          home.username = cfg.toyvo.name;
+          home.homeDirectory = "${homePath}/${cfg.toyvo.name}";
+          profiles.toyvo.enable = true;
+          profiles.gui.enable = enableGui;
+        };
+        root = {
+          home.username = "root";
+          home.homeDirectory = rootHomeDirectory;
+        };
       };
     };
   };

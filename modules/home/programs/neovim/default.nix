@@ -9,7 +9,7 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      nixd
+      nil
       nixpkgs-fmt
     ];
     programs.nixvim = {
@@ -409,9 +409,9 @@ in
           capabilities = ''
             capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
           '';
-          servers = {
-            lua-ls.enable = true;
-          };
+          # servers = {
+          #   lua-ls.enable = true;
+          # };
           onAttach = ''
             if client and client.server_capabilities.documentHighlightProvider then
               vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {

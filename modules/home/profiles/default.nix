@@ -1,10 +1,11 @@
 { pkgs, lib, config, system, inputs, ... }:
-let 
+let
   cfg = config.profiles;
-in 
+in
 {
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
+    inputs.nix-index-database.hmModules.nix-index
   ];
 
   options.profiles = {
@@ -34,7 +35,7 @@ in
         "/opt/homebrew/sbin"
       ] ++ lib.optionals pkgs.stdenv.isDarwin [
         "/System/Cryptexes/App/usr/bin"
-      ] ++ 
+      ] ++
       [
         "/usr/local/bin"
         "/usr/local/sbin"
@@ -77,6 +78,7 @@ in
       nushell.enable = true;
       powershell.enable = true;
       nvim.enable = true;
+      nix-index-database.comma.enable = true;
     };
     services.easyeffects = lib.mkIf (pkgs.stdenv.isLinux && cfg.gui.enable) {
       enable = true;

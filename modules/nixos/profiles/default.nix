@@ -7,6 +7,7 @@ in
     inputs.nixpkgs.nixosModules.notDetected
     inputs.catppuccin.nixosModules.catppuccin
     inputs.nh.nixosModules.default
+    inputs.nix-index-database.nixosModules.nix-index
     ./common.nix
   ];
 

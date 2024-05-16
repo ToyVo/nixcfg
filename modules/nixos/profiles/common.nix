@@ -32,7 +32,6 @@ in
         flake = "${config.users.users.${config.userPresets.toyvo.name}.home}/nixcfg";
         clean.enable = true;
       };
-      nix-index.enable = true;
     };
     nix = {
       package = pkgs.nixVersions.nix_2_19;
@@ -53,9 +52,6 @@ in
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
-      sharedModules = [{
-        programs.nix-index.enable = true;
-      }];
     };
     nixpkgs.overlays = [ inputs.rust-overlay.overlays.default ];
     environment = let
