@@ -52,6 +52,9 @@ in
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
+      sharedModules = [{
+        nix.package = pkgs.nixVersions.nix_2_19;
+      }]
     };
     nixpkgs.overlays = [ inputs.rust-overlay.overlays.default ];
     environment = let
