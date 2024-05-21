@@ -6,6 +6,7 @@
   ];
   homebrew.casks = [
     { name = "prusaslicer"; greedy = true; }
+    { name = "discord"; greedy = true; }
   ];
   homebrew.masApps = {
     "Yubico Authenticator" = 1497506650;

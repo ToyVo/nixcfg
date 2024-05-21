@@ -33,6 +33,7 @@
     casks = [
       { name = "mongodb-compass"; greedy = true; }
       { name = "slack"; greedy = true; }
+      { name = "keybase"; greedy = true; }
       # must be installed at /Applications, nix-darwin installs it at /Applications/nix apps
       { name = "1password"; greedy = true; }
     ];

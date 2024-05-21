@@ -78,6 +78,7 @@
     win-virtio
     win-spice
     distrobox
+    mpv
   ];
   virtualisation = {
     libvirtd = {

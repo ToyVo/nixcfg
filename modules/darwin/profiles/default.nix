@@ -80,7 +80,6 @@ in
         { name = "bruno"; greedy = true; }
         { name = "floorp"; greedy = true; }
         { name = "jetbrains-toolbox"; greedy = true; }
-        { name = "keybase"; greedy = true; }
         { name = "logseq"; greedy = true; }
         { name = "onlyoffice"; greedy = true; }
         { name = "podman-desktop"; greedy = true; }
