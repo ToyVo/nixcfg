@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   imports = [ ./samba.nix ];
 
   hardware = {
@@ -9,7 +9,10 @@
       driSupport = true;
       driSupport32Bit = true;
     };
-    nvidia.modesetting.enable = true;
+    nvidia = {
+      modesetting.enable = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+    };
   };
   networking = {
     hostName = "ncase";
