@@ -9,13 +9,17 @@ in
   };
 
   config = {
-    users.users.nixremote = lib.mkIf cfg.server.enable {
-      name = "nixremote";
-      home = "/home/nixremote";
-      openssh.authorizedKeys.keys = [
-        (lib.fileContents ./nixremote_ed25519.pub)
-      ];
-      isSystemUser = true;
+      users = {
+        users.nixremote = lib.mkIf cfg.server.enable {
+        name = "nixremote";
+        group = "nixremote";
+        home = "/home/nixremote";
+        openssh.authorizedKeys.keys = [
+          (lib.fileContents ./nixremote_ed25519.pub)
+        ];
+        isSystemUser = true;
+      };
+      groups.nixremote = {};
     };
 
     home-manager.users.root.programs.ssh = lib.mkIf cfg.client.enable {
