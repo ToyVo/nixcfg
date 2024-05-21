@@ -15,7 +15,7 @@ in
       openssh.authorizedKeys.keys = [
         (lib.fileContents ./nixremote_ed25519.pub)
       ];
-      isNormalUser = true;
+      isSystemUser = true;
     };
 
     home-manager.users.root.programs.ssh = lib.mkIf cfg.client.enable {

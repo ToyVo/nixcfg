@@ -4,6 +4,12 @@
   hardware = {
     cpu.amd.updateMicrocode = true;
     bluetooth.enable = true;
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
+    nvidia.modesetting.enable = true;
   };
   networking = {
     hostName = "ncase";
@@ -19,6 +25,7 @@
   };
   profiles.gaming.enable = true;
   userPresets.toyvo.enable = true;
+  userPresets.chloe.enable = true;
   fileSystemPresets.efi.enable = true;
   fileSystemPresets.btrfs.enable = true;
   services = {
@@ -33,6 +40,7 @@
       hostName = "nextcloud.diekvoss.net";
       config.adminpassFile = "${./nextcloudpass.txt}";
     };
+    xserver.videoDrivers = [ "nvidia" ];
   };
   containerPresets = {
     homepage = {
@@ -50,10 +58,6 @@
   };
   users.users = {
     toyvo.extraGroups = [ "libvirtd" ];
-    chloe = {
-      isNormalUser = true;
-      description = "Chloe Diekvoss";
-    };
     share = {
       isSystemUser = true;
       group = "share";

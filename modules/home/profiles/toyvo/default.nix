@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ lib, config, ... }:
 let
   cfg = config.profiles;
 in
@@ -25,6 +25,10 @@ in
       ssh.enable = true;
       zellij.enable = true;
       ideavim.enable = true;
+    };
+    catppuccin = {
+      flavour = "frappe";
+      accent = "red";
     };
   };
 }
