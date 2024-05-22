@@ -86,6 +86,10 @@ in
     services.easyeffects = lib.mkIf (pkgs.stdenv.isLinux && cfg.gui.enable) {
       enable = true;
     };
+    catppuccin = {
+      flavor = lib.mkDefault "frappe";
+      accent = lib.mkDefault "red";
+    };
   };
 }
 

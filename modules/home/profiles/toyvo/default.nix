@@ -27,7 +27,7 @@ in
       ideavim.enable = true;
     };
     catppuccin = {
-      flavour = "frappe";
+      flavor = "frappe";
       accent = "red";
     };
   };

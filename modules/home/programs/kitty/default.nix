@@ -7,7 +7,7 @@ in
     programs.kitty = {
       catppuccin = {
         enable = true;
-        flavour = config.catppuccin.flavour;
+        flavor = config.catppuccin.flavor;
       };
       font = {
         name = "MonaspiceNe Nerd Font Mono Regular";

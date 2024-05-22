@@ -15,7 +15,7 @@ in
       ssh.enable = true;
     };
     catppuccin = {
-      flavour = "latte";
+      flavor = "latte";
       accent = "pink";
     };
   };

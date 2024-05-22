@@ -11,7 +11,7 @@ in
           enable = true;
           catppuccin = {
             enable = true;
-            flavour = config.catppuccin.flavour;
+            flavor = config.catppuccin.flavor;
           };
         };
         extraConfig = {
@@ -54,7 +54,7 @@ in
         enable = true;
         catppuccin = {
           enable = true;
-          flavour = config.catppuccin.flavour;
+          flavor = config.catppuccin.flavor;
           accent = config.catppuccin.accent;
         };
       };

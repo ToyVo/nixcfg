@@ -18,7 +18,7 @@ in
     programs.helix = {
       catppuccin = {
         enable = true;
-        flavour = config.catppuccin.flavour;
+        flavor = config.catppuccin.flavor;
       };
       settings = {
         editor = {

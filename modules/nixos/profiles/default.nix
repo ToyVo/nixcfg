@@ -21,12 +21,12 @@ in
         LC_TIME = "C.UTF-8";
       };
     };
-    catppuccin.flavour = "frappe";
+    catppuccin.flavor = "frappe";
     console = {
       useXkbConfig = true;
       catppuccin = {
         enable = true;
-        flavour = config.catppuccin.flavour;
+        flavor = config.catppuccin.flavor;
       };
     };
     environment.systemPackages = with pkgs; [

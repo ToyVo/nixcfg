@@ -6,7 +6,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.bat.catppuccin = {
       enable = true;
-      flavour = config.catppuccin.flavour;
+      flavor = config.catppuccin.flavor;
     };
     home.sessionVariables = {
       MANPAGER = "sh -c 'col -bx | bat -l man -p'";

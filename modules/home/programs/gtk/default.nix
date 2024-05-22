@@ -1,5 +1,5 @@
 { pkgs, lib, config, ... }:
-let 
+let
   cfg = config.profiles;
   gtk_2_3_attrs = {
     gtk-button-images = true;
@@ -17,7 +17,7 @@ let
     gtk-modules = "colorreload-gtk-module";
     gtk-xft-dpi = 98304;
   };
-in 
+in
 {
   options.gtk.catppuccin.link = lib.mkEnableOption "Link to local files";
 
@@ -32,7 +32,7 @@ in
       iconTheme = {
         name = "Papirus-Dark";
         package = pkgs.catppuccin-papirus-folders.override {
-          flavor = config.catppuccin.flavour;
+          flavor = config.catppuccin.flavor;
           accent = config.catppuccin.accent;
         };
       };
@@ -42,11 +42,11 @@ in
       gtk4.extraConfig = gtk_2_3_4_attrs // gtk_3_4_attrs;
       catppuccin = {
         enable = true;
-        flavour = config.catppuccin.flavour;
+        flavor = config.catppuccin.flavor;
         accent = config.catppuccin.accent;
         cursor = {
           enable = true;
-          flavour = config.catppuccin.flavour;
+          flavor = config.catppuccin.flavor;
           accent = config.catppuccin.accent;
         };
       };

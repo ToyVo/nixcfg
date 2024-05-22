@@ -22,7 +22,7 @@ in
       clipboard.register = "unnamedplus";
       colorschemes.catppuccin = {
         enable = true;
-        settings.flavour = config.catppuccin.flavour;
+        settings.flavor = config.catppuccin.flavor;
       };
       globals = {
         mapleader = " ";

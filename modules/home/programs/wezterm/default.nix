@@ -1,8 +1,8 @@
 { lib, config, pkgs, system, ... }:
 let
   cfg = config.programs.wezterm;
-  flavour = config.catppuccin.flavour;
-  upperFlavour = with builtins; (lib.toUpper (substring 0 1 flavour)) + (substring 1 (stringLength flavour) flavour);
+  flavor = config.catppuccin.flavor;
+  upperFlavor = with builtins; (lib.toUpper (substring 0 1 flavor)) + (substring 1 (stringLength flavor) flavor);
 in
 {
   config = lib.mkIf cfg.enable {
@@ -14,7 +14,7 @@ in
           family = "MonaspiceNe Nerd Font",
           harfbuzz_features = {'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'},
         };
-        config.color_scheme = "Catppuccin ${upperFlavour}";
+        config.color_scheme = "Catppuccin ${upperFlavor}";
         config.initial_rows = 30;
         config.initial_cols = 120;
         config.window_background_opacity = 0.9;
