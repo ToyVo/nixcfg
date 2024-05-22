@@ -16,7 +16,6 @@ in
     services.gpg-agent = lib.mkIf pkgs.stdenv.isLinux {
       enable = true;
       enableZshIntegration = true;
-      pinentryPackage = if pkgs.stdenv.isDarwin then pkgs.pinentry_mac else pkgs.pinentry-gnome3;
     };
     home.file = lib.mkIf pkgs.stdenv.isDarwin {
       ".gnupg/gpg-agent.conf".text = ''

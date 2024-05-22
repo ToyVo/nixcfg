@@ -16,7 +16,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
+    home.packages = [
       catppuccin-kde
     ];
     home.file = lib.cd.getFiles { dirPath = catppuccin-kde; enableLink = cfg.link; };

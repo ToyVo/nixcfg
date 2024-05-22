@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, ... }:
 let
   cfg = config.services.remote-builds;
 in
@@ -9,8 +9,8 @@ in
   };
 
   config = {
-      users = {
-        users.nixremote = lib.mkIf cfg.server.enable {
+    users = lib.mkIf cfg.server.enable {
+      users.nixremote = {
         name = "nixremote";
         group = "nixremote";
         openssh.authorizedKeys.keys = [
@@ -27,7 +27,7 @@ in
         user = "nixremote";
         hostname = "10.1.0.3";
         identitiesOnly = true;
-        identityFile = "${./nixremote_ed25519}";
+        identityFile = "/root/.ssh/nixremote_ed25519";
       };
     };
 

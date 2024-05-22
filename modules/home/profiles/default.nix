@@ -9,7 +9,7 @@ in
   ];
 
   options.profiles = {
-    defaults.enable = lib.mkEnableOption "Enable toyvo profile";
+    defaults.enable = lib.mkEnableOption "Enable default profile";
     gui.enable = lib.mkEnableOption "Enable GUI applications";
   };
 

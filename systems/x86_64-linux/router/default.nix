@@ -125,6 +125,7 @@
     openssh = {
       enable = true;
       openFirewall = false;
+      settings.PasswordAuthentication = false;
     };
     resolved = {
       enable = true;

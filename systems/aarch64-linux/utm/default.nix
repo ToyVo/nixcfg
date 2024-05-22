@@ -1,5 +1,5 @@
-{ lib, modulesPath, ... }: {
-  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+{ inputs, ... }: {
+  imports = [ "${inputs.nixpkgs}/nixos/modules/profiles/qemu-guest.nix" ];
   networking.hostName = "utm";
   boot = {
     loader.systemd-boot.enable = true;
