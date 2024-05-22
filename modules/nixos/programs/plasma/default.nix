@@ -9,10 +9,17 @@ in
       xserver.enable = true;
       libinput.enable = true;
       displayManager.sddm.enable = true;
+      fwupd.enable = true;
     };
     profiles.gui.enable = true;
     environment.systemPackages = with pkgs; [
       kate
+      aha
+      pciutils
+      clinfo
+      glxinfo
+      vulkan-tools
+      fwupd
     ];
     # TODO: Can be removed when reaching nixos-unstable https://nixpk.gs/pr-tracker.html?pr=296866
     programs.gnupg.agent.pinentryPackage = lib.mkForce pkgs.pinentry-qt;

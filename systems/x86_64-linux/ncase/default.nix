@@ -44,7 +44,6 @@
       config.adminpassFile = "${./nextcloudpass.txt}";
     };
     xserver.videoDrivers = [ "nvidia" ];
-    fwupd.enable = true;
   };
   containerPresets = {
     homepage = {
@@ -80,12 +79,6 @@
     win-spice
     distrobox
     mpv
-    aha
-    pciutils
-    clinfo
-    glxinfo
-    vulkan-tools
-    fwupd
     kdenlive
   ];
   virtualisation = {
