@@ -84,6 +84,7 @@
     clinfo
     glxinfo
     vulkan-tools
+    fwupd
   ];
   virtualisation = {
     libvirtd = {
