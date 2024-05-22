@@ -80,6 +80,7 @@
     distrobox
     mpv
     kdenlive
+    glaxnimate
   ];
   virtualisation = {
     libvirtd = {
