@@ -1,7 +1,7 @@
 { pkgs, lib, config, ... }: let
   cfg = config.programs.kde.catppuccin;
   catppuccin-kde = (pkgs.catppuccin-kde.override {
-    flavor = [ config.catppuccin.flavor ];
+    flavour = [ config.catppuccin.flavor ];
     accents = [ config.catppuccin.accent ];
     winDecStyles = [ "classic" ];
   });
