@@ -79,6 +79,11 @@
     win-spice
     distrobox
     mpv
+    aha
+    pciutils
+    clinfo
+    glxinfo
+    vulkan-tools
   ];
   virtualisation = {
     libvirtd = {
