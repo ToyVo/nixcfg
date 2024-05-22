@@ -44,6 +44,7 @@
       config.adminpassFile = "${./nextcloudpass.txt}";
     };
     xserver.videoDrivers = [ "nvidia" ];
+    fwupd.enable = true;
   };
   containerPresets = {
     homepage = {
@@ -85,6 +86,7 @@
     glxinfo
     vulkan-tools
     fwupd
+    kdenlive
   ];
   virtualisation = {
     libvirtd = {
