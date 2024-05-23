@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, config, ... }: {
+{ pkgs, config, ... }: {
   hardware.cpu.amd.updateMicrocode = true;
   networking.hostName = "Thinkpad";
   boot = {

@@ -18,7 +18,7 @@ in
         ];
         isSystemUser = true;
       };
-      groups.nixremote = {};
+      groups.nixremote = { };
     };
 
     home-manager.users.root.programs.ssh = lib.mkIf cfg.client.enable {

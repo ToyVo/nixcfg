@@ -29,18 +29,6 @@ in
         flavor = config.catppuccin.flavor;
       };
     };
-    environment.systemPackages = with pkgs; [
-      yubikey-manager
-      yubikey-personalization
-      yubico-piv-tool
-    ]
-    ++ lib.optionals cfg.gui.enable [
-      floorp
-      neovide
-      yubikey-manager-qt
-      yubioath-flutter
-      element-desktop
-    ];
     programs = {
       bash.blesh.enable = true;
       ssh.startAgent = false;
@@ -96,7 +84,6 @@ in
     };
     security.rtkit.enable = true;
     hardware.pulseaudio.enable = lib.mkForce false;
-    fonts.packages = with pkgs; lib.mkIf cfg.gui.enable [ monaspace (nerdfonts.override { fonts = [ "Monaspace" "NerdFontsSymbolsOnly" ]; }) ];
     nix.optimise.automatic = true;
     boot = {
       loader.systemd-boot.configurationLimit = lib.mkIf config.boot.loader.systemd-boot.enable 3;

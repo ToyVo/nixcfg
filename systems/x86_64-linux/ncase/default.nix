@@ -72,7 +72,7 @@
       group = "share";
     };
   };
-  users.groups.share = {};
+  users.groups.share = { };
   programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [
     bottles

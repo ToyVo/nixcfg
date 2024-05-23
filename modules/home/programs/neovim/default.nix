@@ -47,7 +47,7 @@ in
         cursorline = true;
         scrolloff = 10;
         hlsearch = true;
-	      foldenable = false;
+        foldenable = false;
       };
       autoCmd = [
         {
@@ -92,31 +92,31 @@ in
           options.desc = "Open diagnostic [Q]uickfix list";
         }
         {
-          mode="n";
+          mode = "n";
           key = "<C-h>";
           action = "<C-w><C-h>";
           options.desc = "Move focus to the left window";
         }
         {
-          mode="n";
+          mode = "n";
           key = "<C-l>";
           action = "<C-w><C-l>";
           options.desc = "Move focus to the right window";
         }
         {
-          mode="n";
+          mode = "n";
           key = "<C-j>";
           action = "<C-w><C-j>";
           options.desc = "Move focus to the lower window";
         }
         {
-          mode="n";
+          mode = "n";
           key = "<C-k>";
           action = "<C-w><C-k>";
           options.desc = "Move focus to the upper window";
         }
         {
-          mode="t";
+          mode = "t";
           key = "<Esc><Esc>";
           action = "<C-\\><C-n>";
           options.desc = "Exit terminal mode";
@@ -428,7 +428,7 @@ in
         };
         cmp = {
           enable = true;
-          settings= {
+          settings = {
             snippet.expand = ''
               function(args)
                 require('luasnip').lsp_expand(args.body)
@@ -472,7 +472,7 @@ in
           enable = true;
           modules = {
             ai.n_lines = 500;
-            surround = {};
+            surround = { };
             statusline.use_icons = true;
           };
         };

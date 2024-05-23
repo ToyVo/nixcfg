@@ -5,8 +5,8 @@
     homeDirectory = "/home/deck";
     packages = with pkgs; [
       r2modman
-      (pkgs.wrapOBS {
-        plugins = with pkgs.obs-studio-plugins; [
+      (wrapOBS {
+        plugins = with obs-studio-plugins; [
           obs-gstreamer
           obs-vkcapture
           obs-vaapi

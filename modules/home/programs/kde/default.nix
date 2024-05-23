@@ -1,11 +1,13 @@
-{ pkgs, lib, config, ... }: let
+{ pkgs, lib, config, ... }:
+let
   cfg = config.programs.kde.catppuccin;
   catppuccin-kde = (pkgs.catppuccin-kde.override {
     flavour = [ config.catppuccin.flavor ];
     accents = [ config.catppuccin.accent ];
     winDecStyles = [ "classic" ];
   });
-in {
+in
+{
   options.programs.kde.catppuccin = {
     enable = lib.mkOption {
       type = lib.types.bool;

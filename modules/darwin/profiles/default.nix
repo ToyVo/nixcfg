@@ -6,17 +6,13 @@ in
   imports = [
     ../../nixos/profiles/common.nix
     ../../nixos/users/common.nix
-    inputs.nh.nixDarwinModules.default
+    inputs.nh.nixDarwinModules.prebuiltin
     inputs.nix-index-database.darwinModules.nix-index
-   ];
+  ];
 
   config = lib.mkIf cfg.enable {
     services.nix-daemon.enable = true;
     security.pam.enableSudoTouchIdAuth = true;
-    fonts = {
-      fontDir.enable = true;
-      fonts = with pkgs; [ monaspace (nerdfonts.override { fonts = [ "Monaspace" "NerdFontsSymbolsOnly" ]; }) ];
-    };
     system = {
       stateVersion = 4;
       keyboard = {
@@ -25,13 +21,6 @@ in
       };
       defaults.finder.AliasSystemApplications = true;
     };
-    environment.systemPackages = with pkgs; [
-      rectangle
-      utm
-      pinentry_mac
-      warp-terminal
-      appcleaner
-    ];
     programs = {
       bash = {
         enable = true;

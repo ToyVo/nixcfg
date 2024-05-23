@@ -1,12 +1,14 @@
 { lib, pkgs, config, ... }:
 let
   cfg = config.userPresets;
-  homePath = if pkgs.stdenv.isDarwin then
-    "/Users" else
-    "/home";
-  rootHomeDirectory = if pkgs.stdenv.isDarwin then
-    "/var/root" else
-    "/root";
+  homePath =
+    if pkgs.stdenv.isDarwin then
+      "/Users" else
+      "/home";
+  rootHomeDirectory =
+    if pkgs.stdenv.isDarwin then
+      "/var/root" else
+      "/root";
   enableGui = config.profiles.gui.enable;
 in
 {

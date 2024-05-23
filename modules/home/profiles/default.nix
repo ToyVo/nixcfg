@@ -15,8 +15,11 @@ in
 
   config = lib.mkIf cfg.defaults.enable {
     home = {
+      shellAliases = {
+        nh = "nh-darwin";
+      };
       stateVersion = "24.05";
-      sessionPath = [] ++ lib.optionals config.programs.volta.enable [
+      sessionPath = [ ] ++ lib.optionals config.programs.volta.enable [
         "${config.programs.volta.voltaHome}/bin"
       ] ++ [
         "${config.home.homeDirectory}/.cargo/bin"
@@ -36,16 +39,16 @@ in
       ] ++ lib.optionals pkgs.stdenv.isDarwin [
         "/System/Cryptexes/App/usr/bin"
       ] ++
-      [
-        "/usr/local/bin"
-        "/usr/local/sbin"
-        "/usr/bin"
-        "/usr/sbin"
-        "/bin"
-        "/sbin"
-        "/usr/local/games"
-        "/usr/games"
-      ] ++ lib.optionals pkgs.stdenv.isDarwin [
+        [
+          "/usr/local/bin"
+          "/usr/local/sbin"
+          "/usr/bin"
+          "/usr/sbin"
+          "/bin"
+          "/sbin"
+          "/usr/local/games"
+          "/usr/games"
+        ] ++ lib.optionals pkgs.stdenv.isDarwin [
         "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
         "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"

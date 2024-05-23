@@ -1,15 +1,21 @@
 { config, lib, inputs, system, ... }:
 let
+  cfg = config.profiles;
   pkgs = import inputs.nixpkgs {
     inherit system;
     overlays = [ (import inputs.rust-overlay) ];
+    config.allowUnfree = true;
   };
   myPython = pkgs.python311.withPackages (ps: with ps; [
     pip
     virtualenv
     python-dotenv
     jupyter
+    pandas
+    pipx
+    numpy
   ] ++ config.environment.pythonPackages);
+  fontPackages = with pkgs; [ monaspace (nerdfonts.override { fonts = [ "Monaspace" "NerdFontsSymbolsOnly" ]; }) ];
 in
 {
   options = {
@@ -19,11 +25,11 @@ in
     };
     environment.pythonPackages = lib.mkOption {
       type = lib.types.listOf lib.types.package;
-      default = [];
+      default = [ ];
     };
   };
 
-  config = lib.mkIf config.profiles.defaults.enable {
+  config = lib.mkIf cfg.defaults.enable {
     programs = {
       zsh.enable = true;
       fish.enable = true;
@@ -53,62 +59,108 @@ in
       useGlobalPkgs = true;
       useUserPackages = true;
       sharedModules = [{
-        nix.package = lib.mkForce pkgs.nixVersions.nix_2_19;
+        nix.package = lib.mkForce config.nix.package;
       }];
     };
     nixpkgs.overlays = [ inputs.rust-overlay.overlays.default ];
-    environment = let
-      shells = with pkgs; [
-        bashInteractive
-        zsh
-        fish
-        nushell
-        powershell
-      ];
-    in {
-      inherit shells;
-      systemPackages = with pkgs; [
-        uutils-coreutils-noprefix
-        sqlite
-        broot
-        bun
-        deno
-        nodejs
-        curl
-        dig
-        dogdns
-        fd
-        gping
-        helix
-        lsof
-        openssh
-        ripgrep
-        rsync
-        wget
-        jq
-        nixpkgs-fmt
-        git-crypt
-        (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
-          extensions = [ "rust-src" "rust-std" ];
-          targets = [ "wasm32-unknown-unknown" ];
-        }))
-        dioxus-cli
-        rust-analyzer
-        cargo-watch
-        cargo-generate
-        xz
-        zstd
-        pipenv
-        myPython
-        dotnet-sdk_8
-        podman
-        podman-compose
-        kubectl
-      ]
-      ++ lib.optionals config.profiles.gui.enable [
-        gimp
-      ]
-      ++ shells;
-    };
+    fonts =
+      if pkgs.stdenv.isLinux then {
+        packages = fontPackages;
+      } else {
+        fontDir.enable = true;
+        fonts = fontPackages;
+      };
+    environment =
+      let
+        shells = with pkgs; [
+          bashInteractive
+          zsh
+          fish
+          nushell
+          powershell
+        ];
+      in
+      {
+        inherit shells;
+        systemPackages = with pkgs; [
+          # Utilities
+          uutils-coreutils-noprefix
+          curl
+          wget
+          dig
+          dogdns
+          fd
+          gping
+          jq
+          ripgrep
+          rsync
+          lsof
+          sqlite
+          broot
+          helix
+          openssh
+          openssl
+          nixpkgs-fmt
+          git-crypt
+          nix-output-monitor
+          dotnet-sdk_8
+          ### Javascript
+          bun
+          deno
+          nodejs
+          ### Rust
+          (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
+            extensions = [ "rust-src" "rust-std" "rust-analyzer" "rustfmt" "clippy" ];
+            targets = [ "wasm32-unknown-unknown" ];
+          }))
+          dioxus-cli
+          cargo-watch
+          cargo-generate
+          ### Python
+          poetry
+          pipenv
+          myPython
+          ### Containers
+          podman
+          podman-compose
+          kubectl
+          ### Compression
+          xz
+          zstd
+          zip
+          unzip
+          gzip
+          gnutar
+        ]
+        ++ lib.optionals cfg.gui.enable [
+          gimp
+        ]
+        ++ shells
+        ++ lib.optionals stdenv.isLinux [
+          yubikey-manager
+          yubikey-personalization
+          yubico-piv-tool
+          aha
+          pciutils
+          clinfo
+          glxinfo
+          vulkan-tools
+          fwupd
+        ]
+        ++ lib.optionals (stdenv.isLinux && cfg.gui.enable) [
+          floorp
+          neovide
+          yubikey-manager-qt
+          yubioath-flutter
+          element-desktop
+        ]
+        ++ lib.optionals stdenv.isDarwin [
+          rectangle
+          utm
+          pinentry_mac
+          warp-terminal
+          appcleaner
+        ];
+      };
   };
 }

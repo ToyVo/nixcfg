@@ -22,7 +22,7 @@ in
     containerPresets.podman.enable = lib.mkDefault true;
     virtualisation.oci-containers.containers.open-webui = {
       image = "ghcr.io/open-webui/open-webui:main";
-      ports = [ "${toString cfg.port}:8080"];
+      ports = [ "${toString cfg.port}:8080" ];
       volumes = [
         "${cfg.datadir}:/app/backend/data"
       ];

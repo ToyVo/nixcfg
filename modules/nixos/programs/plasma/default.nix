@@ -14,12 +14,6 @@ in
     profiles.gui.enable = true;
     environment.systemPackages = with pkgs; [
       kate
-      aha
-      pciutils
-      clinfo
-      glxinfo
-      vulkan-tools
-      fwupd
     ];
   };
 }

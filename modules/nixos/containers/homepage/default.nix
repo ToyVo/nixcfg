@@ -22,7 +22,7 @@ in
     containerPresets.podman.enable = lib.mkDefault true;
     virtualisation.oci-containers.containers.homepage = {
       image = "ghcr.io/gethomepage/homepage:latest";
-      ports = [ "${toString cfg.port}:3000"];
+      ports = [ "${toString cfg.port}:3000" ];
       volumes = [
         "${cfg.datadir}:/app/config"
         "/var/run/podman/podman.sock:/var/run/docker.sock:ro"

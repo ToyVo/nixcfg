@@ -43,9 +43,9 @@ in
         ms-python.debugpy
         rust-lang.rust-analyzer
         vscodevim.vim
-      ] ++ lib.optionals (builtins.elem system ["aarch64-darwin" "x86_64-darwin" "x86_64-linux"]) [
+      ] ++ lib.optionals (builtins.elem system [ "aarch64-darwin" "x86_64-darwin" "x86_64-linux" ]) [
         ms-python.python
-      ] ++ lib.optionals (builtins.elem system ["aarch64-linux" "x86_64-linux"]) [
+      ] ++ lib.optionals (builtins.elem system [ "aarch64-linux" "x86_64-linux" ]) [
         ms-vscode.cpptools
       ];
       userSettings = {

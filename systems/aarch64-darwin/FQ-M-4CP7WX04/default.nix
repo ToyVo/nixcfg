@@ -6,7 +6,6 @@
   };
   environment.systemPackages = with pkgs; [
     ollama
-    poetry
     awscli2
     llama-cpp
   ];
@@ -20,7 +19,6 @@
     transformers
     torch
     jax
-    pipx
     pymongo
   ];
   homebrew = {
@@ -36,6 +34,7 @@
       { name = "keybase"; greedy = true; }
       # must be installed at /Applications, nix-darwin installs it at /Applications/nix apps
       { name = "1password"; greedy = true; }
+      { name = "prusaslicer"; greedy = true; }
     ];
     taps = [
       "mongodb/brew"

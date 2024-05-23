@@ -12,7 +12,7 @@ in
         };
         shell = {
           program = "${pkgs.nushell}/bin/nu";
-          args = [];
+          args = [ ];
         };
       };
       catppuccin = {

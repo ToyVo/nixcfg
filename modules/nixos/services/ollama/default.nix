@@ -1,5 +1,5 @@
-{ config, lib, ... }: 
-let 
+{ config, lib, ... }:
+let
   cfg = config.services.ollama;
 in
 {

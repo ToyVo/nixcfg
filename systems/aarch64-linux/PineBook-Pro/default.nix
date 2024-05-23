@@ -1,4 +1,4 @@
-{ lib, inputs,  ... }: {
+{ lib, inputs, ... }: {
   imports = [ inputs.nixos-hardware.nixosModules.pine64-pinebook-pro ];
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
   networking.hostName = "PineBook-Pro";

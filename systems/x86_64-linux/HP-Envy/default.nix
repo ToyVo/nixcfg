@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ pkgs, ... }: {
   hardware.cpu.amd.updateMicrocode = true;
   networking.hostName = "HP-Envy";
   boot = {
