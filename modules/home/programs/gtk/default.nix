@@ -13,20 +13,21 @@ let
   };
   gtk_3_4_attrs = {
     gtk-application-prefer-dark-theme = true;
-    gtk-decoration-layout = "close,minimize,maximize:icon";
+    gtk-decoration-layout = lib.mkIf config.gtk.macbuttons.enable "close,minimize,maximize:icon";
     gtk-modules = "colorreload-gtk-module";
     gtk-xft-dpi = 98304;
   };
 in
 {
   options.gtk.catppuccin.link = lib.mkEnableOption "Link to local files";
+  options.gtk.macbuttons.enable = lib.mkEnableOption "Mac style window decoration buttons with close on the left";
 
   config = lib.mkIf (cfg.defaults.enable && cfg.gui.enable && pkgs.stdenv.isLinux) {
     xdg.enable = true;
     gtk = {
       enable = true;
       font = {
-        name = "MonaspiceNe Nerd Font";
+        name = "Noto Sans";
         size = 10;
       };
       iconTheme = {
