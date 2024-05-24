@@ -56,6 +56,7 @@ in
       nixPath = [ "nixpkgs=${inputs.nixpkgs-unstable}" "nixos=${inputs.nixos-unstable}" ];
     };
     home-manager = {
+      backupFileExtension = "old";
       useGlobalPkgs = true;
       useUserPackages = true;
       sharedModules = [{
