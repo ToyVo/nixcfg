@@ -66,7 +66,7 @@ in
       nixPath = [ "nixpkgs=${inputs.nixpkgs-unstable}" "nixos=${inputs.nixos-unstable}" ];
     };
     home-manager = {
-      backupFileExtension = "old";
+      backupFileExtension = "${toString inputs.self.sourceInfo.lastModified}.old";
       useGlobalPkgs = true;
       useUserPackages = true;
       sharedModules = [{
@@ -156,6 +156,7 @@ in
           clinfo
           glxinfo
           vulkan-tools
+          wayland-utils
           fwupd
         ]
         ++ lib.optionals (stdenv.isLinux && cfg.gui.enable) [
