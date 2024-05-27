@@ -21,7 +21,11 @@ in
         LC_TIME = "C.UTF-8";
       };
     };
-    catppuccin.flavor = "frappe";
+    catppuccin = {
+      enable = true;
+      flavor = "frappe";
+      accent = "red";
+    };
     console = {
       useXkbConfig = true;
       catppuccin = {
@@ -44,6 +48,7 @@ in
           pcre2
           pcre16
           pcre-cpp
+          libgcc
         ];
       };
       command-not-found.enable = false;
@@ -62,10 +67,11 @@ in
         alsa.support32Bit = true;
         pulse.enable = true;
       };
+      fwupd.enable = true;
     };
     sound.enable = cfg.gui.enable;
     system = {
-      stateVersion = "24.05";
+      stateVersion = "24.11";
       autoUpgrade = {
         enable = true;
         flake = inputs.self.outPath;
@@ -94,6 +100,10 @@ in
         offset = 0;
         mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
         magicOrExtension = ''\x7fELF....AI\x02'';
+      };
+      plymouth = {
+        enable = true;
+        catppuccin.enable = true;
       };
     };
   };

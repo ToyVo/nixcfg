@@ -5,6 +5,7 @@ in
 {
   config = lib.mkIf cfg.enable {
     programs.vscode = {
+      package = pkgs.vscode-fhs;
       extensions = with pkgs.vscode-extensions; [
         # Sorting by how they appear in vscode
         # .NET Install Tool

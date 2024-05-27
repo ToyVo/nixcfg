@@ -8,12 +8,15 @@ in
     services = {
       xserver.enable = true;
       libinput.enable = true;
-      displayManager.sddm.enable = true;
-      fwupd.enable = true;
+      displayManager.sddm = {
+        enable = true;
+        catppuccin.enable = false;
+      };
     };
     profiles.gui.enable = true;
     environment.systemPackages = with pkgs; [
       kate
+      kdePackages.sddm-kcm
     ];
   };
 }

@@ -18,7 +18,7 @@ in
       shellAliases = {
         nh = "nh-darwin";
       };
-      stateVersion = "24.05";
+      stateVersion = "24.11";
       sessionPath = [ ] ++ lib.optionals config.programs.volta.enable [
         "${config.programs.volta.voltaHome}/bin"
       ] ++ [
