@@ -4,10 +4,6 @@ let
 in
 {
   imports = [
-    ../../nixos/profiles/common.nix
-    ../../nixos/users/common.nix
-    inputs.nh.nixDarwinModules.prebuiltin
-    inputs.nix-index-database.darwinModules.nix-index
   ];
 
   config = lib.mkIf cfg.enable {

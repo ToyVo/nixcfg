@@ -41,23 +41,15 @@
     catppuccin.url = "github:catppuccin/nix";
   };
 
-  outputs = inputs:
-    let
-      lib = inputs.snowfall-lib.mkLib {
-        inherit inputs;
-        src = ./.;
-        snowfall = {
-          namespace = "cd";
-          meta = {
-            name = "cd-dotfiles";
-            title = "Collin Diekvoss Dotfiles";
-          };
-        };
-      };
-    in
-    lib.mkFlake {
-      channels-config.allowUnfree = true;
-    };
+  outputs = inputs: {
+    lib = import ./lib inputs.nixpkgs-unstable;
+    nixosModules.default = import ./modules/nixos inputs;
+    nixosConfigurations = import ./systems/nixos.nix inputs;
+    darwinModules.default = import ./modules/darwin inputs;
+    darwinConfigurations = import ./systems/darwin.nix inputs;
+    homeManagerModules.default = import ./modules/home inputs;
+    homeManagerConfigurations = import ./systems/home.nix inputs;
+  };
 
   nixConfig = {
     extra-substituters = [
