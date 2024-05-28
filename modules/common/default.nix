@@ -1,4 +1,4 @@
-{ config , lib , nixos-unstable , nixpkgs-unstable , pkgs , rust-overlay , self , ...  }:
+{ config, lib, nixos-unstable, nixpkgs-unstable, pkgs, rust-overlay, self, ... }:
 let
   cfg = config.profiles;
   myPython = pkgs.python311.withPackages (ps: with ps; [

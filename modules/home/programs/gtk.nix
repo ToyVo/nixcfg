@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, self, ... }:
 let
   cfg = config.profiles;
   gtk_2_3_attrs = {
@@ -52,9 +52,9 @@ in
         };
       };
     };
-    home.file = lib.cd.getFiles { dirPath = config.gtk.theme.package; enableLink = config.gtk.catppuccin.link; }
-      # // lib.cd.getFiles { dirPath = config.gtk.iconTheme.package; enableLink = config.gtk.catppuccin.link; }
-      // lib.cd.getFiles { dirPath = config.gtk.cursorTheme.package; enableLink = config.gtk.catppuccin.link; };
+    home.file = self.lib.getFiles { dirPath = config.gtk.theme.package; enableLink = config.gtk.catppuccin.link; }
+      # // self.lib.getFiles { dirPath = config.gtk.iconTheme.package; enableLink = config.gtk.catppuccin.link; }
+      // self.lib.getFiles { dirPath = config.gtk.cursorTheme.package; enableLink = config.gtk.catppuccin.link; };
   };
 }
 

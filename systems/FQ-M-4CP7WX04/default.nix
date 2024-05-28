@@ -1,9 +1,14 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }:
+let
+  cfg = config.userPresets;
+in
+{
   profiles.defaults.enable = true;
   userPresets.toyvo = {
     enable = true;
     name = "CollinDie";
   };
+  home-manager.users.${cfg.toyvo.name} = import ./home.nix;
   environment.systemPackages = with pkgs; [
     ollama
     awscli2
