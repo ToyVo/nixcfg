@@ -8,14 +8,13 @@
 , nix-index-database
 , nixos-hardware
 , nixos-unstable
-, nixpkgs-unstable
 , nixvim
 , rust-overlay
 , self
 , ...
 }@inputs:
 let
-  syspkgs = {system, nixpkgs ? nixpkgs-unstable}: import nixpkgs {
+  syspkgs = {system, nixpkgs ? nixos-unstable}: import nixpkgs {
     inherit system;
     overlays = [ (import rust-overlay) ];
     config.allowUnfree = true;
@@ -27,10 +26,10 @@ let
     hyprland.homeManagerModules.default
     nixvim.homeManagerModules.nixvim
   ];
-  lib = nixpkgs-unstable.lib;
+  lib = nixos-unstable.lib;
   nixcfg = system: configurations:
     let
-      pkgs = syspkgs { inherit system; nixpkgs = nixos-unstable; };
+      pkgs = syspkgs { inherit system; };
       specialArgs = inputs // { inherit system; };
     in
     lib.nixosSystem {
@@ -38,7 +37,7 @@ let
       specialArgs = specialArgs;
       modules = [
         self.nixosModules.default
-        nixpkgs-unstable.nixosModules.notDetected
+        nixos-unstable.nixosModules.notDetected
         catppuccin.nixosModules.catppuccin
         nh.nixosModules.default
         nix-index-database.nixosModules.nix-index
@@ -105,6 +104,6 @@ in
     rpi4b8c = nixcfg "aarch64-linux" [ ./rpi4b8c.nix ];
     steamdeck-nixos = nixcfg "x86_64-linux" [ ./steamdeck-nixos.nix jovian.nixosModules.jovian ];
     Thinkpad = nixcfg "x86_64-linux" [ ./Thinkpad.nix ];
-    utm = nixcfg "aarch64-linux" [ ./utm.nix "${nixpkgs-unstable}/nixos/modules/profiles/qemu-guest.nix" ];
+    utm = nixcfg "aarch64-linux" [ ./utm.nix "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ];
   };
 }
