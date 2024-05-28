@@ -25,6 +25,7 @@
     };
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
     kernelModules = [ "kvm-amd" ];
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
   profiles.gaming.enable = true;
   userPresets.toyvo.enable = true;

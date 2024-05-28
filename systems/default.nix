@@ -10,6 +10,7 @@
 , nixvim
 , rust-overlay
 , self
+, sops-nix
 , ...
 }@inputs:
 let
@@ -23,6 +24,7 @@ let
     catppuccin.homeManagerModules.catppuccin
     nix-index-database.hmModules.nix-index
     nixvim.homeManagerModules.nixvim
+    sops-nix.homeManagerModules.sops
   ];
   lib = nixos-unstable.lib;
   nixcfg = system: configurations:
@@ -40,6 +42,7 @@ let
         nh.nixosModules.default
         nix-index-database.nixosModules.nix-index
         home-manager.nixosModules.default
+        sops-nix.nixosModules.sops
         {
           home-manager = {
             extraSpecialArgs = specialArgs;
