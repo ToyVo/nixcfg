@@ -1,0 +1,3 @@
+nixremote_ed25519 filter=git-crypt diff=git-crypt
+ykA_ed25519_sk filter=git-crypt diff=git-crypt
+ykC_ed25519_sk filter=git-crypt diff=git-crypt

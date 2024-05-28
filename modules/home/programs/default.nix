@@ -1,0 +1,26 @@
+{ ... }: {
+  imports = [
+    ./bash.nix
+    ./bat.nix
+    ./eza.nix
+    ./fish.nix
+    ./git.nix
+    ./gpg.nix
+    ./gtk.nix
+    ./helix.nix
+    ./hyprland.nix
+    ./ideavim.nix
+    ./kde.nix
+    ./kitty.nix
+    ./neovim.nix
+    ./nushell.nix
+    ./powershell.nix
+    ./rio.nix
+    ./ssh.nix
+    ./volta.nix
+    ./vscode.nix
+    ./wezterm.nix
+    ./zellij.nix
+    ./zsh.nix
+  ];
+}

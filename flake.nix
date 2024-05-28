@@ -2,29 +2,20 @@
   description = "Collin Diekvoss Nix Configurations";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    darwin = {
+    nix-darwin = {
       url = "github:lnl7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    snowfall-lib = {
-      url = "github:snowfallorg/lib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     # Hardware
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -43,20 +34,16 @@
 
   outputs = inputs:
     let
-      lib = inputs.snowfall-lib.mkLib {
-        inherit inputs;
-        src = ./.;
-        snowfall = {
-          namespace = "cd";
-          meta = {
-            name = "cd-dotfiles";
-            title = "Collin Diekvoss Dotfiles";
-          };
-        };
-      };
+      configurations = import ./systems inputs;
     in
-    lib.mkFlake {
-      channels-config.allowUnfree = true;
+    {
+      lib = import ./lib inputs;
+      nixosModules.default = ./modules/nixos;
+      darwinModules.default = ./modules/darwin;
+      homeManagerModules.default = ./modules/home;
+      nixosConfigurations = configurations.nixosConfigurations;
+      darwinConfigurations = configurations.darwinConfigurations;
+      homeManagerConfigurations = configurations.homeManagerConfigurations;
     };
 
   nixConfig = {

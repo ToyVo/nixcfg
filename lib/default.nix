@@ -1,5 +1,6 @@
-{ lib, ... }:
+{ nixpkgs-unstable, ... }:
 let
+  lib = nixpkgs-unstable.lib;
   listFilesRecursively = dirPath:
     let
       contents = builtins.readDir dirPath;
