@@ -1,7 +1,6 @@
 { apple-silicon-support
 , catppuccin
 , home-manager
-, hyprland
 , jovian
 , nh
 , nix-darwin
@@ -23,7 +22,6 @@ let
     self.homeManagerModules.default
     catppuccin.homeManagerModules.catppuccin
     nix-index-database.hmModules.nix-index
-    hyprland.homeManagerModules.default
     nixvim.homeManagerModules.nixvim
   ];
   lib = nixos-unstable.lib;
@@ -42,7 +40,6 @@ let
         nh.nixosModules.default
         nix-index-database.nixosModules.nix-index
         home-manager.nixosModules.default
-        hyprland.nixosModules.default
         {
           home-manager = {
             extraSpecialArgs = specialArgs;

@@ -22,7 +22,6 @@
     apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     # Applications
-    hyprland.url = "github:hyprwm/hyprland";
     mkAlias.url = "github:reckenrode/mkAlias";
     nixvim.url = "github:nix-community/nixvim";
     rust-overlay.url = "github:oxalica/rust-overlay";
@@ -49,11 +48,9 @@
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
-      "https://hyprland.cachix.org"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
   };
 }

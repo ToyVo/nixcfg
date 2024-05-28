@@ -8,7 +8,6 @@
     ./gpg.nix
     ./gtk.nix
     ./helix.nix
-    ./hyprland.nix
     ./ideavim.nix
     ./kde.nix
     ./kitty.nix

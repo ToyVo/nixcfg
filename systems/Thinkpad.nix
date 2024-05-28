@@ -24,6 +24,4 @@
     driSupport = true;
     driSupport32Bit = true;
   };
-  programs.hyprland.enable = true;
-  home-manager.users.${config.userPresets.toyvo.name}.programs.hyprland.enable = true;
 }
