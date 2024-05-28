@@ -7,6 +7,7 @@
 , nix-darwin
 , nix-index-database
 , nixos-hardware
+, nixos-unstable
 , nixpkgs-unstable
 , nixvim
 , rust-overlay
@@ -14,7 +15,7 @@
 , ...
 }@inputs:
 let
-  syspkgs = system: import nixpkgs-unstable {
+  syspkgs = {system, nixpkgs ? nixpkgs-unstable}: import nixpkgs {
     inherit system;
     overlays = [ (import rust-overlay) ];
     config.allowUnfree = true;
@@ -29,7 +30,7 @@ let
   lib = nixpkgs-unstable.lib;
   nixcfg = system: configurations:
     let
-      pkgs = syspkgs system;
+      pkgs = syspkgs { inherit system; nixpkgs = nixos-unstable; };
       specialArgs = inputs // { inherit system; };
     in
     lib.nixosSystem {
@@ -53,7 +54,7 @@ let
     };
   darwincfg = system: configurations:
     let
-      pkgs = syspkgs system;
+      pkgs = syspkgs { inherit system; };
       specialArgs = inputs // { inherit system; };
     in
     nix-darwin.lib.darwinSystem {
@@ -74,7 +75,7 @@ let
     };
   homecfg = system: configurations:
     let
-      pkgs = syspkgs system;
+      pkgs = syspkgs { inherit system; };
       specialArgs = inputs // { inherit system; };
     in
     home-manager.lib.homeManagerConfiguration {
