@@ -9,6 +9,7 @@
     kernelModules = [ "kvm-amd" ];
   };
   profiles.gaming.enable = true;
+  profiles.dev.enable = true;
   userPresets.toyvo.enable = true;
   fileSystemPresets.efi.enable = true;
   fileSystemPresets.btrfs.enable = true;

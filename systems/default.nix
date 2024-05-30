@@ -14,12 +14,12 @@
 , ...
 }@inputs:
 let
-  syspkgs = {system, nixpkgs ? nixos-unstable}: import nixpkgs {
+  import_nixpkgs = {system, nixpkgs ? nixos-unstable}: import nixpkgs {
     inherit system;
     overlays = [ (import rust-overlay) ];
     config.allowUnfree = true;
   };
-  homemodules = [
+  homeManagerModules = [
     self.homeManagerModules.default
     catppuccin.homeManagerModules.catppuccin
     nix-index-database.hmModules.nix-index
@@ -27,9 +27,9 @@ let
     sops-nix.homeManagerModules.sops
   ];
   lib = nixos-unstable.lib;
-  nixcfg = system: configurations:
+  nixosSystem = system: configurations:
     let
-      pkgs = syspkgs { inherit system; };
+      pkgs = import_nixpkgs { inherit system; };
       specialArgs = inputs // { inherit system; };
     in
     lib.nixosSystem {
@@ -46,14 +46,14 @@ let
         {
           home-manager = {
             extraSpecialArgs = specialArgs;
-            sharedModules = homemodules;
+            sharedModules = homeManagerModules;
           };
         }
       ] ++ configurations;
     };
-  darwincfg = system: configurations:
+  darwinSystem = system: configurations:
     let
-      pkgs = syspkgs { inherit system; };
+      pkgs = import_nixpkgs { inherit system; };
       specialArgs = inputs // { inherit system; };
     in
     nix-darwin.lib.darwinSystem {
@@ -67,44 +67,44 @@ let
         {
           home-manager = {
             extraSpecialArgs = specialArgs;
-            sharedModules = homemodules;
+            sharedModules = homeManagerModules;
           };
         }
       ] ++ configurations;
     };
-  homecfg = system: configurations:
+  homeManagerConfiguration = system: configurations:
     let
-      pkgs = syspkgs { inherit system; };
+      pkgs = import_nixpkgs { inherit system; };
       specialArgs = inputs // { inherit system; };
     in
     home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       extraSpecialArgs = specialArgs;
-      modules = configurations ++ homemodules;
+      modules = configurations ++ homeManagerModules;
     };
 in
 {
   darwinConfigurations = {
-    FQ-M-4CP7WX04 = darwincfg "aarch64-darwin" [ ./FQ-M-4CP7WX04 ];
-    MacBook-Pro = darwincfg "aarch64-darwin" [ ./MacBook-Pro.nix ];
-    MacMini-Intel = darwincfg "x86_64-darwin" [ ./MacMini-Intel.nix ];
-    MacMini-M1 = darwincfg "aarch64-darwin" [ ./MacMini-M1.nix ];
+    FQ-M-4CP7WX04 = darwinSystem "aarch64-darwin" [ ./FQ-M-4CP7WX04 ];
+    MacBook-Pro = darwinSystem "aarch64-darwin" [ ./MacBook-Pro.nix ];
+    MacMini-Intel = darwinSystem "x86_64-darwin" [ ./MacMini-Intel.nix ];
+    MacMini-M1 = darwinSystem "aarch64-darwin" [ ./MacMini-M1.nix ];
   };
-  homeManagerConfigurations."deck@steamdeck" = homecfg "x86_64-linux" [ ./steamdeck.nix ];
+  homeManagerConfigurations."deck@steamdeck" = homeManagerConfiguration "x86_64-linux" [ ./steamdeck.nix ];
   nixosConfigurations = {
-    HP-Envy = nixcfg "x86_64-linux" [ ./HP-Envy.nix ];
-    HP-ZBook = nixcfg "x86_64-linux" [ ./HP-ZBook.nix ];
-    MacBook-Pro-Nixos = nixcfg "aarch64-linux" [ ./MacBook-Pro-Nixos apple-silicon-support.nixosModules.apple-silicon-support ];
-    ncase = nixcfg "x86_64-linux" [ ./ncase ];
-    PineBook-Pro = nixcfg "aarch64-linux" [ ./PineBook-Pro.nix nixos-hardware.nixosModules.pine64-pinebook-pro ];
-    Protectli = nixcfg "x86_64-linux" [ ./Protectli.nix ];
-    router = nixcfg "x86_64-linux"  [  ./router  ];
-    rpi4b4a = nixcfg "aarch64-linux" [ ./rpi4b4a.nix ];
-    rpi4b8a = nixcfg "aarch64-linux" [ ./rpi4b8a.nix ];
-    rpi4b8b = nixcfg "aarch64-linux" [ ./rpi4b8b.nix ];
-    rpi4b8c = nixcfg "aarch64-linux" [ ./rpi4b8c.nix ];
-    steamdeck-nixos = nixcfg "x86_64-linux" [ ./steamdeck-nixos.nix jovian.nixosModules.jovian ];
-    Thinkpad = nixcfg "x86_64-linux" [ ./Thinkpad.nix ];
-    utm = nixcfg "aarch64-linux" [ ./utm.nix "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ];
+    HP-Envy = nixosSystem "x86_64-linux" [ ./HP-Envy.nix ];
+    HP-ZBook = nixosSystem "x86_64-linux" [ ./HP-ZBook.nix ];
+    MacBook-Pro-Nixos = nixosSystem "aarch64-linux" [ ./MacBook-Pro-Nixos apple-silicon-support.nixosModules.apple-silicon-support ];
+    ncase = nixosSystem "x86_64-linux" [ ./ncase ];
+    PineBook-Pro = nixosSystem "aarch64-linux" [ ./PineBook-Pro.nix nixos-hardware.nixosModules.pine64-pinebook-pro ];
+    Protectli = nixosSystem "x86_64-linux" [ ./Protectli.nix ];
+    router = nixosSystem "x86_64-linux"  [  ./router  ];
+    rpi4b4a = nixosSystem "aarch64-linux" [ ./rpi4b4a.nix ];
+    rpi4b8a = nixosSystem "aarch64-linux" [ ./rpi4b8a.nix ];
+    rpi4b8b = nixosSystem "aarch64-linux" [ ./rpi4b8b.nix ];
+    rpi4b8c = nixosSystem "aarch64-linux" [ ./rpi4b8c.nix ];
+    steamdeck-nixos = nixosSystem "x86_64-linux" [ ./steamdeck-nixos.nix jovian.nixosModules.jovian ];
+    Thinkpad = nixosSystem "x86_64-linux" [ ./Thinkpad.nix ];
+    utm = nixosSystem "aarch64-linux" [ ./utm.nix "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ];
   };
 }

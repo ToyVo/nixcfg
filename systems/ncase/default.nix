@@ -28,6 +28,7 @@
     binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
   profiles.gaming.enable = true;
+  profiles.dev.enable = true;
   userPresets.toyvo.enable = true;
   userPresets.chloe.enable = true;
   fileSystemPresets.efi.enable = true;

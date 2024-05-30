@@ -6,7 +6,7 @@
     loader.efi.canTouchEfiVariables = false;
     initrd.availableKernelModules = [ "usb_storage" "sdhci_pci" ];
   };
-  profiles.defaults.enable = true;
+  profiles.dev.enable = true;
   userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;

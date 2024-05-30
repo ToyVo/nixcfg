@@ -3,7 +3,7 @@ let
   cfg = config.userPresets;
 in
 {
-  profiles.defaults.enable = true;
+  profiles.dev.enable = true;
   userPresets.toyvo = {
     enable = true;
     name = "CollinDie";

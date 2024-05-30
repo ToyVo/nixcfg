@@ -8,7 +8,7 @@
       [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
     kernelModules = [ "kvm-amd" "amdgpu" ];
   };
-  profiles.defaults.enable = true;
+  profiles.dev.enable = true;
   userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;
