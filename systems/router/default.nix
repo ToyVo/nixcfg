@@ -13,19 +13,29 @@
     useNetworkd = true;
     useDHCP = false;
     nameservers = [ "127.0.1.53" ];
-    nat.enable = true;
-    nat.externalInterface = "enp2s0";
-    nat.internalInterfaces = [ "enp3s0" "cdnet" "cdiot" "cdguest" ];
+    nat = {
+      enable = true;
+      externalInterface = "enp2s0";
+      internalInterfaces = [ "enp3s0" "cdnet" "cdiot" "cdguest" ];
+      forwardPorts = [
+        {
+          sourcePort = 25565;
+          proto = "tcp";
+          destination = "10.1.0.3:25565";
+        }
+      ];
+    };
     firewall = {
       enable = true;
       # Port 53 is for DNS, 22 is for SSH, 67/68 is for DHCP, 80 is for HTTP, 443 is for HTTPS
-      interfaces.enp3s0.allowedTCPPorts = [ 53 22 80 443 ];
+      interfaces.enp2s0.allowedTCPPorts = [ 25565 ];
+      interfaces.enp3s0.allowedTCPPorts = [ 53 22 80 443 25565 ];
       interfaces.enp3s0.allowedUDPPorts = [ 53 67 68 443 ];
-      interfaces.cdnet.allowedTCPPorts = [ 53 22 80 443 ];
+      interfaces.cdnet.allowedTCPPorts = [ 53 22 80 443 25565 ];
       interfaces.cdnet.allowedUDPPorts = [ 53 67 68 443 ];
       interfaces.cdiot.allowedTCPPorts = [ 53 ];
       interfaces.cdiot.allowedUDPPorts = [ 53 67 68 ];
-      interfaces.cdguest.allowedTCPPorts = [ 53 ];
+      interfaces.cdguest.allowedTCPPorts = [ 53 80 443 25565 ];
       interfaces.cdguest.allowedUDPPorts = [ 53 67 68 ];
     };
   };
@@ -120,6 +130,7 @@
       dhcpServerConfig.DNS = [ "10.1.0.1" ];
       linkConfig.RequiredForOnline = "no";
     };
+
   };
   services = {
     openssh = {
@@ -146,6 +157,7 @@
       email = "collin@diekvoss.com";
       records = [
         "*.diekvoss.net"
+        "mc.toyvo.dev"
       ];
       apikeyFile = "${./cfapikey}";
       apiTokenFile = "${./cfapitoken}";

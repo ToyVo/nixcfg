@@ -10,36 +10,36 @@ in
   };
   home-manager.users.${cfg.toyvo.name} = import ./home.nix;
   environment.systemPackages = with pkgs; [
-    ollama
     awscli2
     llama-cpp
+    ollama
   ];
   environment.pythonPackages = with pkgs.python311Packages; [
     boto3
-    typer
-    openai
-    sagemaker
-    huggingface-hub
     datasets
-    transformers
-    torch
+    huggingface-hub
     jax
+    openai
     pymongo
+    sagemaker
+    torch
+    transformers
+    typer
   ];
   homebrew = {
     brews = [
-      "mongosh"
-      "mongodb-community@4.4"
       "mongodb-community-shell@4.4"
+      "mongodb-community@4.4"
       "mongodb-database-tools"
+      "mongosh"
     ];
     casks = [
-      { name = "mongodb-compass"; greedy = true; }
-      { name = "slack"; greedy = true; }
-      { name = "keybase"; greedy = true; }
       # must be installed at /Applications, nix-darwin installs it at /Applications/nix apps
       { name = "1password"; greedy = true; }
+      { name = "keybase"; greedy = true; }
+      { name = "mongodb-compass"; greedy = true; }
       { name = "prusaslicer"; greedy = true; }
+      { name = "slack"; greedy = true; }
     ];
     taps = [
       "mongodb/brew"

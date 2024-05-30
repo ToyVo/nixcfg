@@ -15,11 +15,10 @@ in
         catppuccin.catppuccin-vsc
         catppuccin.catppuccin-vsc-icons
         ms-vscode.cmake-tools
-        ms-vscode-remote.remote-ssh
         vadimcn.vscode-lldb
-        ms-vscode-remote.remote-containers
         continue.continue
         serayuzgur.crates
+        ms-vscode-remote.remote-containers
         usernamehw.errorlens
         dbaeumer.vscode-eslint
         tamasfe.even-better-toml
@@ -42,6 +41,8 @@ in
         ms-python.vscode-pylance
         # ms-python.python
         ms-python.debugpy
+        ms-vscode-remote.remote-ssh
+        humao.rest-client
         rust-lang.rust-analyzer
         vscodevim.vim
       ] ++ lib.optionals (builtins.elem system [ "aarch64-darwin" "x86_64-darwin" "x86_64-linux" ]) [

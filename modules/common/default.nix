@@ -30,6 +30,10 @@ in
       gui.enable = lib.mkEnableOption "GUI Applications";
       defaults.enable = lib.mkEnableOption "Enable Defaults";
     };
+    environment.pythonPackage = lib.mkOption {
+      type = lib.types.package;
+      default = myPython;
+    };
     environment.pythonPackages = lib.mkOption {
       type = lib.types.listOf lib.types.package;
       default = [ ];
