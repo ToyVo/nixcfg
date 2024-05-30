@@ -94,10 +94,11 @@ in
   nixosConfigurations = {
     HP-Envy = nixcfg "x86_64-linux" [ ./HP-Envy.nix ];
     HP-ZBook = nixcfg "x86_64-linux" [ ./HP-ZBook.nix ];
-    MacBook-Pro-Nixos = nixcfg "aarch64-linux" [ ./MacBook-Pro-Nixos.nix apple-silicon-support.nixosModules.apple-silicon-support ];
+    MacBook-Pro-Nixos = nixcfg "aarch64-linux" [ ./MacBook-Pro-Nixos apple-silicon-support.nixosModules.apple-silicon-support ];
     ncase = nixcfg "x86_64-linux" [ ./ncase ];
     PineBook-Pro = nixcfg "aarch64-linux" [ ./PineBook-Pro.nix nixos-hardware.nixosModules.pine64-pinebook-pro ];
     Protectli = nixcfg "x86_64-linux" [ ./Protectli.nix ];
+    router = nixcfg "x86_64-linux"  [  ./router  ];
     rpi4b4a = nixcfg "aarch64-linux" [ ./rpi4b4a.nix ];
     rpi4b8a = nixcfg "aarch64-linux" [ ./rpi4b8a.nix ];
     rpi4b8b = nixcfg "aarch64-linux" [ ./rpi4b8b.nix ];
