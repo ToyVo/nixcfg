@@ -182,11 +182,11 @@
               echo "DNS for $DOMAIN is currently set to $CURRENT_IP"
               if [ "$CURRENT_IP" != "$NEW_IP" ]; then
                 echo "DNS for $DOMAIN Doesn't point to $NEW_IP, checking for confirmation..."
-                BASE_DOMAIN = awk -F'.' '{gsub(/^\*\./, ""); print $(NF-1) "." $NF}' <<< "$DOMAIN"
+                BASE_DOMAIN=$(awk -F'.' '{gsub(/^\*\./, ""); print $(NF-1) "." $NF}' <<< "$DOMAIN")
                 echo "Base for $DOMAIN is $BASE_DOMAIN"
-                ZONE = get_zone "$BASE_DOMAIN"
+                ZONE=$(get_zone "$BASE_DOMAIN")
                 echo "Zone ID for $BASE_DOMAIN is $ZONE"
-                RECORD = get_record "$ZONE" "$DOMAIN"
+                RECORD=$(get_record "$ZONE" "$DOMAIN")
                 echo "Record ID for $DOMAIN is $RECORD"
                 CONFIRM_IP=$(get_ip "$ZONE" "$RECORD")
                 echo "DNS for $DOMAIN is confirmed set to $CONFIRM_IP"
