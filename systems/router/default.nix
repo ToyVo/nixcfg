@@ -150,17 +150,23 @@
               --header 'Authorization: Bearer ${builtins.readFile ./cfapitoken}' | ${pkgs.jq}/bin/jq -r '.result.content')
             echo "DNS is currently set to $CONFIRM_IP"
             if [ "$CONFIRM_IP" != "$NEW_IP" ]; then
-              echo "Updating DNS record to $NEW_IP..."
+
+              BODY=$(echo '{"type":"A","name":"*.diekvoss.net","content":"'$NEW_IP'","ttl":1,"proxied":false}')
+              echo "Updating DNS record to $BODY"
               ${pkgs.curl}/bin/curl -sS --request PUT \
                 --url https://api.cloudflare.com/client/v4/zones/866ce54cff10441050b4280f5c337ab1/dns_records/32d003f7bc1e418b36abe7aea91e64b4 \
                 --header 'authorization: Bearer ${builtins.readFile ./cfapitoken}' \
                 --header 'content-type: application/json' \
-                --data '{"content": "$NEW_IP","name": "*.diekvoss.net","proxied": false,"type": "A","ttl": 1}'
+                --data "$BODY"
+
+              BODY=$(echo '{"type":"A","name":"mc.toyvo.dev","content":"'$NEW_IP'","ttl":1,"proxied":false}')
+              echo "Updating DNS record to $BODY"
               ${pkgs.curl}/bin/curl -sS --request PUT \
                 --url https://api.cloudflare.com/client/v4/zones/382657947fecd33d501b0cd59bd01f18/dns_records/8056d3fea28af3303fbf4519cd3173b7 \
                 --header 'authorization: Bearer ${builtins.readFile ./cfapitoken}' \
                 --header 'content-type: application/json' \
-                --data '{"content": "$NEW_IP","name": "mc.toyvo.dev","proxied": false,"type": "A","ttl": 1}'
+                --data "$BODY"
+
             else
               echo "DNS record is already set to the right IP, skipping update. Assuming TTL."
             fi
