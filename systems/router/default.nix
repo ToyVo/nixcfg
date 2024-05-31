@@ -187,7 +187,7 @@
                   echo "DNS record for $3 is already set to $NEW_IP, skipping update. Assuming TTL."
                 fi
               else
-                echo "DNS record for $3 is the right IP, skipping update."
+                echo "DNS record for $3 is $NEW_IP, skipping update."
               fi
           done
         '';
