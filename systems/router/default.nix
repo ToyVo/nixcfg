@@ -159,7 +159,7 @@
             curl -sS \
                -H "Content-Type: application/json" \
                -H "Authorization: Bearer $TOKEN" \
-               https://api.cloudflare.com/client/v4/zones/$1/dns_records/$2 | jq '.result.content'
+               https://api.cloudflare.com/client/v4/zones/$1/dns_records/$2 | jq -r '.result.content'
           }
 
           NEW_IP=$(ip addr show dev enp2s0 | awk '/inet / {print $2}' | cut -d '/' -f1)
