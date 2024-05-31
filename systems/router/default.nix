@@ -139,13 +139,16 @@
         after = [ "network.target" ];
         script = ''
           CURRENT_IP=$(${pkgs.dig}/bin/dig +short *.diekvoss.net)
-          NEW_IP=$(${pkgs.iproute2}/bin/ip addr show dev eth0 | awk '/inet / {print $2}' | cut -d '/' -f1)
+          echo "DNS is currently set to $CURRENT_IP"
+          NEW_IP=$(${pkgs.iproute2}/bin/ip addr show dev enp2s0 | awk '/inet / {print $2}' | cut -d '/' -f1)
+          echo "The IP Address of this machine is $NEW_IP"
           if [ "$CURRENT_IP" != "$NEW_IP" ]; then
             echo "DNS Doesn't point to the right IP, checking for confirmation..."
             CONFIRM_IP=$(${pkgs.curl}/bin/curl --request GET \
               --url https://api.cloudflare.com/client/v4/zones/866ce54cff10441050b4280f5c337ab1/dns_records/32d003f7bc1e418b36abe7aea91e64b4 \
               --header 'Content-Type: application/json' \
               --header 'Authorization: Bearer ${builtins.readFile ./cfapitoken}' | ${pkgs.jq}/bin/jq -r '.result.content')
+            echo "DNS is currently set to $CONFIRM_IP"
             if [ "$CONFIRM_IP" != "$NEW_IP" ]; then
               echo "Updating DNS record to $NEW_IP..."
               ${pkgs.curl}/bin/curl --request PUT \
