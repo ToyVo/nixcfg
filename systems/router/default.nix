@@ -145,6 +145,10 @@
           ZONE_TOYVO_DEV="382657947fecd33d501b0cd59bd01f18"
           RECORD_MC_TOYVO_DEV="8056d3fea28af3303fbf4519cd3173b7"
           DOMAIN_MC_TOYVO_DEV="mc.toyvo.dev"
+          declare -a DOMAINS=(
+            "$ZONE_DIEKVOSS_NET $RECORD_WC_DIEKVOSS_NET $DOMAIN_WC_DIEKVOSS_NET"
+            "$ZONE_TOYVO_DEV $RECORD_MC_TOYVO_DEV $DOMAIN_MC_TOYVO_DEV"
+          )
           TOKEN=${builtins.readFile  ./cfapitoken}
 
           function put_record() {
@@ -165,7 +169,7 @@
           NEW_IP=$(ip addr show dev enp2s0 | awk '/inet / {print $2}' | cut -d '/' -f1)
           echo "The IP Address of this machine is $NEW_IP"
 
-          for i in "$ZONE_DIEKVOSS_NET $RECORD_WC_DIEKVOSS_NET $DOMAIN_WC_DIEKVOSS_NET" "$ZONE_TOYVO_DEV $RECORD_MC_TOYVO_DEV $DOMAIN_MC_TOYVO_DEV"
+          for i in "''${DOMAINS[@]}"
           do
               set -- $i # Convert the "tuple" into the param args $1 $2 $3...
 
@@ -173,14 +177,14 @@
               echo "DNS for $3 is currently set to $CURRENT_IP"
 
               if [ "$CURRENT_IP" != "$NEW_IP" ]; then
-                echo "DNS for $3 Doesn't point to the right IP, checking for confirmation..."
+                echo "DNS for $3 Doesn't point to $NEW_IP, checking for confirmation..."
                 CONFIRM_IP=$(get_ip "$1" "$2")
                 echo "DNS for $3 is confirmed set to $CONFIRM_IP"
                 if [ "$CONFIRM_IP" != "$NEW_IP" ]; then
                   echo "Updating DNS record for $3 to $NEW_IP"
                   put_record "$1" "$2" "$3" "$NEW_IP"
                 else
-                  echo "DNS record for $3 is already set to the right IP, skipping update. Assuming TTL."
+                  echo "DNS record for $3 is already set to $NEW_IP, skipping update. Assuming TTL."
                 fi
               else
                 echo "DNS record for $3 is the right IP, skipping update."
