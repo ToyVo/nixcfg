@@ -139,15 +139,9 @@
         after = [ "network.target" ];
         path = with pkgs; [curl iproute2 gawk dig jq];
         script = ''
-          ZONE_DIEKVOSS_NET="866ce54cff10441050b4280f5c337ab1"
-          RECORD_WC_DIEKVOSS_NET="32d003f7bc1e418b36abe7aea91e64b4"
-          DOMAIN_WC_DIEKVOSS_NET="*.diekvoss.net"
-          ZONE_TOYVO_DEV="382657947fecd33d501b0cd59bd01f18"
-          RECORD_MC_TOYVO_DEV="8056d3fea28af3303fbf4519cd3173b7"
-          DOMAIN_MC_TOYVO_DEV="mc.toyvo.dev"
           declare -a DOMAINS=(
-            "$ZONE_DIEKVOSS_NET $RECORD_WC_DIEKVOSS_NET $DOMAIN_WC_DIEKVOSS_NET"
-            "$ZONE_TOYVO_DEV $RECORD_MC_TOYVO_DEV $DOMAIN_MC_TOYVO_DEV"
+            "*.diekvoss.net"
+            "mc.toyvo.dev"
           )
           TOKEN=${builtins.readFile  ./cfapitoken}
 
@@ -166,28 +160,44 @@
                https://api.cloudflare.com/client/v4/zones/$1/dns_records/$2 | jq -r '.result.content'
           }
 
+          function get_zone() {
+            curl -sS \
+               -H "Content-Type: application/json" \
+               -H "Authorization: Bearer $TOKEN" \
+               https://api.cloudflare.com/client/v4/zones?name=$1 | jq -r '.result.[].id'
+          }
+
+          function get_record() {
+            curl -sS \
+               -H "Content-Type: application/json" \
+               -H "Authorization: Bearer $TOKEN" \
+               https://api.cloudflare.com/client/v4/zones/$1/dns_records?name=$2 | jq -r '.result.[].id'
+          }
+
           NEW_IP=$(ip addr show dev enp2s0 | awk '/inet / {print $2}' | cut -d '/' -f1)
           echo "The IP Address of this machine is $NEW_IP"
-
-          for i in "''${DOMAINS[@]}"
+          for DOMAIN in "''${DOMAINS[@]}"
           do
-              set -- $i # Convert the "tuple" into the param args $1 $2 $3...
-
-              CURRENT_IP=$(dig +short $3)
-              echo "DNS for $3 is currently set to $CURRENT_IP"
-
+              CURRENT_IP=$(dig +short $DOMAIN)
+              echo "DNS for $DOMAIN is currently set to $CURRENT_IP"
               if [ "$CURRENT_IP" != "$NEW_IP" ]; then
-                echo "DNS for $3 Doesn't point to $NEW_IP, checking for confirmation..."
-                CONFIRM_IP=$(get_ip "$1" "$2")
-                echo "DNS for $3 is confirmed set to $CONFIRM_IP"
+                echo "DNS for $DOMAIN Doesn't point to $NEW_IP, checking for confirmation..."
+                BASE_DOMAIN = awk -F'.' '{gsub(/^\*\./, ""); print $(NF-1) "." $NF}' <<< "$DOMAIN"
+                echo "Base for $DOMAIN is $BASE_DOMAIN"
+                ZONE = get_zone "$BASE_DOMAIN"
+                echo "Zone ID for $BASE_DOMAIN is $ZONE"
+                RECORD = get_record "$ZONE" "$DOMAIN"
+                echo "Record ID for $DOMAIN is $RECORD"
+                CONFIRM_IP=$(get_ip "$ZONE" "$RECORD")
+                echo "DNS for $DOMAIN is confirmed set to $CONFIRM_IP"
                 if [ "$CONFIRM_IP" != "$NEW_IP" ]; then
-                  echo "Updating DNS record for $3 to $NEW_IP"
-                  put_record "$1" "$2" "$3" "$NEW_IP"
+                  echo "Updating DNS record for $DOMAIN to $NEW_IP"
+                  put_record "$ZONE" "$RECORD" "$DOMAIN" "$NEW_IP"
                 else
-                  echo "DNS record for $3 is already set to $NEW_IP, skipping update. Assuming TTL."
+                  echo "DNS record for $DOMAIN is already set to $NEW_IP, skipping update. Assuming TTL."
                 fi
               else
-                echo "DNS record for $3 is $NEW_IP, skipping update."
+                echo "DNS record for $DOMAIN is $NEW_IP, skipping update."
               fi
           done
         '';
