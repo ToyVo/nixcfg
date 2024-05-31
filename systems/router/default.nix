@@ -137,42 +137,55 @@
       cfdyndns = {
         serviceConfig.Type = "oneshot";
         after = [ "network.target" ];
+        path = with pkgs; [curl iproute2 gawk dig jq];
         script = ''
-          CURRENT_IP=$(${pkgs.dig}/bin/dig +short *.diekvoss.net)
-          echo "DNS is currently set to $CURRENT_IP"
-          NEW_IP=$(${pkgs.iproute2}/bin/ip addr show dev enp2s0 | ${pkgs.gawk}/bin/awk '/inet / {print $2}' | cut -d '/' -f1)
+          ZONE_DIEKVOSS_NET="866ce54cff10441050b4280f5c337ab1"
+          RECORD_WC_DIEKVOSS_NET="32d003f7bc1e418b36abe7aea91e64b4"
+          DOMAIN_WC_DIEKVOSS_NET="*.diekvoss.net"
+          ZONE_TOYVO_DEV="382657947fecd33d501b0cd59bd01f18"
+          RECORD_MC_TOYVO_DEV="8056d3fea28af3303fbf4519cd3173b7"
+          DOMAIN_MC_TOYVO_DEV="mc.toyvo.dev"
+          TOKEN=${builtins.readFile  ./cfapitoken}
+
+          function put_record() {
+            curl -sS -X PUT \
+              -H "Content-Type: application/json" \
+              -H "Authoriztion: Bearer $TOKEN" \
+              -d "{\"type\":\"A\",\"name\":\"$3\",\"content\":\"$4\",\"ttl\":1,\"proxied\":false}" \
+              "https://api.cloudflare.com/client/v4/zones/$1/dns_records/$2"
+          }
+
+          function get_ip() {
+            curl -sS \
+               -H "Content-Type: application/json" \
+               -H "Authoriztion: Bearer $TOKEN" \
+               https://api.cloudflare.com/client/v4/zones/$1/dns_records/$2 | jq '.result.content'
+          }
+
+          NEW_IP=$(ip addr show dev enp2s0 | awk '/inet / {print $2}' | cut -d '/' -f1)
           echo "The IP Address of this machine is $NEW_IP"
-          if [ "$CURRENT_IP" != "$NEW_IP" ]; then
-            echo "DNS Doesn't point to the right IP, checking for confirmation..."
-            CONFIRM_IP=$(${pkgs.curl}/bin/curl -sS --request GET \
-              --url https://api.cloudflare.com/client/v4/zones/866ce54cff10441050b4280f5c337ab1/dns_records/32d003f7bc1e418b36abe7aea91e64b4 \
-              --header 'Content-Type: application/json' \
-              --header 'Authorization: Bearer ${builtins.readFile ./cfapitoken}' | ${pkgs.jq}/bin/jq -r '.result.content')
-            echo "DNS is currently set to $CONFIRM_IP"
-            if [ "$CONFIRM_IP" != "$NEW_IP" ]; then
 
-              BODY=$(echo '{"type":"A","name":"*.diekvoss.net","content":"'$NEW_IP'","ttl":1,"proxied":false}')
-              echo "Updating DNS record to $BODY"
-              ${pkgs.curl}/bin/curl -sS --request PUT \
-                --url https://api.cloudflare.com/client/v4/zones/866ce54cff10441050b4280f5c337ab1/dns_records/32d003f7bc1e418b36abe7aea91e64b4 \
-                --header 'authorization: Bearer ${builtins.readFile ./cfapitoken}' \
-                --header 'content-type: application/json' \
-                --data '$(echo $BODY)'
+          for i in "$ZONE_DIEKVOSS_NET $RECORD_WC_DIEKVOSS_NET $DOMAIN_WC_DIEKVOSS_NET" "$ZONE_TOYVO_DEV $RECORD_MC_TOYVO_DEV $DOMAIN_MC_TOYVO_DEV"
+          do
+              set -- $i # Convert the "tuple" into the param args $1 $2 $3...
 
-              BODY=$(echo '{"type":"A","name":"mc.toyvo.dev","content":"'$NEW_IP'","ttl":1,"proxied":false}')
-              echo "Updating DNS record to $BODY"
-              ${pkgs.curl}/bin/curl -sS --request PUT \
-                --url https://api.cloudflare.com/client/v4/zones/382657947fecd33d501b0cd59bd01f18/dns_records/8056d3fea28af3303fbf4519cd3173b7 \
-                --header 'authorization: Bearer ${builtins.readFile ./cfapitoken}' \
-                --header 'content-type: application/json' \
-                --data '$(echo $BODY)'
+              CURRENT_IP=$(dig +short $3)
+              echo "DNS for $3 is currently set to $CURRENT_IP"
 
-            else
-              echo "DNS record is already set to the right IP, skipping update. Assuming TTL."
-            fi
-          else
-            echo "DNS record is the right IP, skipping update."
-          fi
+              if [ "$CURRENT_IP" != "$NEW_IP" ]; then
+                echo "DNS Doesn't point to the right IP, checking for confirmation..."
+                CONFIRM_IP=$(get_ip "$1" "$2")
+                echo "DNS for $3 is confirmed set to $CONFIRM_IP"
+                if [ "$CONFIRM_IP" != "$NEW_IP" ]; then
+                  echo "Updating DNS record for $3 to $NEW_IP"
+                  put_record "$1" "$2" "$3" "$NEW_IP"
+                else
+                  echo "DNS record is already set to the right IP, skipping update. Assuming TTL."
+                fi
+              else
+                echo "DNS record is the right IP, skipping update."
+              fi
+          done
         '';
         startAt = "*:0/5";
       };
