@@ -30,11 +30,6 @@
       interfaces.cdiot.allowedUDPPorts = [ 53 67 68 ];
       interfaces.cdguest.allowedTCPPorts = [ 53 80 443 25565 ];
       interfaces.cdguest.allowedUDPPorts = [ 53 67 68 ];
-      extraCommands = ''
-        iptables -t nat -D PREROUTING -p tcp --dport 25565 -j DNAT --to-destination 10.1.0.3:25565 || true
-        iptables -D FORWARD -p tcp -d 10.1.0.3 --dport 25565 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
-        iptables -D POSTROUTING -t nat -p tcp -d 10.1.0.3 --dport 25565 -j MASQUERADE
-      '';
     };
   };
   boot = {
@@ -55,80 +50,89 @@
   userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;
-  systemd.network = {
-    enable = true;
-    networks."10-wan0" = {
-      matchConfig.Name = "enp2s0";
-      networkConfig.DHCP = "ipv4";
-      dhcpV4Config = {
-        UseDNS = false;
+  systemd = {
+    network = {
+      enable = true;
+      networks."10-wan0" = {
+        matchConfig.Name = "enp2s0";
+        networkConfig.DHCP = "ipv4";
+        dhcpV4Config = {
+          UseDNS = false;
+        };
+        linkConfig.RequiredForOnline = "routable";
       };
-      linkConfig.RequiredForOnline = "routable";
-    };
-    networks."20-lan" = {
-      matchConfig.Name = "enp3s0";
-      address = [ "10.1.0.1/24" ];
-      vlan = [ "cdnet" "cdiot" "cdguest" ];
-      networkConfig = {
-        DHCPServer = true;
-        IPMasquerade = "ipv4";
-        MulticastDNS = true;
+      networks."20-lan" = {
+        matchConfig.Name = "enp3s0";
+        address = [ "10.1.0.1/24" ];
+        vlan = [ "cdnet" "cdiot" "cdguest" ];
+        networkConfig = {
+          DHCPServer = true;
+          IPMasquerade = "ipv4";
+          MulticastDNS = true;
+        };
+        dhcpServerConfig.DNS = [ "10.1.0.1" ];
+        linkConfig.RequiredForOnline = "no";
       };
-      dhcpServerConfig.DNS = [ "10.1.0.1" ];
-      linkConfig.RequiredForOnline = "no";
-    };
-    netdevs."21-cdnet" = {
-      netdevConfig = {
-        Name = "cdnet";
-        Kind = "vlan";
+      netdevs."21-cdnet" = {
+        netdevConfig = {
+          Name = "cdnet";
+          Kind = "vlan";
+        };
+        vlanConfig.Id = 10;
       };
-      vlanConfig.Id = 10;
-    };
-    netdevs."22-cdiot" = {
-      netdevConfig = {
-        Name = "cdiot";
-        Kind = "vlan";
+      netdevs."22-cdiot" = {
+        netdevConfig = {
+          Name = "cdiot";
+          Kind = "vlan";
+        };
+        vlanConfig.Id = 20;
       };
-      vlanConfig.Id = 20;
-    };
-    netdevs."23-cdguest" = {
-      netdevConfig = {
-        Name = "cdguest";
-        Kind = "vlan";
+      netdevs."23-cdguest" = {
+        netdevConfig = {
+          Name = "cdguest";
+          Kind = "vlan";
+        };
+        vlanConfig.Id = 30;
       };
-      vlanConfig.Id = 30;
-    };
-    networks."21-cdnet" = {
-      matchConfig.Name = "cdnet";
-      address = [ "10.1.10.1/24" ];
-      networkConfig = {
-        DHCPServer = true;
-        IPMasquerade = "ipv4";
+      networks."21-cdnet" = {
+        matchConfig.Name = "cdnet";
+        address = [ "10.1.10.1/24" ];
+        networkConfig = {
+          DHCPServer = true;
+          IPMasquerade = "ipv4";
+        };
+        dhcpServerConfig.DNS = [ "10.1.0.1" ];
+        linkConfig.RequiredForOnline = "no";
       };
-      dhcpServerConfig.DNS = [ "10.1.0.1" ];
-      linkConfig.RequiredForOnline = "no";
-    };
-    networks."22-cdiot" = {
-      matchConfig.Name = "cdiot";
-      address = [ "10.1.20.1/24" ];
-      networkConfig = {
-        DHCPServer = true;
-        IPMasquerade = "ipv4";
+      networks."22-cdiot" = {
+        matchConfig.Name = "cdiot";
+        address = [ "10.1.20.1/24" ];
+        networkConfig = {
+          DHCPServer = true;
+          IPMasquerade = "ipv4";
+        };
+        dhcpServerConfig.DNS = [ "10.1.0.1" ];
+        linkConfig.RequiredForOnline = "no";
       };
-      dhcpServerConfig.DNS = [ "10.1.0.1" ];
-      linkConfig.RequiredForOnline = "no";
-    };
-    networks."23-cdguest" = {
-      matchConfig.Name = "cdguest";
-      address = [ "10.1.30.1/24" ];
-      networkConfig = {
-        DHCPServer = true;
-        IPMasquerade = "ipv4";
+      networks."23-cdguest" = {
+        matchConfig.Name = "cdguest";
+        address = [ "10.1.30.1/24" ];
+        networkConfig = {
+          DHCPServer = true;
+          IPMasquerade = "ipv4";
+        };
+        dhcpServerConfig.DNS = [ "10.1.0.1" ];
+        linkConfig.RequiredForOnline = "no";
       };
-      dhcpServerConfig.DNS = [ "10.1.0.1" ];
-      linkConfig.RequiredForOnline = "no";
     };
-
+    services.minecraft-server-forwarder = {
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
+      serviceConfig = {
+        Restart = "on-failure";
+      };
+      script = "${pkgs.socat}/bin/socat TCP-LISTEN:25565,fork,reuseaddr TCP:10.1.0.3:25565";
+    };
   };
   services = {
     openssh = {
