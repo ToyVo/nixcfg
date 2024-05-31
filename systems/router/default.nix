@@ -17,13 +17,6 @@
       enable = true;
       externalInterface = "enp2s0";
       internalInterfaces = [ "enp3s0" "cdnet" "cdiot" "cdguest" ];
-      forwardPorts = [
-        {
-          sourcePort = 25565;
-          proto = "tcp";
-          destination = "10.1.0.3:25565";
-        }
-      ];
     };
     firewall = {
       enable = true;
