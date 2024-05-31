@@ -140,7 +140,7 @@
         script = ''
           CURRENT_IP=$(${pkgs.dig}/bin/dig +short *.diekvoss.net)
           echo "DNS is currently set to $CURRENT_IP"
-          NEW_IP=$(${pkgs.iproute2}/bin/ip addr show dev enp2s0 | awk '/inet / {print $2}' | cut -d '/' -f1)
+          NEW_IP=$(${pkgs.iproute2}/bin/ip addr show dev enp2s0 | ${pkgs.gawk}/bin/awk '/inet / {print $2}' | cut -d '/' -f1)
           echo "The IP Address of this machine is $NEW_IP"
           if [ "$CURRENT_IP" != "$NEW_IP" ]; then
             echo "DNS Doesn't point to the right IP, checking for confirmation..."
