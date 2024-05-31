@@ -31,8 +31,9 @@
       interfaces.cdguest.allowedTCPPorts = [ 53 80 443 25565 ];
       interfaces.cdguest.allowedUDPPorts = [ 53 67 68 ];
       extraCommands = ''
-        iptables -t nat -A PREROUTING -p tcp --dport 25565 -j DNAT --to-destination 10.1.0.3:25565
-        iptables -t nat -A POSTROUTING -j MASQUERADE
+        iptables -t nat -D PREROUTING -p tcp --dport 25565 -j DNAT --to-destination 10.1.0.3:25565 || true
+        iptables -D FORWARD -p tcp -d 10.1.0.3 --dport 25565 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+        iptables -D POSTROUTING -t nat -p tcp -d 10.1.0.3 --dport 25565 -j MASQUERADE
       '';
     };
   };
