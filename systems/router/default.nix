@@ -150,7 +150,7 @@
           function put_record() {
             curl -sS -X PUT \
               -H "Content-Type: application/json" \
-              -H "Authoriztion: Bearer $TOKEN" \
+              -H "Authorization: Bearer $TOKEN" \
               -d "{\"type\":\"A\",\"name\":\"$3\",\"content\":\"$4\",\"ttl\":1,\"proxied\":false}" \
               "https://api.cloudflare.com/client/v4/zones/$1/dns_records/$2"
           }
@@ -158,7 +158,7 @@
           function get_ip() {
             curl -sS \
                -H "Content-Type: application/json" \
-               -H "Authoriztion: Bearer $TOKEN" \
+               -H "Authorization: Bearer $TOKEN" \
                https://api.cloudflare.com/client/v4/zones/$1/dns_records/$2 | jq '.result.content'
           }
 
@@ -173,17 +173,17 @@
               echo "DNS for $3 is currently set to $CURRENT_IP"
 
               if [ "$CURRENT_IP" != "$NEW_IP" ]; then
-                echo "DNS Doesn't point to the right IP, checking for confirmation..."
+                echo "DNS for $3 Doesn't point to the right IP, checking for confirmation..."
                 CONFIRM_IP=$(get_ip "$1" "$2")
                 echo "DNS for $3 is confirmed set to $CONFIRM_IP"
                 if [ "$CONFIRM_IP" != "$NEW_IP" ]; then
                   echo "Updating DNS record for $3 to $NEW_IP"
                   put_record "$1" "$2" "$3" "$NEW_IP"
                 else
-                  echo "DNS record is already set to the right IP, skipping update. Assuming TTL."
+                  echo "DNS record for $3 is already set to the right IP, skipping update. Assuming TTL."
                 fi
               else
-                echo "DNS record is the right IP, skipping update."
+                echo "DNS record for $3 is the right IP, skipping update."
               fi
           done
         '';
