@@ -125,13 +125,48 @@
         linkConfig.RequiredForOnline = "no";
       };
     };
-    services.minecraft-server-forwarder = {
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
-      serviceConfig = {
-        Restart = "on-failure";
+    services = {
+      minecraft-server-forwarder = {
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network.target" ];
+        serviceConfig = {
+          Restart = "on-failure";
+        };
+        script = "${pkgs.socat}/bin/socat TCP-LISTEN:25565,fork,reuseaddr TCP:10.1.0.3:25565";
       };
-      script = "${pkgs.socat}/bin/socat TCP-LISTEN:25565,fork,reuseaddr TCP:10.1.0.3:25565";
+      cfdyndns = {
+        serviceConfig.Type = "oneshot";
+        after = [ "network.target" ];
+        script = ''
+          CURRENT_IP=$(${pkgs.dig}/bin/dig +short *.diekvoss.net)
+          NEW_IP=$(${pkgs.iproute2}/bin/ip addr show dev eth0 | awk '/inet / {print $2}' | cut -d '/' -f1)
+          if [ "$CURRENT_IP" != "$NEW_IP" ]; then
+            echo "DNS Doesn't point to the right IP, checking for confirmation..."
+            CONFIRM_IP=$(${pkgs.curl}/bin/curl --request GET \
+              --url https://api.cloudflare.com/client/v4/zones/866ce54cff10441050b4280f5c337ab1/dns_records/32d003f7bc1e418b36abe7aea91e64b4 \
+              --header 'Content-Type: application/json' \
+              --header 'Authorization: Bearer ${builtins.readFile ./cfapitoken}' | ${pkgs.jq}/bin/jq -r '.result.content')
+            if [ "$CONFIRM_IP" != "$NEW_IP" ]; then
+              echo "Updating DNS record to $NEW_IP..."
+              ${pkgs.curl}/bin/curl --request PUT \
+                --url https://api.cloudflare.com/client/v4/zones/866ce54cff10441050b4280f5c337ab1/dns_records/32d003f7bc1e418b36abe7aea91e64b4 \
+                --header 'Content-Type: application/json' \
+                --header 'Authorization: Bearer ${builtins.readFile ./cfapitoken}' \
+                --data '{ "content": "$NEW_IP", "name": "*.diekvoss.net", "proxied": false, "type": "A", "ttl": 1 }'
+              ${pkgs.curl}/bin/curl --request PUT \
+                --url https://api.cloudflare.com/client/v4/zones/382657947fecd33d501b0cd59bd01f18/dns_records/8056d3fea28af3303fbf4519cd3173b7 \
+                --header 'Content-Type: application/json' \
+                --header 'Authorization: Bearer ${builtins.readFile ./cfapitoken}' \
+                --data '{ "content": "$NEW_IP", "name": "mc.toyvo.dev", "proxied": false, "type": "A", "ttl": 1 }'
+            else
+              echo "DNS record is already set to the right IP, skipping update. Assuming TTL."
+            fi
+          else
+            echo "DNS record is the right IP, skipping update."
+          fi
+        '';
+        startAt = "*:0/5";
+      };
     };
   };
   services = {
@@ -153,16 +188,6 @@
         bind_hosts = [ "127.0.1.53" ];
         bootstrap_dns = [ "9.9.9.9" ];
       };
-    };
-    cfdyndns = {
-      enable = true;
-      email = "collin@diekvoss.com";
-      records = [
-        "*.diekvoss.net"
-        "mc.toyvo.dev"
-      ];
-      apikeyFile = "${./cfapikey}";
-      apiTokenFile = "${./cfapitoken}";
     };
     caddy = {
       enable = true;
