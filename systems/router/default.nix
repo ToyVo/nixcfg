@@ -135,6 +135,8 @@
         script = "${pkgs.socat}/bin/socat TCP-LISTEN:25565,fork,reuseaddr TCP:10.1.0.3:25565";
       };
       cfdyndns = {
+        # temp
+        enable = false;
         serviceConfig.Type = "oneshot";
         after = [ "network.target" ];
         script = ''
