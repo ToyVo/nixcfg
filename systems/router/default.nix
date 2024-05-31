@@ -135,8 +135,6 @@
         script = "${pkgs.socat}/bin/socat TCP-LISTEN:25565,fork,reuseaddr TCP:10.1.0.3:25565";
       };
       cfdyndns = {
-        # temp
-        enable = false;
         serviceConfig.Type = "oneshot";
         after = [ "network.target" ];
         script = ''
@@ -146,23 +144,23 @@
           echo "The IP Address of this machine is $NEW_IP"
           if [ "$CURRENT_IP" != "$NEW_IP" ]; then
             echo "DNS Doesn't point to the right IP, checking for confirmation..."
-            CONFIRM_IP=$(${pkgs.curl}/bin/curl --request GET \
+            CONFIRM_IP=$(${pkgs.curl}/bin/curl -sS --request GET \
               --url https://api.cloudflare.com/client/v4/zones/866ce54cff10441050b4280f5c337ab1/dns_records/32d003f7bc1e418b36abe7aea91e64b4 \
               --header 'Content-Type: application/json' \
               --header 'Authorization: Bearer ${builtins.readFile ./cfapitoken}' | ${pkgs.jq}/bin/jq -r '.result.content')
             echo "DNS is currently set to $CONFIRM_IP"
             if [ "$CONFIRM_IP" != "$NEW_IP" ]; then
               echo "Updating DNS record to $NEW_IP..."
-              ${pkgs.curl}/bin/curl --request PUT \
+              ${pkgs.curl}/bin/curl -sS --request PUT \
                 --url https://api.cloudflare.com/client/v4/zones/866ce54cff10441050b4280f5c337ab1/dns_records/32d003f7bc1e418b36abe7aea91e64b4 \
-                --header 'Content-Type: application/json' \
-                --header 'Authorization: Bearer ${builtins.readFile ./cfapitoken}' \
-                --data '{ "content": "$NEW_IP", "name": "*.diekvoss.net", "proxied": false, "type": "A", "ttl": 1 }'
-              ${pkgs.curl}/bin/curl --request PUT \
+                --header 'authorization: Bearer ${builtins.readFile ./cfapitoken}' \
+                --header 'content-type: application/json' \
+                --data '{"content": "$NEW_IP","name": "*.diekvoss.net","proxied": false,"type": "A","ttl": 1}'
+              ${pkgs.curl}/bin/curl -sS --request PUT \
                 --url https://api.cloudflare.com/client/v4/zones/382657947fecd33d501b0cd59bd01f18/dns_records/8056d3fea28af3303fbf4519cd3173b7 \
-                --header 'Content-Type: application/json' \
-                --header 'Authorization: Bearer ${builtins.readFile ./cfapitoken}' \
-                --data '{ "content": "$NEW_IP", "name": "mc.toyvo.dev", "proxied": false, "type": "A", "ttl": 1 }'
+                --header 'authorization: Bearer ${builtins.readFile ./cfapitoken}' \
+                --header 'content-type: application/json' \
+                --data '{"content": "$NEW_IP","name": "mc.toyvo.dev","proxied": false,"type": "A","ttl": 1}'
             else
               echo "DNS record is already set to the right IP, skipping update. Assuming TTL."
             fi
