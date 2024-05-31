@@ -25,6 +25,17 @@
         }
       ];
     };
+    nftables = {
+      enable = true;
+      ruleset = ''
+          table ip nat {
+            chain PREROUTING {
+              type nat hook prerouting priority dstnat; policy accept;
+              iifname "enp2s0" tcp dport 25565 dnat to 10.1.0.3:25565
+            }
+          }
+      '';
+    };
     firewall = {
       enable = true;
       # Port 53 is for DNS, 22 is for SSH, 67/68 is for DHCP, 80 is for HTTP, 443 is for HTTPS
