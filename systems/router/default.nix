@@ -25,17 +25,6 @@
         }
       ];
     };
-    nftables = {
-      enable = true;
-      ruleset = ''
-          table ip nat {
-            chain PREROUTING {
-              type nat hook prerouting priority dstnat; policy accept;
-              iifname "enp2s0" tcp dport 25565 dnat to 10.1.0.3:25565
-            }
-          }
-      '';
-    };
     firewall = {
       enable = true;
       # Port 53 is for DNS, 22 is for SSH, 67/68 is for DHCP, 80 is for HTTP, 443 is for HTTPS
@@ -48,6 +37,10 @@
       interfaces.cdiot.allowedUDPPorts = [ 53 67 68 ];
       interfaces.cdguest.allowedTCPPorts = [ 53 80 443 25565 ];
       interfaces.cdguest.allowedUDPPorts = [ 53 67 68 ];
+      extraCommands = ''
+        iptables -t nat -A PREROUTING -p tcp --dport 25565 -j DNAT --to-destination 10.1.0.3:25565
+        iptables -t nat -A POSTROUTING -j MASQUERADE
+      '';
     };
   };
   boot = {
