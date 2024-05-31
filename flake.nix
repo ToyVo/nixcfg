@@ -26,7 +26,7 @@
     nixvim.url = "github:nix-community/nixvim";
     rust-overlay.url = "github:oxalica/rust-overlay";
     sops-nix.url = "github:Mic92/sops-nix";
-    nh.url = "github:toyvo/nh";
+    nh.url = "github:toyvo/nh-darwin";
     # Misc sources
     catppuccin.url = "github:catppuccin/nix";
   };
