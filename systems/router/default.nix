@@ -157,7 +157,7 @@
                 --url https://api.cloudflare.com/client/v4/zones/866ce54cff10441050b4280f5c337ab1/dns_records/32d003f7bc1e418b36abe7aea91e64b4 \
                 --header 'authorization: Bearer ${builtins.readFile ./cfapitoken}' \
                 --header 'content-type: application/json' \
-                --data "$BODY"
+                --data '$(echo $BODY)'
 
               BODY=$(echo '{"type":"A","name":"mc.toyvo.dev","content":"'$NEW_IP'","ttl":1,"proxied":false}')
               echo "Updating DNS record to $BODY"
@@ -165,7 +165,7 @@
                 --url https://api.cloudflare.com/client/v4/zones/382657947fecd33d501b0cd59bd01f18/dns_records/8056d3fea28af3303fbf4519cd3173b7 \
                 --header 'authorization: Bearer ${builtins.readFile ./cfapitoken}' \
                 --header 'content-type: application/json' \
-                --data "$BODY"
+                --data '$(echo $BODY)'
 
             else
               echo "DNS record is already set to the right IP, skipping update. Assuming TTL."
