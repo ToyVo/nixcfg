@@ -10,7 +10,7 @@
   };
   profiles.dev.enable = true;
   userPresets.toyvo.enable = true;
-  fileSystemPresets.boot.enable = true;
+  fileSystemPresets.efi.enable = true;
   fileSystemPresets.btrfs.enable = true;
   services.desktopManager.plasma6.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];

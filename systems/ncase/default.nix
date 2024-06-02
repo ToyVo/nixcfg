@@ -62,6 +62,10 @@
       enable = true;
       openFirewall = true;
     };
+    minecraft = {
+      enable = true;
+      openFirewall = true;
+    };
   };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
