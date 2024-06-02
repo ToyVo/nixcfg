@@ -12,6 +12,7 @@ in
     home.sessionVariables.EDITOR = "nvim";
     gtk.macbuttons.enable = true;
     programs = {
+      alacritty.enable = cfg.gui.enable;
       direnv = {
         enable = true;
         nix-direnv.enable = true;
@@ -35,6 +36,7 @@ in
         }];
       };
       helix.enable = true;
+      hyper.enable = cfg.gui.enable;
       ssh =
         let
           identityConfig = {

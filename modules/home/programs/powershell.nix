@@ -52,6 +52,7 @@ in
               }
           }
           [Environment]::SetEnvironmentVariable('PATH', $paths_to_export -join [IO.Path]::PathSeparator)
+          ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "Function nixalias${name} { param([Parameter(ValueFromRemainingArguments=$true)] [string[]]$Arguments) ${value} $Arguments}\nSet-Alias -Name ${name} -Value nixalias${name}") config.home.shellAliases)}
           ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "Function nixalias${name} { param([Parameter(ValueFromRemainingArguments=$true)] [string[]]$Arguments) ${value} $Arguments}\nSet-Alias -Name ${name} -Value nixalias${name}") cfg.powershell.shellAliases)}
         ''
         (lib.mkIf (starship.enable && starship.enablePowerShellIntegration) ''

@@ -5,6 +5,7 @@ in
 {
   config = lib.mkIf cfg.enable {
     programs.nushell = {
+      shellAliases = config.home.shellAliases;
       envFile.text = ''
         $env.config = {
           show_banner: false

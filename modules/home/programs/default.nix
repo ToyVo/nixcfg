@@ -1,5 +1,6 @@
 { ... }: {
   imports = [
+    ./alacritty.nix
     ./bash.nix
     ./bat.nix
     ./eza.nix
@@ -8,6 +9,7 @@
     ./gpg.nix
     ./gtk.nix
     ./helix.nix
+    ./hyper.nix
     ./ideavim.nix
     ./kde.nix
     ./kitty.nix
