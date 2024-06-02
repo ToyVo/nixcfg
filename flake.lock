@@ -325,11 +325,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1717199771,
-        "narHash": "sha256-ghSSunMVRfkWmiyiiqy0MJYOn4cINC1NHlrkpQB66bI=",
+        "lastModified": 1717298090,
+        "narHash": "sha256-7oD16/JsJ5uBs3Gf+fp9dKo+leF0v1A2KWdIOZKjDlk=",
         "owner": "toyvo",
         "repo": "nh-darwin",
-        "rev": "13652d6f4482ad16f8a3d2ea50f8b7280c765602",
+        "rev": "cb9c4263ab0d75b9ec284fb4f9049d3b5216ddd5",
         "type": "github"
       },
       "original": {
@@ -693,12 +693,12 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1717121863,
-        "narHash": "sha256-/3sxIe7MZqF/jw1RTQCSmgTjwVod43mmrk84m50MJQ4=",
-        "rev": "2a7b53172ed08f856b8382d7dcfd36a4e0cbd866",
-        "revCount": 1402,
+        "lastModified": 1717294752,
+        "narHash": "sha256-QhlS52cEQyx+iVcgrEoCnEEpWUA6uLdmeLRxk935inI=",
+        "rev": "b46857a406d207a1de74e792ef3b83e800c30e08",
+        "revCount": 1404,
         "type": "tarball",
-        "url": "https://api.flakehub.com/f/pinned/oxalica/rust-overlay/0.1.1402%2Brev-2a7b53172ed08f856b8382d7dcfd36a4e0cbd866/018fcc81-7489-7406-b306-5c3886b2130b/source.tar.gz"
+        "url": "https://api.flakehub.com/f/pinned/oxalica/rust-overlay/0.1.1404%2Brev-b46857a406d207a1de74e792ef3b83e800c30e08/018fd6c0-e37b-764d-87fb-f43d7877594b/source.tar.gz"
       },
       "original": {
         "type": "tarball",
