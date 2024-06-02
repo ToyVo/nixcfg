@@ -48,10 +48,8 @@
       hostName = "nextcloud.diekvoss.net";
       config.adminpassFile = "${./nextcloudpass.txt}";
     };
-    xserver = {
-      videoDrivers = [ "nvidia" ];
-      displayManager.defaultSession = "plasmax11";
-    };
+    xserver.videoDrivers = [ "nvidia" ];
+    displayManager.defaultSession = "plasmax11";
   };
   containerPresets = {
     homepage = {

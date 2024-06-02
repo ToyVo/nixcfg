@@ -9,15 +9,10 @@ in
       default = true;
       description = "Whether to open the firewall for the Ollama service.";
     };
-    port = lib.mkOption {
-      type = lib.types.int;
-      default = 11434;
-      description = "The port on which the Ollama service listens.";
-    };
   };
 
   config = lib.mkIf (cfg.enable && cfg.openFirewall) {
-    services.ollama.listenAddress = "0.0.0.0:${toString cfg.port}";
+    services.ollama.host = "0.0.0.0";
     networking = {
       firewall = {
         allowedTCPPorts = [ cfg.port ];
