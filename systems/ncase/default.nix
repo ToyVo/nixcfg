@@ -85,7 +85,9 @@
     spice
     spice-gtk
     spice-protocol
-    win-virtio
+    virtio-win
+    guestfs-tools
+    libosinfo
     win-spice
     distrobox
     mpv

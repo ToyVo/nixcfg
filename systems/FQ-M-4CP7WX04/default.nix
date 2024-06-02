@@ -34,8 +34,6 @@ in
       "mongosh"
     ];
     casks = [
-      # must be installed at /Applications, nix-darwin installs it at /Applications/nix apps
-      { name = "1password"; greedy = true; }
       { name = "keybase"; greedy = true; }
       { name = "mongodb-compass"; greedy = true; }
       { name = "prusaslicer"; greedy = true; }
