@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   imports = [ ./samba.nix ];
 
   hardware = {
@@ -50,6 +50,7 @@
     };
     xserver.videoDrivers = [ "nvidia" ];
     displayManager.defaultSession = "plasmax11";
+    displayManager.sddm.catppuccin.enable = lib.mkForce false;
   };
   containerPresets = {
     homepage = {

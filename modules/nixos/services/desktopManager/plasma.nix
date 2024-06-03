@@ -10,7 +10,7 @@ in
       libinput.enable = true;
       displayManager.sddm = {
         enable = true;
-        catppuccin.enable = false;
+        catppuccin.enable = true;
       };
     };
     profiles.gui.enable = true;
