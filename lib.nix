@@ -22,8 +22,8 @@ let
       '';
     in
     builtins.readFile resultFile;
-  isDirectory = runCommand: path: (symlinkTargetType path) == "directory\n";
-  isFile = runCommand: path: (symlinkTargetType path) == "file\n";
+  isDirectory = runCommand: path: (symlinkTargetType runCommand path) == "directory\n";
+  isFile = runCommand: path: (symlinkTargetType runCommand path) == "file\n";
   listFilesRecursively = runCommand: dirPath:
     let
       contents = builtins.readDir dirPath;
@@ -43,8 +43,8 @@ let
         fileFromLocal = ".local/${builtins.unsafeDiscardStringContext (lib.strings.removePrefix "${dirPath}/" name)}";
       in
       { name = fileFromLocal; value = { source = name; }; })
-    (listFilesRecursively dirPath));
+    (listFilesRecursively runCommand dirPath));
 in
 {
-  inherit isFile isDirectory getFiles;
+  inherit isFile isDirectory getFiles symlinkTargetType listFilesRecursively;
 }
