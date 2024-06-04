@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.profiles;
   gtk_2_3_attrs = {
@@ -52,17 +52,10 @@ in
         };
       };
     };
-    home.symlinkPackage = pkgs.buildEnv {
-      name = "symlink packages";
-      paths = [
-        config.gtk.theme.package
-        config.gtk.iconTheme.package
-        config.gtk.cursorTheme.package
-      ];
-    };
-    # home.file = self.lib.getFiles {
-    #   dirPath = config.home.symlinkPackage;
-    #   enableLink = config.gtk.catppuccin.link;
-    # };
+    home.symlinkPackages = lib.mkIf config.gtk.catppuccin.link [
+      config.gtk.theme.package
+      config.gtk.iconTheme.package
+      config.gtk.cursorTheme.package
+    ];
   };
 }
