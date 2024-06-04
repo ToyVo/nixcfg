@@ -1,4 +1,4 @@
-{ pkgs, lib, config, self, ... }: {
+{ pkgs, lib, config, self, system, ... }: {
   imports = [ ./alias-home-apps.nix ./users ./programs ];
 
   options.home = {
@@ -16,6 +16,6 @@
   };
 
   config = {
-    home.file = self.lib.getFiles pkgs.runCommand config.home.symlinkPackage;
+    home.file = self.lib.${system}.getFiles config.home.symlinkPackage;
   };
 }

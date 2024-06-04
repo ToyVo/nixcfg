@@ -9,17 +9,11 @@
 , nixos-unstable
 , nixvim
 , plasma-manager
-, rust-overlay
 , self
 , sops-nix
 , ...
 }@inputs:
 let
-  import_nixpkgs = { system, nixpkgs ? nixos-unstable }: import nixpkgs {
-    inherit system;
-    overlays = [ (import rust-overlay) ];
-    config.allowUnfree = true;
-  };
   sharedHomeManagerModules = [
     self.homeManagerModules.default
     catppuccin.homeManagerModules.catppuccin
@@ -30,7 +24,7 @@ let
   lib = nixos-unstable.lib;
   nixosSystem = { system, nixosModules ? [ ], homeManagerModules ? [ ] }:
     let
-      pkgs = import_nixpkgs { inherit system; };
+      pkgs = self.lib.import_nixpkgs { inherit system; };
       specialArgs = inputs // { inherit system; };
     in
     lib.nixosSystem {
@@ -54,7 +48,7 @@ let
     };
   darwinSystem = { system, darwinModules ? [ ], homeManagerModules ? [ ] }:
     let
-      pkgs = import_nixpkgs { inherit system; };
+      pkgs = self.lib.import_nixpkgs { inherit system; };
       specialArgs = inputs // { inherit system; };
     in
     nix-darwin.lib.darwinSystem {
@@ -75,7 +69,7 @@ let
     };
   homeManagerConfiguration = { system, homeManagerModules ? [ ] }:
     let
-      pkgs = import_nixpkgs { inherit system; };
+      pkgs = self.lib.import_nixpkgs { inherit system; };
       specialArgs = inputs // { inherit system; };
     in
     home-manager.lib.homeManagerConfiguration {
