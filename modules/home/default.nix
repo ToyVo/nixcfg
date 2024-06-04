@@ -20,8 +20,8 @@
       '';
     in
     builtins.readFile resultFile;
-  isDirectory = path: (symlinkTargetType path) == "directory";
-  isFile = path: (symlinkTargetType path) == "file";
+  isDirectory = path: (symlinkTargetType path) == "directory\n";
+  isFile = path: (symlinkTargetType path) == "file\n";
   listFilesRecursively = dirPath:
     let
       contents = builtins.readDir dirPath;

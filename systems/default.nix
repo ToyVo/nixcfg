@@ -73,7 +73,7 @@ let
         }
       ] ++ darwinModules;
     };
-  homeManagerConfiguration = { system, homeMangerModules ? [ ] }:
+  homeManagerConfiguration = { system, homeManagerModules ? [ ] }:
     let
       pkgs = import_nixpkgs { inherit system; };
       specialArgs = inputs // { inherit system; };
@@ -81,7 +81,7 @@ let
     home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       extraSpecialArgs = specialArgs;
-      modules = homeMangerModules ++ sharedHomeManagerModules;
+      modules = homeManagerModules ++ sharedHomeManagerModules;
     };
 in
 {

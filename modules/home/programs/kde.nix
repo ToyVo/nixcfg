@@ -21,6 +21,6 @@ in
     home.packages = [
       catppuccin-kde
     ];
-    home.file = self.lib.getFiles { dirPath = catppuccin-kde; enableLink = cfg.link; };
+    home.symlinkPackages = lib.mkIf cfg.link [ catppuccin-kde ];
   };
 }
