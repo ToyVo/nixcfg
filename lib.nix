@@ -22,8 +22,6 @@ let
       '';
     in
     builtins.readFile resultFile;
-  isDirectory = runCommand: path: (symlinkTargetType runCommand path) == "directory\n";
-  isFile = runCommand: path: (symlinkTargetType runCommand path) == "file\n";
   listFilesRecursively = runCommand: dirPath:
     let
       contents = builtins.readDir dirPath;
@@ -31,8 +29,8 @@ let
       # I'm having issues with running this with pkgs.catppuccin-papirus-folders which I notice has a bunch of symlinks
       # I'm getting errors with nix about potentially infinite recursion, that is with value != "directory"
       # I think I tried value == "regular" and it didn't work, and that would end up missing some files unless I could follow the symlink?
-      files = lib.mapAttrsToList (name: value: "${dirPath}/${name}") (lib.filterAttrs (name: value: value == "regular" || (value == "symlink" && isFile runCommand name)) contents);
-      subDirectories = lib.mapAttrsToList (name: value: name) (lib.filterAttrs (name: value: value == "directory" || (value == "symlink" && isDirectory runCommand name)) contents);
+      files = lib.mapAttrsToList (name: value: "${dirPath}/${name}") (lib.filterAttrs (name: value: (symlinkTargetType runCommand name) != "file\n") contents);
+      subDirectories = lib.mapAttrsToList (name: value: name) (lib.filterAttrs (name: value: (symlinkTargetType runCommand name) != "directory\n") contents);
       subFiles = builtins.concatLists (builtins.map (subDir: listFilesRecursively runCommand "${dirPath}/${subDir}") subDirectories);
     in
     files ++ subFiles;
@@ -46,5 +44,5 @@ let
     (listFilesRecursively runCommand dirPath));
 in
 {
-  inherit isFile isDirectory getFiles symlinkTargetType listFilesRecursively;
+  inherit getFiles symlinkTargetType listFilesRecursively;
 }
