@@ -29,13 +29,12 @@ let
         type = if value == "symlink" then symlinkTargetType runCommand "${dirPath}/${name}" else value;
       in
       { "${name}" = "${type}"; })
-    builtins.readDir
-    dirPath;
+    (builtins.readDir dirPath);
   listFilesRecursively = runCommand: dirPath:
     let
-      contents = builtins.readDir dirPath;
-      files = lib.mapAttrsToList (name: value: "${dirPath}/${name}") (lib.filterAttrs (name: value: (symlinkTargetType runCommand "${dirPath}/${name}") != "regular") contents);
-      subDirectories = lib.mapAttrsToList (name: value: name) (lib.filterAttrs (name: value: (symlinkTargetType runCommand "${dirPath}/${name}") != "directory") contents);
+      contents = readDir runCommand dirPath;
+      files = lib.mapAttrsToList (name: value: "${dirPath}/${name}") (lib.filterAttrs (name: value: value != "regular") contents);
+      subDirectories = lib.mapAttrsToList (name: value: name) (lib.filterAttrs (name: value: value != "directory") contents);
       subFiles = builtins.concatLists (builtins.map (subDir: listFilesRecursively runCommand "${dirPath}/${subDir}") subDirectories);
     in
     files ++ subFiles;
