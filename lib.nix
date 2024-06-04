@@ -8,7 +8,7 @@ let
           if [ -d "$1" ]; then
             printf "%s" "directory" > $out
           elif [ -f "$1" ]; then
-            printf "%s" "file" > $out
+            printf "%s" "regular" > $out
           else
             printf "%s" "should-not-appear" > $out
           fi
@@ -22,14 +22,19 @@ let
       '';
     in
     builtins.readFile resultFile;
+  # through using builtins.readDir, value is "directory", "regular" or "symlink" for each item
+  readDir = runCommand: dirPath: lib.concatMapAttrs
+    (name: value:
+      let
+        type = if value == "symlink" then symlinkTargetType runCommand "${dirPath}/${name}" else value;
+      in
+      { "${name}" = "${type}"; })
+    builtins.readDir
+    dirPath;
   listFilesRecursively = runCommand: dirPath:
     let
       contents = builtins.readDir dirPath;
-      # through using builtins.readDir, value is "directory", "regular" or "symlink" for each item
-      # I'm having issues with running this with pkgs.catppuccin-papirus-folders which I notice has a bunch of symlinks
-      # I'm getting errors with nix about potentially infinite recursion, that is with value != "directory"
-      # I think I tried value == "regular" and it didn't work, and that would end up missing some files unless I could follow the symlink?
-      files = lib.mapAttrsToList (name: value: "${dirPath}/${name}") (lib.filterAttrs (name: value: (symlinkTargetType runCommand "${dirPath}/${name}") != "file") contents);
+      files = lib.mapAttrsToList (name: value: "${dirPath}/${name}") (lib.filterAttrs (name: value: (symlinkTargetType runCommand "${dirPath}/${name}") != "regular") contents);
       subDirectories = lib.mapAttrsToList (name: value: name) (lib.filterAttrs (name: value: (symlinkTargetType runCommand "${dirPath}/${name}") != "directory") contents);
       subFiles = builtins.concatLists (builtins.map (subDir: listFilesRecursively runCommand "${dirPath}/${subDir}") subDirectories);
     in
@@ -44,5 +49,5 @@ let
     (listFilesRecursively runCommand dirPath));
 in
 {
-  inherit getFiles symlinkTargetType listFilesRecursively;
+  inherit getFiles symlinkTargetType listFilesRecursively readDir;
 }
