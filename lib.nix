@@ -6,11 +6,11 @@ let
       resultFile = runCommand "check-symlink-target-type" { } ''
         check_target() {
           if [ -d "$1" ]; then
-            echo "directory" > $out
+            printf "%s" "directory" > $out
           elif [ -f "$1" ]; then
-            echo "file" > $out
+            printf "%s" "file" > $out
           else
-            echo "should-not-appear" > $out
+            printf "%s" "should-not-appear" > $out
           fi
         }
 
@@ -29,8 +29,8 @@ let
       # I'm having issues with running this with pkgs.catppuccin-papirus-folders which I notice has a bunch of symlinks
       # I'm getting errors with nix about potentially infinite recursion, that is with value != "directory"
       # I think I tried value == "regular" and it didn't work, and that would end up missing some files unless I could follow the symlink?
-      files = lib.mapAttrsToList (name: value: "${dirPath}/${name}") (lib.filterAttrs (name: value: (symlinkTargetType runCommand name) != "file\n") contents);
-      subDirectories = lib.mapAttrsToList (name: value: name) (lib.filterAttrs (name: value: (symlinkTargetType runCommand name) != "directory\n") contents);
+      files = lib.mapAttrsToList (name: value: "${dirPath}/${name}") (lib.filterAttrs (name: value: (symlinkTargetType runCommand "${dirPath}/${name}") != "file") contents);
+      subDirectories = lib.mapAttrsToList (name: value: name) (lib.filterAttrs (name: value: (symlinkTargetType runCommand "${dirPath}/${name}") != "directory") contents);
       subFiles = builtins.concatLists (builtins.map (subDir: listFilesRecursively runCommand "${dirPath}/${subDir}") subDirectories);
     in
     files ++ subFiles;
