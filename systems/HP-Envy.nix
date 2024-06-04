@@ -7,6 +7,7 @@
     initrd.availableKernelModules =
       [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
     kernelModules = [ "kvm-amd" "amdgpu" ];
+    kernelPackages = pkgs.linuxKernel.packages.linux_latest;
   };
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;

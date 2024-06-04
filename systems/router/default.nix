@@ -45,6 +45,7 @@
       "sdhci_pci"
     ];
     kernelModules = [ "kvm-intel" ];
+    kernelPackages = pkgs.linuxKernel.packages.linux_latest;
   };
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;
@@ -137,7 +138,7 @@
       cfdyndns = {
         serviceConfig.Type = "oneshot";
         after = [ "network.target" ];
-        path = with pkgs; [curl iproute2 gawk dig jq];
+        path = with pkgs; [ curl iproute2 gawk dig jq ];
         script = ''
           declare -a DOMAINS=(
             "*.diekvoss.net"

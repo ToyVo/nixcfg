@@ -24,10 +24,10 @@ in
       image = "docker.io/itzg/minecraft-server:latest";
       ports = [ "${toString cfg.port}:25565" ];
       environment = {
-        EULA="TRUE";
-        TYPE="FTBA";
-        FTB_MODPACK_ID="119";
-        MEMORY="8g";
+        EULA = "TRUE";
+        TYPE = "FTBA";
+        FTB_MODPACK_ID = "119";
+        MEMORY = "8g";
       };
       volumes = [
         "${cfg.datadir}:/data"

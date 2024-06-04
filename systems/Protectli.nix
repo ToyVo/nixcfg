@@ -1,4 +1,4 @@
-{ lib, ... }: {
+{ lib, pkgs, ... }: {
   hardware.cpu.intel.updateMicrocode = true;
   networking = {
     hostName = "Protectli";
@@ -25,6 +25,7 @@
     initrd.availableKernelModules =
       [ "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
     kernelModules = [ "kvm-intel" ];
+    kernelPackages = pkgs.linuxKernel.packages.linux_latest;
   };
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;

@@ -39,7 +39,7 @@ in
               initialHashedPassword = "$y$j9T$tkZ4b5vK1fCsRP0oWUb0e1$w0QbUEv9swXir33ivvM70RYTYflQszeLBi3vubYTqd8";
             })]);
       };
-      groups.${cfg.toyvo.name} = lib.mkIf pkgs.stdenv.isLinux {};
+      groups.${cfg.toyvo.name} = lib.mkIf pkgs.stdenv.isLinux { };
     };
     nix.settings.trusted-users = [
       cfg.toyvo.name

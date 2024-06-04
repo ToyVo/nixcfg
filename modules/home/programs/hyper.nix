@@ -5,7 +5,7 @@ in
 {
   options.programs.hyper = {
     enable = lib.mkEnableOption "Hyper terminal emulator";
-    program = lib.mkOption {
+    package = lib.mkOption {
       type = lib.types.package;
       default = if (system == "x86_64-linux") then pkgs.hyper else pkgs.emptyDirectory;
     };
@@ -23,7 +23,7 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
-    home.packages = [cfg.program];
+    home.packages = [ cfg.package ];
     home.file.".hyper.js" = lib.mkIf pkgs.stdenv.isDarwin { text = cfg.config_file; };
     xdg.configFile."Hyper/.hyper.js" = lib.mkIf pkgs.stdenv.isLinux { text = cfg.config_file; };
   };

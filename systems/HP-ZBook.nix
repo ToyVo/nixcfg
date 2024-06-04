@@ -1,4 +1,4 @@
-{ lib, ... }: {
+{ lib, pkgs, ... }: {
   hardware.cpu.intel.updateMicrocode = true;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   networking.hostName = "HP-ZBook";
@@ -8,6 +8,7 @@
     initrd.availableKernelModules =
       [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
     kernelModules = [ "kvm-intel" ];
+    kernelPackages = pkgs.linuxKernel.packages.linux_latest;
   };
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;

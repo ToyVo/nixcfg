@@ -52,9 +52,17 @@ in
         };
       };
     };
-    home.file = self.lib.getFiles { dirPath = config.gtk.theme.package; enableLink = config.gtk.catppuccin.link; }
-      # // self.lib.getFiles { dirPath = config.gtk.iconTheme.package; enableLink = config.gtk.catppuccin.link; }
-      // self.lib.getFiles { dirPath = config.gtk.cursorTheme.package; enableLink = config.gtk.catppuccin.link; };
+    home.symlinkPackage = pkgs.buildEnv {
+      name = "symlink packages";
+      paths = [
+        config.gtk.theme.package
+        config.gtk.iconTheme.package
+        config.gtk.cursorTheme.package
+      ];
+    };
+    # home.file = self.lib.getFiles {
+    #   dirPath = config.home.symlinkPackage;
+    #   enableLink = config.gtk.catppuccin.link;
+    # };
   };
 }
-

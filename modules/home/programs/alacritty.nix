@@ -12,7 +12,7 @@ in
       settings = {
         shell = {
           program = "${pkgs.bashInteractive}/bin/bash";
-          args = ["-l"];
+          args = [ "-l" ];
         };
       };
     };

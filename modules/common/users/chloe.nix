@@ -35,7 +35,7 @@ in
               initialHashedPassword = "$y$j9T$3qj7b7.lXJ2wiK29g9njQ1$Dn.dhmjQvPSkmdtHbA.2qEDl3eUnMeaawAW84X0/5i0";
             })]);
       };
-      groups.${cfg.chloe.name} = lib.mkIf pkgs.stdenv.isLinux {};
+      groups.${cfg.chloe.name} = lib.mkIf pkgs.stdenv.isLinux { };
     };
     home-manager.users.${cfg.chloe.name} = lib.mkIf cfg.chloe.enable {
       home.username = cfg.chloe.name;

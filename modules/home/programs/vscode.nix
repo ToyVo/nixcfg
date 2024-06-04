@@ -76,6 +76,7 @@ in
         "prettier.tabWidth" = 4;
         "terminal.integrated.defaultProfile.linux" = "fish";
         "terminal.integrated.defaultProfile.osx" = "fish";
+        "terminal.integrated.scrollback" = "5000";
         "workbench.colorTheme" = "Catppuccin Frappé";
       };
     };

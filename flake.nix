@@ -27,6 +27,7 @@
     rust-overlay.url = "github:oxalica/rust-overlay";
     sops-nix.url = "github:Mic92/sops-nix";
     nh.url = "github:toyvo/nh-darwin";
+    plasma-manager.url = "github:pjones/plasma-manager";
     # Misc sources
     catppuccin.url = "github:catppuccin/nix";
   };
