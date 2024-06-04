@@ -3,7 +3,7 @@ let
   lib = nixos-unstable.lib;
   symlinkTargetType = runCommand: path:
     let
-      resultFile = runCommand "check-symlink-target-type" { } ''
+      resultFile = runCommand "check-symlink-target-type-${builtins.replaceStrings ["/"] ["-"] path}" { } ''
         check_target() {
           if [ -d "$1" ]; then
             printf "%s" "directory" > $out
