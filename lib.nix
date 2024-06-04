@@ -33,8 +33,8 @@ let
   listFilesRecursively = runCommand: dirPath:
     let
       contents = readDir runCommand dirPath;
-      files = lib.mapAttrsToList (name: value: "${dirPath}/${name}") (lib.filterAttrs (name: value: value != "regular") contents);
-      subDirectories = lib.mapAttrsToList (name: value: name) (lib.filterAttrs (name: value: value != "directory") contents);
+      files = lib.mapAttrsToList (name: value: "${dirPath}/${name}") (lib.filterAttrs (name: value: value == "regular") contents);
+      subDirectories = lib.mapAttrsToList (name: value: name) (lib.filterAttrs (name: value: value == "directory") contents);
       subFiles = builtins.concatLists (builtins.map (subDir: listFilesRecursively runCommand "${dirPath}/${subDir}") subDirectories);
     in
     files ++ subFiles;
