@@ -30,6 +30,7 @@ in
         pandas
         pip
         pipx
+        pygraphviz
         python-dotenv
         virtualenv
       ] ++ config.environment.pythonPackages);
@@ -105,11 +106,14 @@ in
             dotnet-sdk_8
             fd
             git-crypt
+            gnumake
             gnutar
             gping
+            graphviz
             gzip
             helix
             jq
+            just
             kubectl
             lsof
             netcat

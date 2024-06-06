@@ -4,7 +4,7 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     initrd.availableKernelModules = [ "xhci_pci" "virtio_pci" "usbhid" "usb_storage" "sr_mod" ];
-    kernelPackages = pkgs.linuxKernel.packages.linux_latest;
+    kernelPackages = pkgs.linux_latest;
   };
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;
