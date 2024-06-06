@@ -45,7 +45,7 @@
       "sdhci_pci"
     ];
     kernelModules = [ "kvm-intel" ];
-    kernelPackages = pkgs.linux_hardened;
+    kernelPackages = pkgs.linuxKernel.packages.linux_hardened;
   };
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;
