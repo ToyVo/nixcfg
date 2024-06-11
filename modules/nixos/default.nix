@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.profiles;
 in
@@ -73,7 +73,7 @@ in
       stateVersion = "24.11";
       autoUpgrade = {
         enable = true;
-        flake = self.outPath;
+        flake = "${config.users.users.${config.userPresets.toyvo.name}.home}/nixcfg";
         persistent = true;
         allowReboot = true;
         rebootWindow = {
@@ -83,7 +83,7 @@ in
         randomizedDelaySec = "45min";
         flags = [
           "--update-input"
-          "nixpkgs"
+          "nixos-unstable"
         ];
       };
     };

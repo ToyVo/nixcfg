@@ -6,10 +6,15 @@ let
       "/root";
 in
 {
-  users.users.root = {
-    name = "root";
-    home = rootHomeDirectory;
-  };
+  users.users.root = lib.mkMerge [
+    {
+      name = "root";
+      home = rootHomeDirectory;
+    }
+    (lib.mkIf pkgs.stdenv.isLinux {
+      hashedPassword = "";
+    })
+  ];
   nix.settings.trusted-users = [ "root" ];
   home-manager.users.root = {
     home.username = "root";

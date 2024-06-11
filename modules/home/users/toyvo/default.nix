@@ -49,8 +49,26 @@ in
         in
         {
           enable = true;
-          matchBlocks."10.1.0.*" = identityConfig;
           matchBlocks."github.com" = identityConfig;
+          matchBlocks."oracle" = {
+            user = "ubuntu";
+            hostname = "207.211.168.90";
+            identitiesOnly = true;
+            identityFile = "~/.ssh/nixremote_ed25519";
+          };
+          matchBlocks."router" = identityConfig // {
+            user = "toyvo";
+            hostname = "10.1.0.1";
+          };
+          matchBlocks."ncase" = identityConfig // {
+            user = "toyvo";
+            hostname = "10.1.0.3";
+          };
+          matchBlocks."protectli" = identityConfig // {
+            user = "toyvo";
+            hostname = "10.1.0.6";
+          };
+          matchBlocks."10.1.0.*" = identityConfig;
         };
       zellij.enable = true;
       ideavim.enable = true;
