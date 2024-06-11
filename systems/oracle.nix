@@ -8,7 +8,7 @@
   };
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;
-  system.build.OCIImage = lib.mkForce (import "${nixos-unstable}/lib/make-disk-image.nix" {
+  system.build.OCIImage = lib.mkForce (import "${nixos-unstable}/nixos/lib/make-disk-image.nix" {
     inherit config lib pkgs;
     name = "oci-image";
     configFile = "${nixos-unstable}/nixos/modules/virtualisation/make-disk-image.nix";
