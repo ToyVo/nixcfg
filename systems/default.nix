@@ -103,6 +103,6 @@ in
     steamdeck-nixos = nixosSystem { system = "x86_64-linux"; nixosModules = [ ./steamdeck-nixos.nix jovian.nixosModules.jovian ]; };
     Thinkpad = nixosSystem { system = "x86_64-linux"; nixosModules = [ ./Thinkpad.nix ]; };
     utm = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./utm.nix "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ]; };
-    oracle = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./oracle.nix "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ]; };
+    oracle-ampere-nixos = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./oracle.nix "${nixos-unstable}/nixos/modules/virtualisation/oci-image.nix" ]; };
   };
 }
