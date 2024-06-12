@@ -16,55 +16,49 @@
     (lib.fileContents ../modules/common/users/nixremote_ed25519.pub)
   ];
 
+  programs.nix-index.enable = false;
+
   system.stateVersion = "24.11";
 
-  # Example to create a bios compatible gpt partition
   disko.devices = {
-    disk.disk1 = {
-      device = lib.mkDefault "/dev/sda";
-      type = "disk";
-      content = {
-        type = "gpt";
-        partitions = {
-          boot = {
-            name = "boot";
-            size = "1M";
-            type = "EF02";
-          };
-          esp = {
-            name = "ESP";
-            size = "500M";
-            type = "EF00";
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/boot";
+    disk = {
+      sda = {
+        type = "disk";
+        device = "/dev/sda";
+        content = {
+          type = "gpt";
+          partitions = {
+            ESP = {
+              priority = 1;
+              name = "ESP";
+              start = "1M";
+              end = "128M";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+              };
             };
-          };
-          root = {
-            name = "root";
-            size = "100%";
-            content = {
-              type = "lvm_pv";
-              vg = "pool";
-            };
-          };
-        };
-      };
-    };
-    lvm_vg = {
-      pool = {
-        type = "lvm_vg";
-        lvs = {
-          root = {
-            size = "100%FREE";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/";
-              mountOptions = [
-                "defaults"
-              ];
+            root = {
+              size = "100%";
+              content = {
+                type = "btrfs";
+                extraArgs = [ "-f" ];
+                subvolumes = {
+                  "@" = {
+                    mountpoint = "/";
+                  };
+                  "@home" = {
+                    mountOptions = [ "compress=zstd" ];
+                    mountpoint = "/home";
+                  };
+                  "@nix" = {
+                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountpoint = "/nix";
+                  };
+                };
+              };
             };
           };
         };
