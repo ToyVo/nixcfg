@@ -2,10 +2,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "xhci_pci" "virtio_scsi" ];
-  fileSystemPresets = {
-    btrfs.enable = true;
-    boot.enable = true;
-  };
   networking.hostName = "oracle-cloud-nixos";
   profiles.defaults.enable = true;
   services.openssh.enable = true;
