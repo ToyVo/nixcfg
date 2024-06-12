@@ -6,7 +6,7 @@ in
   config = lib.mkIf (cfg.enable && cfg.openFirewall) {
     services.ollama = {
       host = "0.0.0.0";
-      openFirewall = true;
+      openFirewall = lib.mkDefault true;
     };
     networking = {
       firewall = {
