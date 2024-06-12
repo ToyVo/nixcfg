@@ -16,10 +16,10 @@
 }@inputs:
 let
   sharedHomeManagerModules = [
-    self.homeManagerModules.default
     catppuccin.homeManagerModules.catppuccin
     nix-index-database.hmModules.nix-index
     nixvim.homeManagerModules.nixvim
+    self.homeManagerModules.default
     sops-nix.homeManagerModules.sops
   ];
   lib = nixos-unstable.lib;
@@ -32,12 +32,13 @@ let
       inherit system pkgs;
       specialArgs = specialArgs;
       modules = [
-        self.nixosModules.default
-        nixos-unstable.nixosModules.notDetected
         catppuccin.nixosModules.catppuccin
+        disko.nixosModules.disko
+        home-manager.nixosModules.default
         nh.nixosModules.default
         nix-index-database.nixosModules.nix-index
-        home-manager.nixosModules.default
+        nixos-unstable.nixosModules.notDetected
+        self.nixosModules.default
         sops-nix.nixosModules.sops
         {
           home-manager = {
@@ -56,10 +57,10 @@ let
       inherit pkgs;
       specialArgs = specialArgs;
       modules = [
-        self.darwinModules.default
+        home-manager.darwinModules.default
         nh.nixDarwinModules.prebuiltin
         nix-index-database.darwinModules.nix-index
-        home-manager.darwinModules.default
+        self.darwinModules.default
         {
           home-manager = {
             extraSpecialArgs = specialArgs;
@@ -104,7 +105,6 @@ in
     steamdeck-nixos = nixosSystem { system = "x86_64-linux"; nixosModules = [ ./steamdeck-nixos.nix jovian.nixosModules.jovian ]; };
     Thinkpad = nixosSystem { system = "x86_64-linux"; nixosModules = [ ./Thinkpad.nix ]; };
     utm = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./utm.nix "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ]; };
-    oracle-cloud-nixos-anywhere = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./oracle-cloud-nixos-anywhere.nix disko.nixosModules.disko "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ]; };
-    oracle-cloud-nixos = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./oracle-cloud-nixos.nix disko.nixosModules.disko "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ]; };
+    oracle-cloud-nixos = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./oracle-cloud-nixos.nix "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ]; };
   };
 }

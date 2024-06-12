@@ -52,7 +52,7 @@ in
           matchBlocks."github.com" = identityConfig;
           matchBlocks."oracle" = identityConfig // {
             user = "toyvo";
-            hostname = "207.211.190.8";
+            hostname = "164.152.23.35";
           };
           matchBlocks."router" = identityConfig // {
             user = "toyvo";
