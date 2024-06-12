@@ -1,4 +1,4 @@
-{ config, lib, nixos-unstable, nixpkgs-unstable, pkgs, rust-overlay, self, ... }:
+{ config, lib, nixos-unstable, pkgs, rust-overlay, self, ... }:
 let
   cfg = config.profiles;
   fontPackages = with pkgs; [
@@ -68,7 +68,7 @@ in
             "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           ];
         };
-        nixPath = [ "nixpkgs=${nixpkgs-unstable}" "nixos=${nixos-unstable}" ];
+        nixPath = [ "nixpkgs=${nixos-unstable}" "nixos=${nixos-unstable}" ];
       };
       home-manager = {
         backupFileExtension = "${toString self.sourceInfo.lastModified}.old";

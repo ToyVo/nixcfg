@@ -3,7 +3,6 @@
 
   inputs = {
     nixos.url = "github:nixos/nixpkgs/nixos-24.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nix-darwin = {
       url = "github:lnl7/nix-darwin";
