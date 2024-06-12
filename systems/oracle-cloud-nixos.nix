@@ -9,7 +9,7 @@
   users.users.root.openssh.authorizedKeys.keys = [
     (lib.fileContents ../modules/common/users/nixremote_ed25519.pub)
   ];
-  container-presets.minecraft = {
+  containerPresets.minecraft = {
     enable = true;
     openFirewall = true;
     datadir = "/minecraft-data";
