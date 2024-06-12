@@ -1,24 +1,15 @@
-{ lib, pkgs, ... }: {
+{ lib, ... }: {
   boot.loader.grub = {
-    # no need to set devices, disko will add all devices that have a EF02 partition to the list already
-    # devices = [ ];
     efiSupport = true;
     efiInstallAsRemovable = true;
   };
-  services.openssh.enable = true;
-
-  environment.systemPackages = map lib.lowPrio [
-    pkgs.curl
-    pkgs.gitMinimal
-  ];
 
   users.users.root.openssh.authorizedKeys.keys = [
     (lib.fileContents ../modules/common/users/nixremote_ed25519.pub)
   ];
 
-  programs.nix-index.enable = false;
-
-  system.stateVersion = "24.11";
+  profiles.defaults.enable = true;
+  userPresets.toyvo.enable = true;
 
   disko.devices = {
     disk = {
