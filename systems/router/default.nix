@@ -47,6 +47,8 @@
     kernelModules = [ "kvm-intel" ];
     kernelPackages = pkgs.linuxKernel.packages.linux_hardened;
   };
+  # fix for hardened kernel
+  security.unprivilegedUsernsClone = true;
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;
