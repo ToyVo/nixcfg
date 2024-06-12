@@ -8,8 +8,8 @@
     (lib.fileContents ../modules/common/users/nixremote_ed25519.pub)
   ];
 
-  profiles.defaults.enable = true;
-  userPresets.toyvo.enable = true;
+  programs.nix-index.enable = false;
+  home-manager.enable = lib.mkForce false;
 
   disko.devices = {
     disk = {

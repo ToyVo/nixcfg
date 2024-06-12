@@ -50,11 +50,9 @@ in
         {
           enable = true;
           matchBlocks."github.com" = identityConfig;
-          matchBlocks."oracle" = {
-            user = "ubuntu";
-            hostname = "149.130.208.150";
-            identitiesOnly = true;
-            identityFile = "~/.ssh/nixremote_ed25519";
+          matchBlocks."oracle" = identityConfig // {
+            user = "toyvo";
+            hostname = "207.211.190.8";
           };
           matchBlocks."router" = identityConfig // {
             user = "toyvo";
