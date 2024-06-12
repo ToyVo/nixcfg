@@ -105,6 +105,6 @@ in
     Thinkpad = nixosSystem { system = "x86_64-linux"; nixosModules = [ ./Thinkpad.nix ]; };
     utm = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./utm.nix "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ]; };
     oracle-cloud-nixos-anywhere = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./oracle-cloud-nixos-anywhere.nix disko.nixosModules.disko "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ]; };
-    oracle-cloud-nixos = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./oracle-cloud-nixos.nix "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ]; };
+    oracle-cloud-nixos = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./oracle-cloud-nixos.nix disko.nixosModules.disko "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ]; };
   };
 }
