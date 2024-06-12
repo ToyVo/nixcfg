@@ -9,7 +9,6 @@
   ];
 
   programs.nix-index.enable = false;
-  home-manager.enable = lib.mkForce false;
 
   disko.devices = {
     disk = {
