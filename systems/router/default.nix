@@ -142,7 +142,6 @@
         script = ''
           declare -a DOMAINS=(
             "*.diekvoss.net"
-            "mc.toyvo.dev"
           )
           TOKEN=${builtins.readFile  ./cfapitoken}
 
