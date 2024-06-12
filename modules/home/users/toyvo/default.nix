@@ -52,7 +52,7 @@ in
           matchBlocks."github.com" = identityConfig;
           matchBlocks."oracle" = {
             user = "ubuntu";
-            hostname = "207.211.168.90";
+            hostname = "149.130.208.150";
             identitiesOnly = true;
             identityFile = "~/.ssh/nixremote_ed25519";
           };

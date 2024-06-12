@@ -29,6 +29,10 @@
     plasma-manager.url = "github:pjones/plasma-manager";
     # Misc sources
     catppuccin.url = "github:catppuccin/nix";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixos-unstable";
+    };
   };
 
   outputs = inputs:

@@ -1,5 +1,6 @@
 { apple-silicon-support
 , catppuccin
+, disko
 , home-manager
 , jovian
 , nh
@@ -104,5 +105,6 @@ in
     Thinkpad = nixosSystem { system = "x86_64-linux"; nixosModules = [ ./Thinkpad.nix ]; };
     utm = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./utm.nix "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ]; };
     oracle-ampere-nixos = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./oracle.nix "${nixos-unstable}/nixos/modules/virtualisation/oci-image.nix" ]; };
+    oracle-cloud-aarch64 = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./oracle-cloud-aarch64.nix disko.nixosModules.disko "${nixos-unstable}/nixos/modules/installer/scan/not-detected.nix" "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ]; };
   };
 }
