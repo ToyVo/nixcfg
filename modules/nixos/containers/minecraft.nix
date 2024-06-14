@@ -75,7 +75,7 @@ in
           OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
           EXISTING_OPS_FILE = "MERGE";
           CF_API_KEY = "${builtins.readFile ./forgeapikey}";
-          CURSEFORGE_FILES = ''|
+          CURSEFORGE_FILES = ''
             projecte
           '';
         };
