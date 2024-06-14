@@ -1,14 +1,14 @@
-{ lib, ... }: {
+{ ... }: {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "xhci_pci" "virtio_scsi" ];
   networking.hostName = "oracle-cloud-nixos";
   profiles.defaults.enable = true;
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false;
+  };
   userPresets.toyvo.enable = true;
-  users.users.root.openssh.authorizedKeys.keys = [
-    (lib.fileContents ../modules/common/users/nixremote_ed25519.pub)
-  ];
   containerPresets.minecraft = {
     enable = true;
     openFirewall = true;
