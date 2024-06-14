@@ -233,7 +233,7 @@ in
             "kubejs-create"
             "kubejs-enderio"
             "kubejs-thermal"
-            "l_ender-s-cataclysm"
+            "lendercataclysm"
             "l2library"
             "laserio"
             "lemon-lib"
