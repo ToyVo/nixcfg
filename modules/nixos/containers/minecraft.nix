@@ -42,7 +42,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.minecraft.enable {
+  config = lib.mkIf (cfg.minecraft.enable || cfg.minecraft-experimental.enable) {
     containerPresets.podman.enable = lib.mkDefault true;
     virtualisation.oci-containers.containers = {
       minecraft = lib.mkIf cfg.minecraft.enable {
