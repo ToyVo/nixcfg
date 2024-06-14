@@ -1,42 +1,87 @@
 { config, lib, ... }:
 let
-  cfg = config.containerPresets.minecraft;
+  cfg = config.containerPresets;
 in
 {
-  options.containerPresets.minecraft = {
-    enable = lib.mkEnableOption "Enable minecraft server";
-    port = lib.mkOption {
-      type = lib.types.int;
-      default = 25565;
-      description = "Port to expose minecraft server on";
+  options.containerPresets = {
+    minecraft = {
+      enable = lib.mkEnableOption "Enable minecraft server";
+      port = lib.mkOption {
+        type = lib.types.int;
+        default = 25565;
+        description = "Port to expose minecraft server on";
+      };
+      RCONPort = lib.mkOption {
+        type = lib.types.int;
+        default = 25575;
+        description = "Port to expose minecraft server on";
+      };
+      datadir = lib.mkOption {
+        type = lib.types.path;
+        description = "Path to store minecraft data";
+      };
+      openFirewall = lib.mkEnableOption "Open firewall for minecraft";
     };
-    datadir = lib.mkOption {
-      type = lib.types.path;
-      default = "/mnt/POOL/minecraft";
-      description = "Path to store minecraft data";
+    minecraft-experimental = {
+      enable = lib.mkEnableOption "Enable minecraft server";
+      port = lib.mkOption {
+        type = lib.types.int;
+        default = 25564;
+        description = "Port to expose minecraft server on";
+      };
+      RCONPort = lib.mkOption {
+        type = lib.types.int;
+        default = 25574;
+        description = "Port to expose minecraft server on";
+      };
+      datadir = lib.mkOption {
+        type = lib.types.path;
+        description = "Path to store minecraft data";
+      };
+      openFirewall = lib.mkEnableOption "Open firewall for minecraft";
     };
-    openFirewall = lib.mkEnableOption "Open firewall for minecraft";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.minecraft.enable {
     containerPresets.podman.enable = lib.mkDefault true;
-    virtualisation.oci-containers.containers.minecraft = {
-      image = "docker.io/itzg/minecraft-server:latest";
-      ports = [ "${toString cfg.port}:25565" ];
-      environment = {
-        EULA = "TRUE";
-        TYPE = "FTBA";
-        FTB_MODPACK_ID = "119";
-        MEMORY = "16g";
-        OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
-        EXISTING_OPS_FILE = "MERGE";
+    virtualisation.oci-containers.containers = {
+      minecraft = lib.mkIf cfg.minecraft.enable {
+        image = "docker.io/itzg/minecraft-server:latest";
+        # I plan to make a web interface that I want to be able to use RCON to get information but keep it internal
+        ports = [ "${toString cfg.minecraft.port}:25565" "${toString cfg.minecraft.RCONPort}:25575" ];
+        environment = {
+          EULA = "TRUE";
+          TYPE = "FTBA";
+          FTB_MODPACK_ID = "119";
+          MEMORY = "16g";
+          OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
+          EXISTING_OPS_FILE = "MERGE";
+        };
+        volumes = [
+          "${cfg.minecraft.datadir}:/data"
+        ];
       };
-      volumes = [
-        "${cfg.datadir}:/data"
-      ];
-    };
-    networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedTCPPorts = [ cfg.port ];
+      minecraft-experimental = lib.mkIf cfg.minecraft-experimential.enable {
+        image = "docker.io/itzg/minecraft-server:latest";
+        # I plan to make a web interface that I want to be able to use RCON to get information but keep it internal
+        ports = [ "${toString cfg.minecraft-experimential.port}:25565" "${toString cfg.minecraft-experimential.RCONPort}:25575" ];
+        environment = {
+          EULA = "TRUE";
+          TYPE = "MOHIST";
+          VERSION = "1.20.1";
+          MOD_PLATFORM = "FTBA";
+          FTB_MODPACK_ID = "119";
+          MEMORY = "16g";
+          OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
+          EXISTING_OPS_FILE = "MERGE";
+        };
+        volumes = [
+          "${cfg.minecraft-experimential.datadir}:/data"
+        ];
+      };
+      networking.firewall.allowedTCPPorts = [ ]
+        ++ lib.optionals cfg.minecraft.openFirewall [ cfg.minecraft.port ]
+        ++ lib.optionals cfg.minecraft-experimential.openFirewall [ cfg.minecraft-experimential.port ];
     };
   };
 }
