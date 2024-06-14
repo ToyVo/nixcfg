@@ -66,17 +66,17 @@ in
       };
       minecraft-experimental = lib.mkIf cfg.minecraft-experimental.enable {
         image = "docker.io/itzg/minecraft-server:latest";
-        # I plan to make a web interface that I want to be able to use RCON to get information but keep it internal
         ports = [ "${toString cfg.minecraft-experimental.port}:25565" "${toString cfg.minecraft-experimental.RCONPort}:25575" ];
         environment = {
           EULA = "TRUE";
           TYPE = "MOHIST";
           VERSION = "1.20.1";
-          MOD_PLATFORM = "FTBA";
-          FTB_MODPACK_ID = "119";
           MEMORY = "16g";
           OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
           EXISTING_OPS_FILE = "MERGE";
+          CURSEFORGE_FILES = ''|
+            projecte
+          '';
         };
         volumes = [
           "${cfg.minecraft-experimental.datadir}:/data"
