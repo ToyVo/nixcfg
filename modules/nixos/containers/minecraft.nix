@@ -54,11 +54,12 @@ in
         ports = [ "${toString cfg.minecraft.port}:25565" "${toString cfg.minecraft.RCONPort}:25575" ];
         environment = {
           EULA = "TRUE";
-          TYPE = "FTBA";
-          FTB_MODPACK_ID = "119";
           MEMORY = "16g";
           OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
           EXISTING_OPS_FILE = "MERGE";
+          MOTD = "ToyVo Direwolf20 Custom Server";
+          TYPE = "FTBA";
+          FTB_MODPACK_ID = "119";
         };
         volumes = [
           "${cfg.minecraft.datadir}:/data"
@@ -71,10 +72,10 @@ in
           EULA = "TRUE";
           TYPE = "MOHIST";
           VERSION = "1.20.1";
-          MEMORY = "16g";
+          MEMORY = "4g";
           OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
           EXISTING_OPS_FILE = "MERGE";
-          # MOD_PLATFORM = "AUTO_CURSEFORGE";
+          MOTD = "ToyVo Custom Server";
           CF_API_KEY = "${builtins.readFile ./forgeapikey}";
           CURSEFORGE_FILES = lib.strings.concatMapStringsSep "," (mod: "https://www.curseforge.com/minecraft/mc-mods/${mod}")  [
             "projecte"
