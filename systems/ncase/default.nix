@@ -61,9 +61,10 @@
       enable = true;
       openFirewall = true;
     };
-    minecraft-experimential = {
+    minecraft-experimental = {
       enable = true;
       openFirewall = true;
+      dataDir = "/mnt/POOL/minecraft-experimental";
     };
   };
   fileSystems."/mnt/POOL" = {

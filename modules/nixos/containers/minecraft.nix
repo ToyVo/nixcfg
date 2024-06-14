@@ -61,10 +61,10 @@ in
           "${cfg.minecraft.datadir}:/data"
         ];
       };
-      minecraft-experimental = lib.mkIf cfg.minecraft-experimential.enable {
+      minecraft-experimental = lib.mkIf cfg.minecraft-experimental.enable {
         image = "docker.io/itzg/minecraft-server:latest";
         # I plan to make a web interface that I want to be able to use RCON to get information but keep it internal
-        ports = [ "${toString cfg.minecraft-experimential.port}:25565" "${toString cfg.minecraft-experimential.RCONPort}:25575" ];
+        ports = [ "${toString cfg.minecraft-experimental.port}:25565" "${toString cfg.minecraft-experimental.RCONPort}:25575" ];
         environment = {
           EULA = "TRUE";
           TYPE = "MOHIST";
@@ -76,12 +76,12 @@ in
           EXISTING_OPS_FILE = "MERGE";
         };
         volumes = [
-          "${cfg.minecraft-experimential.datadir}:/data"
+          "${cfg.minecraft-experimental.datadir}:/data"
         ];
       };
       networking.firewall.allowedTCPPorts = [ ]
         ++ lib.optionals cfg.minecraft.openFirewall [ cfg.minecraft.port ]
-        ++ lib.optionals cfg.minecraft-experimential.openFirewall [ cfg.minecraft-experimential.port ];
+        ++ lib.optionals cfg.minecraft-experimental.openFirewall [ cfg.minecraft-experimental.port ];
     };
   };
 }
