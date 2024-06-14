@@ -74,11 +74,12 @@ in
           MEMORY = "16g";
           OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
           EXISTING_OPS_FILE = "MERGE";
-          MOD_PLATFORM = "AUTO_CURSEFORGE";
+          # MOD_PLATFORM = "AUTO_CURSEFORGE";
           CF_API_KEY = "${builtins.readFile ./forgeapikey}";
-          CURSEFORGE_FILES = ''
-            projecte
-          '';
+          CURSEFORGE_FILES = lib.strings.concatMapStringsSep "," (mod: "https://www.curseforge.com/minecraft/mc-mods/${mod}")  [
+            "projecte"
+            "rats"
+          ];
         };
         volumes = [
           "${cfg.minecraft-experimental.datadir}:/data"
