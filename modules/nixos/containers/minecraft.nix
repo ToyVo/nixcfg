@@ -44,6 +44,9 @@ in
 
   config = lib.mkIf (cfg.minecraft.enable || cfg.minecraft-experimental.enable) {
     containerPresets.podman.enable = lib.mkDefault true;
+    networking.firewall.allowedTCPPorts = [ ]
+      ++ lib.optionals cfg.minecraft.openFirewall [ cfg.minecraft.port ]
+      ++ lib.optionals cfg.minecraft-experimental.openFirewall [ cfg.minecraft-experimental.port ];
     virtualisation.oci-containers.containers = {
       minecraft = lib.mkIf cfg.minecraft.enable {
         image = "docker.io/itzg/minecraft-server:latest";
@@ -79,9 +82,6 @@ in
           "${cfg.minecraft-experimental.datadir}:/data"
         ];
       };
-      networking.firewall.allowedTCPPorts = [ ]
-        ++ lib.optionals cfg.minecraft.openFirewall [ cfg.minecraft.port ]
-        ++ lib.optionals cfg.minecraft-experimental.openFirewall [ cfg.minecraft-experimental.port ];
     };
   };
 }
