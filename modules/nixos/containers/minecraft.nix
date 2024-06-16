@@ -54,7 +54,7 @@ in
         ports = [ "${toString cfg.minecraft.port}:25565" "${toString cfg.minecraft.RCONPort}:25575" ];
         environment = {
           EULA = "TRUE";
-          MEMORY = "16g";
+          MEMORY = "20g";
           OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
           EXISTING_OPS_FILE = "MERGE";
           MOTD = "ToyVo Direwolf20 Custom Server";
