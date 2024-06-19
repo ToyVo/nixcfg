@@ -61,7 +61,7 @@ in
           TYPE = "FTBA";
           FTB_MODPACK_ID = "119";
           MAX_TICK_TIME = "-1";
-          MAX_WORLD_SIZE = 128000
+          MAX_WORLD_SIZE = 128000;
         };
         volumes = [
           "${cfg.minecraft.datadir}:/data"
