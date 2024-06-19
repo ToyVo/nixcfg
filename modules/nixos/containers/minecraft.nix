@@ -60,6 +60,7 @@ in
           MOTD = "ToyVo Direwolf20 Custom Server";
           TYPE = "FTBA";
           FTB_MODPACK_ID = "119";
+          MAX_TICK_TIME = "300000";
         };
         volumes = [
           "${cfg.minecraft.datadir}:/data"
@@ -203,7 +204,7 @@ in
             "hole-filler-mod"
             "hostile-neural-networks"
             "hyperbox"
-            "ifly"
+            # "ifly"
             "industrial-foregoing"
             "industrial-foregoing-souls"
             "integrated-crafting"
