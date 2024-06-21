@@ -60,7 +60,7 @@ in
           MOTD = "ToyVo Direwolf20 Custom Server";
           TYPE = "FTBA";
           FTB_MODPACK_ID = "119";
-          FTB_MODPACK_VERSION = "11614";
+          FTB_MODPACK_VERSION = "12135";
           MAX_TICK_TIME = "-1";
           MAX_WORLD_SIZE = "128000";
         };
