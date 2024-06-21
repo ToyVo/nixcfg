@@ -61,7 +61,7 @@ in
           TYPE = "FTBA";
           FTB_MODPACK_ID = "119";
           FTB_MODPACK_VERSION_ID = "11614";
-          FTB_FORCE_REINSTALL = "true";
+          # FTB_FORCE_REINSTALL = "true";
           MAX_TICK_TIME = "-1";
           MAX_WORLD_SIZE = "128000";
         };
