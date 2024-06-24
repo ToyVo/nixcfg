@@ -3,7 +3,7 @@ let
   cfg = config.profiles;
 in
 {
-  imports = [ ./users ];
+  imports = [ ./users ./podman.nix ];
 
   options = {
     profiles = {
@@ -79,6 +79,10 @@ in
         monaspace
         (nerdfonts.override { fonts = [ "Monaspace" "NerdFontsSymbolsOnly" ]; })
       ];
+      virtualisation.podman = {
+        enable = true;
+        dockerCompat = true;
+      };
       environment =
         let
           shells = with pkgs; [
@@ -114,8 +118,6 @@ in
             nmap
             openssh
             openssl
-            podman
-            podman-compose
             ripgrep
             rsync
             sqlite
@@ -130,6 +132,7 @@ in
           ++ shells
           ++ lib.optionals cfg.gui.enable [
             gimp
+            neovide
           ]
           ++ lib.optionals cfg.dev.enable [
             bison
@@ -180,7 +183,6 @@ in
           ++ lib.optionals (stdenv.isLinux && cfg.gui.enable) [
             element-desktop
             floorp
-            neovide
             yubikey-manager-qt
             yubioath-flutter
           ]

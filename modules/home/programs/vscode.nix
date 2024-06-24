@@ -69,6 +69,7 @@ in
         "nix.enableLanguageServer" = true;
         "nix.serverPath" = "nil";
         "nix.serverSettings"."nil"."formatting"."command" = [ "nixpkgs-fmt" ];
+        "mypy-type-checker.args" = ["--ignore-missing-imports"];
         "notebook.formatOnSave.enabled" = true;
         "notebook.insertFinalNewline" = true;
         "notebook.lineNumbers" = "on";
@@ -76,7 +77,7 @@ in
         "prettier.tabWidth" = 4;
         "terminal.integrated.defaultProfile.linux" = "fish";
         "terminal.integrated.defaultProfile.osx" = "fish";
-        "terminal.integrated.scrollback" = "5000";
+        "terminal.integrated.scrollback" = 10000;
         "workbench.colorTheme" = "Catppuccin Frappé";
       };
     };
