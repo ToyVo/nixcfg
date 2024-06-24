@@ -3,6 +3,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "xhci_pci" "virtio_scsi" ];
   networking.hostName = "oracle-cloud-nixos";
+  networking.firewall.allowedTCPPorts = [ 443 ];
+  networking.firewall.allowedUDPPorts = [ 443 ];
   profiles.defaults.enable = true;
   services = {
     openssh = {
