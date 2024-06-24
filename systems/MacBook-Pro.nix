@@ -3,6 +3,7 @@
   userPresets.toyvo.enable = true;
   environment.systemPackages = with pkgs; [
     openscad
+    ollama
   ];
   homebrew.casks = [
     { name = "prusaslicer"; greedy = true; }

@@ -1,17 +1,6 @@
 { config, lib, nixos-unstable, pkgs, rust-overlay, self, ... }:
 let
   cfg = config.profiles;
-  fontPackages = with pkgs; [
-    noto-fonts
-    noto-fonts-lgc-plus
-    noto-fonts-cjk-sans
-    noto-fonts-cjk-serif
-    noto-fonts-color-emoji
-    noto-fonts-emoji-blob-bin
-    noto-fonts-monochrome-emoji
-    monaspace
-    (nerdfonts.override { fonts = [ "Monaspace" "NerdFontsSymbolsOnly" ]; })
-  ];
 in
 {
   imports = [ ./users ];
@@ -79,13 +68,17 @@ in
         }];
       };
       nixpkgs.overlays = [ rust-overlay.overlays.default ];
-      fonts =
-        if pkgs.stdenv.isLinux then {
-          packages = fontPackages;
-        } else {
-          fontDir.enable = true;
-          fonts = fontPackages;
-        };
+      fonts.packages = with pkgs; [
+        noto-fonts
+        noto-fonts-lgc-plus
+        noto-fonts-cjk-sans
+        noto-fonts-cjk-serif
+        noto-fonts-color-emoji
+        noto-fonts-emoji-blob-bin
+        noto-fonts-monochrome-emoji
+        monaspace
+        (nerdfonts.override { fonts = [ "Monaspace" "NerdFontsSymbolsOnly" ]; })
+      ];
       environment =
         let
           shells = with pkgs; [
@@ -106,7 +99,6 @@ in
             dotnet-sdk_8
             fd
             git-crypt
-            gnumake
             gnutar
             gping
             graphviz
@@ -140,19 +132,38 @@ in
             gimp
           ]
           ++ lib.optionals cfg.dev.enable [
+            bison
             bun
             cargo-generate
             cargo-watch
+            ccache
+            cmake
             config.environment.pythonPackage
             deno
+            dfu-util
             dioxus-cli
+            flex
+            gnumake
+            gperf
+            libffi
+            libiconv
+            libusb1
+            ninja
             nodejs
             pipenv
             poetry
             (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
               extensions = [ "rust-src" "rust-std" "rust-analyzer" "rustfmt" "clippy" ];
-              targets = [ "wasm32-unknown-unknown" ];
+              targets = [
+                "wasm32-unknown-unknown"
+                "riscv32imc-unknown-none-elf"
+              ];
             }))
+          ]
+          ++ lib.optionals (stdenv.isLinux && cfg.dev.enable) [
+            # Having gcc or clang will also set cc, which breaks compiling rust on macos, to ivestigate
+            gcc
+            clang
           ]
           ++ lib.optionals stdenv.isLinux [
             aha

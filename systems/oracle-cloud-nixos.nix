@@ -1,13 +1,43 @@
-{ ... }: {
+{ pkgs, ... }: {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "xhci_pci" "virtio_scsi" ];
   networking.hostName = "oracle-cloud-nixos";
   profiles.defaults.enable = true;
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
+  services = {
+    openssh = {
+      enable = true;
+      settings.PasswordAuthentication = false;
+    };
+    mc-discord-bot.enable = true;
+    caddy = {
+      enable = true;
+      email = "collin@diekvoss.com";
+      virtualHosts."https://mc.toyvo.dev:443" = {
+        useACMEHost = "mc.toyvo.dev";
+        extraConfig = ''
+          reverse_proxy http://0.0.0.0:8080
+        '';
+      };
+    };
   };
+  security.acme = {
+    acceptTerms = true;
+    certs = {
+      "mc.toyvo.dev" = {
+        email = "collin@diekvoss.com";
+        dnsProvider = "cloudflare";
+        credentialFiles = {
+          "CF_API_EMAIL_FILE" = "${pkgs.writeText "cfemail" ''
+            collin@diekvoss.com
+          ''}";
+          "CF_API_KEY_FILE" = "${./cfapikey}";
+          "CF_DNS_API_TOKEN_FILE" = "${./cfapitoken}";
+        };
+      };
+    };
+  };
+  users.users.caddy.extraGroups = [ "acme" ];
   userPresets.toyvo.enable = true;
   containerPresets.minecraft = {
     enable = true;
