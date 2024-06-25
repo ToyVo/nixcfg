@@ -314,11 +314,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1719032789,
-        "narHash": "sha256-MIPobSKR53T0Yrb8wu2fbjSVokhJeJy5AF6B1Hzckso=",
+        "lastModified": 1719292813,
+        "narHash": "sha256-6w/buoRKo4ijH9O4D/0KjNtiWjtrJebuV7djTEEa0+k=",
         "owner": "Jovian-Experiments",
         "repo": "Jovian-NixOS",
-        "rev": "495a672a2024bdc0e86af95f4e338827f9bfb865",
+        "rev": "d6222e7818aa5528f8369afe84bc53556a57c329",
         "type": "github"
       },
       "original": {
@@ -333,11 +333,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1719290555,
-        "narHash": "sha256-X0R2SU9oFff5J9twYOxEOt31pQJKNk3wO9ADTD2jtI8=",
+        "lastModified": 1719295685,
+        "narHash": "sha256-arJE40nepzN6VKloel9qELlS0TDsErdvaFSp4vZTdXo=",
         "owner": "toyvo",
         "repo": "mc-discord-bot",
-        "rev": "22574693e2e0e4e6175fc6eaf2301447471b47fd",
+        "rev": "29fa385f1d8d9cb6da9de8cbd6219f46487287af",
         "type": "github"
       },
       "original": {
