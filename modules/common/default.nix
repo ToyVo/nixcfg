@@ -145,6 +145,7 @@ in
             deno
             dfu-util
             dioxus-cli
+            esp-idf-full
             flex
             gnumake
             gperf

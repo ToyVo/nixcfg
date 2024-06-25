@@ -21,13 +21,14 @@
     apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     # Applications
+    mc-discord-bot.url = "github:toyvo/mc-discord-bot";
     mkAlias.url = "github:reckenrode/mkAlias";
+    nh.url = "github:toyvo/nh-darwin";
+    nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
     nixvim.url = "github:nix-community/nixvim";
+    plasma-manager.url = "github:pjones/plasma-manager";
     rust-overlay.url = "github:oxalica/rust-overlay";
     sops-nix.url = "github:Mic92/sops-nix";
-    nh.url = "github:toyvo/nh-darwin";
-    mc-discord-bot.url = "github:toyvo/mc-discord-bot";
-    plasma-manager.url = "github:pjones/plasma-manager";
     # Misc sources
     catppuccin.url = "github:catppuccin/nix";
     disko = {

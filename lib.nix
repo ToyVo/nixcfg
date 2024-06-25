@@ -1,8 +1,8 @@
-{ nixos-unstable, rust-overlay, ... }: with nixos-unstable.lib;
+{ nixos-unstable, nixpkgs-esp-dev, rust-overlay, ... }: with nixos-unstable.lib;
 let
   import_nixpkgs = { system, nixpkgs ? nixos-unstable }: import nixpkgs {
     inherit system;
-    overlays = [ (import rust-overlay) ];
+    overlays = [ (import rust-overlay) nixpkgs-esp-dev.overlays.default ];
     config.allowUnfree = true;
   };
 
