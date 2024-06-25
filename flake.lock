@@ -333,11 +333,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1719321834,
-        "narHash": "sha256-V5ORrWAOGzz/CAONfMk3gIWTVk1LGPNn6uyT/FEVFls=",
+        "lastModified": 1719323955,
+        "narHash": "sha256-t/YXc8FPnbSNDVEssbc3Xmr1HHLnvQUta87O/pBvbMU=",
         "owner": "toyvo",
         "repo": "mc-discord-bot",
-        "rev": "bd6bccff9467b503fb2f23d1fef6753ef84121c1",
+        "rev": "97e350557b7b43e2db0be85effe45095a806feb2",
         "type": "github"
       },
       "original": {
@@ -484,11 +484,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1719145664,
-        "narHash": "sha256-+0bBlerLxsHUJcKPDWZM1wL3V9bzCFjz+VyRTG8fnUA=",
+        "lastModified": 1719322773,
+        "narHash": "sha256-BqPxtFwXrpJQDh65NOIHX99pz2rtIMshG9Mt2xnnc5c=",
         "owner": "nixos",
         "repo": "nixos-hardware",
-        "rev": "c3e48cbd88414f583ff08804eb57b0da4c194f9e",
+        "rev": "caabc425565bbd5c8640630b0bf6974961a49242",
         "type": "github"
       },
       "original": {
