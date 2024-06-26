@@ -21,7 +21,7 @@
     apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     # Applications
-    mc-discord-bot.url = "github:toyvo/mc-discord-bot";
+    mc_discord_bot.url = "github:toyvo/mc_discord_bot";
     mkAlias.url = "github:reckenrode/mkAlias";
     nh.url = "github:toyvo/nh-darwin";
     nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";

@@ -3,7 +3,7 @@
 , disko
 , home-manager
 , jovian
-, mc-discord-bot
+, mc_discord_bot
 , nh
 , nix-darwin
 , nix-index-database
@@ -36,7 +36,7 @@ let
         catppuccin.nixosModules.catppuccin
         disko.nixosModules.disko
         home-manager.nixosModules.default
-        mc-discord-bot.nixosModules.mc-discord-bot
+        mc_discord_bot.nixosModules.mc_discord_bot
         nh.nixosModules.default
         nix-index-database.nixosModules.nix-index
         nixos-unstable.nixosModules.notDetected

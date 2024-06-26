@@ -11,7 +11,7 @@
       enable = true;
       settings.PasswordAuthentication = false;
     };
-    mc-discord-bot = {
+    mc_discord_bot = {
       enable = true;
       env_file = ./discord-bot.env;
     };
