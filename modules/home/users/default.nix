@@ -1,4 +1,4 @@
-{ config, lib, nh, pkgs, system, ... }:
+{ config, lib, pkgs, system, ... }:
 let
   cfg = config.profiles;
 in
@@ -16,7 +16,7 @@ in
   config = lib.mkIf cfg.defaults.enable {
     home = {
       shellAliases = {
-        nh = "nh-darwin";
+        nh = "nh_darwin";
       };
       stateVersion = "24.11";
       sessionPath = [ ] ++ lib.optionals config.programs.volta.enable [
@@ -53,9 +53,6 @@ in
         "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         "/Library/Apple/usr/bin"
-      ];
-      packages = [
-        nh.packages.${system}.default
       ];
     };
     xdg.configFile = {

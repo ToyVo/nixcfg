@@ -1,0 +1,156 @@
+{
+    "patches": [
+        {
+            "file": "/config/twilightforest-common.toml",
+            "ops": [
+                {
+                    "$set": {
+                        "path": "$.['Uncrafting Table'].disableUncrafting",
+                        "value": false
+                    }
+                }
+            ]
+        },
+        {
+            "file": "/config/ProjectE/custom_emc.json",
+            "ops": [
+                {
+                    "$put": {
+                        "path": "$.entries",
+                        "value": [
+                            {
+                                "item": "rechiseled:glowstone_smooth",
+                                "emc": 1536
+                            },
+                            {
+                                "item": "rechiseled:glowstone_smooth_connecting",
+                                "emc": 1536
+                            },
+                            {
+                                "item": "ae2:certus_quartz_crystal",
+                                "emc": 10240
+                            },
+                            {
+                                "item": "ae2:fluix_crystal",
+                                "emc": 10240
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "file": "/config/rftoolsdim/userdimlets.json",
+            "ops": [
+                {
+                    "$put": {
+                        "path": "$",
+                        "value": [
+                            {
+                                "type": "block",
+                                "key": "draconicevolution:awakened_draconium_block",
+                                "rarity": "common",
+                                "create": 10,
+                                "maintain": 10,
+                                "ticks": 10,
+                                "worldgen": true,
+                                "dimlet": true
+                            },
+                            {
+                                "type": "block",
+                                "key": "draconicevolution:deepslate_draconium_ore",
+                                "rarity": "uncommon",
+                                "create": 100,
+                                "maintain": 100,
+                                "ticks": 100,
+                                "worldgen": true,
+                                "dimlet": true
+                            },
+                            {
+                                "type": "block",
+                                "key": "draconicevolution:dislocation_inhibitor",
+                                "rarity": "common",
+                                "create": 10,
+                                "maintain": 10,
+                                "ticks": 10,
+                                "worldgen": true,
+                                "dimlet": true
+                            },
+                            {
+                                "type": "block",
+                                "key": "draconicevolution:draconium_block",
+                                "rarity": "common",
+                                "create": 10,
+                                "maintain": 10,
+                                "ticks": 10,
+                                "worldgen": true,
+                                "dimlet": true
+                            },
+                            {
+                                "type": "block",
+                                "key": "draconicevolution:end_draconium_ore",
+                                "rarity": "uncommon",
+                                "create": 100,
+                                "maintain": 100,
+                                "ticks": 100,
+                                "worldgen": true,
+                                "dimlet": true
+                            },
+                            {
+                                "type": "block",
+                                "key": "draconicevolution:infused_obsidian",
+                                "rarity": "common",
+                                "create": 10,
+                                "maintain": 10,
+                                "ticks": 10,
+                                "worldgen": true,
+                                "dimlet": true
+                            },
+                            {
+                                "type": "block",
+                                "key": "draconicevolution:nether_draconium_ore",
+                                "rarity": "uncommon",
+                                "create": 100,
+                                "maintain": 100,
+                                "ticks": 100,
+                                "worldgen": true,
+                                "dimlet": true
+                            },
+                            {
+                                "type": "block",
+                                "key": "draconicevolution:overworld_draconium_ore",
+                                "rarity": "uncommon",
+                                "create": 100,
+                                "maintain": 100,
+                                "ticks": 100,
+                                "worldgen": true,
+                                "dimlet": true
+                            },
+                            {
+                                "type": "block",
+                                "key": "draconicevolution:particle_generator",
+                                "rarity": "common",
+                                "create": 10,
+                                "maintain": 10,
+                                "ticks": 10,
+                                "worldgen": true,
+                                "dimlet": true
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "file": "/world/serverconfig/rftoolsdim-server.toml",
+            "ops": [
+                {
+                    "$put": {
+                        "path": "$.['dimlets'].dimletPackages",
+                        "value": ["userdimlets.json"]
+                    }
+                }
+            ]
+        }
+    ]
+}

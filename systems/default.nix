@@ -4,7 +4,7 @@
 , home-manager
 , jovian
 , mc_discord_bot
-, nh
+, nh_darwin
 , nix-darwin
 , nix-index-database
 , nixos-hardware
@@ -37,7 +37,7 @@ let
         disko.nixosModules.disko
         home-manager.nixosModules.default
         mc_discord_bot.nixosModules.mc_discord_bot
-        nh.nixosModules.default
+        nh_darwin.nixosModules.default
         nix-index-database.nixosModules.nix-index
         nixos-unstable.nixosModules.notDetected
         self.nixosModules.default
@@ -60,7 +60,7 @@ let
       specialArgs = specialArgs;
       modules = [
         home-manager.darwinModules.default
-        nh.nixDarwinModules.prebuiltin
+        nh_darwin.nixDarwinModules.prebuiltin
         nix-index-database.darwinModules.nix-index
         self.darwinModules.default
         {

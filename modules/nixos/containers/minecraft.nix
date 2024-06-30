@@ -64,6 +64,7 @@ in
           # FTB_FORCE_REINSTALL = "true";
           MAX_TICK_TIME = "-1";
           MAX_WORLD_SIZE = "128000";
+          PATCH_DEFINITIONS = "/data/patches";
         };
         volumes = [
           "${cfg.minecraft.datadir}:/data"

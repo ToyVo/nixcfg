@@ -23,7 +23,7 @@
     # Applications
     mc_discord_bot.url = "github:toyvo/mc_discord_bot";
     mkAlias.url = "github:reckenrode/mkAlias";
-    nh.url = "github:toyvo/nh-darwin";
+    nh_darwin.url = "github:toyvo/nh_darwin";
     nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
     nixvim.url = "github:nix-community/nixvim";
     plasma-manager.url = "github:pjones/plasma-manager";
