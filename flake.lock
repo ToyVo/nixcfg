@@ -838,11 +838,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1719862189,
-        "narHash": "sha256-n0rZg6wTNtoWX6vYuBZZJm/gufn8wmz+UKQ2AaAaK/Y=",
+        "lastModified": 1719862840,
+        "narHash": "sha256-vSLXLOM0hm1wjE+UosH6yZ5eOWbCGC6+k+gIRWb/4Hs=",
         "owner": "toyvo",
         "repo": "nh_darwin",
-        "rev": "d8319f06eca81f0980c454778956c5357bc90c51",
+        "rev": "f28c0257e0f12ec0ca5b658c21c284a85c8630bb",
         "type": "github"
       },
       "original": {
