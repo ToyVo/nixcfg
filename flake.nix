@@ -35,6 +35,7 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixos-unstable";
     };
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
   outputs = inputs:
