@@ -37,7 +37,10 @@ in
           accent = config.catppuccin.accent;
         };
       };
-      cursorTheme.size = 24;
+      cursorTheme = {
+        name = config.home.pointerCursor.name;
+        size = 24;
+      };
       gtk2.extraConfig = lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "${name} = ${if lib.isString value then "\"${value}\"" else toString value}") (gtk_2_3_attrs // gtk_2_3_4_attrs));
       gtk3.extraConfig = gtk_2_3_attrs // gtk_2_3_4_attrs // gtk_3_4_attrs;
       gtk4.extraConfig = gtk_2_3_4_attrs // gtk_3_4_attrs;
@@ -52,6 +55,7 @@ in
         };
       };
     };
+    catppuccin.pointerCursor.enable = lib.mkDefault true;
     home.symlinkPackages = lib.mkIf config.gtk.catppuccin.link [
       config.gtk.theme.package
       config.gtk.iconTheme.package

@@ -35,7 +35,7 @@ in
     xdg.configFile."powershell/Microsoft.PowerShell_profile.ps1" = {
       text = lib.mkMerge [
         ''
-          ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "[Environment]::SetEnvironmentVariable(\"${name}\", \"${value}\")") config.home.sessionVariables)}
+          ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "[Environment]::SetEnvironmentVariable(\"${name}\", \"${toString value}\")") config.home.sessionVariables)}
           $pre_paths = [Environment]::GetEnvironmentVariable('PATH').split([IO.Path]::PathSeparator)
           $nix_paths = "${lib.concatStringsSep "\", \"" config.home.sessionPath}"
           $paths_to_export = @()
