@@ -44,18 +44,12 @@ in
       gtk2.extraConfig = lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "${name} = ${if lib.isString value then "\"${value}\"" else toString value}") (gtk_2_3_attrs // gtk_2_3_4_attrs));
       gtk3.extraConfig = gtk_2_3_attrs // gtk_2_3_4_attrs // gtk_3_4_attrs;
       gtk4.extraConfig = gtk_2_3_4_attrs // gtk_3_4_attrs;
-      catppuccin = {
-        enable = true;
-        flavor = config.catppuccin.flavor;
-        accent = config.catppuccin.accent;
-        cursor = {
-          enable = true;
-          flavor = config.catppuccin.flavor;
-          accent = config.catppuccin.accent;
-        };
-      };
     };
-    catppuccin.pointerCursor.enable = lib.mkDefault true;
+    catppuccin.pointerCursor = {
+      enable = lib.mkDefault true;
+      flavor = config.catppuccin.flavor;
+      accent = config.catppuccin.accent;
+    };
     home.symlinkPackages = lib.mkIf config.gtk.catppuccin.link [
       config.gtk.theme.package
       config.gtk.iconTheme.package
