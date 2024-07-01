@@ -116,6 +116,7 @@ in
             nix-output-monitor
             nixpkgs-fmt
             nmap
+            nvd
             openssh
             openssl
             ripgrep
