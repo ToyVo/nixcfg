@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  imports = [ ./secrets.nix ];
+  imports = [ ../../secrets/secrets.nix ];
 
   programs = {
     ssh.matchBlocks."github-emu" = {

@@ -45,7 +45,7 @@
       enable = true;
       home = "/mnt/POOL/nextcloud";
       hostName = "nextcloud.diekvoss.net";
-      config.adminpassFile = "${./nextcloudpass.txt}";
+      config.adminpassFile = "${../../secrets/nextcloudpass.txt}";
     };
     xserver.videoDrivers = [ "nvidia" ];
     displayManager.defaultSession = "plasmax11";
