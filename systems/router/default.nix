@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, config, ... }: {
   imports = [
     ./static-leases.nix
     ./virtual-hosts.nix
@@ -144,7 +144,7 @@
           declare -a DOMAINS=(
             "*.diekvoss.net"
           )
-          TOKEN=${builtins.readFile  ./cfapitoken}
+          TOKEN=$(cat ${config.sops.secrets.cloudflare_w_dns_r_zone_token.path})
 
           function put_record() {
             curl -sS -X PUT \
@@ -242,11 +242,15 @@
           "CF_API_EMAIL_FILE" = "${pkgs.writeText "cfemail" ''
             collin@diekvoss.com
           ''}";
-          "CF_API_KEY_FILE" = "${../../secrets/cfapikey}";
-          "CF_DNS_API_TOKEN_FILE" = "${../../secrets/cfapitoken}";
+          "CF_API_KEY_FILE" = config.sops.secrets.cloudflare_global_api_key.path;
+          "CF_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
         };
       };
     };
+  };
+  sops.secrets = {
+    cloudflare_global_api_key = { };
+    cloudflare_w_dns_r_zone_token = { };
   };
   users.users.caddy.extraGroups = [ "acme" ];
 }

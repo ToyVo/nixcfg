@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.availableKernelModules = [ "xhci_pci" "virtio_scsi" ];
@@ -13,6 +13,7 @@
     };
     mc_discord_bot = {
       enable = true;
+      # TODO use sops
       env_file = ../secrets/discord-bot.env;
     };
     caddy = {
@@ -36,11 +37,20 @@
           "CF_API_EMAIL_FILE" = "${pkgs.writeText "cfemail" ''
             collin@diekvoss.com
           ''}";
-          "CF_API_KEY_FILE" = "${../secrets/cfapikey}";
-          "CF_DNS_API_TOKEN_FILE" = "${../secrets/cfapitoken}";
+          "CF_API_KEY_FILE" = config.sops.secrets.cloudflare_global_api_key.path;
+          "CF_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
         };
       };
     };
+  };
+  sops.secrets = {
+    cloudflare_global_api_key = { };
+    cloudflare_w_dns_r_zone_token = { };
+    discord_client_id = { };
+    discord_client_secret = { };
+    discord_public_key = { };
+    discord_bot_token = { };
+    forge_api_key = { };
   };
   users.users.caddy.extraGroups = [ "acme" ];
   userPresets.toyvo.enable = true;

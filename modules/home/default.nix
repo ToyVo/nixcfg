@@ -17,5 +17,12 @@
 
   config = {
     home.file = self.lib.${system}.getFiles config.home.symlinkPackage;
+    sops = {
+      defaultSopsFile = ../../secrets/secrets.yaml;
+      age = {
+        keyFile = "${config.xdg.configHome}/sops-nix/key.txt";
+        generateKey = true;
+      };
+    };
   };
 }

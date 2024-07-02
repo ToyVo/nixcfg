@@ -81,6 +81,7 @@ in
           OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
           EXISTING_OPS_FILE = "MERGE";
           MOTD = "ToyVo Custom Server";
+          # TODO: use sops
           CF_API_KEY = lib.strings.removeSuffix "\n" (builtins.readFile ../../../secrets/forgeapikey);
           CURSEFORGE_FILES = lib.strings.concatMapStringsSep "," (mod: "https://www.curseforge.com/minecraft/mc-mods/${mod}")  [
             "projecte"

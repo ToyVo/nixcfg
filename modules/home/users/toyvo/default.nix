@@ -42,8 +42,8 @@ in
           identityConfig = {
             identitiesOnly = true;
             identityFile = [
-              "~/.ssh/ykC_ed25519_sk"
-              "~/.ssh/ykA_ed25519_sk"
+              config.sops.secrets.ykA_ed25519_sk.path
+              config.sops.secrets.ykC_ed25519_sk.path
             ];
           };
         in
@@ -74,6 +74,12 @@ in
     catppuccin = {
       flavor = "frappe";
       accent = "red";
+    };
+    sops.secrets = {
+      ykA_ed25519_sk.mode = "0600";
+      "ykA_ed25519_sk.pub".mode = "0644";
+      ykC_ed25519_sk.mode = "0600";
+      "ykC_ed25519_sk.pub".mode = "0644";
     };
   };
 }

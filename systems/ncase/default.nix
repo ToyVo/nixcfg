@@ -45,11 +45,17 @@
       enable = true;
       home = "/mnt/POOL/nextcloud";
       hostName = "nextcloud.diekvoss.net";
-      config.adminpassFile = "${../../secrets/nextcloudpass.txt}";
+      config.adminpassFile = config.sops.secrets.nextcloud_admin_password.path;
     };
     xserver.videoDrivers = [ "nvidia" ];
     displayManager.defaultSession = "plasmax11";
     displayManager.sddm.catppuccin.enable = lib.mkForce false;
+  };
+  sops.secrets = {
+    forge_api_key = { };
+    nextcloud_admin_password = {
+      owner = "nextcloud";
+    };
   };
   containerPresets = {
     homepage = {

@@ -25,9 +25,12 @@ in
         user = "nixremote";
         hostname = "10.1.0.3";
         identitiesOnly = true;
-        # TODO: automatically put the key in the right place without pulling it into the store
-        identityFile = "${rootHomeDirectory}/.ssh/nixremote_ed25519";
+        identityFile = config.sops.secrets.nixremote_ed25519.path;
       };
+    };
+    sops.secrets = {
+      nixremote_ed25519.mode = "0600";
+      "nixremote_ed25519.pub".mode = "0644";
     };
   };
 }
