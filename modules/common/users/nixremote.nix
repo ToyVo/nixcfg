@@ -13,8 +13,8 @@ in
       users.nixremote = {
         name = "nixremote";
         group = "nixremote";
-        openssh.authorizedKeys.keys = [
-          (lib.fileContents ./nixremote_ed25519.pub)
+        openssh.authorizedKeys.keyFiles = [
+          ../../../secrets/nixremote_ed25519.pub
         ];
         isSystemUser = true;
       };

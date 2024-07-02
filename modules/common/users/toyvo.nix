@@ -26,9 +26,9 @@ in
           description = "Collin Diekvoss";
           home = "${homePath}/${cfg.toyvo.name}";
           shell = pkgs.fish;
-          openssh.authorizedKeys.keys = [
-            (lib.fileContents ./ykA_ed25519_sk.pub)
-            (lib.fileContents ./ykC_ed25519_sk.pub)
+          openssh.authorizedKeys.keyFiles = [
+            ../../../secrets/ykA_ed25519_sk.pub
+            ../../../secrets/ykC_ed25519_sk.pub
           ];
         }
           (lib.mkIf

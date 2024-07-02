@@ -31,7 +31,7 @@ in
       gpg = {
         enable = true;
         publicKeys = [{
-          source = ./gpg_yubikey.pub;
+          source = ../../../../secrets/gpg_yubikey.pub;
           trust = 5;
         }];
       };

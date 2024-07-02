@@ -9,7 +9,7 @@
       identityFile = "~/.ssh/emu_ed25519";
     };
     gpg.publicKeys = [{
-      source = ./gpg_emu.pub;
+      source = ../../secrets/gpg_emu.pub;
       trust = 5;
     }];
     volta = {
