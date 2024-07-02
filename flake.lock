@@ -902,11 +902,11 @@
         "rust-overlay": "rust-overlay_3"
       },
       "locked": {
-        "lastModified": 1719868155,
-        "narHash": "sha256-QydxEFFlk/xKjxLmplpLQqa201mN8GA2zgiKvCK8Uuk=",
+        "lastModified": 1719935332,
+        "narHash": "sha256-yX0NOCmiRq3iMAwsKoSMxhfBMkLlZirHdmAyZIL95FM=",
         "owner": "toyvo",
         "repo": "nh_darwin",
-        "rev": "0b59bd6f8b45cf705fb31e4352bba31274d2a4b2",
+        "rev": "aa4bc963cbbdc44d0ed35d18345c911d465a5c7e",
         "type": "github"
       },
       "original": {

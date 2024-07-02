@@ -96,6 +96,7 @@ in
         {
           inherit shells;
           systemPackages = with pkgs; [
+            age
             broot
             curl
             dig
@@ -121,6 +122,7 @@ in
             openssl
             ripgrep
             rsync
+            sops
             sqlite
             tlrc
             unzip
