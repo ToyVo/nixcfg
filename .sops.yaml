@@ -1,0 +1,18 @@
+# This example uses YAML anchors which allows reuse of multiple keys
+# without having to repeat yourself.
+# Also see https://github.com/Mic92/dotfiles/blob/master/nixos/.sops.yaml
+# for a more complex example.
+keys:
+  - &admin_toyvo fcab5705add00d89bbf2e66cfab3032cc9513440
+  - &server_work age1vtkfvm0zr89gphfym2afqqkhfua6rezzq7lldpfg028t80krmacquu8x48
+  - &server_macbook_pro age1t5qen2h9pdnlath0aykg2mp5830sxan2w32e0lke93zw8zrac5wqzh4zrq
+  - &server_oracle_cloud_nixos age1vjlce2dce0j6k8cvlmt6a5w8wfqfdlye96gs5enf0njuwdr6ncds9gjney
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - pgp:
+      - *admin_toyvo
+      age:
+      - *server_work
+      - *server_macbook_pro
+      - *server_oracle_cloud_nixos
