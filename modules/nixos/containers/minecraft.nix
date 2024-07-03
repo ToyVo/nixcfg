@@ -22,7 +22,7 @@ in
       };
       openFirewall = lib.mkEnableOption "Open firewall for minecraft";
     };
-    minecraft-experimental = {
+    minecraft-ftb = {
       enable = lib.mkEnableOption "Enable minecraft server";
       port = lib.mkOption {
         type = lib.types.int;
@@ -42,17 +42,17 @@ in
     };
   };
 
-  config = lib.mkIf (cfg.minecraft.enable || cfg.minecraft-experimental.enable) {
+  config = lib.mkIf (cfg.minecraft.enable || cfg.minecraft-ftb.enable) {
     sops.secrets."minecraft_docker.env" = { };
     containerPresets.podman.enable = lib.mkDefault true;
     networking.firewall.allowedTCPPorts = [ ]
       ++ lib.optionals cfg.minecraft.openFirewall [ cfg.minecraft.port ]
-      ++ lib.optionals cfg.minecraft-experimental.openFirewall [ cfg.minecraft-experimental.port ];
+      ++ lib.optionals cfg.minecraft-ftb.openFirewall [ cfg.minecraft-ftb.port ];
     virtualisation.oci-containers.containers = {
-      minecraft-ftb = lib.mkIf cfg.minecraft.enable {
+      minecraft-ftb = lib.mkIf cfg.minecraft-ftb.enable {
         image = "docker.io/itzg/minecraft-server:latest";
         # I plan to make a web interface that I want to be able to use RCON to get information but keep it internal
-        ports = [ "${toString cfg.minecraft.port}:25565" "${toString cfg.minecraft.RCONPort}:25575" ];
+        ports = [ "${toString cfg.minecraft-ftb.port}:25565" "${toString cfg.minecraft-ftb.RCONPort}:25575" ];
         environment = {
           EULA = "TRUE";
           MEMORY = "20g";
@@ -68,12 +68,12 @@ in
           PATCH_DEFINITIONS = "/data/patches";
         };
         volumes = [
-          "${cfg.minecraft.datadir}:/data"
+          "${cfg.minecraft-ftb.datadir}:/data"
         ];
       };
-      minecraft = lib.mkIf cfg.minecraft-experimental.enable {
+      minecraft = lib.mkIf cfg.minecraft.enable {
         image = "docker.io/itzg/minecraft-server:latest";
-        ports = [ "${toString cfg.minecraft-experimental.port}:25565" "${toString cfg.minecraft-experimental.RCONPort}:25575" ];
+        ports = [ "${toString cfg.minecraft.port}:25565" "${toString cfg.minecraft.RCONPort}:25575" ];
         environmentFiles = [
           config.sops.secrets."minecraft_docker.env"
         ];
@@ -394,7 +394,7 @@ in
           ];
         };
         volumes = [
-          "${cfg.minecraft-experimental.datadir}:/data"
+          "${cfg.minecraft.datadir}:/data"
         ];
       };
     };

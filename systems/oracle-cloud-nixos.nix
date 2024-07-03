@@ -54,7 +54,7 @@
   };
   users.users.caddy.extraGroups = [ "acme" ];
   userPresets.toyvo.enable = true;
-  containerPresets.minecraft-experimental = {
+  containerPresets.minecraft = {
     enable = true;
     openFirewall = true;
     datadir = "/minecraft-data";
