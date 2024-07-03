@@ -10,7 +10,6 @@ in
   config = lib.mkIf cfg.toyvo.enable {
     profiles.defaults.enable = lib.mkDefault true;
     home.sessionVariables.EDITOR = "nvim";
-    gtk.macbuttons.enable = true;
     programs = {
       alacritty.enable = cfg.gui.enable;
       direnv = {

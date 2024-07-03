@@ -13,8 +13,7 @@
     };
     mc_discord_bot = {
       enable = true;
-      # TODO use sops
-      env_file = ../secrets/discord-bot.env;
+      env_file = config.sops.secrets."discord_bot.env".path;
     };
     caddy = {
       enable = true;
@@ -50,11 +49,12 @@
     discord_client_secret = { };
     discord_public_key = { };
     discord_bot_token = { };
+    "discord_bot.env" = { };
     forge_api_key = { };
   };
   users.users.caddy.extraGroups = [ "acme" ];
   userPresets.toyvo.enable = true;
-  containerPresets.minecraft = {
+  containerPresets.minecraft-experimental = {
     enable = true;
     openFirewall = true;
     datadir = "/minecraft-data";

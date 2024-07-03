@@ -17,6 +17,7 @@
 
   config = {
     home.file = self.lib.${system}.getFiles config.home.symlinkPackage;
+    home.sessionVariables.SOPS_AGE_RECIPIENTS = config.sops.age.keyFile;
     sops = {
       defaultSopsFile = ../../secrets/secrets.yaml;
       age = {

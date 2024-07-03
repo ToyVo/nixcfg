@@ -26,12 +26,12 @@ in
       enable = lib.mkEnableOption "Enable minecraft server";
       port = lib.mkOption {
         type = lib.types.int;
-        default = 25564;
+        default = 25565;
         description = "Port to expose minecraft server on";
       };
       RCONPort = lib.mkOption {
         type = lib.types.int;
-        default = 25574;
+        default = 25575;
         description = "Port to expose minecraft server on";
       };
       datadir = lib.mkOption {
@@ -43,6 +43,7 @@ in
   };
 
   config = lib.mkIf (cfg.minecraft.enable || cfg.minecraft-experimental.enable) {
+    sops.secrets."minecraft_docker.env" = { };
     containerPresets.podman.enable = lib.mkDefault true;
     networking.firewall.allowedTCPPorts = [ ]
       ++ lib.optionals cfg.minecraft.openFirewall [ cfg.minecraft.port ]
@@ -73,16 +74,17 @@ in
       minecraft-experimental = lib.mkIf cfg.minecraft-experimental.enable {
         image = "docker.io/itzg/minecraft-server:latest";
         ports = [ "${toString cfg.minecraft-experimental.port}:25565" "${toString cfg.minecraft-experimental.RCONPort}:25575" ];
+        environmentFiles = [
+          config.sops.secrets."minecraft_docker.env"
+        ];
         environment = {
           EULA = "TRUE";
           TYPE = "MOHIST";
           VERSION = "1.20.1";
-          MEMORY = "4g";
+          MEMORY = "20g";
           OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
           EXISTING_OPS_FILE = "MERGE";
           MOTD = "ToyVo Custom Server";
-          # TODO: use sops
-          CF_API_KEY = lib.strings.removeSuffix "\n" (builtins.readFile ../../../secrets/forgeapikey);
           CURSEFORGE_FILES = lib.strings.concatMapStringsSep "," (mod: "https://www.curseforge.com/minecraft/mc-mods/${mod}")  [
             "projecte"
             "brandons-core"
