@@ -13,8 +13,23 @@ in
     };
     programs.gnupg.agent.pinentryPackage = pkgs.pinentry-gnome3;
     environment.systemPackages = with pkgs; [
-      gnome.gnome-tweaks
       gnome-extension-manager
+      gnome.gnome-tweaks
+      gnomeExtensions.appindicator
+      gnomeExtensions.arcmenu
+      gnomeExtensions.blur-my-shell
+      gnomeExtensions.burn-my-windows
+      gnomeExtensions.compiz-alike-magic-lamp-effect
+      gnomeExtensions.compiz-windows-effect
+      gnomeExtensions.dash-to-dock
+      gnomeExtensions.dash-to-panel
+      gnomeExtensions.desktop-cube
+      gnomeExtensions.extension-list
+      gnomeExtensions.just-perfection
+      gnomeExtensions.mpris-label
+      gnomeExtensions.quick-settings-tweaker
+      gnomeExtensions.systemstatsplus
+      gnomeExtensions.user-themes
     ];
     profiles.gui.enable = true;
   };

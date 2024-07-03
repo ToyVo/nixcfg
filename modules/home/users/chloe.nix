@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.profiles;
 in
@@ -9,6 +9,9 @@ in
 
   config = lib.mkIf cfg.chloe.enable {
     profiles.defaults.enable = lib.mkDefault true;
+    home.packages = with pkgs; [
+      spotify
+    ];
     catppuccin = {
       flavor = "latte";
       accent = "pink";
