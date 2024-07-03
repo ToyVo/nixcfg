@@ -49,7 +49,7 @@ in
       ++ lib.optionals cfg.minecraft.openFirewall [ cfg.minecraft.port ]
       ++ lib.optionals cfg.minecraft-experimental.openFirewall [ cfg.minecraft-experimental.port ];
     virtualisation.oci-containers.containers = {
-      minecraft = lib.mkIf cfg.minecraft.enable {
+      minecraft-ftb = lib.mkIf cfg.minecraft.enable {
         image = "docker.io/itzg/minecraft-server:latest";
         # I plan to make a web interface that I want to be able to use RCON to get information but keep it internal
         ports = [ "${toString cfg.minecraft.port}:25565" "${toString cfg.minecraft.RCONPort}:25575" ];
@@ -71,7 +71,7 @@ in
           "${cfg.minecraft.datadir}:/data"
         ];
       };
-      minecraft-experimental = lib.mkIf cfg.minecraft-experimental.enable {
+      minecraft = lib.mkIf cfg.minecraft-experimental.enable {
         image = "docker.io/itzg/minecraft-server:latest";
         ports = [ "${toString cfg.minecraft-experimental.port}:25565" "${toString cfg.minecraft-experimental.RCONPort}:25575" ];
         environmentFiles = [
