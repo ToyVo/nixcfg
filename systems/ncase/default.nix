@@ -37,7 +37,7 @@
       enable = true;
       settings.PasswordAuthentication = false;
     };
-    desktopManager.plasma6.enable = true;
+    xserver.desktopManager.gnome.enable = true;
     remote-builds.server.enable = true;
     ollama.enable = true;
     spice-vdagentd.enable = true;
@@ -48,8 +48,6 @@
       config.adminpassFile = config.sops.secrets.nextcloud_admin_password.path;
     };
     xserver.videoDrivers = [ "nvidia" ];
-    displayManager.defaultSession = "plasmax11";
-    displayManager.sddm.catppuccin.enable = lib.mkForce false;
   };
   sops.secrets = {
     forge_api_key = { };
@@ -67,7 +65,7 @@
       openFirewall = true;
     };
     minecraft-experimental = {
-      enable = true;
+      enable = false;
       openFirewall = true;
       datadir = "/mnt/POOL/minecraft-experimental";
     };
