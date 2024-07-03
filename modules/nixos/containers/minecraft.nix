@@ -75,7 +75,7 @@ in
         image = "docker.io/itzg/minecraft-server:latest";
         ports = [ "${toString cfg.minecraft.port}:25565" "${toString cfg.minecraft.RCONPort}:25575" ];
         environmentFiles = [
-          config.sops.secrets."minecraft_docker.env"
+          config.sops.secrets."minecraft_docker.env".path
         ];
         environment = {
           EULA = "TRUE";
