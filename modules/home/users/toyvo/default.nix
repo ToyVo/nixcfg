@@ -42,8 +42,8 @@ in
           identityConfig = {
             identitiesOnly = true;
             identityFile = [
-              config.sops.secrets.ykA_ed25519_sk.path
               config.sops.secrets.ykC_ed25519_sk.path
+              config.sops.secrets.ykA_ed25519_sk.path
             ];
           };
         in
@@ -76,10 +76,10 @@ in
       accent = "red";
     };
     sops.secrets = {
-      ykA_ed25519_sk.mode = "0600";
-      "ykA_ed25519_sk.pub".mode = "0644";
       ykC_ed25519_sk.mode = "0600";
       "ykC_ed25519_sk.pub".mode = "0644";
+      ykA_ed25519_sk.mode = "0600";
+      "ykA_ed25519_sk.pub".mode = "0644";
     };
   };
 }
