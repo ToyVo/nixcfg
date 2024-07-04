@@ -79,16 +79,6 @@
     home-manager.sharedModules = [
       ({ config, pkgs, lib, ... }: {
         targets.darwin.aliasHomeApplications = true;
-        home = lib.mkIf (config.sops.secrets != { }) {
-          activation.sops-nix = lib.mkForce ''
-            echo "Skipping..."
-          '';
-          packages = [
-            (pkgs.writeShellScriptBin "sops_user_decrypt" ''
-              ${config.launchd.agents.sops-nix.config.Program}
-            '')
-          ];
-        };
       })
     ];
     profiles.gui.enable = true;
