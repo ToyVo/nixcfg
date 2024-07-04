@@ -4,12 +4,12 @@ let
   # eza.enableAliases adds aliases to nushell which is unwanted
   aliases = {
     ls = "eza";
-    ll = "eza -l";
+    ll = "eza -lgo";
     la = "eza -a";
     lt = "eza -T";
-    lla = "eza -la";
+    lla = "eza -lago";
     lta = "eza -Ta";
-    llta = "eza -lTa";
+    llta = "eza -lTago";
   };
 in
 {
@@ -25,7 +25,7 @@ in
         lla = "ls -la";
         lt = "eza -T";
         lta = "eza -Ta";
-        llta = "eza -lTa";
+        llta = "eza -lTago";
       };
     };
   };
