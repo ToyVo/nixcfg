@@ -84,6 +84,7 @@ in
           OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
           EXISTING_OPS_FILE = "MERGE";
           MOTD = "ToyVo Custom Server";
+          CF_API_KEY = "$${CF_API_KEY}"
           CURSEFORGE_FILES = lib.strings.concatMapStringsSep "," (mod: "https://www.curseforge.com/minecraft/mc-mods/${mod}") [
             "projecte"
             "brandons-core"
