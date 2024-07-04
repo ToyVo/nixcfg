@@ -1,4 +1,4 @@
-{config, pkgs, ...}: {
+{ config, pkgs, ... }: {
   home.sessionVariables = {
     SDKMAN_DIR = "${config.home.homeDirectory}/.sdkman";
   };

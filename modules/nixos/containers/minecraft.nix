@@ -45,8 +45,7 @@ in
   config = lib.mkIf (cfg.minecraft.enable || cfg.minecraft-ftb.enable) {
     sops.secrets."minecraft_docker.env" = { };
     containerPresets.podman.enable = lib.mkDefault true;
-    networking.firewall.allowedTCPPorts = [ ]
-      ++ lib.optionals cfg.minecraft.openFirewall [ cfg.minecraft.port ]
+    networking.firewall.allowedTCPPorts = lib.optionals cfg.minecraft.openFirewall [ cfg.minecraft.port ]
       ++ lib.optionals cfg.minecraft-ftb.openFirewall [ cfg.minecraft-ftb.port ];
     virtualisation.oci-containers.containers = {
       minecraft-ftb = lib.mkIf cfg.minecraft-ftb.enable {
@@ -85,7 +84,7 @@ in
           OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
           EXISTING_OPS_FILE = "MERGE";
           MOTD = "ToyVo Custom Server";
-          CURSEFORGE_FILES = lib.strings.concatMapStringsSep "," (mod: "https://www.curseforge.com/minecraft/mc-mods/${mod}")  [
+          CURSEFORGE_FILES = lib.strings.concatMapStringsSep "," (mod: "https://www.curseforge.com/minecraft/mc-mods/${mod}") [
             "projecte"
             "brandons-core"
             "codechicken-lib-1-8"
