@@ -66,8 +66,6 @@
         { name = "podman-desktop"; greedy = true; }
         { name = "proton-mail"; greedy = true; }
         { name = "protonvpn"; greedy = true; }
-      ] ++ lib.optionals (system == "aarch64-darwin") [
-        { name = "lm-studio"; greedy = true; }
       ];
       taps = [
         "cfergeau/crc"

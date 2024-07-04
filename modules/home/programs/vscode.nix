@@ -90,6 +90,7 @@ in
         "terminal.integrated.defaultProfile.osx" = "fish";
         "terminal.integrated.scrollback" = 10000;
         "workbench.colorTheme" = "Catppuccin Frappé";
+        "workbench.editor.revealIfOpen" = true;
       };
     };
   };
