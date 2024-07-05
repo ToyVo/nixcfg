@@ -78,7 +78,7 @@ in
         name = "pre-start";
         runtimeInputs = [ ];
         text = ''
-          ${cfg.backend} rm -f ${name} || true
+          podman rm -f ${name} || true
           rm -f /run/podman-${escapedName}.ctr-id
         '';
       };
