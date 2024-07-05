@@ -400,7 +400,7 @@ in
 
       script = lib.concatStringsSep " \\\n  " ([
         # TODO read secret
-        "export CF_API_KEY = $(cat ${config.sops.secrets.forge_api_key.path})"
+        "CF_API_KEY = $(cat ${config.sops.secrets.forge_api_key.path});"
         "exec podman"
         "run"
         "--rm"
