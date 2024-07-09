@@ -397,7 +397,7 @@ in
       environment = config.networking.proxy.envVars;
 
       path = [config.virtualisation.podman.package];
-      script = "export CF_API_KEY = $(cat ${config.sops.secrets.forge_api_key.path})\n" +
+      script = "export CF_API_KEY=$(cat ${config.sops.secrets.forge_api_key.path})\n" +
       lib.concatStringsSep " \\\n  " ([
         "exec podman"
         "run"
