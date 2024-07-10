@@ -57,7 +57,8 @@
   containerPresets.minecraft = {
     enable = true;
     openFirewall = true;
-    datadir = "/minecraft-data";
+    datadir = "/minecraft-data/server";
+    downloadsdir = "/minecraft-data/downloads";
   };
   disko.devices.disk.sda = {
     type = "disk";

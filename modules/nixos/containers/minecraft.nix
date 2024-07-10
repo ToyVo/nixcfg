@@ -20,6 +20,10 @@ in
         type = lib.types.path;
         description = "Path to store minecraft data";
       };
+      downloadsdir = lib.mkOption {
+        type = lib.types.path;
+        description = "Path to store manually downloaded mods";
+      };
       openFirewall = lib.mkEnableOption "Open firewall for minecraft";
     };
     minecraft-ftb = {
@@ -71,6 +75,7 @@ in
         ];
       };
     };
+    # The need to read a secret for CF_API_KEY is the reason why I'm using systemd instead of oci-containers to manually control escaping
     systemd.services.podman-minecraft = let
       name = "minecraft";
       escapedName = lib.escapeShellArg name;
@@ -83,9 +88,34 @@ in
         '';
       };
       # Known mod ids that aren't needed
-      # 440979 "wthit" we have the forge version
+      # 220333 "cofh-lib" last available for 1.7.10
+      # 227083 "baubles" last available for 1.12.2
+      # 228816 "openblocks" last available for 1.12.2
+      # 238222 "jei" incompatible with "roughly-enough-items-hacks"
+      # 242942 "ic2-classic" last available for 1.12.2
+      # 244651 "tesla" last available for 1.12.2
+      # 247560 "oh-the-biomes-youll-go" last available for 1.19.4
       # 253449 "hwyla" we have wthit-forge instead
+      # 261348 "avaritia-1-10" last available for 1.18.2
+      # 267602 "ctm" not available for 1.20.1 but is for 1.19.2, 1.20.4+
+      # 270789 "redstone-flux" last available for 1.12.2
+      # 313272 "enchantability" last available for 1.16.5
+      # 358877 "industrial-reborn" last available for 1.19.2
       # 368223 "health-overlay" we have colorful-hearts instead
+      # 437654 "oc2" last available for 1.18.2
+      # 440979 "wthit" we have the forge version
+      # 449945 "perviaminvenire" last available for 1.19.2
+      # 475110 "i-like-wood-oh-the-biomes-youll-go-plugin" last available for 1.19.2
+      # 486392 "flywheel" last available for 1.19.2
+      # 632048 "voluminous-energy-integrations-addon" last available for 1.19.2
+      # 682881 "pluto" last available for 1.19.3
+      # 74072 "tinkers-construct" last available for 1.19.2
+      # 74924 "mantle" last available for 1.19.2
+
+      # Manual downloads
+      # "blaze-gear" # 418589 mc-image-helper says author doesn't allow automated downloads
+      # "i-like-wood-twilight-forest-plugin" # 661721 mc-image-helper says author doesn't allow automated downloads
+      # "ifly" # mc-image-helper says author doesn't allow automated downloads
       mods = lib.strings.concatMapStringsSep "," (mod: "https://www.curseforge.com/minecraft/mc-mods/${mod}") [
         "accelerated-decay"
         "ad-astra"
@@ -123,11 +153,9 @@ in
         "athena"
         "attributefix"
         "autumnity"
-        # "avaritia-1-10" # 261348 last available for 1.18.2
         "badpackets"
         "balm"
         "bamboo-everything"
-        # "baubles" # 227083 last available for 1.12.2
         "baubley-heart-canisters"
         "bdlib"
         "bendy-lib"
@@ -137,7 +165,6 @@ in
         "better-than-bunnies"
         "better-than-llamas"
         "biomes-o-plenty"
-        "blaze-gear"
         "blood-magic"
         "bookshelf"
         "bosses-of-mass-destruction-forge"
@@ -161,7 +188,6 @@ in
         "cobweb"
         "codechicken-lib-1-8"
         "cofh-core"
-        # "cofh-lib" # 220333 last available for 1.7.10
         "colorful-hearts"
         "comforts"
         "common-capabilities"
@@ -182,7 +208,6 @@ in
         "creeperhost-minetogether"
         "creeperhost-presents-soul-shards"
         "crossroads-mc"
-        # "ctm" # 267602 not available for 1.20.1 but is for 1.19.2, 1.20.4+
         "cucumber"
         "cumulus"
         "cupboard"
@@ -204,7 +229,6 @@ in
         "embers-rekindled"
         "emi"
         "emojiful"
-        # "enchantability" # 313272 last available for 1.16.5
         "enchantment-descriptions"
         "ender-io"
         "enderchests"
@@ -227,12 +251,11 @@ in
         "flib"
         "flower-patch"
         "flux-networks"
-        # "flywheel" # 486392 last available for 1.19.2
         "forbidden-arcanus"
         "framedblocks"
         "ftb-backups-2"
         "ftb-chunks-forge"
-        "ftb-essentials-forge"
+        "ftb-essentials"
         "ftb-library-forge"
         "ftb-ranks-forge"
         "ftb-teams-forge"
@@ -254,16 +277,11 @@ in
         "hyperbox"
         "i-like-wood"
         "i-like-wood-biomes-o-plenty-plugin"
-        # "i-like-wood-oh-the-biomes-youll-go-plugin" # 475110 last available for 1.19.2
-        "i-like-wood-twilight-forest-plugin"
-        # "ic2-classic" # 242942 last available for 1.12.2
         "ice-and-fire-dragons"
         "ichunutil"
-        "ifly"
-        "immersive-engineering"
+        "immersive-engineering/files/5224387" # 231951 mc-image-helper says unable to find match in latest files
         "industrial-foregoing"
         "industrial-foregoing-souls"
-        # "industrial-reborn" # 358877 last available for 1.19.2
         "integrated-crafting"
         "integrated-dynamics"
         "integrated-terminals"
@@ -281,7 +299,6 @@ in
         "jamd"
         "jaopca"
         "javd"
-        # "jei" # incompatible with "roughly-enough-items-hacks"
         "jeitweaker"
         "json-things"
         "jumbo-furnace"
@@ -318,7 +335,6 @@ in
         "luggage"
         "macaws-bridges"
         "macaws-doors"
-        # "mantle" # 74924 last available for 1.19.2
         "map-atlases-forge"
         "max-health-fix"
         "mcjtylib"
@@ -353,11 +369,8 @@ in
         "neat"
         "nomowanderer"
         "nuclearcraft-neoteric"
-        # "oc2" # 437654 last available for 1.18.2
         "occultism"
-        # "oh-the-biomes-youll-go" # 247560 last available for 1.19.4
         "open-loader"
-        # "openblocks" # 228816 last available for 1.12.2
         "openblocks-elevator"
         "openblocks-trophies"
         "overweight-farming"
@@ -365,13 +378,11 @@ in
         "patchouli"
         "pedestals"
         "peripheralium"
-        # "perviaminvenire" # 449945 last available for 1.19.2
         "pig-pen-cipher"
         "pipez"
         "placebo"
         "player-plates"
         "playeranimator"
-        # "pluto" # 682881 last available for 1.19.3
         "pneumaticcraft-repressurized"
         "pocket-storage"
         "polylib"
@@ -389,7 +400,6 @@ in
         "rechiseled"
         "rechiseled-create"
         "recipe-stages"
-        # "redstone-flux" # 270789 last available for 1.12.2
         "refined-cooking"
         "refined-storage"
         "refined-storage-addons"
@@ -418,7 +428,7 @@ in
         "serverconfig-updater"
         "shetiphiancore"
         "shimmer"
-        "shrink_"
+        "shrink_/files/4863339" # mc-image-helper says mod file reference is not valid
         "simple-discord-rich-presence"
         "simple-magnets"
         "simple-sponge"
@@ -444,7 +454,6 @@ in
         "team-projecte"
         "tempad"
         "terrablender"
-        # "tesla" # 244651 last available for 1.12.2
         "tesseract"
         "the-bumblezone-forge"
         "the-lost-cities"
@@ -462,7 +471,6 @@ in
         "theurgy"
         "time-in-a-bottle-curio-support"
         "time-in-a-bottle-universal"
-        # "tinkers-construct" # 74072 last available for 1.19.2
         "tiny-coal"
         "titanium"
         "toast-control"
@@ -481,7 +489,6 @@ in
         "useful-machinery"
         "valhelsia-core"
         "voluminous-energy"
-        # "voluminous-energy-integrations-addon" # 632048 last available for 1.19.2
         "waddles"
         "waystones"
         "when-dungeons-arise"
@@ -552,4 +559,3 @@ in
     };
   };
 }
-
