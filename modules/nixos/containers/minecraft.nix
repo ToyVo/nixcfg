@@ -82,6 +82,10 @@ in
           rm -f /run/podman-${escapedName}.ctr-id
         '';
       };
+      # Known mod ids that aren't needed
+      # 440979 "wthit" we have the forge version
+      # 253449 "hwyla" we have wthit-forge instead
+      # 368223 "health-overlay" we have colorful-hearts instead
       mods = lib.strings.concatMapStringsSep "," (mod: "https://www.curseforge.com/minecraft/mc-mods/${mod}") [
         "accelerated-decay"
         "ad-astra"
@@ -119,11 +123,11 @@ in
         "athena"
         "attributefix"
         "autumnity"
-        # "avaritia-1-10"
+        # "avaritia-1-10" # 261348 last available for 1.18.2
         "badpackets"
         "balm"
         "bamboo-everything"
-        # "baubles"
+        # "baubles" # 227083 last available for 1.12.2
         "baubley-heart-canisters"
         "bdlib"
         "bendy-lib"
@@ -133,7 +137,7 @@ in
         "better-than-bunnies"
         "better-than-llamas"
         "biomes-o-plenty"
-        # "blaze-gear"
+        "blaze-gear"
         "blood-magic"
         "bookshelf"
         "bosses-of-mass-destruction-forge"
@@ -157,10 +161,11 @@ in
         "cobweb"
         "codechicken-lib-1-8"
         "cofh-core"
-        # "cofh-lib"
+        # "cofh-lib" # 220333 last available for 1.7.10
         "colorful-hearts"
         "comforts"
         "common-capabilities"
+        "config-menus-forge"
         "configured"
         "connected-glass"
         "connectivity"
@@ -177,7 +182,7 @@ in
         "creeperhost-minetogether"
         "creeperhost-presents-soul-shards"
         "crossroads-mc"
-        # "ctm"
+        # "ctm" # 267602 not available for 1.20.1 but is for 1.19.2, 1.20.4+
         "cucumber"
         "cumulus"
         "cupboard"
@@ -199,7 +204,7 @@ in
         "embers-rekindled"
         "emi"
         "emojiful"
-        # "enchantability"
+        # "enchantability" # 313272 last available for 1.16.5
         "enchantment-descriptions"
         "ender-io"
         "enderchests"
@@ -222,12 +227,12 @@ in
         "flib"
         "flower-patch"
         "flux-networks"
-        # "flywheel"
+        # "flywheel" # 486392 last available for 1.19.2
         "forbidden-arcanus"
         "framedblocks"
         "ftb-backups-2"
         "ftb-chunks-forge"
-        # "ftb-essentials-forge"
+        "ftb-essentials-forge"
         "ftb-library-forge"
         "ftb-ranks-forge"
         "ftb-teams-forge"
@@ -244,23 +249,21 @@ in
         "handcrafted"
         "harvest-with-ease"
         "haunted-harvest"
-        # "health-overlay"
         "hole-filler-mod"
         "hostile-neural-networks"
-        # "hwyla"
         "hyperbox"
         "i-like-wood"
         "i-like-wood-biomes-o-plenty-plugin"
-        # "i-like-wood-oh-the-biomes-youll-go-plugin"
-        # "i-like-wood-twilight-forest-plugin"
-        # "ic2-classic"
+        # "i-like-wood-oh-the-biomes-youll-go-plugin" # 475110 last available for 1.19.2
+        "i-like-wood-twilight-forest-plugin"
+        # "ic2-classic" # 242942 last available for 1.12.2
         "ice-and-fire-dragons"
         "ichunutil"
-        # "ifly"
-        # "immersive-engineering"
+        "ifly"
+        "immersive-engineering"
         "industrial-foregoing"
         "industrial-foregoing-souls"
-        # "industrial-reborn"
+        # "industrial-reborn" # 358877 last available for 1.19.2
         "integrated-crafting"
         "integrated-dynamics"
         "integrated-terminals"
@@ -278,7 +281,7 @@ in
         "jamd"
         "jaopca"
         "javd"
-        "jei"
+        # "jei" # incompatible with "roughly-enough-items-hacks"
         "jeitweaker"
         "json-things"
         "jumbo-furnace"
@@ -315,7 +318,7 @@ in
         "luggage"
         "macaws-bridges"
         "macaws-doors"
-        # "mantle"
+        # "mantle" # 74924 last available for 1.19.2
         "map-atlases-forge"
         "max-health-fix"
         "mcjtylib"
@@ -350,11 +353,11 @@ in
         "neat"
         "nomowanderer"
         "nuclearcraft-neoteric"
-        # "oc2"
+        # "oc2" # 437654 last available for 1.18.2
         "occultism"
-        # "oh-the-biomes-youll-go"
+        # "oh-the-biomes-youll-go" # 247560 last available for 1.19.4
         "open-loader"
-        # "openblocks"
+        # "openblocks" # 228816 last available for 1.12.2
         "openblocks-elevator"
         "openblocks-trophies"
         "overweight-farming"
@@ -362,13 +365,13 @@ in
         "patchouli"
         "pedestals"
         "peripheralium"
-        # "perviaminvenire"
+        # "perviaminvenire" # 449945 last available for 1.19.2
         "pig-pen-cipher"
         "pipez"
         "placebo"
         "player-plates"
         "playeranimator"
-        # "pluto"
+        # "pluto" # 682881 last available for 1.19.3
         "pneumaticcraft-repressurized"
         "pocket-storage"
         "polylib"
@@ -386,7 +389,7 @@ in
         "rechiseled"
         "rechiseled-create"
         "recipe-stages"
-        # "redstone-flux"
+        # "redstone-flux" # 270789 last available for 1.12.2
         "refined-cooking"
         "refined-storage"
         "refined-storage-addons"
@@ -401,7 +404,7 @@ in
         "rftools-utility"
         "rhino"
         "roughly-enough-items"
-        "roughly-enough-items-hacks"
+        "roughly-enough-items-hacks" # incompatible with "jei"
         "rs-requestify"
         "rsinfinitybooster"
         "runelic"
@@ -415,7 +418,7 @@ in
         "serverconfig-updater"
         "shetiphiancore"
         "shimmer"
-        # "shrink_"
+        "shrink_"
         "simple-discord-rich-presence"
         "simple-magnets"
         "simple-sponge"
@@ -441,7 +444,7 @@ in
         "team-projecte"
         "tempad"
         "terrablender"
-        # "tesla"
+        # "tesla" # 244651 last available for 1.12.2
         "tesseract"
         "the-bumblezone-forge"
         "the-lost-cities"
@@ -459,7 +462,7 @@ in
         "theurgy"
         "time-in-a-bottle-curio-support"
         "time-in-a-bottle-universal"
-        # "tinkers-construct"
+        # "tinkers-construct" # 74072 last available for 1.19.2
         "tiny-coal"
         "titanium"
         "toast-control"
@@ -478,13 +481,12 @@ in
         "useful-machinery"
         "valhelsia-core"
         "voluminous-energy"
-        # "voluminous-energy-integrations-addon"
+        # "voluminous-energy-integrations-addon" # 632048 last available for 1.19.2
         "waddles"
         "waystones"
         "when-dungeons-arise"
         "wireless-chargers"
         "wormhole-portals"
-        # "wthit"
         "wthit-forge"
         "xnet"
         "xycraft"
