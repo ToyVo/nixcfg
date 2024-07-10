@@ -540,6 +540,7 @@ in
         "-p '${toString cfg.minecraft.port}:25565'"
         "-p '${toString cfg.minecraft.RCONPort}:25575'"
         "-v '${cfg.minecraft.datadir}:/data'"
+        "-v '${cfg.minecraft.downloadsdir}:/downloads'"
         "docker.io/itzg/minecraft-server:latest"
       ]);
 
