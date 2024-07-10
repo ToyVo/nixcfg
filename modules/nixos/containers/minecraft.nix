@@ -116,8 +116,8 @@ in
       # "blaze-gear" # 418589 mc-image-helper says author doesn't allow automated downloads
       # "i-like-wood-twilight-forest-plugin" # 661721 mc-image-helper says author doesn't allow automated downloads
       # "ifly" # mc-image-helper says author doesn't allow automated downloads
-      # "immersive-engineering/files/5224387" # 231951 mc-image-helper says unable to find match in latest files
-      # "shrink_/files/4863339" # mc-image-helper says mod file reference is not valid
+      # "immersive-engineering/files/5224387" # 231951 mc-image-helper says unable to find match in latest files says neoforge, but would need to be both forge/neoforge
+      # "shrink_/files/4863339" # mc-image-helper says mod file reference is not valid is it the underscore?
       mods = lib.strings.concatMapStringsSep "," (mod: "https://www.curseforge.com/minecraft/mc-mods/${mod}") [
         "accelerated-decay"
         "ad-astra"
@@ -168,6 +168,7 @@ in
         "better-than-llamas"
         "biomes-o-plenty"
         "blood-magic"
+        "blueprint"
         "bookshelf"
         "bosses-of-mass-destruction-forge"
         "botania"
@@ -237,6 +238,7 @@ in
         "endertanks"
         "energized-power"
         "entangled"
+        "essentials"
         "experience-obelisk"
         "extreme-reactors"
         "extreme-sound-muffler"
