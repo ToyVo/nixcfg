@@ -2,3 +2,4 @@
 .idea
 .luarc.json
 result
+requests.http
