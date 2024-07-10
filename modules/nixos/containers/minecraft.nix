@@ -116,6 +116,8 @@ in
       # "blaze-gear" # 418589 mc-image-helper says author doesn't allow automated downloads
       # "i-like-wood-twilight-forest-plugin" # 661721 mc-image-helper says author doesn't allow automated downloads
       # "ifly" # mc-image-helper says author doesn't allow automated downloads
+      # "immersive-engineering/files/5224387" # 231951 mc-image-helper says unable to find match in latest files
+      # "shrink_/files/4863339" # mc-image-helper says mod file reference is not valid
       mods = lib.strings.concatMapStringsSep "," (mod: "https://www.curseforge.com/minecraft/mc-mods/${mod}") [
         "accelerated-decay"
         "ad-astra"
@@ -279,7 +281,6 @@ in
         "i-like-wood-biomes-o-plenty-plugin"
         "ice-and-fire-dragons"
         "ichunutil"
-        "immersive-engineering/files/5224387" # 231951 mc-image-helper says unable to find match in latest files
         "industrial-foregoing"
         "industrial-foregoing-souls"
         "integrated-crafting"
@@ -428,7 +429,6 @@ in
         "serverconfig-updater"
         "shetiphiancore"
         "shimmer"
-        "shrink_/files/4863339" # mc-image-helper says mod file reference is not valid
         "simple-discord-rich-presence"
         "simple-magnets"
         "simple-sponge"
