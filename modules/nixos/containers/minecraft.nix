@@ -84,7 +84,7 @@ in
           MOTD = "ToyVo Custom Server";
           MAX_TICK_TIME = "-1";
           MAX_WORLD_SIZE = "100000";
-          PACKWIZ_URL="https://mc.toyvo.dev/pack.toml";
+          PACKWIZ_URL="https://mc.toyvo.dev/modpack/pack.toml";
         };
         volumes = [
           "${cfg.minecraft.datadir}:/data"
