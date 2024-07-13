@@ -16,7 +16,7 @@ in
         enable = true;
         nix-direnv.enable = true;
       };
-      rio.enable = cfg.gui.enable;
+      rio.enable = false;#cfg.gui.enable;
       vscode.enable = cfg.gui.enable;
       wezterm.enable = cfg.gui.enable;
       kitty.enable = cfg.gui.enable;

@@ -159,13 +159,7 @@ in
             nodejs
             pipenv
             poetry
-            (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
-              extensions = [ "rust-src" "rust-std" "rust-analyzer" "rustfmt" "clippy" ];
-              targets = [
-                "wasm32-unknown-unknown"
-                "riscv32imc-unknown-none-elf"
-              ];
-            }))
+            rustup
           ]
           ++ lib.optionals (stdenv.isLinux && cfg.dev.enable) [
             # Having gcc or clang will also set cc, which breaks compiling rust on macos, to ivestigate
