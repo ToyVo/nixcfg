@@ -4,6 +4,8 @@
   environment.systemPackages = with pkgs; [
     openscad
     ollama
+    prismlauncher
+    packwiz
   ];
   homebrew.casks = [
     { name = "prusaslicer"; greedy = true; }
