@@ -14,6 +14,8 @@
     mc_discord_bot = {
       enable = true;
       env_file = config.sops.secrets."discord_bot.env".path;
+      openFirewall = true;
+      datadir = "/minecraft-data";
     };
     caddy = {
       enable = true;
@@ -54,11 +56,6 @@
   };
   users.users.caddy.extraGroups = [ "acme" ];
   userPresets.toyvo.enable = true;
-  containerPresets.minecraft = {
-    enable = true;
-    openFirewall = true;
-    datadir = "/minecraft-data/server";
-  };
   disko.devices.disk.sda = {
     type = "disk";
     device = "/dev/sda";

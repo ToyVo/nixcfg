@@ -3,7 +3,7 @@ let
   cfg = config.containerPresets;
 in
 {
-  imports = [ ./chat.nix ./homepage.nix ./minecraft.nix ];
+  imports = [ ./chat.nix ./homepage.nix ];
 
   options.containerPresets = {
     podman.enable = lib.mkEnableOption "Enable podman runtime";
