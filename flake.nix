@@ -36,6 +36,7 @@
       inputs.nixpkgs.follows = "nixos-unstable";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
+    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
   };
 
   outputs = inputs:

@@ -7,6 +7,7 @@
 , nh_darwin
 , nix-darwin
 , nix-index-database
+, nixos-cosmic
 , nixos-hardware
 , nixos-unstable
 , nixvim
@@ -39,6 +40,7 @@ let
         mc_discord_bot.nixosModules.mc_discord_bot
         nh_darwin.nixosModules.default
         nix-index-database.nixosModules.nix-index
+        nixos-cosmic.nixosModules.default
         nixos-unstable.nixosModules.notDetected
         self.nixosModules.default
         sops-nix.nixosModules.sops

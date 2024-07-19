@@ -13,7 +13,7 @@
   userPresets.toyvo.enable = true;
   fileSystemPresets.efi.enable = true;
   fileSystemPresets.btrfs.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  services.desktopManager.cosmic.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
   hardware.graphics = {
     extraPackages = with pkgs; [
