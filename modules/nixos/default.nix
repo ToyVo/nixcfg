@@ -68,7 +68,6 @@ in
       };
       fwupd.enable = true;
     };
-    sound.enable = cfg.gui.enable;
     system = {
       stateVersion = "24.11";
       autoUpgrade = {
