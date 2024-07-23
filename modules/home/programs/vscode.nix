@@ -17,7 +17,7 @@ in
         ms-vscode.cmake-tools
         vadimcn.vscode-lldb
         continue.continue
-        serayuzgur.crates
+        fill-labs.dependi
         ms-vscode-remote.remote-containers
         usernamehw.errorlens
         dbaeumer.vscode-eslint
