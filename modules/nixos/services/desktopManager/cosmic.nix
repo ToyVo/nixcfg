@@ -4,6 +4,10 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    services.displayManager.cosmic-greeter.enable = true;
+    services = {
+      displayManager.cosmic-greeter.enable = true;
+      libinput.enable = true;
+    };
+    profiles.gui.enable = true;
   };
 }
