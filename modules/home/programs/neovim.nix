@@ -442,8 +442,10 @@ in
         };
         treesitter = {
           enable = true;
-          indent = true;
-          incrementalSelection.enable = true;
+          settings = {
+            indent = true;
+            incremental_selection.enable = true;
+          };
           folding = true;
         };
         treesitter-context.enable = true;
