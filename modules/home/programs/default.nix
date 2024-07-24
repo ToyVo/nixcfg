@@ -17,7 +17,6 @@
     ./nushell.nix
     ./powershell.nix
     ./rio.nix
-    ./sdkman.nix
     ./ssh.nix
     ./volta.nix
     ./vscode.nix
