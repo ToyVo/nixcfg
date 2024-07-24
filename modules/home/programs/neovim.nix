@@ -443,7 +443,7 @@ in
         treesitter = {
           enable = true;
           settings = {
-            indent = true;
+            indent.enable = true;
             incremental_selection.enable = true;
           };
           folding = true;
