@@ -8,6 +8,7 @@ keys:
   - &server_oracle_cloud_nixos age1vjlce2dce0j6k8cvlmt6a5w8wfqfdlye96gs5enf0njuwdr6ncds9gjney
   - &server_ncase age1elnqflh50lwvy3pfrjqz7yc902hns8da4yfgmhvjf8uxs8f8w94s0spmr4
   - &server_router age1xqgaud2s9f6rsqa09mw9vw9upklxwzlgrhtun6n2s8zysuspqvqq8c4hrr
+  - &server_thinkpad age1gcn0aykdd0e9gs3v6wx39wy84ann38vgvfwtan5e9z4qt4zevgtqygp0la
   - &admin_toyvo fcab5705add00d89bbf2e66cfab3032cc9513440
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
@@ -18,5 +19,6 @@ creation_rules:
       - *server_oracle_cloud_nixos
       - *server_ncase
       - *server_router
+      - *server_thinkpad
       pgp:
       - *admin_toyvo
