@@ -14,7 +14,7 @@ in
     programs.gnupg.agent.pinentryPackage = pkgs.pinentry-gnome3;
     environment.systemPackages = with pkgs; [
       gnome-extension-manager
-      gnome.gnome-tweaks
+      gnome-tweaks
       gnomeExtensions.appindicator
       gnomeExtensions.arcmenu
       gnomeExtensions.blur-my-shell

@@ -21,6 +21,7 @@
     ./volta.nix
     ./vscode.nix
     ./wezterm.nix
+    ./zed.nix
     ./zellij.nix
     ./zsh.nix
   ];

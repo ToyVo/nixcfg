@@ -11,6 +11,7 @@ in
     profiles.defaults.enable = lib.mkDefault true;
     home.packages = with pkgs; [
       spotify
+      discord
     ];
     catppuccin = {
       flavor = "latte";

@@ -35,7 +35,7 @@ in
             pkgs.stdenv.isLinux
             {
               isNormalUser = true;
-              extraGroups = [ "networkmanager" "wheel" cfg.toyvo.name ] ++ lib.optionals config.containerPresets.podman.enable [ "podman" ];
+              extraGroups = [ "networkmanager" "wheel" "input" "uinput" cfg.toyvo.name ] ++ lib.optionals config.containerPresets.podman.enable [ "podman" ];
               initialHashedPassword = "$y$j9T$tkZ4b5vK1fCsRP0oWUb0e1$w0QbUEv9swXir33ivvM70RYTYflQszeLBi3vubYTqd8";
             })]);
       };

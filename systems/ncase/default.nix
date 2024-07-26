@@ -37,7 +37,12 @@
       enable = true;
       settings.PasswordAuthentication = false;
     };
-    xserver.desktopManager.gnome.enable = true;
+    xserver = {
+      desktopManager.gnome.enable = true;
+      videoDrivers = [ "nvidia" ];
+    };
+    desktopManager.cosmic.enable = true;
+    displayManager.cosmic-greeter.enable = lib.mkForce false;
     remote-builds.server.enable = true;
     ollama.enable = true;
     spice-vdagentd.enable = true;
@@ -47,7 +52,6 @@
       hostName = "nextcloud.diekvoss.net";
       config.adminpassFile = config.sops.secrets.nextcloud_admin_password.path;
     };
-    xserver.videoDrivers = [ "nvidia" ];
   };
   sops.secrets = {
     forge_api_key = { };

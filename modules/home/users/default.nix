@@ -5,7 +5,7 @@ in
 {
   imports = [
     ./chloe.nix
-    ./toyvo
+    ./toyvo.nix
   ];
 
   options.profiles = {
@@ -92,4 +92,3 @@ in
     };
   };
 }
-

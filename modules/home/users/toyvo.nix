@@ -16,7 +16,7 @@ in
         enable = true;
         nix-direnv.enable = true;
       };
-      rio.enable = false;#cfg.gui.enable;
+      rio.enable = false; #cfg.gui.enable;
       vscode.enable = cfg.gui.enable;
       wezterm.enable = cfg.gui.enable;
       kitty.enable = cfg.gui.enable;
@@ -67,6 +67,7 @@ in
           };
           matchBlocks."10.1.0.*" = identityConfig;
         };
+      zed.enable = true;
       zellij.enable = true;
       ideavim.enable = true;
     };
@@ -82,5 +83,3 @@ in
     };
   };
 }
-
-
