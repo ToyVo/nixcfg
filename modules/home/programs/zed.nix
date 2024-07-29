@@ -10,7 +10,7 @@
           "format_on_save": "on",
           "autosave": "on_focus_change",
           "auto_update": false,
-          "buffer_font_family": "MonaspiceNe NF",
+          "buffer_font_family": "MonaspiceNe Nerd Font",
           "formatter": [
               "language_server",
               {
