@@ -20,29 +20,46 @@
     caddy = {
       enable = true;
       email = "collin@diekvoss.com";
-      virtualHosts."https://mc.toyvo.dev:443" = {
-        useACMEHost = "mc.toyvo.dev";
-        extraConfig = ''
-          reverse_proxy http://0.0.0.0:8080
-        '';
+      virtualHosts = {
+        "https://mc.toyvo.dev:443" = {
+          useACMEHost = "mc.toyvo.dev";
+          extraConfig = ''
+            reverse_proxy http://0.0.0.0:8080
+          '';
+        };
+        "https://static.toyvo.dev:443" = {
+          useACMEHost = "static.toyvo.dev";
+          extraConfig = ''
+            reverse_proxy http://0.0.0.0:8787
+          '';
+        };
       };
+    };
+    static-web-server = {
+      enable = true;
+      root = "/var/www/";
     };
   };
   security.acme = {
     acceptTerms = true;
-    certs = {
-      "mc.toyvo.dev" = {
-        email = "collin@diekvoss.com";
-        dnsProvider = "cloudflare";
-        credentialFiles = {
-          "CF_API_EMAIL_FILE" = "${pkgs.writeText "cfemail" ''
+    certs =
+      let
+        cf = {
+          email = "collin@diekvoss.com";
+          dnsProvider = "cloudflare";
+          credentialFiles = {
+            "CF_API_EMAIL_FILE" = "${pkgs.writeText "cfemail" ''
             collin@diekvoss.com
           ''}";
-          "CF_API_KEY_FILE" = config.sops.secrets.cloudflare_global_api_key.path;
-          "CF_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
+            "CF_API_KEY_FILE" = config.sops.secrets.cloudflare_global_api_key.path;
+            "CF_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
+          };
         };
+      in
+      {
+        "mc.toyvo.dev" = cf;
+        "static.toyvo.dev" = cf;
       };
-    };
   };
   sops.secrets = {
     cloudflare_global_api_key = { };
