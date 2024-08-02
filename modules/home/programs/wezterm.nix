@@ -14,6 +14,7 @@ in
           family = "MonaspiceNe Nerd Font",
           harfbuzz_features = {'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'},
         };
+        config.window_close_confirmation = 'NeverPrompt'
         config.color_scheme = "Catppuccin ${upperFlavor}";
         config.initial_rows = 30;
         config.initial_cols = 120;

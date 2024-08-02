@@ -86,6 +86,7 @@ in
         "notebook.lineNumbers" = "on";
         "prettier.singleQuote" = true;
         "prettier.tabWidth" = 4;
+        "prettier.trailingComma" = "all";
         "terminal.integrated.defaultProfile.linux" = "fish";
         "terminal.integrated.defaultProfile.osx" = "fish";
         "terminal.integrated.scrollback" = 10000;
