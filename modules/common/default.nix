@@ -160,14 +160,15 @@ in
             ninja
             nodejs
             pipenv
+            pkg-config
             poetry
             rustup
-            zed-editor
           ]
           ++ lib.optionals (stdenv.isLinux && cfg.dev.enable) [
             # Having gcc or clang will also set cc, which breaks compiling rust on macos, to ivestigate
             gcc
             clang
+            zed-editor
           ]
           ++ lib.optionals stdenv.isLinux [
             aha
