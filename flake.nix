@@ -39,17 +39,33 @@
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
   };
 
-  outputs = inputs:
+  outputs = inputs@{ flake-parts, rust-overlay, nixpkgs-esp-dev, nixos-unstable, ... }:
     let
       configurations = import ./systems inputs;
     in
-    {
-      nixosModules.default = ./modules/nixos;
-      darwinModules.default = ./modules/darwin;
-      homeManagerModules.default = ./modules/home;
-      nixosConfigurations = configurations.nixosConfigurations;
-      darwinConfigurations = configurations.darwinConfigurations;
-      homeManagerConfigurations = configurations.homeManagerConfigurations;
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      flake = {
+        lib.import_nixpkgs = { system, nixpkgs ? nixos-unstable }: import nixpkgs {
+          inherit system;
+          overlays = [ (import rust-overlay) nixpkgs-esp-dev.overlays.default ];
+          config.allowUnfree = true;
+        };
+        nixosModules.default = ./modules/nixos;
+        darwinModules.default = ./modules/darwin;
+        homeManagerModules.default = ./modules/home;
+        nixosConfigurations = configurations.nixosConfigurations;
+        darwinConfigurations = configurations.darwinConfigurations;
+        homeManagerConfigurations = configurations.homeManagerConfigurations;
+      };
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      perSystem = { config, pkgs, system, self', ... }: {
+        _module.args.pkgs = self'.lib.import_nixpkgs { };
+      };
     };
 
   nixConfig = {
