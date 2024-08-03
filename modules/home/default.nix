@@ -21,38 +21,48 @@
         const fs = require('node:fs/promises');
         const path = require('node:path');
         let result = {};
-        const traverseDir = async (dir, segments = []) => {
-          const listing = await fs.readdir(dir, { withFileTypes: true });
-          for (const obj of listing) {
-            const subPath = path.join(dir, obj.name);
-            try {
-            const stat = await fs.lstat(subPath);
-            if (stat.isDirectory()) {
-              await traverseDir(subPath, [...segments, obj.name]);
-            } else if (stat.isFile()) {
-              const target = path.join(...segments, obj.name);
-              const source = path.join(obj.path, obj.name);
-              result[target] = {source};
-            } else if (stat.isSymbolicLink()) {
-              let link = await fs.readlink(subPath);
 
-              if (!link.startsWith('/')) {
-                link = path.join(subPath, '..', link);
-              }
+        const traverseDir = async (initialDir, initialSegments = []) => {
+          const stack = [{ dir: initialDir, segments: initialSegments }];
 
-              const targetStat = await fs.lstat(link);
-              if (targetStat.isDirectory()) {
-                await traverseDir(subPath, [...segments, obj.name]);
-              } else if (targetStat.isFile()) {
-                const target = path.join(...segments, obj.name);
-                const source = path.join(obj.path, obj.name);
-                result[target] = {source};
+          while (stack.length > 0) {
+            const { dir, segments } = stack.pop();
+            const listing = await fs.readdir(dir, { withFileTypes: true });
+
+            for (const obj of listing) {
+              const subPath = path.join(dir, obj.name);
+
+              try {
+                const stat = await fs.lstat(subPath);
+
+                if (stat.isDirectory()) {
+                  stack.push({ dir: subPath, segments: [...segments, obj.name] });
+                } else if (stat.isFile()) {
+                  const target = path.join(...segments, obj.name);
+                  result[target] = { source: subPath };
+                } else if (stat.isSymbolicLink()) {
+                  let link = await fs.readlink(subPath);
+
+                  if (!link.startsWith('/')) {
+                    link = path.resolve(path.dirname(subPath), link);
+                  }
+
+                  const targetStat = await fs.lstat(link);
+                  if (targetStat.isDirectory()) {
+                    stack.push({ dir: link, segments: [...segments, obj.name] });
+                  } else if (targetStat.isFile()) {
+                    const target = path.join(...segments, obj.name);
+                    result[target] = { source: link };
+                  }
+                }
+              } catch (e) {
+                // TODO: Handle errors (e.g., symlink target doesn't exist)
               }
             }
-            } catch (e) {}
           }
         };
-        traverseDir("${config.home.symlinkPackage}", ['.local']).then(() => {
+
+        traverseDir('${config.home.symlinkPackage}', ['.local']).then(() => {
           console.log(JSON.stringify(result));
         });
       '';
