@@ -44,7 +44,6 @@
       configurations = import ./systems inputs;
     in
     {
-      lib = import ./lib.nix inputs;
       nixosModules.default = ./modules/nixos;
       darwinModules.default = ./modules/darwin;
       homeManagerModules.default = ./modules/home;
