@@ -55,7 +55,7 @@
         homeManagerModules.default = ./modules/home;
         nixosConfigurations = configurations.nixosConfigurations;
         darwinConfigurations = configurations.darwinConfigurations;
-        homeManagerConfigurations = configurations.homeManagerConfigurations;
+        homeConfigurations = configurations.homeConfigurations;
       };
       systems = [
         "x86_64-linux"

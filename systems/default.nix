@@ -73,7 +73,7 @@ let
         }
       ] ++ darwinModules;
     };
-  homeManagerConfiguration = { system, homeManagerModules ? [ ] }:
+  homeConfiguration = { system, homeManagerModules ? [ ] }:
     let
       pkgs = self.lib.import_nixpkgs { inherit system; };
       specialArgs = inputs // { inherit system; };
@@ -91,8 +91,8 @@ in
     MacMini-Intel = darwinSystem { system = "x86_64-darwin"; darwinModules = [ ./MacMini-Intel.nix ]; };
     MacMini-M1 = darwinSystem { system = "aarch64-darwin"; darwinModules = [ ./MacMini-M1.nix ]; };
   };
-  homeManagerConfigurations = {
-    "deck@steamdeck" = homeManagerConfiguration { system = "x86_64-linux"; homeManagerModules = [ ./steamdeck.nix plasma-manager.homeManagerModules.plasma-manager ]; };
+  homeConfigurations = {
+    "deck@steamdeck" = homeConfiguration { system = "x86_64-linux"; homeManagerModules = [ ./steamdeck.nix plasma-manager.homeManagerModules.plasma-manager ]; };
   };
   nixosConfigurations = {
     HP-Envy = nixosSystem { system = "x86_64-linux"; nixosModules = [ ./HP-Envy.nix ]; };
