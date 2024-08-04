@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, nix_home_files, system, ... }: {
   imports = [ ./alias-home-apps.nix ./users ./programs ];
 
   options.home = {
@@ -17,57 +17,9 @@
 
   config =
     let
-      recursive_list_files = pkgs.writers.writeJS "recursive_list_files.js" { } ''
-        const fs = require('node:fs/promises');
-        const path = require('node:path');
-        let result = {};
-
-        const traverseDir = async (initialDir, initialSegments = []) => {
-          const stack = [{ dir: initialDir, segments: initialSegments }];
-
-          while (stack.length > 0) {
-            const { dir, segments } = stack.pop();
-            const listing = await fs.readdir(dir, { withFileTypes: true });
-
-            for (const obj of listing) {
-              const subPath = path.join(dir, obj.name);
-
-              try {
-                const stat = await fs.lstat(subPath);
-
-                if (stat.isDirectory()) {
-                  stack.push({ dir: subPath, segments: [...segments, obj.name] });
-                } else if (stat.isFile()) {
-                  const target = path.join(...segments, obj.name);
-                  result[target] = { source: subPath };
-                } else if (stat.isSymbolicLink()) {
-                  let link = await fs.readlink(subPath);
-
-                  if (!link.startsWith('/')) {
-                    link = path.resolve(path.dirname(subPath), link);
-                  }
-
-                  const targetStat = await fs.lstat(link);
-                  if (targetStat.isDirectory()) {
-                    stack.push({ dir: link, segments: [...segments, obj.name] });
-                  } else if (targetStat.isFile()) {
-                    const target = path.join(...segments, obj.name);
-                    result[target] = { source: link };
-                  }
-                }
-              } catch (e) {
-                // TODO: Handle errors (e.g., symlink target doesn't exist)
-              }
-            }
-          }
-        };
-
-        traverseDir('${config.home.symlinkPackage}', ['.local']).then(() => {
-          console.log(JSON.stringify(result));
-        });
-      '';
-      files = pkgs.runCommand "recursive_list_files" { } ''
-        echo -n $(${recursive_list_files}) > $out
+      command = nix_home_files.packages.${system}.default;
+      files = pkgs.runCommand "list_files" { } ''
+        ${command}/bin/nix_home_files ${config.home.symlinkPackage} > $out
       '';
     in
     {
