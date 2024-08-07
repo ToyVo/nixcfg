@@ -126,7 +126,6 @@ in
             rsync
             sops
             sqlite
-            tlrc
             unzip
             uutils-coreutils-noprefix
             wget
@@ -168,6 +167,7 @@ in
             # Having gcc or clang will also set cc, which breaks compiling rust on macos, to ivestigate
             gcc
             clang
+            # TODO: broken on darwin but should be available there
             zed-editor
           ]
           ++ lib.optionals stdenv.isLinux [
@@ -181,6 +181,8 @@ in
             yubico-piv-tool
             yubikey-manager
             yubikey-personalization
+            # TODO: broken on darwin but should be available there
+            tlrc
           ]
           ++ lib.optionals (stdenv.isLinux && cfg.gui.enable) [
             element-desktop
@@ -188,12 +190,18 @@ in
             yubikey-manager-qt
             yubioath-flutter
           ]
+          ++ lib.optionals (stdenv.isDarwin && cfg.dev.enable) [
+            darwin.apple_sdk.frameworks.SystemConfiguration
+            darwin.apple_sdk.frameworks.CoreServices
+          ]
           ++ lib.optionals stdenv.isDarwin [
             appcleaner
             pinentry_mac
             rectangle
             utm
             warp-terminal
+            # TODO: prefer tlrc
+            tldr
           ];
         };
     })

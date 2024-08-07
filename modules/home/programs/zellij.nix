@@ -20,7 +20,7 @@ in
     };
     programs = {
       # extension of zellij setup --generate-auto-start $SHELL because the code generated doesn't start zellij with a window with the shell that started it, but the default shell of the user. Additionally generation doesn't support nushell
-      # Don't auto start zellij within zellij, when connected via ssh, or when used as the shell within vscode or any jetbrains ides
+      # Don't auto start zellij within zellij, when connected via ssh, or when used as the shell within ides
       bash.initExtra = ''
         if [ -z "$ZELLIJ" ] && [ -z "$SSH_CONNECTION" ] && ${lib.concatStringsSep " && " (lib.mapAttrsToList (name: values: lib.concatStringsSep " && " (map (v: "[ \"\$${name}\" != \"${v}\" ]") values)) cfg.restrictedVariables)}; then
           ${pkgs.zellij}/bin/zellij options --default-shell ${pkgs.bashInteractive}/bin/bash --session-name bash --attach-to-session true

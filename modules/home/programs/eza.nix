@@ -1,7 +1,6 @@
 { config, lib, ... }:
 let
   cfg = config.programs.eza;
-  # eza.enableAliases adds aliases to nushell which is unwanted
   aliases = {
     ls = "eza";
     ll = "eza -lgo";
@@ -19,13 +18,12 @@ in
       zsh.shellAliases = aliases;
       fish.shellAliases = aliases;
       powershell.shellAliases = aliases;
-      nushell.shellAliases = {
-        ll = "ls -l";
-        la = "ls -a";
-        lla = "ls -la";
-        lt = "eza -T";
-        lta = "eza -Ta";
-        llta = "eza -lTago";
+      # eza.enableAliases adds aliases to nushell which is unwanted
+      nushell.shellAliases = aliases // {
+        ls = lib.mkForce "ls";
+        ll = lib.mkForce "ls -l";
+        la = lib.mkForce "ls -a";
+        lla = lib.mkForce "ls -la";
       };
     };
   };
