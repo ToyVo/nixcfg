@@ -39,6 +39,12 @@
       enable = true;
       root = "/var/www/";
     };
+    terraria = {
+      enable = true;
+      secure = true;
+      openFirewall = true;
+      maxPlayers = 16;
+    };
   };
   security.acme = {
     acceptTerms = true;
