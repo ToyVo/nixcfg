@@ -1,7 +1,10 @@
 { pkgs, config, ... }: {
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.availableKernelModules = [ "xhci_pci" "virtio_scsi" ];
+  boot = {
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    initrd.availableKernelModules = [ "xhci_pci" "virtio_scsi" ];
+    binfmt.emulatedSystems = [ "x86_64-linux" ];
+  };
   networking.hostName = "oracle-cloud-nixos";
   networking.firewall.allowedTCPPorts = [ 443 ];
   networking.firewall.allowedUDPPorts = [ 443 ];
