@@ -50,7 +50,7 @@
       "/terraria-data/world:/root/.local/share/Terraria/Worlds"
     ];
     environment = {
-      WORLD_FILENAME = "server.wld";
+      WORLD_FILENAME = "large_master_crimson.wld";
     };
   };
   security.acme = {
