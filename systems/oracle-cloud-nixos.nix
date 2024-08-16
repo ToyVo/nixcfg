@@ -43,7 +43,7 @@
       root = "/var/www/";
     };
     terraria = {
-      enable = true;
+      enable = false;
       secure = true;
       openFirewall = true;
       maxPlayers = 16;
