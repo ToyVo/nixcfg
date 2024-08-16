@@ -6,8 +6,8 @@
     binfmt.emulatedSystems = [ "x86_64-linux" ];
   };
   networking.hostName = "oracle-cloud-nixos";
-  networking.firewall.allowedTCPPorts = [ 443 ];
-  networking.firewall.allowedUDPPorts = [ 443 ];
+  networking.firewall.allowedTCPPorts = [ 443 7777 ];
+  networking.firewall.allowedUDPPorts = [ 443 7777 ];
   profiles.defaults.enable = true;
   services = {
     openssh = {
@@ -42,11 +42,15 @@
       enable = true;
       root = "/var/www/";
     };
-    terraria = {
-      enable = false;
-      secure = true;
-      openFirewall = true;
-      maxPlayers = 16;
+  };
+  virtualisation.oci-containers.containers.terraria = {
+    image = "docker.io/ryshe/terraria:tshock-1.4.4.9-5.2.0-3";
+    ports = [ "7777:7777" ];
+    volumes = [
+      "/terraria-data/world:/root/.local/share/Terraria/Worlds"
+    ];
+    environment = {
+      WORLD_FILENAME = "server.wld";
     };
   };
   security.acme = {
