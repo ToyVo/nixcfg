@@ -14,6 +14,7 @@
 , plasma-manager
 , self
 , sops-nix
+, nur
 , ...
 }@inputs:
 let
@@ -23,6 +24,7 @@ let
     nixvim.homeManagerModules.nixvim
     self.homeManagerModules.default
     sops-nix.homeManagerModules.sops
+    nur.nixosModules.nur
   ];
   lib = nixos-unstable.lib;
   nixosSystem = { system, nixosModules ? [ ], homeManagerModules ? [ ] }:
@@ -44,6 +46,7 @@ let
         nixos-unstable.nixosModules.notDetected
         self.nixosModules.default
         sops-nix.nixosModules.sops
+        nur.nixosModules.nur
         {
           home-manager = {
             extraSpecialArgs = specialArgs;
@@ -65,6 +68,7 @@ let
         nh_darwin.nixDarwinModules.prebuiltin
         nix-index-database.darwinModules.nix-index
         self.darwinModules.default
+        nur.nixosModules.nur
         {
           home-manager = {
             extraSpecialArgs = specialArgs;

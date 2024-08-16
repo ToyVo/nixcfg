@@ -38,6 +38,7 @@
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    nur.url = "github:nix-community/nur";
   };
 
   outputs = inputs@{ flake-parts, rust-overlay, nixpkgs-esp-dev, nixos-unstable, ... }:

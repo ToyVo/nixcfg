@@ -51,18 +51,26 @@ in
         ms-vscode.cpptools
       ];
       userSettings = {
-        "[javascript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
-        "[javascriptreact]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+        "[javascript]" = {
+          "editor.defaultFormatter" = "esbenp.prettier-vscode";
+          "editor.formatOnSave" = false;
+        };
+        "[javascriptreact]" = {
+          "editor.defaultFormatter" = "esbenp.prettier-vscode";
+          "editor.formatOnSave" = false;
+        };
         "[json]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[jsonc]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+        "diffEditor.ignoreTrimWhitespace" = false;
+        "editor.codeActionsOnSave"."source.fixAll" = "always";
         "editor.fontFamily" = "'MonaspiceNe Nerd Font'";
         "editor.fontLigatures" = "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'";
         "editor.fontSize" = 14;
         "editor.formatOnSave" = true;
         "editor.formatOnSaveMode" = "modificationsIfAvailable";
         "editor.lineNumbers" = "relative";
-        "diffEditor.ignoreTrimWhitespace" = false;
+        "eslint.alwaysShowStatus" = true;
         "files.autoSave" = "onFocusChange";
         "files.insertFinalNewline" = true;
         "files.trimTrailingWhitespace" = true;
@@ -77,10 +85,10 @@ in
         "idf.pythonBinPath" = "${config.home.homeDirectory}/.espressif/python_env/idf5.4_py3.9_env/bin/python";
         "idf.toolsPath" = "${config.home.homeDirectory}/.espressif";
         "jupyter.askForKernelRestart" = false;
+        "mypy-type-checker.args" = [ "--ignore-missing-imports" ];
         "nix.enableLanguageServer" = true;
         "nix.serverPath" = "nil";
         "nix.serverSettings"."nil"."formatting"."command" = [ "nixpkgs-fmt" ];
-        "mypy-type-checker.args" = [ "--ignore-missing-imports" ];
         "notebook.formatOnSave.enabled" = true;
         "notebook.insertFinalNewline" = true;
         "notebook.lineNumbers" = "on";

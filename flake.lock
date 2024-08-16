@@ -2232,6 +2232,21 @@
         "type": "github"
       }
     },
+    "nur": {
+      "locked": {
+        "lastModified": 1723567815,
+        "narHash": "sha256-FZRFHuPN5k3j4wxSVbQiQ/wO07ErIMVHUNFhNmRI3Fo=",
+        "owner": "nix-community",
+        "repo": "nur",
+        "rev": "e6177712b31189686407abbda3e186356dfb0094",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nur",
+        "type": "github"
+      }
+    },
     "nuschtosSearch": {
       "inputs": {
         "flake-utils": "flake-utils_15",
@@ -2470,6 +2485,7 @@
         "nixos-unstable": "nixos-unstable",
         "nixpkgs-esp-dev": "nixpkgs-esp-dev",
         "nixvim": "nixvim",
+        "nur": "nur",
         "plasma-manager": "plasma-manager",
         "rust-overlay": "rust-overlay_5",
         "sops-nix": "sops-nix"
