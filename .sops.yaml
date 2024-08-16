@@ -3,7 +3,7 @@
 # Also see https://github.com/Mic92/dotfiles/blob/master/nixos/.sops.yaml
 # for a more complex example.
 keys:
-  - &server_work age10nul2zx2l4wm5jggu8n54kw59kzg6wel3w4xcllk0k3dtp75uagsm47th6
+  - &server_work age1hftc90y0377ekg80a6e2080fl7qtve6jqrx3wwzmtpm7fcucqu2sn7mema
   - &server_macbook_pro age1t5qen2h9pdnlath0aykg2mp5830sxan2w32e0lke93zw8zrac5wqzh4zrq
   - &server_oracle_cloud_nixos age1m847c49r9q3hkjtq5fsan9zl67yqz6arexmpdymy58l6g58yafuqs7tnun
   - &server_ncase age1elnqflh50lwvy3pfrjqz7yc902hns8da4yfgmhvjf8uxs8f8w94s0spmr4

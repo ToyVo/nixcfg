@@ -24,7 +24,6 @@
     in
     {
       home.file = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile files));
-      home.sessionVariables.SOPS_AGE_RECIPIENTS = config.sops.age.keyFile;
       sops = {
         defaultSopsFile = ../../secrets/secrets.yaml;
         age = {
