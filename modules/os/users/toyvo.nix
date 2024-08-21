@@ -47,8 +47,11 @@ in
     home-manager.users.${cfg.toyvo.name} = lib.mkIf cfg.toyvo.enable {
       home.username = cfg.toyvo.name;
       home.homeDirectory = "${homePath}/${cfg.toyvo.name}";
-      profiles.toyvo.enable = true;
-      profiles.gui.enable = enableGui;
+      profiles = {
+        defaults.enable = true;
+        gui.enable = enableGui;
+        toyvo.enable = true;
+      };
     };
   };
 }

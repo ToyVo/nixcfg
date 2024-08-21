@@ -1,5 +1,9 @@
 { pkgs, ... }: {
-  profiles.dev.enable = true;
+  profiles = {
+    defaults.enable = true;
+    dev.enable = true;
+    gui.enable = true;
+  };
   userPresets.toyvo.enable = true;
   environment.systemPackages = with pkgs; [
     openscad
@@ -10,6 +14,7 @@
   homebrew.casks = [
     { name = "prusaslicer"; greedy = true; }
     { name = "discord"; greedy = true; }
+    { name = "whisky"; greedy = true; }
   ];
   homebrew.masApps = {
     "Yubico Authenticator" = 1497506650;

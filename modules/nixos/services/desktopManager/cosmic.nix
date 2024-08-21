@@ -8,6 +8,5 @@ in
       displayManager.cosmic-greeter.enable = true;
       libinput.enable = true;
     };
-    profiles.gui.enable = true;
   };
 }

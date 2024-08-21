@@ -31,6 +31,5 @@ in
       gnomeExtensions.systemstatsplus
       gnomeExtensions.user-themes
     ];
-    profiles.gui.enable = true;
   };
 }

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.programs.kde.catppuccin;
   catppuccin-kde = (pkgs.catppuccin-kde.override {
@@ -11,16 +11,14 @@ in
   options.programs.kde.catppuccin = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = config.profiles.defaults.enable && config.profiles.gui.enable && pkgs.stdenv.isLinux;
+      default = config.profiles.gui.enable && pkgs.stdenv.isLinux;
       description = "Enable Catppuccin KDE theme";
     };
-    link = lib.mkEnableOption "Link Catppuccin KDE theme";
   };
 
   config = lib.mkIf cfg.enable {
     home.packages = [
       catppuccin-kde
     ];
-    home.symlinkPackages = lib.mkIf cfg.link [ catppuccin-kde ];
   };
 }

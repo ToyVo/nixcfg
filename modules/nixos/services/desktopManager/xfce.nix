@@ -11,6 +11,5 @@ in
       };
       libinput.enable = true;
     };
-    profiles.gui.enable = true;
   };
 }

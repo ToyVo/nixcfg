@@ -26,8 +26,12 @@
     kernelModules = [ "kvm-amd" ];
     binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
-  profiles.gaming.enable = true;
-  profiles.dev.enable = true;
+  profiles = {
+    defaults.enable = true;
+    dev.enable = true;
+    gaming.enable = true;
+    gui.enable = true;
+  };
   userPresets.toyvo.enable = true;
   userPresets.chloe.enable = true;
   fileSystemPresets.efi.enable = true;

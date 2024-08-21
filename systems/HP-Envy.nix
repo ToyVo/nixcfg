@@ -9,7 +9,10 @@
     kernelModules = [ "kvm-amd" "amdgpu" ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
-  profiles.defaults.enable = true;
+  profiles = {
+    defaults.enable = true;
+    gui.enable = true;
+  };
   userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;

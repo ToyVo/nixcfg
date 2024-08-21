@@ -6,7 +6,10 @@
     initrd.availableKernelModules = [ "xhci_pci" "virtio_pci" "usbhid" "usb_storage" "sr_mod" ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
-  profiles.defaults.enable = true;
+  profiles = {
+    defaults.enable = true;
+    gui.enable = true;
+  };
   userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;

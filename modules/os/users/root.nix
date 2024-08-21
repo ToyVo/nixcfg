@@ -20,6 +20,7 @@ in
   home-manager.users.root = {
     home.username = "root";
     home.homeDirectory = rootHomeDirectory;
+    profiles.defaults.enable = true;
     programs.zsh.enableCompletion = false;
     programs.ssh = lib.mkIf config.services.remote-builds.client.enable {
       enable = lib.mkDefault true;

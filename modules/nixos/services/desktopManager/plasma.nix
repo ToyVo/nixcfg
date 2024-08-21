@@ -13,7 +13,6 @@ in
         catppuccin.enable = true;
       };
     };
-    profiles.gui.enable = true;
     environment.systemPackages = with pkgs; [
       kate
       kdePackages.sddm-kcm

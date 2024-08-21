@@ -8,8 +8,12 @@
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
     kernelModules = [ "kvm-amd" ];
   };
-  profiles.gaming.enable = true;
-  profiles.dev.enable = true;
+  profiles = {
+    defaults.enable = true;
+    dev.enable = true;
+    gaming.enable = true;
+    gui.enable = true;
+  };
   userPresets.toyvo.enable = true;
   fileSystemPresets.efi.enable = true;
   fileSystemPresets.btrfs.enable = true;

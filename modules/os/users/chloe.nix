@@ -40,8 +40,11 @@ in
     home-manager.users.${cfg.chloe.name} = lib.mkIf cfg.chloe.enable {
       home.username = cfg.chloe.name;
       home.homeDirectory = "${homePath}/${cfg.chloe.name}";
-      profiles.chloe.enable = true;
-      profiles.gui.enable = enableGui;
+      profiles = {
+        chloe.enable = true;
+        defaults.enable = true;
+        gui.enable = enableGui;
+      };
     };
   };
 }

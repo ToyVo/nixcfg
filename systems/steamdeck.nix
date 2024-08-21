@@ -14,10 +14,9 @@
       })
     ];
   };
-  programs.kde.catppuccin.link = true;
-  gtk.catppuccin.link = true;
   profiles = {
     chloe.enable = true;
+    defaults.enable = true;
     gui.enable = true;
   };
 }

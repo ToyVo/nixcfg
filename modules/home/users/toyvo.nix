@@ -3,12 +3,9 @@ let
   cfg = config.profiles;
 in
 {
-  options.profiles = {
-    toyvo.enable = lib.mkEnableOption "Enable toyvo profile";
-  };
+  options.profiles.toyvo.enable = lib.mkEnableOption "Enable toyvo profile";
 
   config = lib.mkIf cfg.toyvo.enable {
-    profiles.defaults.enable = lib.mkDefault true;
     home.sessionVariables.EDITOR = "nvim";
     programs = {
       alacritty.enable = cfg.gui.enable;

@@ -4,7 +4,7 @@
 # for a more complex example.
 keys:
   - &server_work age1hftc90y0377ekg80a6e2080fl7qtve6jqrx3wwzmtpm7fcucqu2sn7mema
-  - &server_macbook_pro age1t5qen2h9pdnlath0aykg2mp5830sxan2w32e0lke93zw8zrac5wqzh4zrq
+  - &server_macbook_pro age1yaqnllg9s44u9kw9e656jg8rcru33d3m2sc2tckv8lypzv8r9ujqmce4mf
   - &server_oracle_cloud_nixos age1m847c49r9q3hkjtq5fsan9zl67yqz6arexmpdymy58l6g58yafuqs7tnun
   - &server_ncase age1elnqflh50lwvy3pfrjqz7yc902hns8da4yfgmhvjf8uxs8f8w94s0spmr4
   - &server_router age1xqgaud2s9f6rsqa09mw9vw9upklxwzlgrhtun6n2s8zysuspqvqq8c4hrr

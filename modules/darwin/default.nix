@@ -1,6 +1,6 @@
-{ config, lib, pkgs, system, ... }: {
+{ config, lib, pkgs, ... }: {
   imports = [
-    ../common
+    ../os
     ./alias-system-apps.nix
     ./podman.nix
   ];
@@ -79,6 +79,5 @@
         targets.darwin.aliasHomeApplications = true;
       })
     ];
-    profiles.gui.enable = true;
   };
 }

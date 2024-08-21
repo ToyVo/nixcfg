@@ -3,8 +3,6 @@ let
   cfg = config.profiles;
 in
 {
-  options.gtk.catppuccin.link = lib.mkEnableOption "Link to local files";
-
   config = lib.mkIf (cfg.defaults.enable && cfg.gui.enable && pkgs.stdenv.isLinux) {
     xdg.enable = true;
     gtk = {
@@ -30,9 +28,5 @@ in
       flavor = config.catppuccin.flavor;
       accent = config.catppuccin.accent;
     };
-    home.symlinkPackages = lib.mkIf config.gtk.catppuccin.link [
-      config.gtk.iconTheme.package
-      config.home.pointerCursor.package
-    ];
   };
 }

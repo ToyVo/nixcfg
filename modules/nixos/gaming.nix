@@ -6,7 +6,6 @@ in
   options.profiles.gaming.enable = lib.mkEnableOption "Enable various gaming programs";
 
   config = lib.mkIf cfg.enable {
-    profiles.defaults.enable = lib.mkDefault true;
     programs = {
       steam = {
         enable = true;

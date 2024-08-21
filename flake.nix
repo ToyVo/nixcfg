@@ -22,7 +22,6 @@
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     # Applications
     mc_discord_bot.url = "github:toyvo/mc_discord_bot";
-    nix_home_files.url = "github:toyvo/nix_home_files";
     mkAlias.url = "github:reckenrode/mkAlias";
     nh_darwin.url = "github:toyvo/nh_darwin";
     nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
