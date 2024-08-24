@@ -19,6 +19,7 @@
     defaults.enable = true;
     dev.enable = true;
   };
+  userPresets.chloe.enable = true;
   userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;
