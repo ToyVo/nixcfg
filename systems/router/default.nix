@@ -45,7 +45,6 @@
       "sdhci_pci"
     ];
     kernelModules = [ "kvm-intel" ];
-    kernelPackages = pkgs.linuxKernel.packages.linux_hardened;
   };
   virtualisation.containers.enable = true;
   profiles.defaults.enable = true;
