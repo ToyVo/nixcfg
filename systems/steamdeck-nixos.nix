@@ -19,10 +19,9 @@
   fileSystemPresets.btrfs.enable = true;
   services = {
     openssh.enable = true;
-    desktopManager.plasma6.enable = true;
+    desktopManager.cosmic.enable = true;
     # remote-builds.client.enable = true;
-    xserver.displayManager.gdm.enable = lib.mkForce false;
-    displayManager.sddm.enable = lib.mkForce false;
+    displayManager.cosmic-greeter.enable = lib.mkForce false;
   };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
@@ -34,7 +33,7 @@
     steam.enable = true;
     steam.autoStart = true;
     steam.user = "toyvo";
-    steam.desktopSession = "plasma";
+    steam.desktopSession = "cosmic";
   };
   environment.systemPackages = with pkgs; [
     maliit-keyboard

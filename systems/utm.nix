@@ -13,5 +13,5 @@
   userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  services.desktopManager.cosmic.enable = true;
 }

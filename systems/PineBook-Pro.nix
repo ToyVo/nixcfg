@@ -10,5 +10,5 @@
   userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;
-  services.xserver.desktopManager.xfce.enable = true;
+  services.desktopManager.cosmic.enable = true;
 }
