@@ -7,12 +7,12 @@
         MACAddress = "10:27:f5:bd:04:97";
       };
     }
-    # NCase
+    # nas
     # if changing ip, change A record on cloudflare
     {
       dhcpServerStaticLeaseConfig = {
         Address = "10.1.0.3";
-        MACAddress = "70:85:c2:8a:53:5b";
+        MACAddress = "30:9c:23:ad:79:43";
       };
     }
     # Canon Printer (wifi)

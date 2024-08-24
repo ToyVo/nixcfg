@@ -6,7 +6,7 @@ keys:
   - &server_work age1hftc90y0377ekg80a6e2080fl7qtve6jqrx3wwzmtpm7fcucqu2sn7mema
   - &server_macbook_pro age1yaqnllg9s44u9kw9e656jg8rcru33d3m2sc2tckv8lypzv8r9ujqmce4mf
   - &server_oracle_cloud_nixos age1m847c49r9q3hkjtq5fsan9zl67yqz6arexmpdymy58l6g58yafuqs7tnun
-  - &server_ncase age1elnqflh50lwvy3pfrjqz7yc902hns8da4yfgmhvjf8uxs8f8w94s0spmr4
+  - &server_nas age1elnqflh50lwvy3pfrjqz7yc902hns8da4yfgmhvjf8uxs8f8w94s0spmr4
   - &server_router age1xqgaud2s9f6rsqa09mw9vw9upklxwzlgrhtun6n2s8zysuspqvqq8c4hrr
   - &server_thinkpad age1gcn0aykdd0e9gs3v6wx39wy84ann38vgvfwtan5e9z4qt4zevgtqygp0la
   - &admin_toyvo fcab5705add00d89bbf2e66cfab3032cc9513440
@@ -17,7 +17,7 @@ creation_rules:
       - *server_work
       - *server_macbook_pro
       - *server_oracle_cloud_nixos
-      - *server_ncase
+      - *server_nas
       - *server_router
       - *server_thinkpad
       pgp:

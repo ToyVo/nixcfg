@@ -102,7 +102,7 @@ in
     HP-Envy = nixosSystem { system = "x86_64-linux"; nixosModules = [ ./HP-Envy.nix ]; };
     HP-ZBook = nixosSystem { system = "x86_64-linux"; nixosModules = [ ./HP-ZBook.nix ]; };
     MacBook-Pro-Nixos = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./MacBook-Pro-Nixos apple-silicon-support.nixosModules.apple-silicon-support ]; };
-    ncase = nixosSystem { system = "x86_64-linux"; nixosModules = [ ./ncase ]; };
+    nas = nixosSystem { system = "x86_64-linux"; nixosModules = [ ./nas ]; };
     PineBook-Pro = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./PineBook-Pro.nix nixos-hardware.nixosModules.pine64-pinebook-pro ]; };
     Protectli = nixosSystem { system = "x86_64-linux"; nixosModules = [ ./Protectli.nix ]; };
     router = nixosSystem { system = "x86_64-linux"; nixosModules = [ ./router ]; };

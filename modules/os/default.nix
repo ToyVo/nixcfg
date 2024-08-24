@@ -16,6 +16,7 @@ in
         nix.package = lib.mkForce config.nix.package;
       }];
     };
+    nixpkgs.config.allowUnfree = true;
     nix = {
       package = pkgs.nixVersions.nix_2_22;
       settings = {

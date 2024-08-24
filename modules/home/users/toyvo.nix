@@ -55,7 +55,7 @@ in
             user = "toyvo";
             hostname = "10.1.0.1";
           };
-          matchBlocks."ncase" = identityConfig // {
+          matchBlocks."nas" = identityConfig // {
             user = "toyvo";
             hostname = "10.1.0.3";
           };

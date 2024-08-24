@@ -1,20 +1,9 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, ... }: {
   imports = [ ./samba.nix ];
 
-  hardware = {
-    cpu.amd.updateMicrocode = true;
-    bluetooth.enable = true;
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
-    nvidia = {
-      modesetting.enable = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
-    };
-  };
+  hardware.cpu.amd.updateMicrocode = true;
   networking = {
-    hostName = "ncase";
+    hostName = "nas";
     firewall.allowedTCPPorts = [ 80 ];
   };
   boot = {
@@ -29,24 +18,15 @@
   profiles = {
     defaults.enable = true;
     dev.enable = true;
-    gaming.enable = true;
-    gui.enable = true;
   };
   userPresets.toyvo.enable = true;
-  userPresets.chloe.enable = true;
-  fileSystemPresets.efi.enable = true;
+  fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;
   services = {
     openssh = {
       enable = true;
       settings.PasswordAuthentication = false;
     };
-    xserver = {
-      desktopManager.gnome.enable = true;
-      videoDrivers = [ "nvidia" ];
-    };
-    desktopManager.cosmic.enable = true;
-    displayManager.cosmic-greeter.enable = lib.mkForce false;
     remote-builds.server.enable = true;
     ollama.enable = true;
     spice-vdagentd.enable = true;
@@ -58,7 +38,6 @@
     };
   };
   sops.secrets = {
-    forge_api_key = { };
     nextcloud_admin_password = {
       owner = "nextcloud";
     };
@@ -79,12 +58,12 @@
   };
   users.users = {
     toyvo.extraGroups = [ "libvirtd" ];
-    share = {
+    nas = {
       isSystemUser = true;
-      group = "share";
+      group = "nas";
     };
   };
-  users.groups.share = { };
+  users.groups.nas = { };
   programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [
     bottles
@@ -98,10 +77,6 @@
     libosinfo
     win-spice
     distrobox
-    mpv
-    kdenlive
-    glaxnimate
-    google-chrome
   ];
   virtualisation = {
     libvirtd = {

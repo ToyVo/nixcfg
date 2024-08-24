@@ -8,7 +8,7 @@
       enable = true;
       openFirewall = true;
       extraConfig = ''
-        netbios name = ncasesmb
+        netbios name = nas
         security = user
         server role = standalone server
         hosts allow = 10.1.0.0/24 127.0.0.1 localhost
