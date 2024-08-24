@@ -59,12 +59,7 @@
   };
   users.users = {
     toyvo.extraGroups = [ "libvirtd" ];
-    nas = {
-      isSystemUser = true;
-      group = "nas";
-    };
   };
-  users.groups.nas = { };
   programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [
     bottles
