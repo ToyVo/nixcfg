@@ -20,6 +20,7 @@ in
           core.editor = "nvim";
           core.eol = "lf";
           core.autocrlf = "input";
+          gpg.format = "ssh";
           init.defaultBranch = "main";
           url."git@github.com:".pushInsteadOf = "https://github.com/";
         };

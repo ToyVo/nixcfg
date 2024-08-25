@@ -1,12 +1,15 @@
-{  ... }: {
+{ pkgs, config, lib, ... }: {
   imports = [ ./alias-home-apps.nix ./users ./programs ];
 
   config = {
-      sops = {
-        defaultSopsFile = ../../secrets/secrets.yaml;
-        age = {
-          sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-        };
+    sops = {
+      defaultSopsFile = ../../secrets/secrets.yaml;
+      age = {
+        sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       };
     };
+    home.packages = lib.optionals (config.launchd.agents ? sops-nix) [
+      (pkgs.writeShellScriptBin "sops-nix-user" "${config.launchd.agents.sops-nix.config.Program}")
+    ];
+  };
 }

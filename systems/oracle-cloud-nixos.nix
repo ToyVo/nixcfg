@@ -77,12 +77,7 @@
   sops.secrets = {
     cloudflare_global_api_key = { };
     cloudflare_w_dns_r_zone_token = { };
-    discord_client_id = { };
-    discord_client_secret = { };
-    discord_public_key = { };
-    discord_bot_token = { };
     "discord_bot.env" = { };
-    forge_api_key = { };
   };
   users.users.caddy.extraGroups = [ "acme" ];
   userPresets.toyvo.enable = true;
