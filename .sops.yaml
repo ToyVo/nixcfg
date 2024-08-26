@@ -11,7 +11,7 @@ keys:
   - &server_thinkpad age1cxc0z4q8mtsn7xzleaty2qazhe5zwdnkqe0uv6yeftmlea9j9clqefy4a3
   - &admin_toyvo fcab5705add00d89bbf2e66cfab3032cc9513440
 creation_rules:
-  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini|nix)$
     key_groups:
     - age:
       - *server_work

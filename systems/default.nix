@@ -30,7 +30,8 @@ let
   nixosSystem = { system, nixosModules ? [ ], homeManagerModules ? [ ] }:
     let
       pkgs = self.lib.import_nixpkgs { inherit system; };
-      specialArgs = inputs // { inherit system; };
+      pkgsStable = self.lib.import_nixpkgs { inherit system; nixpkgs=inputs.nixos; };
+      specialArgs = inputs // { inherit system pkgsStable; };
     in
     lib.nixosSystem {
       inherit system pkgs;
@@ -58,7 +59,8 @@ let
   darwinSystem = { system, darwinModules ? [ ], homeManagerModules ? [ ] }:
     let
       pkgs = self.lib.import_nixpkgs { inherit system; };
-      specialArgs = inputs // { inherit system; };
+      pkgsStable = self.lib.import_nixpkgs { inherit system; nixpkgs=inputs.nixos; };
+      specialArgs = inputs // { inherit system pkgsStable; };
     in
     nix-darwin.lib.darwinSystem {
       inherit pkgs;
@@ -80,7 +82,8 @@ let
   homeConfiguration = { system, homeManagerModules ? [ ] }:
     let
       pkgs = self.lib.import_nixpkgs { inherit system; };
-      specialArgs = inputs // { inherit system; };
+      pkgsStable = self.lib.import_nixpkgs { inherit system; nixpkgs=inputs.nixos; };
+      specialArgs = inputs // { inherit system pkgsStable; };
     in
     home-manager.lib.homeManagerConfiguration {
       inherit pkgs;

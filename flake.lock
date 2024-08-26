@@ -172,7 +172,7 @@
       "inputs": {
         "cachix": "cachix",
         "crate2nix_stable": "crate2nix_stable",
-        "devshell": "devshell",
+        "devshell": "devshell_2",
         "flake-compat": "flake-compat_2",
         "flake-parts": "flake-parts_2",
         "nix-test-runner": "nix-test-runner",
@@ -197,7 +197,7 @@
       "inputs": {
         "cachix": "cachix_2",
         "crate2nix_stable": "crate2nix_stable_2",
-        "devshell": "devshell_5",
+        "devshell": "devshell_6",
         "flake-compat": "flake-compat_5",
         "flake-parts": "flake-parts_6",
         "nix-test-runner": "nix-test-runner_4",
@@ -241,7 +241,7 @@
       "inputs": {
         "cachix": "cachix_3",
         "crate2nix_stable": "crate2nix_stable_3",
-        "devshell": "devshell_4",
+        "devshell": "devshell_5",
         "flake-compat": "flake-compat_4",
         "flake-parts": "flake-parts_5",
         "nix-test-runner": "nix-test-runner_3",
@@ -267,7 +267,7 @@
       "inputs": {
         "cachix": "cachix_4",
         "crate2nix_stable": "crate2nix_stable_4",
-        "devshell": "devshell_3",
+        "devshell": "devshell_4",
         "flake-compat": "flake-compat_3",
         "flake-parts": "flake-parts_4",
         "nix-test-runner": "nix-test-runner_2",
@@ -310,6 +310,26 @@
     },
     "devshell": {
       "inputs": {
+        "nixpkgs": [
+          "nixos-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1722113426,
+        "narHash": "sha256-Yo/3loq572A8Su6aY5GP56knpuKYRvM2a1meP9oJZCw=",
+        "owner": "numtide",
+        "repo": "devshell",
+        "rev": "67cce7359e4cd3c45296fb4aaf6a19e2a9c757ae",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "devshell",
+        "type": "github"
+      }
+    },
+    "devshell_2": {
+      "inputs": {
         "flake-utils": "flake-utils_2",
         "nixpkgs": [
           "mc_discord_bot",
@@ -331,7 +351,7 @@
         "type": "github"
       }
     },
-    "devshell_2": {
+    "devshell_3": {
       "inputs": {
         "flake-utils": "flake-utils_4",
         "nixpkgs": [
@@ -353,7 +373,7 @@
         "type": "github"
       }
     },
-    "devshell_3": {
+    "devshell_4": {
       "inputs": {
         "flake-utils": "flake-utils_6",
         "nixpkgs": [
@@ -378,7 +398,7 @@
         "type": "github"
       }
     },
-    "devshell_4": {
+    "devshell_5": {
       "inputs": {
         "flake-utils": "flake-utils_7",
         "nixpkgs": [
@@ -402,7 +422,7 @@
         "type": "github"
       }
     },
-    "devshell_5": {
+    "devshell_6": {
       "inputs": {
         "flake-utils": "flake-utils_8",
         "nixpkgs": [
@@ -425,7 +445,7 @@
         "type": "github"
       }
     },
-    "devshell_6": {
+    "devshell_7": {
       "inputs": {
         "nixpkgs": [
           "nh_darwin",
@@ -446,7 +466,7 @@
         "type": "github"
       }
     },
-    "devshell_7": {
+    "devshell_8": {
       "inputs": {
         "nixpkgs": [
           "nixvim",
@@ -1211,7 +1231,7 @@
     "mc_discord_bot": {
       "inputs": {
         "crate2nix": "crate2nix",
-        "devshell": "devshell_2",
+        "devshell": "devshell_3",
         "flake-parts": "flake-parts_3",
         "nixpkgs": "nixpkgs_5",
         "rust-overlay": "rust-overlay_2"
@@ -1251,7 +1271,7 @@
     "nh_darwin": {
       "inputs": {
         "crate2nix": "crate2nix_2",
-        "devshell": "devshell_6",
+        "devshell": "devshell_7",
         "flake-parts": "flake-parts_7",
         "nixpkgs": "nixpkgs_14"
       },
@@ -1882,7 +1902,7 @@
     },
     "nixvim": {
       "inputs": {
-        "devshell": "devshell_7",
+        "devshell": "devshell_8",
         "flake-compat": "flake-compat_7",
         "flake-parts": "flake-parts_9",
         "git-hooks": "git-hooks",
@@ -2109,6 +2129,7 @@
       "inputs": {
         "apple-silicon-support": "apple-silicon-support",
         "catppuccin": "catppuccin",
+        "devshell": "devshell",
         "disko": "disko",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
