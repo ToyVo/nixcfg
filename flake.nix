@@ -50,7 +50,10 @@
       import_nixpkgs = { system, nixpkgs ? nixos-unstable }: import nixpkgs {
         inherit system;
         overlays = [ (import rust-overlay) nixpkgs-esp-dev.overlays.default ];
-        config.allowUnfree = true;
+        config = {
+          allowUnfree = true;
+          allowBroken = true;
+        };
       };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {

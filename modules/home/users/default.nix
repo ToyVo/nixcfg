@@ -60,7 +60,10 @@ in
         experimental-features = nix-command flakes
       '';
       "nixpkgs/config.nix".text = ''
-        { allowUnfree = true; }
+        {
+          allowUnfree = true;
+          allowBroken = true;
+        }
       '';
     };
     programs = {
