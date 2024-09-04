@@ -23,6 +23,7 @@ in
         config.audible_bell = "Disabled";
         config.enable_kitty_keyboard = true;
         config.default_prog = { '${pkgs.fish}/bin/fish' };
+        config.front_end = "WebGpu";
         return config;
       '';
     };
