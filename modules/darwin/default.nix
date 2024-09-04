@@ -59,7 +59,7 @@
         { name = "proton-drive"; greedy = true; }
         # Nix package exists but unavailable on darwin
         { name = "bruno"; greedy = true; }
-        { name = "floorp"; greedy = true; }
+        { name = "firefox@developer-edition"; greedy = true; }
         { name = "jetbrains-toolbox"; greedy = true; }
         { name = "logseq"; greedy = true; }
         { name = "onlyoffice"; greedy = true; }

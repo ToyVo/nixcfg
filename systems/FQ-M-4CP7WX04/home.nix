@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, ... }:
 {
   imports = [ ../../secrets/secrets.nix ];
 
@@ -6,6 +6,8 @@
     sops.secrets = {
       ykW_ed25519_sk.mode = "0600";
       "ykW_ed25519_sk.pub".mode = "0644";
+      git_work_sign_ed25519.mode = "0600";
+      "git_work_sign_ed25519.pub".mode = "0644";
       github_work_auth_ed25519.mode = "0600";
       "github_work_auth_ed25519.pub".mode = "0644";
     };
