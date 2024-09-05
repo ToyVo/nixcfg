@@ -37,6 +37,7 @@
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    nixos-wsl.url = "github:nix-community/nixos-wsl";
     nur.url = "github:nix-community/nur";
     devshell = {
       url = "github:numtide/devshell";

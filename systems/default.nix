@@ -15,6 +15,7 @@
 , self
 , sops-nix
 , nur
+, nixos-wsl
 , ...
 }@inputs:
 let
@@ -30,7 +31,7 @@ let
   nixosSystem = { system, nixosModules ? [ ], homeManagerModules ? [ ] }:
     let
       pkgs = self.lib.import_nixpkgs { inherit system; };
-      pkgsStable = self.lib.import_nixpkgs { inherit system; nixpkgs=inputs.nixos; };
+      pkgsStable = self.lib.import_nixpkgs { inherit system; nixpkgs = inputs.nixos; };
       specialArgs = inputs // { inherit system pkgsStable; };
     in
     lib.nixosSystem {
@@ -59,7 +60,7 @@ let
   darwinSystem = { system, darwinModules ? [ ], homeManagerModules ? [ ] }:
     let
       pkgs = self.lib.import_nixpkgs { inherit system; };
-      pkgsStable = self.lib.import_nixpkgs { inherit system; nixpkgs=inputs.nixos; };
+      pkgsStable = self.lib.import_nixpkgs { inherit system; nixpkgs = inputs.nixos; };
       specialArgs = inputs // { inherit system pkgsStable; };
     in
     nix-darwin.lib.darwinSystem {
@@ -82,7 +83,7 @@ let
   homeConfiguration = { system, homeManagerModules ? [ ] }:
     let
       pkgs = self.lib.import_nixpkgs { inherit system; };
-      pkgsStable = self.lib.import_nixpkgs { inherit system; nixpkgs=inputs.nixos; };
+      pkgsStable = self.lib.import_nixpkgs { inherit system; nixpkgs = inputs.nixos; };
       specialArgs = inputs // { inherit system pkgsStable; };
     in
     home-manager.lib.homeManagerConfiguration {
@@ -117,5 +118,6 @@ in
     Thinkpad = nixosSystem { system = "x86_64-linux"; nixosModules = [ ./Thinkpad.nix ]; };
     utm = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./utm.nix "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ]; };
     oracle-cloud-nixos = nixosSystem { system = "aarch64-linux"; nixosModules = [ ./oracle-cloud-nixos.nix "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix" ]; };
+    wsl = nixosSystem { system = "x86_64-linux"; nixosModules = [ ./wsl.nix nixos-wsl.nixosModules.wsl ]; };
   };
 }
