@@ -39,6 +39,7 @@ in
           identityConfig = {
             identitiesOnly = true;
             identityFile = [
+              config.sops.secrets.nixremote_ed25519.path
               config.sops.secrets.ykC_ed25519_sk.path
               config.sops.secrets.ykA_ed25519_sk.path
             ];
@@ -85,6 +86,8 @@ in
       git_toyvo_sign_ed25519.mode = "0600";
       "github_toyvo_auth_ed25519.pub".mode = "0644";
       github_toyvo_auth_ed25519.mode = "0600";
+      "nixremote_ed25519.pub".mode = "0644";
+      nixremote_ed25519.mode = "0600";
       "ykA_ed25519_sk.pub".mode = "0644";
       ykA_ed25519_sk.mode = "0600";
       "ykC_ed25519_sk.pub".mode = "0644";

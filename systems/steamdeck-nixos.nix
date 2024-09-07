@@ -22,6 +22,7 @@
     desktopManager.cosmic.enable = true;
     # remote-builds.client.enable = true;
     displayManager.cosmic-greeter.enable = lib.mkForce false;
+    kanata.enable = lib.mkForce false;
   };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";

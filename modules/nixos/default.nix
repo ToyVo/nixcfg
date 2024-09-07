@@ -73,6 +73,7 @@ in
         alsa.support32Bit = true;
         pulse.enable = true;
       };
+      flatpak.enable = true;
       fwupd.enable = true;
       kanata = {
         enable = true;
