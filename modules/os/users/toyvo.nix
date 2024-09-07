@@ -27,7 +27,7 @@ in
           home = "${homePath}/${cfg.toyvo.name}";
           shell = pkgs.fish;
           openssh.authorizedKeys.keyFiles = [
-            ../../../secrets/nixremote_ed25519_sk.pub
+            ../../../secrets/nixremote_ed25519.pub
             ../../../secrets/ykC_ed25519_sk.pub
             ../../../secrets/ykA_ed25519_sk.pub
           ];
