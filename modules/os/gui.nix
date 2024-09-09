@@ -23,7 +23,7 @@ in
       ]
       ++ lib.optionals stdenv.isLinux [
         element-desktop
-        floorp
+        firefox-devedition-bin
         yubikey-manager-qt
         yubioath-flutter
       ]
