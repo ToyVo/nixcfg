@@ -26,10 +26,12 @@ in
       };
       gpg = {
         enable = true;
-        publicKeys = [{
-          source = ../../../secrets/gpg_yubikey.pub;
-          trust = 5;
-        }];
+        publicKeys = [
+          {
+            source = ../../../secrets/gpg_yubikey.pub;
+            trust = 5;
+          }
+        ];
       };
       helix.enable = true;
       hyper.enable = cfg.gui.enable;

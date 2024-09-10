@@ -1,9 +1,11 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  rootHomeDirectory =
-    if pkgs.stdenv.isDarwin then
-      "/var/root" else
-      "/root";
+  rootHomeDirectory = if pkgs.stdenv.isDarwin then "/var/root" else "/root";
 in
 {
   users.users.root = lib.mkMerge [

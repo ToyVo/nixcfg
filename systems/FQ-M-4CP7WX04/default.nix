@@ -38,10 +38,22 @@ in
       "mongosh"
     ];
     casks = [
-      { name = "keybase"; greedy = true; }
-      { name = "mongodb-compass"; greedy = true; }
-      { name = "prusaslicer"; greedy = true; }
-      { name = "slack"; greedy = true; }
+      {
+        name = "keybase";
+        greedy = true;
+      }
+      {
+        name = "mongodb-compass";
+        greedy = true;
+      }
+      {
+        name = "prusaslicer";
+        greedy = true;
+      }
+      {
+        name = "slack";
+        greedy = true;
+      }
     ];
     taps = [
       "mongodb/brew"

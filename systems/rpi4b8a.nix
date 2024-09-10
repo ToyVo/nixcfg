@@ -1,4 +1,5 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }:
+{
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
   networking = {
     hostName = "rpi4b8a";
@@ -9,7 +10,11 @@
     loader.generic-extlinux-compatible = {
       enable = true;
     };
-    initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "usbhid"
+      "usb_storage"
+    ];
   };
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;

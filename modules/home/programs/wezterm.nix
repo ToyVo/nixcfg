@@ -1,8 +1,16 @@
-{ config, lib, pkgs, system, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  system,
+  ...
+}:
 let
   cfg = config.programs.wezterm;
   flavor = config.catppuccin.flavor;
-  upperFlavor = with builtins; (lib.toUpper (substring 0 1 flavor)) + (substring 1 (stringLength flavor) flavor);
+  upperFlavor =
+    with builtins;
+    (lib.toUpper (substring 0 1 flavor)) + (substring 1 (stringLength flavor) flavor);
 in
 {
   config = lib.mkIf cfg.enable {

@@ -1,4 +1,12 @@
-{ config, home-manager, lib, mkAlias, pkgs, system, ... }:
+{
+  config,
+  home-manager,
+  lib,
+  mkAlias,
+  pkgs,
+  system,
+  ...
+}:
 let
   cfg = config.targets.darwin;
   mkalias = mkAlias.outputs.apps.${system}.default.program;

@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   services.caddy.virtualHosts = {
     "https://adguard.diekvoss.net:443" = {
       useACMEHost = "diekvoss.net";

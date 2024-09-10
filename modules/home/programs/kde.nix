@@ -1,11 +1,18 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.programs.kde.catppuccin;
-  catppuccin-kde = (pkgs.catppuccin-kde.override {
-    flavour = [ config.catppuccin.flavor ];
-    accents = [ config.catppuccin.accent ];
-    winDecStyles = [ "classic" ];
-  });
+  catppuccin-kde = (
+    pkgs.catppuccin-kde.override {
+      flavour = [ config.catppuccin.flavor ];
+      accents = [ config.catppuccin.accent ];
+      winDecStyles = [ "classic" ];
+    }
+  );
 in
 {
   options.programs.kde.catppuccin = {

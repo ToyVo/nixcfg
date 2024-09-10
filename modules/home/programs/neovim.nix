@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.programs.nvim;
 in
@@ -8,7 +13,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       nil
-      nixpkgs-fmt
+      nixfmt-rfc-style
     ];
     programs.nixvim = {
       enable = true;
@@ -347,18 +352,28 @@ in
         };
         conform-nvim = {
           enable = true;
-          notifyOnError = false;
-          formattersByFt = {
-            lua = [ "stylua" ];
-            # Conform will run multiple formatters sequentially
-            python = [ "isort" "black" ];
-            # Use a sub-list to run only the first available formatter
-            javascript = [ [ "prettierd" "prettier" ] ];
-            # Use the "*" filetype to run formatters on all filetypes.
-            "*" = [ "codespell" ];
-            # Use the "_" filetype to run formatters on filetypes that don't
-            # have other formatters configured.
-            "_" = [ "trim_whitespace" ];
+          settings = {
+            notify_on_error = false;
+            formatters_by_ft = {
+              lua = [ "stylua" ];
+              # Conform will run multiple formatters sequentially
+              python = [
+                "isort"
+                "black"
+              ];
+              # Use a sub-list to run only the first available formatter
+              javascript = [
+                [
+                  "prettierd"
+                  "prettier"
+                ]
+              ];
+              # Use the "*" filetype to run formatters on all filetypes.
+              "*" = [ "codespell" ];
+              # Use the "_" filetype to run formatters on filetypes that don't
+              # have other formatters configured.
+              "_" = [ "trim_whitespace" ];
+            };
           };
         };
         lsp = {
@@ -477,7 +492,11 @@ in
           lintersByFt = {
             markdown = [ "markdownlint" ];
           };
-          autoCmd.event = [ "BufEnter" "BufWritePost" "InsertLeave" ];
+          autoCmd.event = [
+            "BufEnter"
+            "BufWritePost"
+            "InsertLeave"
+          ];
         };
         sleuth.enable = true;
       };

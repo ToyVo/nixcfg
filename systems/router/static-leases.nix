@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   systemd.network.networks."20-lan".dhcpServerStaticLeases = [
     # Omada Controller
     {

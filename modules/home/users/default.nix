@@ -1,4 +1,10 @@
-{ config, lib, pkgs, system, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  system,
+  ...
+}:
 let
   cfg = config.profiles;
 in
@@ -19,41 +25,46 @@ in
         nh = "nh_darwin";
       };
       stateVersion = "24.11";
-      sessionPath = lib.optionals config.programs.volta.enable [
-        "${config.programs.volta.voltaHome}/bin"
-      ] ++ [
-        "${config.home.homeDirectory}/.cargo/bin"
-        "${config.home.homeDirectory}/.local/bin"
-        "${config.home.homeDirectory}/.bin"
-        "${config.home.homeDirectory}/bin"
-        "/run/wrappers/bin"
-        "${config.home.homeDirectory}/.nix-profile/bin"
-        "/nix/profile/bin"
-        "${config.home.homeDirectory}/.local/state/nix/profile/bin"
-        "/etc/profiles/per-user/${config.home.username}/bin"
-        "/run/current-system/sw/bin"
-        "/nix/var/nix/profiles/default/bin"
-      ] ++ lib.optionals (system == "aarch64-darwin") [
-        "/opt/homebrew/bin"
-        "/opt/homebrew/sbin"
-      ] ++ lib.optionals pkgs.stdenv.isDarwin [
-        "/System/Cryptexes/App/usr/bin"
-      ] ++
-      [
-        "/usr/local/bin"
-        "/usr/local/sbin"
-        "/usr/bin"
-        "/usr/sbin"
-        "/bin"
-        "/sbin"
-        "/usr/local/games"
-        "/usr/games"
-      ] ++ lib.optionals pkgs.stdenv.isDarwin [
-        "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
-        "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
-        "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
-        "/Library/Apple/usr/bin"
-      ];
+      sessionPath =
+        lib.optionals config.programs.volta.enable [
+          "${config.programs.volta.voltaHome}/bin"
+        ]
+        ++ [
+          "${config.home.homeDirectory}/.cargo/bin"
+          "${config.home.homeDirectory}/.local/bin"
+          "${config.home.homeDirectory}/.bin"
+          "${config.home.homeDirectory}/bin"
+          "/run/wrappers/bin"
+          "${config.home.homeDirectory}/.nix-profile/bin"
+          "/nix/profile/bin"
+          "${config.home.homeDirectory}/.local/state/nix/profile/bin"
+          "/etc/profiles/per-user/${config.home.username}/bin"
+          "/run/current-system/sw/bin"
+          "/nix/var/nix/profiles/default/bin"
+        ]
+        ++ lib.optionals (system == "aarch64-darwin") [
+          "/opt/homebrew/bin"
+          "/opt/homebrew/sbin"
+        ]
+        ++ lib.optionals pkgs.stdenv.isDarwin [
+          "/System/Cryptexes/App/usr/bin"
+        ]
+        ++ [
+          "/usr/local/bin"
+          "/usr/local/sbin"
+          "/usr/bin"
+          "/usr/sbin"
+          "/bin"
+          "/sbin"
+          "/usr/local/games"
+          "/usr/games"
+        ]
+        ++ lib.optionals pkgs.stdenv.isDarwin [
+          "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+          "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+          "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+          "/Library/Apple/usr/bin"
+        ];
     };
     xdg.configFile = {
       "nix/nix.conf".text = ''

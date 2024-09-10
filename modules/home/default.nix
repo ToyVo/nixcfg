@@ -1,5 +1,15 @@
-{ pkgs, config, lib, ... }: {
-  imports = [ ./alias-home-apps.nix ./users ./programs ];
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+{
+  imports = [
+    ./alias-home-apps.nix
+    ./users
+    ./programs
+  ];
 
   config = {
     sops = {

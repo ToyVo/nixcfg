@@ -19,10 +19,12 @@
           identityFile = config.sops.secrets.github_work_auth_ed25519.path;
         };
       };
-      gpg.publicKeys = [{
-        source = ../../secrets/gpg_work.pub;
-        trust = 5;
-      }];
+      gpg.publicKeys = [
+        {
+          source = ../../secrets/gpg_work.pub;
+          trust = 5;
+        }
+      ];
       volta = {
         enable = true;
         package = pkgs.emptyDirectory;

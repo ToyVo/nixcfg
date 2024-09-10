@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   profiles = {
     defaults.enable = true;
     dev.enable = true;

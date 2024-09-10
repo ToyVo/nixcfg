@@ -1,12 +1,21 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   hardware.cpu.amd.updateMicrocode = true;
   networking.hostName = "Thinkpad";
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    initrd.availableKernelModules =
-      [ "nvme" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-    kernelModules = [ "kvm-amd" "amdgpu" ];
+    initrd.availableKernelModules = [
+      "nvme"
+      "xhci_pci"
+      "usb_storage"
+      "sd_mod"
+      "rtsx_pci_sdmmc"
+    ];
+    kernelModules = [
+      "kvm-amd"
+      "amdgpu"
+    ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
   profiles = {

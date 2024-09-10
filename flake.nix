@@ -45,21 +45,39 @@
     };
   };
 
-  outputs = inputs@{ flake-parts, rust-overlay, nixpkgs-esp-dev, nixos-unstable, devshell, ... }:
+  outputs =
+    inputs@{
+      flake-parts,
+      rust-overlay,
+      nixpkgs-esp-dev,
+      nixos-unstable,
+      devshell,
+      ...
+    }:
     let
       configurations = import ./systems inputs;
-      import_nixpkgs = { system, nixpkgs ? nixos-unstable }: import nixpkgs {
-        inherit system;
-        overlays = [ (import rust-overlay) nixpkgs-esp-dev.overlays.default ];
-        config = {
-          allowUnfree = true;
-          allowBroken = true;
+      import_nixpkgs =
+        {
+          system,
+          nixpkgs ? nixos-unstable,
+        }:
+        import nixpkgs {
+          inherit system;
+          overlays = [
+            (import rust-overlay)
+            nixpkgs-esp-dev.overlays.default
+          ];
+          config = {
+            allowUnfree = true;
+            allowBroken = true;
+          };
         };
-      };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       flake = {
-        lib = { inherit import_nixpkgs; };
+        lib = {
+          inherit import_nixpkgs;
+        };
         nixosModules.default = ./modules/nixos;
         darwinModules.default = ./modules/darwin;
         homeManagerModules.default = ./modules/home;
@@ -77,53 +95,71 @@
         devshell.flakeModule
         flake-parts.flakeModules.easyOverlay
       ];
-      perSystem = { config, pkgs, system, self', ... }: {
-        _module.args = {
-          pkgs = import_nixpkgs {
-            inherit system;
+      perSystem =
+        {
+          config,
+          pkgs,
+          system,
+          self',
+          ...
+        }:
+        {
+          _module.args = {
+            pkgs = import_nixpkgs {
+              inherit system;
+            };
+            pkgsStable = import_nixpkgs {
+              inherit system;
+              nixpkg = inputs.nixos;
+            };
           };
-          pkgsStable = import_nixpkgs {
-            inherit system;
-            nixpkg = inputs.nixos;
+
+          formatter = pkgs.nixfmt-rfc-style;
+
+          packages = {
+            sops-unlock = pkgs.writeShellScriptBin "sops-unlock" ''
+              git config diff.sops-decrypt.textconv "sops decrypt"
+              git config filter.sops-binary.smudge "sops decrypt --input-type binary --output-type binary --filename-override %f /dev/stdin"
+              git config filter.sops-binary.clean "sops encrypt --input-type binary --output-type binary --filename-override %f /dev/stdin"
+              git config filter.sops-binary.required "true"
+              git config filter.sops-env.smudge "sops decrypt --input-type env --output-type env --filename-override %f /dev/stdin"
+              git config filter.sops-env.clean "sops encrypt --input-type env --output-type env --filename-override %f /dev/stdin"
+              git config filter.sops-env.required "true"
+              git config filter.sops-ini.smudge "sops decrypt --input-type ini --output-type ini --filename-override %f /dev/stdin"
+              git config filter.sops-ini.clean "sops encrypt --input-type ini --output-type ini --filename-override %f /dev/stdin"
+              git config filter.sops-ini.required "true"
+              git config filter.sops-json.smudge "sops decrypt --input-type json --output-type json --filename-override %f /dev/stdin"
+              git config filter.sops-json.clean "sops encrypt --input-type json --output-type json --filename-override %f /dev/stdin"
+              git config filter.sops-json.required "true"
+              git config filter.sops-yaml.smudge "sops decrypt --input-type yaml --output-type yaml --filename-override %f /dev/stdin"
+              git config filter.sops-yaml.clean "sops encrypt --input-type yaml --output-type yaml --filename-override %f /dev/stdin"
+              git config filter.sops-yaml.required "true"
+              git checkout secrets/secrets.nix
+            '';
+            sops-ssh-to-age = pkgs.writeShellScriptBin "sops-ssh-to-age" ''
+              private_key="$(${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key)"
+              public_key="$(${pkgs.ssh-to-age}/bin/ssh-to-age -i /etc/ssh/ssh_host_ed25519_key.pub)"
+              destination="$HOME/${
+                if pkgs.stdenv.isDarwin then "Library/Application Support" else ".config"
+              }/sops/age/keys.txt"
+              echo "# created: $(date -I seconds)" > "$destination"
+              echo "# public key: $public_key" >> "$destination"
+              echo "$private_key" >> "$destination"
+              echo "$public_key"
+            '';
           };
-        };
 
-        packages = {
-          sops-unlock = pkgs.writeShellScriptBin "sops-unlock" ''
-            git config diff.sops-decrypt.textconv "sops decrypt"
-            git config filter.sops-binary.smudge "sops decrypt --input-type binary --output-type binary --filename-override %f /dev/stdin"
-            git config filter.sops-binary.clean "sops encrypt --input-type binary --output-type binary --filename-override %f /dev/stdin"
-            git config filter.sops-binary.required "true"
-            git config filter.sops-env.smudge "sops decrypt --input-type env --output-type env --filename-override %f /dev/stdin"
-            git config filter.sops-env.clean "sops encrypt --input-type env --output-type env --filename-override %f /dev/stdin"
-            git config filter.sops-env.required "true"
-            git config filter.sops-ini.smudge "sops decrypt --input-type ini --output-type ini --filename-override %f /dev/stdin"
-            git config filter.sops-ini.clean "sops encrypt --input-type ini --output-type ini --filename-override %f /dev/stdin"
-            git config filter.sops-ini.required "true"
-            git config filter.sops-json.smudge "sops decrypt --input-type json --output-type json --filename-override %f /dev/stdin"
-            git config filter.sops-json.clean "sops encrypt --input-type json --output-type json --filename-override %f /dev/stdin"
-            git config filter.sops-json.required "true"
-            git config filter.sops-yaml.smudge "sops decrypt --input-type yaml --output-type yaml --filename-override %f /dev/stdin"
-            git config filter.sops-yaml.clean "sops encrypt --input-type yaml --output-type yaml --filename-override %f /dev/stdin"
-            git config filter.sops-yaml.required "true"
-            git checkout secrets/secrets.nix
-          '';
-          sops-ssh-to-age = pkgs.writeShellScriptBin "sops-ssh-to-age" ''
-            private_key="$(${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key)"
-            public_key="$(${pkgs.ssh-to-age}/bin/ssh-to-age -i /etc/ssh/ssh_host_ed25519_key.pub)"
-            destination="$HOME/${if pkgs.stdenv.isDarwin then "Library/Application Support" else ".config"}/sops/age/keys.txt"
-            echo "# created: $(date -I seconds)" > "$destination"
-            echo "# public key: $public_key" >> "$destination"
-            echo "$private_key" >> "$destination"
-            echo "$public_key"
-          '';
+          devshells.default.commands = [
+            {
+              package = self'.packages.sops-unlock;
+              category = "git";
+            }
+            {
+              package = self'.packages.sops-ssh-to-age;
+              category = "sops";
+            }
+          ];
         };
-
-        devshells.default.commands = [
-          { package = self'.packages.sops-unlock; category = "git"; }
-          { package = self'.packages.sops-ssh-to-age; category = "sops"; }
-        ];
-      };
     };
 
   nixConfig = {

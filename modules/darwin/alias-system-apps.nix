@@ -1,4 +1,11 @@
-{ config, lib, mkAlias, pkgs, system, ... }:
+{
+  config,
+  lib,
+  mkAlias,
+  pkgs,
+  system,
+  ...
+}:
 let
   cfg = config.system.defaults.finder;
   mkalias = mkAlias.outputs.apps.${system}.default.program;

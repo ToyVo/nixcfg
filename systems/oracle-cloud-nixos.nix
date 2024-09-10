@@ -1,13 +1,23 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+{
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    initrd.availableKernelModules = [ "xhci_pci" "virtio_scsi" ];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "virtio_scsi"
+    ];
     binfmt.emulatedSystems = [ "x86_64-linux" ];
   };
   networking.hostName = "oracle-cloud-nixos";
-  networking.firewall.allowedTCPPorts = [ 443 7777 ];
-  networking.firewall.allowedUDPPorts = [ 443 7777 ];
+  networking.firewall.allowedTCPPorts = [
+    443
+    7777
+  ];
+  networking.firewall.allowedUDPPorts = [
+    443
+    7777
+  ];
   profiles.defaults.enable = true;
   services = {
     openssh = {
@@ -62,8 +72,8 @@
           dnsProvider = "cloudflare";
           credentialFiles = {
             "CF_API_EMAIL_FILE" = "${pkgs.writeText "cfemail" ''
-            collin@diekvoss.com
-          ''}";
+              collin@diekvoss.com
+            ''}";
             "CF_API_KEY_FILE" = config.sops.secrets.cloudflare_global_api_key.path;
             "CF_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
           };
@@ -95,14 +105,21 @@
             type = "filesystem";
             format = "vfat";
             mountpoint = "/boot";
-            extraArgs = [ "-n" "BOOT" ];
+            extraArgs = [
+              "-n"
+              "BOOT"
+            ];
           };
         };
         root = {
           size = "100%";
           content = {
             type = "btrfs";
-            extraArgs = [ "-f" "-L" "NIXOS" ];
+            extraArgs = [
+              "-f"
+              "-L"
+              "NIXOS"
+            ];
             subvolumes = {
               "@" = {
                 mountpoint = "/";
@@ -112,7 +129,10 @@
                 mountpoint = "/home";
               };
               "@nix" = {
-                mountOptions = [ "compress=zstd" "noatime" ];
+                mountOptions = [
+                  "compress=zstd"
+                  "noatime"
+                ];
                 mountpoint = "/nix";
               };
             };

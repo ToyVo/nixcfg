@@ -1,10 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.userPresets;
-  homePath =
-    if pkgs.stdenv.isDarwin then
-      "/Users" else
-      "/home";
+  homePath = if pkgs.stdenv.isDarwin then "/Users" else "/home";
   enableGui = config.profiles.gui.enable;
 in
 {
@@ -21,24 +23,32 @@ in
   config = {
     users = {
       users = {
-        ${cfg.toyvo.name} = lib.mkIf cfg.toyvo.enable (lib.mkMerge [{
-          name = cfg.toyvo.name;
-          description = "Collin Diekvoss";
-          home = "${homePath}/${cfg.toyvo.name}";
-          shell = pkgs.fish;
-          openssh.authorizedKeys.keyFiles = [
-            ../../../secrets/nixremote_ed25519.pub
-            ../../../secrets/ykC_ed25519_sk.pub
-            ../../../secrets/ykA_ed25519_sk.pub
-          ];
-        }
-          (lib.mkIf
-            pkgs.stdenv.isLinux
+        ${cfg.toyvo.name} = lib.mkIf cfg.toyvo.enable (
+          lib.mkMerge [
             {
+              name = cfg.toyvo.name;
+              description = "Collin Diekvoss";
+              home = "${homePath}/${cfg.toyvo.name}";
+              shell = pkgs.fish;
+              openssh.authorizedKeys.keyFiles = [
+                ../../../secrets/nixremote_ed25519.pub
+                ../../../secrets/ykC_ed25519_sk.pub
+                ../../../secrets/ykA_ed25519_sk.pub
+              ];
+            }
+            (lib.mkIf pkgs.stdenv.isLinux {
               isNormalUser = true;
-              extraGroups = [ "networkmanager" "wheel" "input" "uinput" cfg.toyvo.name ] ++ lib.optionals config.containerPresets.podman.enable [ "podman" ];
+              extraGroups = [
+                "networkmanager"
+                "wheel"
+                "input"
+                "uinput"
+                cfg.toyvo.name
+              ] ++ lib.optionals config.containerPresets.podman.enable [ "podman" ];
               initialHashedPassword = "$y$j9T$tkZ4b5vK1fCsRP0oWUb0e1$w0QbUEv9swXir33ivvM70RYTYflQszeLBi3vubYTqd8";
-            })]);
+            })
+          ]
+        );
       };
       groups.${cfg.toyvo.name} = lib.mkIf pkgs.stdenv.isLinux { };
     };
@@ -56,4 +66,3 @@ in
     };
   };
 }
-

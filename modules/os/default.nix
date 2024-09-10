@@ -1,9 +1,22 @@
-{ config, lib, self, pkgs, nixos-unstable, ... }:
+{
+  config,
+  lib,
+  self,
+  pkgs,
+  nixos-unstable,
+  ...
+}:
 let
   cfg = config.profiles;
 in
 {
-  imports = [ ./users ./podman.nix ./gui.nix ./dev.nix ./console.nix ];
+  imports = [
+    ./users
+    ./podman.nix
+    ./gui.nix
+    ./dev.nix
+    ./console.nix
+  ];
 
   options.profiles.defaults.enable = lib.mkEnableOption "Enable Defaults";
 
@@ -12,14 +25,19 @@ in
       backupFileExtension = "${toString self.sourceInfo.lastModified}.old";
       useGlobalPkgs = true;
       useUserPackages = true;
-      sharedModules = [{
-        nix.package = lib.mkForce config.nix.package;
-      }];
+      sharedModules = [
+        {
+          nix.package = lib.mkForce config.nix.package;
+        }
+      ];
     };
     nix = {
       package = pkgs.nixVersions.nix_2_22;
       settings = {
-        experimental-features = [ "nix-command" "flakes" ];
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
         substituters = config.nix.settings.trusted-substituters;
         trusted-substituters = [
           "https://nix-community.cachix.org"
@@ -30,7 +48,10 @@ in
           "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
         ];
       };
-      nixPath = [ "nixpkgs=${nixos-unstable}" "nixos=${nixos-unstable}" ];
+      nixPath = [
+        "nixpkgs=${nixos-unstable}"
+        "nixos=${nixos-unstable}"
+      ];
     };
   };
 }

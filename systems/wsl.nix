@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   networking.hostName = "utm";
   profiles = {
     defaults.enable = true;

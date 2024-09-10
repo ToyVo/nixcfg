@@ -1,11 +1,19 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }:
+{
   hardware.cpu.amd.updateMicrocode = true;
   hardware.bluetooth.enable = true;
   networking.hostName = "steamdeck-nixos";
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
+    initrd.availableKernelModules = [
+      "nvme"
+      "xhci_pci"
+      "usbhid"
+      "usb_storage"
+      "sd_mod"
+      "sdhci_pci"
+    ];
     kernelModules = [ "kvm-amd" ];
   };
   profiles = {
@@ -27,7 +35,15 @@
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
     fsType = "btrfs";
-    options = [ "nofail" "noatime" "lazytime" "compress-force=zstd" "space_cache=v2" "autodefrag" "ssd_spread" ];
+    options = [
+      "nofail"
+      "noatime"
+      "lazytime"
+      "compress-force=zstd"
+      "space_cache=v2"
+      "autodefrag"
+      "ssd_spread"
+    ];
   };
   jovian = {
     devices.steamdeck.enable = true;

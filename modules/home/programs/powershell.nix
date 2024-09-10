@@ -3,11 +3,35 @@ let
   cfg = config.programs;
   starship = config.programs.starship;
   zoxide = config.programs.zoxide;
-  makePowershellAlias = name: value: let
-    valueNeedsFunction = lib.strings.hasInfix " " value;
-    functionName = if valueNeedsFunction then builtins.replaceStrings [" " "\"" "\\" "/"] ["_" "" "" ""] value else value;
-    function = if valueNeedsFunction then "Function ${functionName} { param([Parameter(ValueFromRemainingArguments=$true)] [string[]]$Arguments) ${value} $Arguments}\n" else "";
-  in "${function}Set-Alias -Name ${name} -Value ${functionName}";
+  makePowershellAlias =
+    name: value:
+    let
+      valueNeedsFunction = lib.strings.hasInfix " " value;
+      functionName =
+        if valueNeedsFunction then
+          builtins.replaceStrings
+            [
+              " "
+              "\""
+              "\\"
+              "/"
+            ]
+            [
+              "_"
+              ""
+              ""
+              ""
+            ]
+            value
+        else
+          value;
+      function =
+        if valueNeedsFunction then
+          "Function ${functionName} { param([Parameter(ValueFromRemainingArguments=$true)] [string[]]$Arguments) ${value} $Arguments}\n"
+        else
+          "";
+    in
+    "${function}Set-Alias -Name ${name} -Value ${functionName}";
 in
 {
   options.programs = {
@@ -21,26 +45,36 @@ in
       shellAliases = lib.mkOption {
         type = lib.types.attrsOf lib.types.str;
         default = { };
-        example = { ll = "ls -l"; };
+        example = {
+          ll = "ls -l";
+        };
         description = ''
           An attribute set that maps aliases (the top level attribute names in
           this option) to command strings or directly to build outputs.
         '';
       };
     };
-    starship.enablePowerShellIntegration = lib.mkEnableOption "Whether to enable PowerShell integration." // {
-      default = true;
-    };
-    zoxide.enablePowerShellIntegration = lib.mkEnableOption "Whether to enable PowerShell integration." // {
-      default = true;
-    };
+    starship.enablePowerShellIntegration =
+      lib.mkEnableOption "Whether to enable PowerShell integration."
+      // {
+        default = true;
+      };
+    zoxide.enablePowerShellIntegration =
+      lib.mkEnableOption "Whether to enable PowerShell integration."
+      // {
+        default = true;
+      };
   };
 
   config = lib.mkIf cfg.powershell.enable {
     xdg.configFile."powershell/Microsoft.PowerShell_profile.ps1" = {
       text = lib.mkMerge [
         ''
-          ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: value: "[Environment]::SetEnvironmentVariable(\"${name}\", \"${toString value}\")") config.home.sessionVariables)}
+          ${lib.concatStringsSep "\n" (
+            lib.mapAttrsToList (
+              name: value: "[Environment]::SetEnvironmentVariable(\"${name}\", \"${toString value}\")"
+            ) config.home.sessionVariables
+          )}
           $pre_paths = [Environment]::GetEnvironmentVariable('PATH').split([IO.Path]::PathSeparator)
           $nix_paths = "${lib.concatStringsSep "\", \"" config.home.sessionPath}"
           $paths_to_export = @()

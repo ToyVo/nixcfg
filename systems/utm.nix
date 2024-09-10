@@ -1,9 +1,16 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   networking.hostName = "utm";
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    initrd.availableKernelModules = [ "xhci_pci" "virtio_pci" "usbhid" "usb_storage" "sr_mod" ];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "virtio_pci"
+      "usbhid"
+      "usb_storage"
+      "sr_mod"
+    ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
   profiles = {

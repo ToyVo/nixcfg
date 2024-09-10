@@ -1,4 +1,5 @@
-{ config, lib, ... }: {
+{ config, lib, ... }:
+{
   options.programs.ideavim.enable = lib.mkEnableOption "Weather to enable ideavim config for Jetbrains IDEs ideavim plugin";
   config = lib.mkIf config.programs.ideavim.enable {
     xdg.configFile = {

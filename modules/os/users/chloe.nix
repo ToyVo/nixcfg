@@ -1,10 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.userPresets;
-  homePath =
-    if pkgs.stdenv.isDarwin then
-      "/Users" else
-      "/home";
+  homePath = if pkgs.stdenv.isDarwin then "/Users" else "/home";
   enableGui = config.profiles.gui.enable;
 in
 {
@@ -21,19 +23,24 @@ in
   config = {
     users = {
       users = {
-        ${cfg.chloe.name} = lib.mkIf cfg.chloe.enable (lib.mkMerge [{
-          name = cfg.chloe.name;
-          description = "Chloe Diekvoss";
-          home = "${homePath}/${cfg.chloe.name}";
-          shell = pkgs.fish;
-        }
-          (lib.mkIf
-            pkgs.stdenv.isLinux
+        ${cfg.chloe.name} = lib.mkIf cfg.chloe.enable (
+          lib.mkMerge [
             {
+              name = cfg.chloe.name;
+              description = "Chloe Diekvoss";
+              home = "${homePath}/${cfg.chloe.name}";
+              shell = pkgs.fish;
+            }
+            (lib.mkIf pkgs.stdenv.isLinux {
               isNormalUser = true;
-              extraGroups = [ "networkmanager" cfg.chloe.name ];
+              extraGroups = [
+                "networkmanager"
+                cfg.chloe.name
+              ];
               initialHashedPassword = "$y$j9T$3qj7b7.lXJ2wiK29g9njQ1$Dn.dhmjQvPSkmdtHbA.2qEDl3eUnMeaawAW84X0/5i0";
-            })]);
+            })
+          ]
+        );
       };
       groups.${cfg.chloe.name} = lib.mkIf pkgs.stdenv.isLinux { };
     };
@@ -48,4 +55,3 @@ in
     };
   };
 }
-

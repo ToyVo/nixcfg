@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profiles;
 in
@@ -15,25 +20,47 @@ in
       noto-fonts-emoji-blob-bin
       noto-fonts-monochrome-emoji
       monaspace
-      (nerdfonts.override { fonts = [ "Monaspace" "NerdFontsSymbolsOnly" ]; })
+      (nerdfonts.override {
+        fonts = [
+          "Monaspace"
+          "NerdFontsSymbolsOnly"
+        ];
+      })
     ];
     environment = {
-      systemPackages = with pkgs; [
-        gimp
-      ]
-      ++ lib.optionals stdenv.isLinux [
-        element-desktop
-        firefox-devedition-bin
-        yubikey-manager-qt
-        yubioath-flutter
-      ]
-      ++ lib.optionals stdenv.isDarwin [
-        appcleaner
-        pinentry_mac
-        rectangle
-        utm
-        warp-terminal
-      ];
+      systemPackages =
+        with pkgs;
+        [
+          gimp
+        ]
+        ++ lib.optionals stdenv.isLinux [
+          element-desktop
+          firefox-devedition-bin
+          yubikey-manager-qt
+          yubioath-flutter
+        ]
+        ++ lib.optionals (stdenv.system == "x86_64-linux") [
+          proton-pass
+          protonvpn-gui
+        ]
+        ++
+          lib.optionals
+            (builtins.elem system [
+              "aarch64-darwin"
+              "x86_64-darwin"
+              "x86_64-linux"
+            ])
+            [
+              logseq
+              protonmail-desktop
+            ]
+        ++ lib.optionals stdenv.isDarwin [
+          appcleaner
+          pinentry_mac
+          rectangle
+          utm
+          warp-terminal
+        ];
     };
   };
 }

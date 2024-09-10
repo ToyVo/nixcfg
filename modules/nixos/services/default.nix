@@ -1,3 +1,7 @@
-{ ... }: {
-  imports = [ ./ollama.nix ./desktopManager ];
+{ ... }:
+{
+  imports = [
+    ./ollama.nix
+    ./desktopManager
+  ];
 }

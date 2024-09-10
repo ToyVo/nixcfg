@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.profiles.gaming;
 in
@@ -31,8 +36,10 @@ in
         ];
       })
     ];
-    home-manager.sharedModules = [{
-      home.sessionVariables.STEAM_EXTRA_COMPAT_TOOLS_PATH = "~/.steam/root/compatibilitytools.d";
-    }];
+    home-manager.sharedModules = [
+      {
+        home.sessionVariables.STEAM_EXTRA_COMPAT_TOOLS_PATH = "~/.steam/root/compatibilitytools.d";
+      }
+    ];
   };
 }

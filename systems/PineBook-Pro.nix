@@ -1,4 +1,5 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }:
+{
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
   networking.hostName = "PineBook-Pro";
   boot.loader.systemd-boot.enable = true;

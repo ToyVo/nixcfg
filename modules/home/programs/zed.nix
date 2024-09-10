@@ -1,4 +1,10 @@
-{ pkgs, config, lib, ... }: {
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+{
   options.programs.zed.enable = lib.mkEnableOption "enable zed";
 
   config = lib.mkIf config.programs.zed.enable {

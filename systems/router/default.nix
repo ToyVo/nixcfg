@@ -1,4 +1,10 @@
-{ lib, pkgs, config, ... }: {
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
+{
   imports = [
     ./static-leases.nix
     ./virtual-hosts.nix
@@ -16,20 +22,60 @@
     nat = {
       enable = true;
       externalInterface = "enp2s0";
-      internalInterfaces = [ "enp3s0" "cdnet" "cdiot" "cdguest" ];
+      internalInterfaces = [
+        "enp3s0"
+        "cdnet"
+        "cdiot"
+        "cdguest"
+      ];
     };
     firewall = {
       enable = true;
       # Port 53 is for DNS, 22 is for SSH, 67/68 is for DHCP, 80 is for HTTP, 443 is for HTTPS
       interfaces.enp2s0.allowedTCPPorts = [ 25565 ];
-      interfaces.enp3s0.allowedTCPPorts = [ 53 22 80 443 25565 ];
-      interfaces.enp3s0.allowedUDPPorts = [ 53 67 68 443 ];
-      interfaces.cdnet.allowedTCPPorts = [ 53 22 80 443 25565 ];
-      interfaces.cdnet.allowedUDPPorts = [ 53 67 68 443 ];
+      interfaces.enp3s0.allowedTCPPorts = [
+        53
+        22
+        80
+        443
+        25565
+      ];
+      interfaces.enp3s0.allowedUDPPorts = [
+        53
+        67
+        68
+        443
+      ];
+      interfaces.cdnet.allowedTCPPorts = [
+        53
+        22
+        80
+        443
+        25565
+      ];
+      interfaces.cdnet.allowedUDPPorts = [
+        53
+        67
+        68
+        443
+      ];
       interfaces.cdiot.allowedTCPPorts = [ 53 ];
-      interfaces.cdiot.allowedUDPPorts = [ 53 67 68 ];
-      interfaces.cdguest.allowedTCPPorts = [ 53 80 443 25565 ];
-      interfaces.cdguest.allowedUDPPorts = [ 53 67 68 ];
+      interfaces.cdiot.allowedUDPPorts = [
+        53
+        67
+        68
+      ];
+      interfaces.cdguest.allowedTCPPorts = [
+        53
+        80
+        443
+        25565
+      ];
+      interfaces.cdguest.allowedUDPPorts = [
+        53
+        67
+        68
+      ];
     };
   };
   boot = {
@@ -65,7 +111,11 @@
       networks."20-lan" = {
         matchConfig.Name = "enp3s0";
         address = [ "10.1.0.1/24" ];
-        vlan = [ "cdnet" "cdiot" "cdguest" ];
+        vlan = [
+          "cdnet"
+          "cdiot"
+          "cdguest"
+        ];
         networkConfig = {
           DHCPServer = true;
           IPMasquerade = "ipv4";
@@ -138,7 +188,13 @@
       cfdyndns = {
         serviceConfig.Type = "oneshot";
         after = [ "network.target" ];
-        path = with pkgs; [ curl iproute2 gawk dig jq ];
+        path = with pkgs; [
+          curl
+          iproute2
+          gawk
+          dig
+          jq
+        ];
         script = ''
           declare -a DOMAINS=(
             "*.diekvoss.net"

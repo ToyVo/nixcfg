@@ -1,4 +1,10 @@
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   imports = [
     ../os
     ./alias-system-apps.nix
@@ -54,17 +60,39 @@
       };
       casks = [
         # Nix package doesn't exist
-        { name = "grammarly"; greedy = true; }
-        { name = "proton-drive"; greedy = true; }
+        {
+          name = "grammarly";
+          greedy = true;
+        }
+        {
+          name = "proton-drive";
+          greedy = true;
+        }
         # Nix package exists but unavailable on darwin
-        { name = "bruno"; greedy = true; }
-        { name = "firefox@developer-edition"; greedy = true; }
-        { name = "jetbrains-toolbox"; greedy = true; }
-        { name = "logseq"; greedy = true; }
-        { name = "onlyoffice"; greedy = true; }
-        { name = "podman-desktop"; greedy = true; }
-        { name = "proton-mail"; greedy = true; }
-        { name = "protonvpn"; greedy = true; }
+        {
+          name = "firefox@developer-edition";
+          greedy = true;
+        }
+        {
+          name = "jetbrains-toolbox";
+          greedy = true;
+        }
+        {
+          name = "onlyoffice";
+          greedy = true;
+        }
+        {
+          name = "podman-desktop";
+          greedy = true;
+        }
+        {
+          name = "proton-pass";
+          greedy = true;
+        }
+        {
+          name = "protonvpn";
+          greedy = true;
+        }
       ];
       taps = [
         "cfergeau/crc"
@@ -74,9 +102,17 @@
       ];
     };
     home-manager.sharedModules = [
-      ({ config, pkgs, lib, ... }: {
-        targets.darwin.aliasHomeApplications = true;
-      })
+      (
+        {
+          config,
+          pkgs,
+          lib,
+          ...
+        }:
+        {
+          targets.darwin.aliasHomeApplications = true;
+        }
+      )
     ];
   };
 }

@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   profiles = {
     defaults.enable = true;
     dev.enable = true;
@@ -12,9 +13,18 @@
     packwiz
   ];
   homebrew.casks = [
-    { name = "prusaslicer"; greedy = true; }
-    { name = "discord"; greedy = true; }
-    { name = "whisky"; greedy = true; }
+    {
+      name = "prusaslicer";
+      greedy = true;
+    }
+    {
+      name = "discord";
+      greedy = true;
+    }
+    {
+      name = "whisky";
+      greedy = true;
+    }
   ];
   homebrew.masApps = {
     "Yubico Authenticator" = 1497506650;
