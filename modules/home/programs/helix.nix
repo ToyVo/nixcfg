@@ -8,8 +8,7 @@ in
       nodePackages_latest.bash-language-server
       nodePackages_latest.typescript-language-server
       clang-tools
-      # TODO: Failed to build
-      # vscode-langservers-extracted
+      vscode-langservers-extracted
       nil
       marksman
       taplo

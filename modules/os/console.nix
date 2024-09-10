@@ -54,6 +54,7 @@ in
           rsync
           sops
           sqlite
+          tlrc
           unzip
           uutils-coreutils-noprefix
           wget
@@ -72,12 +73,6 @@ in
           yubico-piv-tool
           yubikey-manager
           yubikey-personalization
-          # TODO: broken on darwin but should be available there
-          tlrc
-        ]
-          ++ lib.optionals stdenv.isDarwin [
-          # TODO: prefer tlrc
-          tldr
         ];
       };
   };

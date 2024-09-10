@@ -54,7 +54,6 @@
       };
       casks = [
         # Nix package doesn't exist
-        { name = "arc"; greedy = true; }
         { name = "grammarly"; greedy = true; }
         { name = "proton-drive"; greedy = true; }
         # Nix package exists but unavailable on darwin

@@ -55,14 +55,12 @@ in
         pkg-config
         poetry
         rustup
+        # esp-idf-full
+        # zed-editor
       ]
       ++ lib.optionals stdenv.isLinux [
-        # Having gcc or clang will also set cc, which breaks compiling rust on macos, to ivestigate
         gcc
         clang
-        # TODO: broken on darwin but should be available there
-        esp-idf-full
-        zed-editor
       ]
       ++ lib.optionals stdenv.isDarwin [
         darwin.apple_sdk.frameworks.SystemConfiguration

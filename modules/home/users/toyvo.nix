@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 let
   cfg = config.profiles;
 in
@@ -13,8 +13,7 @@ in
         enable = true;
         nix-direnv.enable = true;
       };
-      # TODO fix when not broken on darwin
-      rio.enable = cfg.gui.enable && pkgs.stdenv.isLinux;
+      rio.enable = cfg.gui.enable;
       vscode.enable = cfg.gui.enable;
       wezterm.enable = cfg.gui.enable;
       kitty.enable = cfg.gui.enable;
