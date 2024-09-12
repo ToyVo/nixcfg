@@ -14,7 +14,7 @@ in
       fish.enable = true;
       nh = {
         enable = true;
-        flake.os = "${config.users.users.${config.userPresets.toyvo.name}.home}/nixcfg";
+        os.flake = "${config.users.users.${config.userPresets.toyvo.name}.home}/nixcfg";
         clean.enable = true;
       };
     };

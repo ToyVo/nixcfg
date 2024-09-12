@@ -1,6 +1,6 @@
 { ... }:
 {
-  networking.hostName = "utm";
+  networking.hostName = "wsl";
   profiles = {
     defaults.enable = true;
   };
