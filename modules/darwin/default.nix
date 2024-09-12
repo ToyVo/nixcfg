@@ -94,12 +94,6 @@
           greedy = true;
         }
       ];
-      taps = [
-        "cfergeau/crc"
-      ];
-      brews = [
-        "vfkit"
-      ];
     };
     home-manager.sharedModules = [
       (

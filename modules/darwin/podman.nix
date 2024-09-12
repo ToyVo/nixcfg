@@ -16,6 +16,7 @@
       with pkgs;
       [
         podman
+        vfkit
       ]
       ++ lib.optionals config.virtualisation.podman.dockerCompat [
         (runCommand "${podman.pname}-docker-compat-${podman.version}"
