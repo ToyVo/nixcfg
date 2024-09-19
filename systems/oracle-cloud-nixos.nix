@@ -55,7 +55,9 @@
   };
   virtualisation.oci-containers.containers.terraria = {
     image = "docker.io/ryshe/terraria:tshock-1.4.4.9-5.2.0-3";
-    ports = [ "7777:7777" ];
+    # 7777 needs to be exposed on the vps, is for the game
+    # 7878 is for the web interface, used with my discord bot
+    ports = [ "7777:7777" "7878:7878" ];
     volumes = [
       "/terraria-data/world:/root/.local/share/Terraria/Worlds"
     ];
