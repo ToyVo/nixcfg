@@ -24,7 +24,7 @@
       enable = true;
       settings.PasswordAuthentication = false;
     };
-    mc_discord_bot = {
+    discord_bot = {
       enable = true;
       env_file = config.sops.secrets."discord_bot.env".path;
       openFirewall = true;

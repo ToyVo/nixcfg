@@ -23,16 +23,16 @@
     "cachix": {
       "inputs": {
         "devenv": [
-          "mc_discord_bot",
+          "discord_bot",
           "crate2nix"
         ],
         "flake-compat": [
-          "mc_discord_bot",
+          "discord_bot",
           "crate2nix"
         ],
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_2",
         "pre-commit-hooks": [
-          "mc_discord_bot",
+          "discord_bot",
           "crate2nix"
         ]
       },
@@ -174,9 +174,9 @@
         "crate2nix_stable": "crate2nix_stable",
         "devshell": "devshell_2",
         "flake-compat": "flake-compat_2",
-        "flake-parts": "flake-parts_2",
+        "flake-parts": "flake-parts",
         "nix-test-runner": "nix-test-runner",
-        "nixpkgs": "nixpkgs_4",
+        "nixpkgs": "nixpkgs_3",
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
@@ -332,7 +332,7 @@
       "inputs": {
         "flake-utils": "flake-utils_2",
         "nixpkgs": [
-          "mc_discord_bot",
+          "discord_bot",
           "crate2nix",
           "nixpkgs"
         ]
@@ -355,7 +355,7 @@
       "inputs": {
         "flake-utils": "flake-utils_4",
         "nixpkgs": [
-          "mc_discord_bot",
+          "discord_bot",
           "nixpkgs"
         ]
       },
@@ -484,6 +484,28 @@
       "original": {
         "owner": "numtide",
         "repo": "devshell",
+        "type": "github"
+      }
+    },
+    "discord_bot": {
+      "inputs": {
+        "crate2nix": "crate2nix",
+        "devshell": "devshell_3",
+        "flake-parts": "flake-parts_2",
+        "nixpkgs": "nixpkgs_4",
+        "rust-overlay": "rust-overlay_2"
+      },
+      "locked": {
+        "lastModified": 1726802976,
+        "narHash": "sha256-53k3dzHSfv49rNZxDAvgjLGe0NAhiSLk3z5LnLEA43o=",
+        "owner": "toyvo",
+        "repo": "discord_bot",
+        "rev": "e5b81a45bf32c56b2c1bd40b5cf7ebc589d26eef",
+        "type": "github"
+      },
+      "original": {
+        "owner": "toyvo",
+        "repo": "discord_bot",
         "type": "github"
       }
     },
@@ -626,26 +648,8 @@
     },
     "flake-parts": {
       "inputs": {
-        "nixpkgs-lib": "nixpkgs-lib"
-      },
-      "locked": {
-        "lastModified": 1726153070,
-        "narHash": "sha256-HO4zgY0ekfwO5bX0QH/3kJ/h4KvUDFZg8YpkNwIbg1U=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "bcef6817a8b2aa20a5a6dbb19b43e63c5bf8619a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
-      }
-    },
-    "flake-parts_2": {
-      "inputs": {
         "nixpkgs-lib": [
-          "mc_discord_bot",
+          "discord_bot",
           "crate2nix",
           "nixpkgs"
         ]
@@ -664,10 +668,10 @@
         "type": "github"
       }
     },
-    "flake-parts_3": {
+    "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": [
-          "mc_discord_bot",
+          "discord_bot",
           "nixpkgs"
         ]
       },
@@ -677,6 +681,24 @@
         "owner": "hercules-ci",
         "repo": "flake-parts",
         "rev": "c3c5ecc05edc7dafba779c6c1a61cd08ac6583e9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_3": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib"
+      },
+      "locked": {
+        "lastModified": 1726153070,
+        "narHash": "sha256-HO4zgY0ekfwO5bX0QH/3kJ/h4KvUDFZg8YpkNwIbg1U=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "bcef6817a8b2aa20a5a6dbb19b43e63c5bf8619a",
         "type": "github"
       },
       "original": {
@@ -1067,7 +1089,7 @@
     "gitignore": {
       "inputs": {
         "nixpkgs": [
-          "mc_discord_bot",
+          "discord_bot",
           "crate2nix",
           "pre-commit-hooks",
           "nixpkgs"
@@ -1246,7 +1268,7 @@
     "jovian": {
       "inputs": {
         "nix-github-actions": "nix-github-actions",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_6"
       },
       "locked": {
         "lastModified": 1726774453,
@@ -1259,28 +1281,6 @@
       "original": {
         "owner": "Jovian-Experiments",
         "repo": "Jovian-NixOS",
-        "type": "github"
-      }
-    },
-    "mc_discord_bot": {
-      "inputs": {
-        "crate2nix": "crate2nix",
-        "devshell": "devshell_3",
-        "flake-parts": "flake-parts_3",
-        "nixpkgs": "nixpkgs_5",
-        "rust-overlay": "rust-overlay_2"
-      },
-      "locked": {
-        "lastModified": 1726802976,
-        "narHash": "sha256-53k3dzHSfv49rNZxDAvgjLGe0NAhiSLk3z5LnLEA43o=",
-        "owner": "toyvo",
-        "repo": "mc_discord_bot",
-        "rev": "e5b81a45bf32c56b2c1bd40b5cf7ebc589d26eef",
-        "type": "github"
-      },
-      "original": {
-        "owner": "toyvo",
-        "repo": "mc_discord_bot",
         "type": "github"
       }
     },
@@ -1814,11 +1814,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1723991338,
-        "narHash": "sha256-Grh5PF0+gootJfOJFenTTxDTYPidA3V28dqJ/WV7iis=",
+        "lastModified": 1700612854,
+        "narHash": "sha256-yrQ8osMD+vDLGFX7pcwsY/Qr5PUd6OmDMYJZzZi0+zc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8a3354191c0d7144db9756a74755672387b702ba",
+        "rev": "19cbff58383a4ae384dea4d1d0c823d72b49d614",
         "type": "github"
       },
       "original": {
@@ -1862,22 +1862,6 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1700612854,
-        "narHash": "sha256-yrQ8osMD+vDLGFX7pcwsY/Qr5PUd6OmDMYJZzZi0+zc=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "19cbff58383a4ae384dea4d1d0c823d72b49d614",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_4": {
-      "locked": {
         "lastModified": 1712026416,
         "narHash": "sha256-N/3VR/9e1NlN49p7kCiATiEY6Tzdo+CbrAG8kqCQKcI=",
         "owner": "NixOS",
@@ -1890,7 +1874,7 @@
         "type": "indirect"
       }
     },
-    "nixpkgs_5": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1719690277,
         "narHash": "sha256-0xSej1g7eP2kaUF+JQp8jdyNmpmCJKRpO12mKl/36Kc=",
@@ -1906,7 +1890,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_6": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1718428119,
         "narHash": "sha256-WdWDpNaq6u1IPtxtYHHWpl5BmabtpmLnMAx0RdJ/vo8=",
@@ -1918,6 +1902,22 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_6": {
+      "locked": {
+        "lastModified": 1723991338,
+        "narHash": "sha256-Grh5PF0+gootJfOJFenTTxDTYPidA3V28dqJ/WV7iis=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "8a3354191c0d7144db9756a74755672387b702ba",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -2055,19 +2055,19 @@
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": [
-          "mc_discord_bot",
+          "discord_bot",
           "crate2nix",
           "flake-compat"
         ],
         "flake-utils": "flake-utils_3",
         "gitignore": "gitignore",
         "nixpkgs": [
-          "mc_discord_bot",
+          "discord_bot",
           "crate2nix",
           "nixpkgs"
         ],
         "nixpkgs-stable": [
-          "mc_discord_bot",
+          "discord_bot",
           "crate2nix",
           "nixpkgs"
         ]
@@ -2200,11 +2200,11 @@
         "apple-silicon-support": "apple-silicon-support",
         "catppuccin": "catppuccin",
         "devshell": "devshell",
+        "discord_bot": "discord_bot",
         "disko": "disko",
-        "flake-parts": "flake-parts",
+        "flake-parts": "flake-parts_3",
         "home-manager": "home-manager",
         "jovian": "jovian",
-        "mc_discord_bot": "mc_discord_bot",
         "mkAlias": "mkAlias",
         "nh_darwin": "nh_darwin",
         "nix-darwin": "nix-darwin",
@@ -2240,7 +2240,7 @@
     },
     "rust-overlay_2": {
       "inputs": {
-        "nixpkgs": "nixpkgs_6"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "lastModified": 1719800573,

@@ -21,7 +21,7 @@
     apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     # Applications
-    mc_discord_bot.url = "github:toyvo/mc_discord_bot";
+    discord_bot.url = "github:toyvo/discord_bot";
     mkAlias.url = "github:reckenrode/mkAlias";
     nh_darwin.url = "github:toyvo/nh_darwin";
     nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
@@ -152,11 +152,11 @@
           devshells.default.commands = [
             {
               package = self'.packages.sops-unlock;
-              category = "git";
+              help = "unlock secrets that can be unencrypted on disk";
             }
             {
               package = self'.packages.sops-ssh-to-age;
-              category = "sops";
+              help = "convert ssh host key to age and place it in the default sops location for editing";
             }
           ];
         };
