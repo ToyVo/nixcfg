@@ -496,11 +496,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1726807077,
-        "narHash": "sha256-mPOFei0CbTUL1ajRPfSPRaBv+mWcF1UcTDlMK2yp6F4=",
+        "lastModified": 1726808808,
+        "narHash": "sha256-z2ciyn0JQu7e/NewpsybIRtTRyaUvW6gNKiPPtGlYAI=",
         "owner": "toyvo",
         "repo": "discord_bot",
-        "rev": "8a53e354bb511fa8585a33951615472def056a78",
+        "rev": "9609a0f87fa5a3bc2574dd73838804cf0762d697",
         "type": "github"
       },
       "original": {
@@ -1271,11 +1271,11 @@
         "nixpkgs": "nixpkgs_6"
       },
       "locked": {
-        "lastModified": 1726806210,
-        "narHash": "sha256-bBfhC0uXVtxK9X2Bh9weyMfcg4o+0zXCRP+sqUQ4/+A=",
+        "lastModified": 1726808758,
+        "narHash": "sha256-iXrjLDlMWhiFiGyr4hkPzxlbAxoBODGKG1XchQRNR64=",
         "owner": "Jovian-Experiments",
         "repo": "Jovian-NixOS",
-        "rev": "59e479332071cf48f23ad9fe1fb8c5c5682d0d59",
+        "rev": "982301127901326b19eabddda285220b007a1649",
         "type": "github"
       },
       "original": {
