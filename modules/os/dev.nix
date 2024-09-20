@@ -12,7 +12,7 @@ in
     profiles.dev.enable = lib.mkEnableOption "Development Programs to be available outside of a devshell";
     environment.pythonPackage = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.python311.withPackages (
+      default = pkgs.python312.withPackages (
         ps:
         with ps;
         [
@@ -35,10 +35,7 @@ in
   };
 
   config = lib.mkIf cfg.dev.enable {
-    virtualisation.podman = {
-      enable = true;
-      dockerCompat = true;
-    };
+    virtualisation.podman.enable = true;
     environment = {
       systemPackages =
         with pkgs;

@@ -12,11 +12,9 @@
   networking.hostName = "oracle-cloud-nixos";
   networking.firewall.allowedTCPPorts = [
     443
-    7777
   ];
   networking.firewall.allowedUDPPorts = [
     443
-    7777
   ];
   profiles.defaults.enable = true;
   services = {
@@ -27,8 +25,14 @@
     discord_bot = {
       enable = true;
       env_file = config.sops.secrets."discord_bot.env".path;
-      openFirewall = true;
-      datadir = "/minecraft-data";
+      minecraft = {
+        openFirewall = true;
+        datadir = "/minecraft-data";
+      };
+      terraria = {
+        openFirewall = true;
+        datadir = "/terraria-data";
+      };
     };
     caddy = {
       enable = true;
@@ -51,18 +55,6 @@
     static-web-server = {
       enable = true;
       root = "/var/www/";
-    };
-  };
-  virtualisation.oci-containers.containers.terraria = {
-    image = "docker.io/ryshe/terraria:tshock-1.4.4.9-5.2.0-3";
-    # 7777 needs to be exposed on the vps, is for the game
-    # 7878 is for the web interface, used with my discord bot
-    ports = [ "7777:7777" "7878:7878" ];
-    volumes = [
-      "/terraria-data/world:/root/.local/share/Terraria/Worlds"
-    ];
-    environment = {
-      WORLD_FILENAME = "large_master_crimson.wld";
     };
   };
   security.acme = {

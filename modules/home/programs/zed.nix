@@ -18,20 +18,30 @@
           "auto_update": false,
           "buffer_font_family": "MonaspiceNe Nerd Font",
           "formatter": [
-              "language_server",
+              {
+                  "language_server": {
+                      "name": "rust-analyzer"
+                  }
+              },
               {
                   "external": {
                       "command": "sed",
                       "arguments": ["-e", "s/ *$//"]
                   }
-              }
+              },
           ],
           "languages": {
               "JavaScript": {
                   "code_actions_on_format": {
                       "source.fixAll.eslint": true,
                       "source.organizeImports": true
-                  }
+                  },
+                  "formatter": {
+                      "external": {
+                          "command": "prettier",
+                          "arguments": ["--stdin-filepath", "{buffer_path}"]
+                      }
+                  },
               }
           },
           "inlay_hints": {

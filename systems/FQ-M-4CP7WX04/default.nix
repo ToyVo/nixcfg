@@ -18,7 +18,7 @@ in
     llama-cpp
     ollama
   ];
-  environment.pythonPackages = with pkgs.python311Packages; [
+  environment.pythonPackages = with pkgs.python312Packages; [
     boto3
     datasets
     huggingface-hub
@@ -52,6 +52,10 @@ in
       }
       {
         name = "slack";
+        greedy = true;
+      }
+      {
+        name = "docker";
         greedy = true;
       }
     ];

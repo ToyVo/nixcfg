@@ -68,6 +68,7 @@ in
           ms-vscode.cpptools
         ];
       userSettings = {
+        "[html]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[javascript]" = {
           "editor.defaultFormatter" = "esbenp.prettier-vscode";
           "editor.formatOnSave" = false;
@@ -92,7 +93,9 @@ in
         "files.insertFinalNewline" = true;
         "files.trimTrailingWhitespace" = true;
         "git.autofetch" = true;
+        "git.confirmSync" = false;
         "git.enableSmartCommit" = true;
+        "git.rebaseWhenSync" = true;
         "idf.customExtraPaths" = "${config.home.homeDirectory}/.espressif/tools/xtensa-esp-elf-gdb/14.2_20240403/xtensa-esp-elf-gdb/bin:${config.home.homeDirectory}/.espressif/tools/riscv32-esp-elf-gdb/14.2_20240403/riscv32-esp-elf-gdb/bin:${config.home.homeDirectory}/.espressif/tools/xtensa-esp-elf/esp-13.2.0_20240530/xtensa-esp-elf/bin:${config.home.homeDirectory}/.espressif/tools/riscv32-esp-elf/esp-13.2.0_20240530/riscv32-esp-elf/bin:${config.home.homeDirectory}/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin:${config.home.homeDirectory}/.espressif/tools/openocd-esp32/v0.12.0-esp32-20240318/openocd-esp32/bin:${config.home.homeDirectory}/.espressif/tools/esp-rom-elfs/20240305";
         "idf.customExtraVars" = {
           "OPENOCD_SCRIPTS" = "${config.home.homeDirectory}/.espressif/tools/openocd-esp32/v0.12.0-esp32-20240318/openocd-esp32/share/openocd/scripts";
