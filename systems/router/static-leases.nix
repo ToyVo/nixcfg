@@ -73,7 +73,7 @@
     # Mac Mini m1 (Ethernet)
     {
       dhcpServerStaticLeaseConfig = {
-        Address = "10.1.0.11";
+        Address = "10.1.1.11";
         MACAddress = "4c:20:b8:de:e4:01";
         # Wifi
         # MACAddress = "4c:20:b8:df:d1:5b";
