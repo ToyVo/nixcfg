@@ -24,6 +24,7 @@
       externalInterface = "enp2s0";
       internalInterfaces = [
         "enp3s0"
+        "enp4s0"
         "cdnet"
         "cdiot"
         "cdguest"
@@ -41,6 +42,19 @@
         25565
       ];
       interfaces.enp3s0.allowedUDPPorts = [
+        53
+        67
+        68
+        443
+      ];
+      interfaces.enp4s0.allowedTCPPorts = [
+        53
+        22
+        80
+        443
+        25565
+      ];
+      interfaces.enp4s0.allowedUDPPorts = [
         53
         67
         68
@@ -116,6 +130,17 @@
           "cdiot"
           "cdguest"
         ];
+        networkConfig = {
+          DHCPServer = true;
+          IPMasquerade = "ipv4";
+          MulticastDNS = true;
+        };
+        dhcpServerConfig.DNS = [ "10.1.0.1" ];
+        linkConfig.RequiredForOnline = "no";
+      };
+      networks."30-lan" = {
+        matchConfig.Name = "enp4s0";
+        address = [ "10.1.1.1/24" ];
         networkConfig = {
           DHCPServer = true;
           IPMasquerade = "ipv4";
