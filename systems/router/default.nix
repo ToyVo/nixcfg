@@ -25,6 +25,7 @@
       internalInterfaces = [
         "enp3s0"
         "enp4s0"
+        "enp5s0"
         "cdnet"
         "cdiot"
         "cdguest"
@@ -33,13 +34,11 @@
     firewall = {
       enable = true;
       # Port 53 is for DNS, 22 is for SSH, 67/68 is for DHCP, 80 is for HTTP, 443 is for HTTPS
-      interfaces.enp2s0.allowedTCPPorts = [ 25565 ];
       interfaces.enp3s0.allowedTCPPorts = [
         53
         22
         80
         443
-        25565
       ];
       interfaces.enp3s0.allowedUDPPorts = [
         53
@@ -52,9 +51,20 @@
         22
         80
         443
-        25565
       ];
       interfaces.enp4s0.allowedUDPPorts = [
+        53
+        67
+        68
+        443
+      ];
+      interfaces.enp5s0.allowedTCPPorts = [
+        53
+        22
+        80
+        443
+      ];
+      interfaces.enp5s0.allowedUDPPorts = [
         53
         67
         68
@@ -65,7 +75,6 @@
         22
         80
         443
-        25565
       ];
       interfaces.cdnet.allowedUDPPorts = [
         53
@@ -83,7 +92,6 @@
         53
         80
         443
-        25565
       ];
       interfaces.cdguest.allowedUDPPorts = [
         53
@@ -146,7 +154,18 @@
           IPMasquerade = "ipv4";
           MulticastDNS = true;
         };
-        dhcpServerConfig.DNS = [ "10.1.0.1" ];
+        dhcpServerConfig.DNS = [ "10.1.1.1" ];
+        linkConfig.RequiredForOnline = "no";
+      };
+      networks."40-lan" = {
+        matchConfig.Name = "enp5s0";
+        address = [ "10.1.2.1/24" ];
+        networkConfig = {
+          DHCPServer = true;
+          IPMasquerade = "ipv4";
+          MulticastDNS = true;
+        };
+        dhcpServerConfig.DNS = [ "10.1.2.1" ];
         linkConfig.RequiredForOnline = "no";
       };
       netdevs."21-cdnet" = {
@@ -177,7 +196,7 @@
           DHCPServer = true;
           IPMasquerade = "ipv4";
         };
-        dhcpServerConfig.DNS = [ "10.1.0.1" ];
+        dhcpServerConfig.DNS = [ "10.1.10.1" ];
         linkConfig.RequiredForOnline = "no";
       };
       networks."22-cdiot" = {
@@ -187,7 +206,7 @@
           DHCPServer = true;
           IPMasquerade = "ipv4";
         };
-        dhcpServerConfig.DNS = [ "10.1.0.1" ];
+        dhcpServerConfig.DNS = [ "10.1.20.1" ];
         linkConfig.RequiredForOnline = "no";
       };
       networks."23-cdguest" = {
@@ -197,19 +216,11 @@
           DHCPServer = true;
           IPMasquerade = "ipv4";
         };
-        dhcpServerConfig.DNS = [ "10.1.0.1" ];
+        dhcpServerConfig.DNS = [ "10.1.30.1" ];
         linkConfig.RequiredForOnline = "no";
       };
     };
     services = {
-      minecraft-server-forwarder = {
-        wantedBy = [ "multi-user.target" ];
-        after = [ "network.target" ];
-        serviceConfig = {
-          Restart = "on-failure";
-        };
-        script = "${pkgs.socat}/bin/socat TCP-LISTEN:25565,fork,reuseaddr TCP:10.1.0.3:25565";
-      };
       cfdyndns = {
         serviceConfig.Type = "oneshot";
         after = [ "network.target" ];
