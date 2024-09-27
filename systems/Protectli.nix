@@ -26,6 +26,22 @@
       53
       67
     ];
+    firewall.interfaces.enp3s0.allowedTCPPorts = [
+      53
+      22
+    ];
+    firewall.interfaces.enp3s0.allowedUDPPorts = [
+      53
+      67
+    ];
+    firewall.interfaces.enp4s0.allowedTCPPorts = [
+      53
+      22
+    ];
+    firewall.interfaces.enp4s0.allowedUDPPorts = [
+      53
+      67
+    ];
     firewall.interfaces.cdwifi.allowedTCPPorts = [
       53
       22
@@ -153,8 +169,17 @@
       };
     };
   };
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
+  services = {
+    openssh = {
+      enable = true;
+      settings.PasswordAuthentication = false;
+    };
+    kea = {
+      enable = true;
+      dhcp4 = {
+        enable = true;
+        settings = {};
+      };
+    };
   };
 }
