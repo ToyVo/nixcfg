@@ -174,12 +174,9 @@
       enable = true;
       settings.PasswordAuthentication = false;
     };
-    kea = {
+    kea.dhcp4 = {
       enable = true;
-      dhcp4 = {
-        enable = true;
-        settings = {};
-      };
+      settings = { };
     };
   };
 }
