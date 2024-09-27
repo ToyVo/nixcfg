@@ -154,7 +154,7 @@
           IPMasquerade = "ipv4";
           MulticastDNS = true;
         };
-        dhcpServerConfig.DNS = [ "10.1.1.1" ];
+        dhcpServerConfig.DNS = [ "10.1.0.1" ];
         linkConfig.RequiredForOnline = "no";
       };
       networks."40-lan" = {
@@ -165,7 +165,7 @@
           IPMasquerade = "ipv4";
           MulticastDNS = true;
         };
-        dhcpServerConfig.DNS = [ "10.1.2.1" ];
+        dhcpServerConfig.DNS = [ "10.1.0.1" ];
         linkConfig.RequiredForOnline = "no";
       };
       netdevs."21-cdnet" = {
@@ -196,7 +196,7 @@
           DHCPServer = true;
           IPMasquerade = "ipv4";
         };
-        dhcpServerConfig.DNS = [ "10.1.10.1" ];
+        dhcpServerConfig.DNS = [ "10.1.0.1" ];
         linkConfig.RequiredForOnline = "no";
       };
       networks."22-cdiot" = {
@@ -206,7 +206,7 @@
           DHCPServer = true;
           IPMasquerade = "ipv4";
         };
-        dhcpServerConfig.DNS = [ "10.1.20.1" ];
+        dhcpServerConfig.DNS = [ "10.1.0.1" ];
         linkConfig.RequiredForOnline = "no";
       };
       networks."23-cdguest" = {
@@ -216,7 +216,7 @@
           DHCPServer = true;
           IPMasquerade = "ipv4";
         };
-        dhcpServerConfig.DNS = [ "10.1.30.1" ];
+        dhcpServerConfig.DNS = [ "10.1.0.1" ];
         linkConfig.RequiredForOnline = "no";
       };
     };
