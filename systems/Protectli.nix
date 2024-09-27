@@ -9,57 +9,48 @@
       "1.1.1.1"
       "1.0.0.1"
     ];
-    nat.enable = true;
-    nat.enableIPv6 = true;
-    nat.externalInterface = "enp1s0";
-    nat.internalInterfaces = [
-      "enp2s0"
-      "enp3s0"
-      "enp4s0"
-    ];
+    nat = {
+      enable = true;
+      externalInterface = "enp1s0";
+      internalInterfaces = [
+        "enp2s0"
+        "enp3s0"
+        "enp4s0"
+      ];
+    };
     # Port 53 is for DNS, 22 is for SSH, 67 is for DHCP
-    firewall.interfaces.enp2s0.allowedTCPPorts = [
-      53
-      22
-    ];
-    firewall.interfaces.enp2s0.allowedUDPPorts = [
-      53
-      67
-    ];
-    firewall.interfaces.enp3s0.allowedTCPPorts = [
-      53
-      22
-    ];
-    firewall.interfaces.enp3s0.allowedUDPPorts = [
-      53
-      67
-    ];
-    firewall.interfaces.enp4s0.allowedTCPPorts = [
-      53
-      22
-    ];
-    firewall.interfaces.enp4s0.allowedUDPPorts = [
-      53
-      67
-    ];
-    firewall.interfaces.cdwifi.allowedTCPPorts = [
-      53
-      22
-    ];
-    firewall.interfaces.cdwifi.allowedUDPPorts = [
-      53
-      67
-    ];
-    firewall.interfaces.cdiot.allowedTCPPorts = [ 53 ];
-    firewall.interfaces.cdiot.allowedUDPPorts = [
-      53
-      67
-    ];
-    firewall.interfaces.cdguest.allowedTCPPorts = [ 53 ];
-    firewall.interfaces.cdguest.allowedUDPPorts = [
-      53
-      67
-    ];
+    firewall.interfaces = {
+      enp2s0 = {
+        allowedTCPPorts = [
+          53
+          22
+        ];
+        allowedUDPPorts = [
+          53
+          67
+        ];
+      };
+      enp3s0 = {
+        allowedTCPPorts = [
+          53
+          22
+        ];
+        allowedUDPPorts = [
+          53
+          67
+        ];
+      };
+      enp4s0 = {
+        allowedTCPPorts = [
+          53
+          22
+        ];
+        allowedUDPPorts = [
+          53
+          67
+        ];
+      };
+    };
   };
   boot = {
     loader.systemd-boot.enable = true;
@@ -78,97 +69,6 @@
   userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;
-  systemd.network = {
-    enable = true;
-    networks = {
-      "20-wan" = {
-        matchConfig.Name = "enp1s0";
-        networkConfig.DHCP = "ipv4";
-        networkConfig.IPv6AcceptRA = true;
-        linkConfig.RequiredForOnline = "routable";
-      };
-      "20-lan" = {
-        matchConfig.Name = "enp2s0";
-        networkConfig.DHCPServer = "yes";
-        dhcpServerConfig = {
-          ServerAddress = "192.168.0.1/24";
-          DNS = [
-            "1.1.1.1"
-            "1.0.0.1"
-          ];
-          PoolSize = 100;
-          PoolOffset = 20;
-        };
-        vlan = [
-          "cdwifi"
-          "cdiot"
-          "cdguest"
-        ];
-      };
-      "30-cdwifi" = {
-        matchConfig.Name = "cdwifi";
-        networkConfig.DHCPServer = "yes";
-        dhcpServerConfig = {
-          ServerAddress = "192.168.10.1/24";
-          DNS = [
-            "1.1.1.1"
-            "1.0.0.1"
-          ];
-          PoolSize = 100;
-          PoolOffset = 20;
-        };
-      };
-      "30-cdiot" = {
-        matchConfig.Name = "cdiot";
-        networkConfig.DHCPServer = "yes";
-        dhcpServerConfig = {
-          ServerAddress = "192.168.20.1/24";
-          DNS = [
-            "1.1.1.1"
-            "1.0.0.1"
-          ];
-          PoolSize = 100;
-          PoolOffset = 20;
-        };
-      };
-      "30-cdguest" = {
-        matchConfig.Name = "cdguest";
-        networkConfig.DHCPServer = "yes";
-        dhcpServerConfig = {
-          ServerAddress = "192.168.30.1/24";
-          DNS = [
-            "1.1.1.1"
-            "1.0.0.1"
-          ];
-          PoolSize = 100;
-          PoolOffset = 20;
-        };
-      };
-    };
-    netdevs = {
-      "10-cdwifi" = {
-        netdevConfig = {
-          Kind = "vlan";
-          Name = "cdwifi";
-        };
-        vlanConfig.Id = 10;
-      };
-      "10-cdiot" = {
-        netdevConfig = {
-          Kind = "vlan";
-          Name = "cdiot";
-        };
-        vlanConfig.Id = 20;
-      };
-      "10-cdguest" = {
-        netdevConfig = {
-          Kind = "vlan";
-          Name = "cdguest";
-        };
-        vlanConfig.Id = 30;
-      };
-    };
-  };
   services = {
     openssh = {
       enable = true;
@@ -176,7 +76,61 @@
     };
     kea.dhcp4 = {
       enable = true;
-      settings = { };
+      settings = {
+        interfaces-config.interfaces = [
+          "enp2s0"
+          "enp3s0"
+          "enp4s0"
+        ];
+        lease-database = {
+          type = "memfile";
+          persist = true;
+          name = "/var/lib/kea/dhcp4.leases";
+          lfc-interval = 3600; # 1 hour in seconds
+        };
+        authoritative = true;
+        renew-timer = 3600 * 5;
+        rebind-timer = 3600 * 8;
+        valid-lifetime = 3600 * 9;
+        option-data = [
+          {
+            name = "domain-name-servers";
+            data = "1.1.1.1, 1.0.0.1";
+          }
+          {
+            name = "domain-search";
+            data = "diekvoss.internal, diekvoss.net, diekvoss.com";
+          }
+        ];
+        subnet4 = [
+          {
+            subnet = "192.168.0.0/24";
+            pools = [
+              {
+                pool = "192.168.0.16 - 192.168.0.254";
+              }
+            ];
+            option-data = [
+              {
+                name = "routers";
+                data = "192.168.0.1";
+              }
+            ];
+          }
+        ];
+        loggers = [
+          {
+            name = "kea-dhcp4";
+            output_options = [
+              {
+                output = "/var/lib/kea/kea-dhcp4.log";
+                maxver = 10;
+              }
+            ];
+            severity = "INFO";
+          }
+        ];
+      };
     };
   };
 }
