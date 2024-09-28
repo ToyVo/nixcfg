@@ -350,6 +350,7 @@ in
             fzf-native.enable = true;
           };
         };
+        web-devicons.enable = true;
         conform-nvim = {
           enable = true;
           settings = {

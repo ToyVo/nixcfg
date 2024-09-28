@@ -64,6 +64,7 @@ in
           pkg-config
           poetry
           rustup
+          systemfd
           # esp-idf-full
           # zed-editor
         ]
