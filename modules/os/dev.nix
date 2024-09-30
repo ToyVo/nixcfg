@@ -58,7 +58,6 @@ in
           libiconv
           libusb1
           ninja
-          neovide
           nodejs
           pipenv
           pkg-config
@@ -75,7 +74,17 @@ in
         ++ lib.optionals stdenv.isDarwin [
           darwin.apple_sdk.frameworks.SystemConfiguration
           darwin.apple_sdk.frameworks.CoreServices
-        ];
+        ]
+        ++
+          lib.optionals
+            (builtins.elem system [
+              "aarch64-darwin"
+              "aarch64-linux"
+              "x86_64-linux"
+            ])
+            [
+              neovide
+            ];
     };
   };
 }
