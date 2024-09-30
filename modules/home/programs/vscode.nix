@@ -68,6 +68,7 @@ in
           ms-vscode.cpptools
         ];
       userSettings = {
+        "[css]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[html]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[javascript]" = {
           "editor.defaultFormatter" = "esbenp.prettier-vscode";
