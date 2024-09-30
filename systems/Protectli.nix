@@ -13,34 +13,12 @@
       enable = true;
       externalInterface = "enp1s0";
       internalInterfaces = [
-        "enp2s0"
-        "enp3s0"
-        "enp4s0"
+        "br0"
       ];
     };
     # Port 53 is for DNS, 22 is for SSH, 67 is for DHCP
     firewall.interfaces = {
-      enp2s0 = {
-        allowedTCPPorts = [
-          53
-          22
-        ];
-        allowedUDPPorts = [
-          53
-          67
-        ];
-      };
-      enp3s0 = {
-        allowedTCPPorts = [
-          53
-          22
-        ];
-        allowedUDPPorts = [
-          53
-          67
-        ];
-      };
-      enp4s0 = {
+      br0 = {
         allowedTCPPorts = [
           53
           22
