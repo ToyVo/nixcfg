@@ -82,11 +82,19 @@
         matchConfig.Name = "enp2s0 enp3s0 enp4s0";
         networkConfig.Bridge = "br0";
       };
+      br0.matchConfig.Name = "br0";
     };
     netdevs = {
       br0.netdevConfig = {
         Kind = "bridge";
         Name = "br0";
+        MACAddress = "none";
+      };
+    };
+    links = {
+      br0 = {
+        matchConfig.OriginalName = "br0";
+        linkConfig.MACAddressPolicy = "none";
       };
     };
   };
