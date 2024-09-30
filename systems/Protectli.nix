@@ -82,7 +82,10 @@
         matchConfig.Name = "enp2s0 enp3s0 enp4s0";
         networkConfig.Bridge = "br0";
       };
-      br0.matchConfig.Name = "br0";
+      br0 = {
+        matchConfig.Name = "br0";
+        networkConfig.Address = "192.168.0.1/24";
+      };
     };
     netdevs = {
       br0.netdevConfig = {
@@ -106,9 +109,10 @@
     kea.dhcp4 = {
       enable = true;
       settings = {
-        interfaces-config.interfaces = [
-          "br0"
-        ];
+        interfaces-config = {
+          interfaces = [ "br0" ];
+          dhcp-socket-type = "raw";
+        };
         lease-database = {
           type = "memfile";
           persist = true;
