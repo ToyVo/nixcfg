@@ -70,7 +70,7 @@
         }
         # Nix package exists but unavailable on darwin
         {
-          name = "firefox@developer-edition";
+          name = "firefox";
           greedy = true;
         }
         {

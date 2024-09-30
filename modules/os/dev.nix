@@ -48,7 +48,6 @@ in
           ccache
           cmake
           config.environment.pythonPackage
-          deno
           dfu-util
           dioxus-cli
           flex
@@ -83,6 +82,7 @@ in
               "x86_64-linux"
             ])
             [
+              deno
               neovide
             ];
     };
