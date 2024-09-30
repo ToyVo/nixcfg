@@ -1,5 +1,5 @@
 {
-  kea.dhcp4 = {
+  services.kea.dhcp4 = {
     enable = true;
     settings = {
       interfaces-config = {
