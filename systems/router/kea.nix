@@ -6,6 +6,7 @@
         interfaces = [
           "br0"
         ];
+        dhcp-socket-type = "raw";
       };
       lease-database = {
         name = "/var/lib/kea/dhcp4.leases";
@@ -19,6 +20,7 @@
       valid-lifetime = 3600 * 9;
       subnet4 = [
         {
+          id = 1;
           pools = [
             {
               pool = "10.1.0.64 - 10.1.0.254";
