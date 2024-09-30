@@ -69,6 +69,27 @@
   userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;
+  systemd.network = {
+    enable = true;
+    networks = {
+      wan0 = {
+        matchConfig.Name = "enp1s0";
+        networkConfig.DHCP = "ipv4";
+        networkConfig.IPv6AcceptRA = true;
+        linkConfig.RequiredForOnline = "routable";
+      };
+      lan0 = {
+        matchConfig.Name = "enp2s0 enp3s0 enp4s0";
+        networkConfig.Bridge = "br0";
+      };
+    };
+    netdevs = {
+      br0.netdevConfig = {
+        Kind = "bridge";
+        Name = "br0";
+      };
+    };
+  };
   services = {
     openssh = {
       enable = true;
@@ -78,9 +99,7 @@
       enable = true;
       settings = {
         interfaces-config.interfaces = [
-          "enp2s0"
-          "enp3s0"
-          "enp4s0"
+          "br0"
         ];
         lease-database = {
           type = "memfile";
