@@ -35,7 +35,7 @@ in
         ]
         ++ lib.optionals stdenv.isLinux [
           element-desktop
-          firefox-devedition-bin
+          firefox-bin
           yubikey-manager-qt
           yubioath-flutter
         ]
