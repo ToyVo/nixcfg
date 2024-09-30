@@ -1,14 +1,10 @@
-# TODO: I plan on switching to this over systemd networkd but not finished yet, need more research on kea configuration
-# probably a good oportunity to implement this on the backup router, Protectli
 {
   kea.dhcp4 = {
     enable = true;
     settings = {
       interfaces-config = {
         interfaces = [
-          "enp3s0"
-          "enp4s0"
-          "enp5s0"
+          "br0"
         ];
       };
       lease-database = {
@@ -106,7 +102,7 @@
             # Mac Mini m1 (Ethernet)
             {
               hostname = "MacMini-M1";
-              ip-address = "10.1.1.11";
+              ip-address = "10.1.0.11";
               # Ethernet
               hw-address = "4c:20:b8:de:e4:01";
               # Wifi
@@ -116,9 +112,9 @@
               hostname = "MacMini-Intel";
               ip-address = "10.1.0.12";
               # Ethernet
-              # hw-address = "14:c2:13:ed:e6:ed";
+              hw-address = "14:c2:13:ed:e6:ed";
               # Wifi
-              hw-address = "f0:18:98:8a:6d:ee";
+              # hw-address = "f0:18:98:8a:6d:ee";
             }
           ];
         }

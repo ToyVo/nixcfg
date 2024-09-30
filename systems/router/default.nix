@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    ./static-leases.nix
+    ./kea.nix
     ./virtual-hosts.nix
   ];
 
@@ -23,81 +23,26 @@
       enable = true;
       externalInterface = "enp2s0";
       internalInterfaces = [
-        "enp3s0"
-        "enp4s0"
-        "enp5s0"
-        "cdnet"
-        "cdiot"
-        "cdguest"
+        "br0"
       ];
     };
     firewall = {
       enable = true;
       # Port 53 is for DNS, 22 is for SSH, 67/68 is for DHCP, 80 is for HTTP, 443 is for HTTPS
-      interfaces.enp3s0.allowedTCPPorts = [
-        53
-        22
-        80
-        443
-      ];
-      interfaces.enp3s0.allowedUDPPorts = [
-        53
-        67
-        68
-        443
-      ];
-      interfaces.enp4s0.allowedTCPPorts = [
-        53
-        22
-        80
-        443
-      ];
-      interfaces.enp4s0.allowedUDPPorts = [
-        53
-        67
-        68
-        443
-      ];
-      interfaces.enp5s0.allowedTCPPorts = [
-        53
-        22
-        80
-        443
-      ];
-      interfaces.enp5s0.allowedUDPPorts = [
-        53
-        67
-        68
-        443
-      ];
-      interfaces.cdnet.allowedTCPPorts = [
-        53
-        22
-        80
-        443
-      ];
-      interfaces.cdnet.allowedUDPPorts = [
-        53
-        67
-        68
-        443
-      ];
-      interfaces.cdiot.allowedTCPPorts = [ 53 ];
-      interfaces.cdiot.allowedUDPPorts = [
-        53
-        67
-        68
-      ];
-      interfaces.cdguest.allowedTCPPorts = [
-        53
-        80
-        443
-      ];
-      interfaces.cdguest.allowedUDPPorts = [
-        53
-        67
-        68
-      ];
+      interfaces.br0 = {
+        allowedTCPPorts = [
+          53
+          22
+          80
+          443
+        ];
+        allowedUDPPorts = [
+          53
+          67
+          68
+          443
+        ];
+      };
     };
   };
   boot = {
@@ -122,7 +67,7 @@
   systemd = {
     network = {
       enable = true;
-      networks."10-wan0" = {
+      networks.wan0 = {
         matchConfig.Name = "enp2s0";
         networkConfig.DHCP = "ipv4";
         dhcpV4Config = {
@@ -130,94 +75,26 @@
         };
         linkConfig.RequiredForOnline = "routable";
       };
-      networks."20-lan" = {
-        matchConfig.Name = "enp3s0";
-        address = [ "10.1.0.1/24" ];
-        vlan = [
-          "cdnet"
-          "cdiot"
-          "cdguest"
-        ];
+      networks.lan0 = {
+        matchConfig.Name = "enp3s0 enp4s0 enp5s0";
+        networkConfig.Bridge = "br0";
+      };
+      networks.br0 = {
+        matchConfig.Name  = "br0";
         networkConfig = {
-          DHCPServer = true;
+          Address = "10.1.0.1/24";
           IPMasquerade = "ipv4";
           MulticastDNS = true;
         };
-        dhcpServerConfig.DNS = [ "10.1.0.1" ];
-        linkConfig.RequiredForOnline = "no";
       };
-      networks."30-lan" = {
-        matchConfig.Name = "enp4s0";
-        address = [ "10.1.1.1/24" ];
-        networkConfig = {
-          DHCPServer = true;
-          IPMasquerade = "ipv4";
-          MulticastDNS = true;
-        };
-        dhcpServerConfig.DNS = [ "10.1.0.1" ];
-        linkConfig.RequiredForOnline = "no";
+      netdevs.br0.netdevConfig = {
+        Name = "br0";
+        Kind = "bridge";
+        MACAddress = "none";
       };
-      networks."40-lan" = {
-        matchConfig.Name = "enp5s0";
-        address = [ "10.1.2.1/24" ];
-        networkConfig = {
-          DHCPServer = true;
-          IPMasquerade = "ipv4";
-          MulticastDNS = true;
-        };
-        dhcpServerConfig.DNS = [ "10.1.0.1" ];
-        linkConfig.RequiredForOnline = "no";
-      };
-      netdevs."21-cdnet" = {
-        netdevConfig = {
-          Name = "cdnet";
-          Kind = "vlan";
-        };
-        vlanConfig.Id = 10;
-      };
-      netdevs."22-cdiot" = {
-        netdevConfig = {
-          Name = "cdiot";
-          Kind = "vlan";
-        };
-        vlanConfig.Id = 20;
-      };
-      netdevs."23-cdguest" = {
-        netdevConfig = {
-          Name = "cdguest";
-          Kind = "vlan";
-        };
-        vlanConfig.Id = 30;
-      };
-      networks."21-cdnet" = {
-        matchConfig.Name = "cdnet";
-        address = [ "10.1.10.1/24" ];
-        networkConfig = {
-          DHCPServer = true;
-          IPMasquerade = "ipv4";
-        };
-        dhcpServerConfig.DNS = [ "10.1.0.1" ];
-        linkConfig.RequiredForOnline = "no";
-      };
-      networks."22-cdiot" = {
-        matchConfig.Name = "cdiot";
-        address = [ "10.1.20.1/24" ];
-        networkConfig = {
-          DHCPServer = true;
-          IPMasquerade = "ipv4";
-        };
-        dhcpServerConfig.DNS = [ "10.1.0.1" ];
-        linkConfig.RequiredForOnline = "no";
-      };
-      networks."23-cdguest" = {
-        matchConfig.Name = "cdguest";
-        address = [ "10.1.30.1/24" ];
-        networkConfig = {
-          DHCPServer = true;
-          IPMasquerade = "ipv4";
-        };
-        dhcpServerConfig.DNS = [ "10.1.0.1" ];
-        linkConfig.RequiredForOnline = "no";
+      links.br0 = {
+        matchConfig.OriginalName = "br0";
+        linkConfig.MACAddressPolicy = "none";
       };
     };
     services = {
