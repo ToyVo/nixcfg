@@ -29,6 +29,10 @@
         openFirewall = true;
         datadir = "/minecraft-data";
       };
+      minecraft2 = {
+        openFirewall = true;
+        datadir = "/minecraft-geyser-data";
+      };
       terraria = {
         openFirewall = true;
         datadir = "/terraria-data";
