@@ -29,7 +29,7 @@
         openFirewall = true;
         datadir = "/minecraft-data";
       };
-      minecraft2 = {
+      minecraft_geyser = {
         openFirewall = true;
         datadir = "/minecraft-geyser-data";
       };

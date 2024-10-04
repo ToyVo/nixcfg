@@ -666,11 +666,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1728001146,
-        "narHash": "sha256-5cWSm4as4Sq7gKuR5EWmQ3evvA3xN/d2Cv4ZwIwUi0Y=",
+        "lastModified": 1728002623,
+        "narHash": "sha256-wRqTR+VeJftznP5t2uDbiJ7ngERoxmx0YGOKCK3Rrwg=",
         "owner": "toyvo",
         "repo": "discord_bot",
-        "rev": "d91fba4c38245c68fe753655aae5ebca546b72e4",
+        "rev": "a47a0f95989550cab826af7d8b552601c156707d",
         "type": "github"
       },
       "original": {
