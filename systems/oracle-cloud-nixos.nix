@@ -32,11 +32,13 @@
       env_file = config.sops.secrets."discord_bot.env".path;
       minecraft = {
         openFirewall = true;
-        datadir = "/minecraft-data";
+        datadir = "/minecraft-modded-data";
+        backupdir = "/minecraft-modded-backup";
       };
       minecraft_geyser = {
         openFirewall = true;
         datadir = "/minecraft-geyser-data";
+        backupdir = "/minecraft-geyser-backup";
       };
       terraria = {
         openFirewall = true;
