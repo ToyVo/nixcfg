@@ -9,13 +9,18 @@
     ];
     binfmt.emulatedSystems = [ "x86_64-linux" ];
   };
-  networking.hostName = "oracle-cloud-nixos";
-  networking.firewall.allowedTCPPorts = [
-    443
-  ];
-  networking.firewall.allowedUDPPorts = [
-    443
-  ];
+  containerPresets.podman.enable = true;
+  networking = {
+    hostName = "oracle-cloud-nixos";
+    firewall = {
+      allowedTCPPorts = [
+        443
+      ];
+      allowedUDPPorts = [
+        443
+      ];
+    };
+  };
   profiles.defaults.enable = true;
   services = {
     openssh = {
