@@ -17,6 +17,7 @@
   sops-nix,
   nur,
   nixos-wsl,
+  arion,
   ...
 }@inputs:
 let
@@ -49,6 +50,7 @@ let
       inherit system pkgs;
       specialArgs = specialArgs;
       modules = [
+        arion.nixosModules.arion
         catppuccin.nixosModules.catppuccin
         disko.nixosModules.disko
         home-manager.nixosModules.default

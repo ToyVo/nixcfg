@@ -20,7 +20,7 @@ in
 
   config = lib.mkIf cfg.enable {
     containerPresets.podman.enable = lib.mkDefault true;
-    virtualisation.oci-containers.containers.open-webui = {
+    virtualisation.arion.projects.open-webui.settings.services.open-webui.service = {
       image = "ghcr.io/open-webui/open-webui:main";
       ports = [ "${toString cfg.port}:8080" ];
       volumes = [

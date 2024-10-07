@@ -2,47 +2,48 @@
   description = "Collin Diekvoss Nix Configurations";
 
   inputs = {
-    nixos.url = "github:nixos/nixpkgs/nixos-24.05";
-    nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nix-darwin = {
-      url = "github:lnl7/nix-darwin";
+    arion = {
+      url = "github:hercules-ci/arion";
       inputs.nixpkgs.follows = "nixos-unstable";
     };
+    apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
+    catppuccin.url = "github:catppuccin/nix";
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs.nixpkgs.follows = "nixos-unstable";
+    };
+    discord_bot.url = "github:toyvo/discord_bot";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixos-unstable";
+    };
+    flake-parts.url = "github:hercules-ci/flake-parts";
     home-manager = {
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixos-unstable";
+    };
+    jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
+    mkAlias.url = "github:reckenrode/mkAlias";
+    nh_darwin.url = "github:toyvo/nh_darwin";
+    nix-darwin = {
+      url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixos-unstable";
     };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixos-unstable";
     };
-    # Hardware
+    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     nixos-hardware.url = "github:nixos/nixos-hardware";
-    apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
-    jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
-    # Applications
-    discord_bot.url = "github:toyvo/discord_bot";
-    mkAlias.url = "github:reckenrode/mkAlias";
-    nh_darwin.url = "github:toyvo/nh_darwin";
+    nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-wsl.url = "github:nix-community/nixos-wsl";
+    nixos.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
     nixvim.url = "github:nix-community/nixvim";
+    nur.url = "github:nix-community/nur";
     plasma-manager.url = "github:pjones/plasma-manager";
     rust-overlay.url = "github:oxalica/rust-overlay";
     sops-nix.url = "github:Mic92/sops-nix";
-    # Misc sources
-    catppuccin.url = "github:catppuccin/nix";
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixos-unstable";
-    };
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
-    nixos-wsl.url = "github:nix-community/nixos-wsl";
-    nur.url = "github:nix-community/nur";
-    devshell = {
-      url = "github:numtide/devshell";
-      inputs.nixpkgs.follows = "nixos-unstable";
-    };
   };
 
   outputs =

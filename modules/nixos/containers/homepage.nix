@@ -20,7 +20,7 @@ in
 
   config = lib.mkIf cfg.enable {
     containerPresets.podman.enable = lib.mkDefault true;
-    virtualisation.oci-containers.containers.homepage = {
+    virtualisation.arion.projects.homepage.settings.services.homepage.service = {
       image = "ghcr.io/gethomepage/homepage:latest";
       ports = [ "${toString cfg.port}:3000" ];
       volumes = [
