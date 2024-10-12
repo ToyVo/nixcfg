@@ -1820,7 +1820,6 @@
       },
       "original": {
         "owner": "toyvo",
-        "ref": "rename",
         "repo": "nh_darwin",
         "type": "github"
       }

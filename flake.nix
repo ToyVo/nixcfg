@@ -24,7 +24,7 @@
     };
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     mkAlias.url = "github:reckenrode/mkAlias";
-    nh_darwin.url = "github:toyvo/nh_darwin/rename";
+    nh_darwin.url = "github:toyvo/nh_darwin";
     nix-darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixos-unstable";
