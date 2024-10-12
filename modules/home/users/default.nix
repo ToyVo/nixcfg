@@ -21,9 +21,6 @@ in
 
   config = lib.mkIf cfg.defaults.enable {
     home = {
-      shellAliases = {
-        nh = "nh_darwin";
-      };
       stateVersion = "24.11";
       sessionPath =
         lib.optionals config.programs.volta.enable [
