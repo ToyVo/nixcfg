@@ -8,15 +8,17 @@
     samba = {
       enable = true;
       openFirewall = true;
-      extraConfig = ''
-        netbios name = nas
-        security = user
-        server role = standalone server
-        hosts allow = 10.1.0.0/24 127.0.0.1 localhost
-        hosts deny = 0.0.0.0/0
-        guest account = nobody
-        map to guest = bad user
-      '';
+      settings = {
+        global = {
+          "netbios name" = "nas";
+          security = "user";
+          "server role" = "standalone";
+          "hosts allow" = "10.1.0.0/24 127.0.0.1 localhost";
+          "hosts deny" = "0.0.0.0/0";
+          "guest account" = "nobody";
+          "map to guest" = "bad user";
+        };
+      };
       shares = {
         public = {
           path = "/mnt/POOL/Public";
