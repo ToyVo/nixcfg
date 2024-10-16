@@ -67,12 +67,6 @@
       enable = true;
       root = "/var/www/";
     };
-    surrealdb = {
-      enable = true;
-      extraFlags = [
-        "-A" "--user" "root" "--pass" "$(echo /run/secrets/surrealdb_root_pass)"
-      ];
-    };
   };
   security.acme = {
     acceptTerms = true;
