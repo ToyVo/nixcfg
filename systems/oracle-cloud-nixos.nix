@@ -22,6 +22,9 @@
     };
   };
   profiles.defaults.enable = true;
+  environment.systemPackages = with pkgs; [
+    packwiz
+  ];
   services = {
     openssh = {
       enable = true;
