@@ -32,6 +32,7 @@ in
         with pkgs;
         [
           gimp
+          inkscape
         ]
         ++ lib.optionals stdenv.isLinux [
           element-desktop
