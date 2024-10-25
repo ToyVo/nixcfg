@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 {
   hardware.cpu.amd.updateMicrocode = true;
   networking.hostName = "HP-Envy";
@@ -21,6 +21,7 @@
   profiles = {
     defaults.enable = true;
     gui.enable = true;
+    gaming.enable = true;
   };
   userPresets.toyvo.enable = true;
   userPresets.chloe.enable = true;
@@ -40,22 +41,5 @@
     enable = true;
     enable32Bit = true;
   };
-  environment.systemPackages = with pkgs; [
-    discord
-    heroic
-    lutris
-    mangohud
-    prismlauncher
-    protonup
-    r2modman
-    steam
-    steamPackages.steamcmd
-    (wrapOBS {
-      plugins = with obs-studio-plugins; [
-        obs-gstreamer
-        obs-vaapi
-        obs-vkcapture
-      ];
-    })
-  ];
+  home-manager.users.${config.userPresets.toyvo.name}.programs.vscode.enable = lib.mkForce false;
 }

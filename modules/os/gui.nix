@@ -52,7 +52,7 @@ in
               "x86_64-linux"
             ])
             [
-              logseq
+              # logseq
               protonmail-desktop
             ]
         ++ lib.optionals stdenv.isDarwin [

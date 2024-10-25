@@ -27,7 +27,7 @@ in
       protonup
       r2modman
       steam
-      steamPackages.steamcmd
+      steamcmd
       (wrapOBS {
         plugins = with obs-studio-plugins; [
           obs-gstreamer
