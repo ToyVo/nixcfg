@@ -69,6 +69,10 @@
       enable = true;
       root = "/var/www/";
     };
+    surrealdb = {
+      enable = true;
+      dbPath = "rocksdb:///var/lib/surrealdb/";
+    };
   };
   security.acme = {
     acceptTerms = true;
@@ -95,7 +99,7 @@
     cloudflare_global_api_key = { };
     cloudflare_w_dns_r_zone_token = { };
     "discord_bot.env" = { };
-    surrealdb_root_pass = { };
+    surreal_pass = { };
   };
   users.users.caddy.extraGroups = [ "acme" ];
   userPresets.toyvo.enable = true;
