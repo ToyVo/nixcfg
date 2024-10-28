@@ -9,7 +9,7 @@
   services.github-runners = {
     nh_darwin = {
       enable = true;
-      name = config.networking.hostName;
+      name = "MacMini-Intel";
       tokenFile = "/var/secrets/gha_nh_darwin";
       url = "https://github.com/toyvo/nh_darwin";
     };
