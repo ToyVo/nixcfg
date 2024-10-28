@@ -20,7 +20,7 @@
     nh_darwin = {
       enable = true;
       name = config.networking.hostName;
-      tokenFile = "/secrets/gha_nh_darwin";
+      tokenFile = "/var/secrets/gha_nh_darwin";
       url = "https://github.com/toyvo/nh_darwin";
     };
   };
