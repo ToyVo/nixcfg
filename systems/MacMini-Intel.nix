@@ -1,4 +1,4 @@
-{ config, ... }:
+{ pkgs, ... }:
 {
   profiles = {
     defaults.enable = true;
@@ -12,6 +12,11 @@
       name = "MacMini-Intel";
       tokenFile = "/var/secrets/gha_nh_darwin";
       url = "https://github.com/toyvo/nh_darwin";
+      extraPackages = with pkgs; [
+        nixVersions.nix_2_22
+        jq
+        cachix
+      ];
     };
   };
 }
