@@ -36,6 +36,7 @@ in
           ++ [
             age
             broot
+            cachix
             curl
             dig
             dogdns

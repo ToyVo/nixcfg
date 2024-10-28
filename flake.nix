@@ -166,11 +166,13 @@
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
-      "https://cosmic.cachix.org/"
+      "https://cosmic.cachix.org"
+      "https://toyvo.cachix.org"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
+      "toyvo.cachix.org-1:s++CG1te6YaS9mjICre0Ybbya2o/S9fZIyDNGiD4UXs="
     ];
   };
 }

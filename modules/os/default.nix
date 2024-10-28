@@ -22,7 +22,7 @@ in
 
   config = lib.mkIf cfg.defaults.enable {
     home-manager = {
-      backupFileExtension = "${toString self.sourceInfo.lastModified}.old";
+      backupFileExtension = "${self.shortRev or self.dirtyShortRev}.old";
       useGlobalPkgs = true;
       useUserPackages = true;
       sharedModules = [
@@ -41,11 +41,13 @@ in
         substituters = config.nix.settings.trusted-substituters;
         trusted-substituters = [
           "https://nix-community.cachix.org"
-          "https://cosmic.cachix.org/"
+          "https://cosmic.cachix.org"
+          "https://toyvo.cachix.org"
         ];
         trusted-public-keys = [
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
+          "toyvo.cachix.org-1:s++CG1te6YaS9mjICre0Ybbya2o/S9fZIyDNGiD4UXs="
         ];
       };
       nixPath = [

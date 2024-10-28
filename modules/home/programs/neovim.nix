@@ -13,6 +13,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       nil
+      nixd
       nixfmt-rfc-style
     ];
     programs.nixvim = {
