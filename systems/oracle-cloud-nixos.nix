@@ -97,6 +97,17 @@
           cachix
         ];
       };
+      nur = {
+        enable = true;
+        name = config.networking.hostName;
+        tokenFile = config.sops.secrets.gha_nur.path;
+        url = "https://github.com/toyvo/nur-packages";
+        extraPackages = with pkgs; [
+          nixVersions.nix_2_22
+          jq
+          cachix
+        ];
+      };
     };
   };
   security.acme = {
@@ -126,6 +137,10 @@
       sopsFile = ../secrets/oracle.yaml;
     };
     gha_nh_darwin = {
+      format = "yaml";
+      sopsFile = ../secrets/oracle.yaml;
+    };
+    gha_nur = {
       format = "yaml";
       sopsFile = ../secrets/oracle.yaml;
     };
