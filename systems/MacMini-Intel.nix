@@ -18,5 +18,16 @@
         cachix
       ];
     };
+    nur-packages = {
+      enable = true;
+      name = "MacMini-Intel";
+      tokenFile = "/var/secrets/gha_nur";
+      url = "https://github.com/toyvo/nur-packages";
+      extraPackages = with pkgs; [
+        nixVersions.nix_2_22
+        jq
+        cachix
+      ];
+    };
   };
 }
