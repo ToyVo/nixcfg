@@ -74,11 +74,14 @@
       enable = true;
       dbPath = "rocksdb:///var/lib/surrealdb/";
     };
+    remote-builds.server.enable = true;
     github-runners = {
       discord_bot = {
         enable = true;
         name = config.networking.hostName;
         tokenFile = config.sops.secrets.gha_discord_bot.path;
+        user = "nixremote";
+        group = "nixremote";
         url = "https://github.com/toyvo/discord_bot";
         extraPackages = with pkgs; [
           nixVersions.nix_2_22
@@ -90,6 +93,8 @@
         enable = true;
         name = config.networking.hostName;
         tokenFile = config.sops.secrets.gha_nh_darwin.path;
+        user = "nixremote";
+        group = "nixremote";
         url = "https://github.com/toyvo/nh_darwin";
         extraPackages = with pkgs; [
           nixVersions.nix_2_22
@@ -101,6 +106,8 @@
         enable = true;
         name = config.networking.hostName;
         tokenFile = config.sops.secrets.gha_nur.path;
+        user = "nixremote";
+        group = "nixremote";
         url = "https://github.com/toyvo/nur-packages";
         extraPackages = with pkgs; [
           nixVersions.nix_2_22
@@ -135,14 +142,20 @@
     gha_discord_bot = {
       format = "yaml";
       sopsFile = ../secrets/oracle.yaml;
+      owner = "nixremote";
+      group = "nixremote";
     };
     gha_nh_darwin = {
       format = "yaml";
       sopsFile = ../secrets/oracle.yaml;
+      owner = "nixremote";
+      group = "nixremote";
     };
     gha_nur = {
       format = "yaml";
       sopsFile = ../secrets/oracle.yaml;
+      owner = "nixremote";
+      group = "nixremote";
     };
     cloudflare_global_api_key = { };
     cloudflare_w_dns_r_zone_token = { };

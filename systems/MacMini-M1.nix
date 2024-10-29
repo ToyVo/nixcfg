@@ -16,6 +16,7 @@
       greedy = true;
     }
   ];
+  nix.settings.trusted-users = [ "_github-runner" ];
   services.github-runners = {
     nh_darwin = {
       enable = true;
