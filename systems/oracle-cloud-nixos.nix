@@ -97,7 +97,7 @@
           cachix
         ];
       };
-      nur = {
+      nur-packages = {
         enable = true;
         name = config.networking.hostName;
         tokenFile = config.sops.secrets.gha_nur.path;
