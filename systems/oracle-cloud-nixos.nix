@@ -75,6 +75,17 @@
       dbPath = "rocksdb:///var/lib/surrealdb/";
     };
     github-runners = {
+      discord_bot = {
+        enable = true;
+        name = config.networking.hostName;
+        tokenFile = config.sops.secrets.gha_discord_bot.path;
+        url = "https://github.com/toyvo/nh_darwin";
+        extraPackages = with pkgs; [
+          nixVersions.nix_2_22
+          jq
+          cachix
+        ];
+      };
       nh_darwin = {
         enable = true;
         name = config.networking.hostName;
@@ -110,10 +121,12 @@
       };
   };
   sops.secrets = {
+    gha_discord_bot = {
+      format = "yaml";
+      sopsFile = ../secrets/oracle.yaml;
+    };
     gha_nh_darwin = {
       format = "yaml";
-      owner = "_github-runner";
-      group = "_github-runner";
       sopsFile = ../secrets/oracle.yaml;
     };
     cloudflare_global_api_key = { };
