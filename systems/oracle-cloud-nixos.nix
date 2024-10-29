@@ -17,7 +17,8 @@
         443
       ];
       allowedUDPPorts = [
-        53 443
+        53
+        443
       ];
     };
   };
@@ -73,6 +74,19 @@
       enable = true;
       dbPath = "rocksdb:///var/lib/surrealdb/";
     };
+    github-runners = {
+      nh_darwin = {
+        enable = true;
+        name = config.networking.hostName;
+        tokenFile = config.sops.secrets.gha_nh_darwin.path;
+        url = "https://github.com/toyvo/nh_darwin";
+        extraPackages = with pkgs; [
+          nixVersions.nix_2_22
+          jq
+          cachix
+        ];
+      };
+    };
   };
   security.acme = {
     acceptTerms = true;
@@ -96,6 +110,12 @@
       };
   };
   sops.secrets = {
+    gha_nh_darwin = {
+      format = "yaml";
+      owner = "_github-runner";
+      group = "_github-runner";
+      sopsFile = ../secrets/oracle.yaml;
+    };
     cloudflare_global_api_key = { };
     cloudflare_w_dns_r_zone_token = { };
     "discord_bot.env" = { };
