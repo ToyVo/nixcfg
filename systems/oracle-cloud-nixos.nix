@@ -79,7 +79,7 @@
         enable = true;
         name = config.networking.hostName;
         tokenFile = config.sops.secrets.gha_discord_bot.path;
-        url = "https://github.com/toyvo/nh_darwin";
+        url = "https://github.com/toyvo/discord_bot";
         extraPackages = with pkgs; [
           nixVersions.nix_2_22
           jq
