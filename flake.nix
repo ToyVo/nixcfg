@@ -178,6 +178,10 @@
               help = "unlock secrets that can be unencrypted on disk";
             }
             {
+              package = self'.packages.sops-lock;
+              help = "lock secrets that can be unencrypted on disk";
+            }
+            {
               package = self'.packages.sops-ssh-to-age;
               help = "convert ssh host key to age and place it in the default sops location for editing";
             }
