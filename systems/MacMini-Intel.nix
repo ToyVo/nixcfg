@@ -11,7 +11,7 @@
   services.github-runners = {
     nh_darwin = {
       enable = true;
-      name = "MacMini-Intel";
+      name = "MacMini-Intel_nh";
       tokenFile = "/var/secrets/gha_nh_darwin";
       url = "https://github.com/toyvo/nh_darwin";
       extraPackages = with pkgs; [
@@ -21,7 +21,7 @@
     };
     nur-packages = {
       enable = true;
-      name = "MacMini-Intel";
+      name = "MacMini-Intel_nur";
       tokenFile = "/var/secrets/gha_nur";
       url = "https://github.com/toyvo/nur-packages";
       extraPackages = with pkgs; [
