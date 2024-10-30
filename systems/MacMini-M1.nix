@@ -17,6 +17,7 @@
     }
   ];
   nix.settings.trusted-users = [ "_github-runner" ];
+  users.users._github-runner.home = "/private/var/lib/github-runners";
   services.github-runners = {
     nh_darwin = {
       enable = true;

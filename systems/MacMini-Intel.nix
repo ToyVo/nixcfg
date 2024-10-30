@@ -6,6 +6,7 @@
     gui.enable = true;
   };
   userPresets.toyvo.enable = true;
+  users.users._github-runner.home = "/private/var/lib/github-runners";
   nix.settings.trusted-users = [ "_github-runner" ];
   services.github-runners = {
     nh_darwin = {
