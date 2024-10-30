@@ -17,6 +17,7 @@ in
     awscli2
     llama-cpp
     ollama
+    protonmail-bridge
   ];
   environment.pythonPackages = with pkgs.python312Packages; [
     boto3
@@ -47,7 +48,7 @@ in
         greedy = true;
       }
       {
-        name = "prusaslicer";
+        name = "thunderbird";
         greedy = true;
       }
       {

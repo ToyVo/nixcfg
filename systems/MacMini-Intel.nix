@@ -16,7 +16,6 @@
       url = "https://github.com/toyvo/nh_darwin";
       extraPackages = with pkgs; [
         nixVersions.nix_2_22
-        jq
         cachix
       ];
     };
@@ -27,7 +26,6 @@
       url = "https://github.com/toyvo/nur-packages";
       extraPackages = with pkgs; [
         nixVersions.nix_2_22
-        jq
         cachix
       ];
     };

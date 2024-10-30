@@ -6,16 +6,6 @@
     gui.enable = true;
   };
   userPresets.toyvo.enable = true;
-  homebrew.casks = [
-    {
-      name = "prusaslicer";
-      greedy = true;
-    }
-    {
-      name = "google-chrome";
-      greedy = true;
-    }
-  ];
   nix.settings.trusted-users = [ "_github-runner" ];
   users.users._github-runner.home = lib.mkForce "/private/var/lib/github-runners";
   services.github-runners = {
@@ -26,7 +16,6 @@
       url = "https://github.com/toyvo/nh_darwin";
       extraPackages = with pkgs; [
         nixVersions.nix_2_22
-        jq
         cachix
       ];
     };
@@ -37,7 +26,6 @@
       url = "https://github.com/toyvo/nur-packages";
       extraPackages = with pkgs; [
         nixVersions.nix_2_22
-        jq
         cachix
       ];
     };
