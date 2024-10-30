@@ -40,7 +40,7 @@ let
       pkgs = self.lib.import_nixpkgs { inherit system; };
       pkgsStable = self.lib.import_nixpkgs {
         inherit system;
-        nixpkgs = inputs.nixos;
+        nixpkgs = inputs."nixos-24.05";
       };
       specialArgs = inputs // {
         inherit system pkgsStable;
@@ -83,7 +83,7 @@ let
       pkgs = self.lib.import_nixpkgs { inherit system; };
       pkgsStable = self.lib.import_nixpkgs {
         inherit system;
-        nixpkgs = inputs.nixos;
+        nixpkgs = inputs."nixos-24.05";
       };
       specialArgs = inputs // {
         inherit system pkgsStable;
@@ -115,7 +115,7 @@ let
       pkgs = self.lib.import_nixpkgs { inherit system; };
       pkgsStable = self.lib.import_nixpkgs {
         inherit system;
-        nixpkgs = inputs.nixos;
+        nixpkgs = inputs."nixos-24.05";
       };
       specialArgs = inputs // {
         inherit system pkgsStable;

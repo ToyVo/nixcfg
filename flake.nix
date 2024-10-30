@@ -36,8 +36,9 @@
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    "nixos-24.05".url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixos-wsl.url = "github:nix-community/nixos-wsl";
-    nixos.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
     nixvim.url = "github:nix-community/nixvim";
     nur.url = "github:nix-community/nur";
@@ -119,22 +120,43 @@
 
           packages = {
             sops-unlock = pkgs.writeShellScriptBin "sops-unlock" ''
-              git config diff.sops-decrypt.textconv "sops decrypt"
-              git config filter.sops-binary.smudge "sops decrypt --input-type binary --output-type binary --filename-override %f /dev/stdin"
-              git config filter.sops-binary.clean "sops encrypt --input-type binary --output-type binary --filename-override %f /dev/stdin"
-              git config filter.sops-binary.required "true"
-              git config filter.sops-env.smudge "sops decrypt --input-type env --output-type env --filename-override %f /dev/stdin"
-              git config filter.sops-env.clean "sops encrypt --input-type env --output-type env --filename-override %f /dev/stdin"
-              git config filter.sops-env.required "true"
-              git config filter.sops-ini.smudge "sops decrypt --input-type ini --output-type ini --filename-override %f /dev/stdin"
-              git config filter.sops-ini.clean "sops encrypt --input-type ini --output-type ini --filename-override %f /dev/stdin"
-              git config filter.sops-ini.required "true"
-              git config filter.sops-json.smudge "sops decrypt --input-type json --output-type json --filename-override %f /dev/stdin"
-              git config filter.sops-json.clean "sops encrypt --input-type json --output-type json --filename-override %f /dev/stdin"
-              git config filter.sops-json.required "true"
-              git config filter.sops-yaml.smudge "sops decrypt --input-type yaml --output-type yaml --filename-override %f /dev/stdin"
-              git config filter.sops-yaml.clean "sops encrypt --input-type yaml --output-type yaml --filename-override %f /dev/stdin"
-              git config filter.sops-yaml.required "true"
+              git config --local diff.sops-decrypt.textconv "sops decrypt"
+              git config --local filter.sops-binary.smudge "sops decrypt --input-type binary --output-type binary --filename-override %f /dev/stdin"
+              git config --local filter.sops-binary.clean "sops encrypt --input-type binary --output-type binary --filename-override %f /dev/stdin"
+              git config --local filter.sops-binary.required "true"
+              git config --local filter.sops-env.smudge "sops decrypt --input-type env --output-type env --filename-override %f /dev/stdin"
+              git config --local filter.sops-env.clean "sops encrypt --input-type env --output-type env --filename-override %f /dev/stdin"
+              git config --local filter.sops-env.required "true"
+              git config --local filter.sops-ini.smudge "sops decrypt --input-type ini --output-type ini --filename-override %f /dev/stdin"
+              git config --local filter.sops-ini.clean "sops encrypt --input-type ini --output-type ini --filename-override %f /dev/stdin"
+              git config --local filter.sops-ini.required "true"
+              git config --local filter.sops-json.smudge "sops decrypt --input-type json --output-type json --filename-override %f /dev/stdin"
+              git config --local filter.sops-json.clean "sops encrypt --input-type json --output-type json --filename-override %f /dev/stdin"
+              git config --local filter.sops-json.required "true"
+              git config --local filter.sops-yaml.smudge "sops decrypt --input-type yaml --output-type yaml --filename-override %f /dev/stdin"
+              git config --local filter.sops-yaml.clean "sops encrypt --input-type yaml --output-type yaml --filename-override %f /dev/stdin"
+              git config --local filter.sops-yaml.required "true"
+              rm secrets/secrets.nix
+              git checkout secrets/secrets.nix
+            '';
+            sops-lock = pkgs.writeShellScriptBin "sops-lock" ''
+              git config --local --unset diff.sops-decrypt.textconv
+              git config --local --unset filter.sops-binary.smudge
+              git config --local --unset filter.sops-binary.clean
+              git config --local --unset filter.sops-binary.required
+              git config --local --unset filter.sops-env.smudge
+              git config --local --unset filter.sops-env.clean
+              git config --local --unset filter.sops-env.required
+              git config --local --unset filter.sops-ini.smudge
+              git config --local --unset filter.sops-ini.clean
+              git config --local --unset filter.sops-ini.required
+              git config --local --unset filter.sops-json.smudge
+              git config --local --unset filter.sops-json.clean
+              git config --local --unset filter.sops-json.required
+              git config --local --unset filter.sops-yaml.smudge
+              git config --local --unset filter.sops-yaml.clean
+              git config --local --unset filter.sops-yaml.required
+              rm secrets/secrets.nix
               git checkout secrets/secrets.nix
             '';
             sops-ssh-to-age = pkgs.writeShellScriptBin "sops-ssh-to-age" ''

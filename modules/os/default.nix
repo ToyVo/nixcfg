@@ -3,9 +3,8 @@
   lib,
   self,
   pkgs,
-  nixos-unstable,
   ...
-}:
+}@inputs:
 let
   cfg = config.profiles;
 in
@@ -55,8 +54,11 @@ in
         ];
       };
       nixPath = [
-        "nixpkgs=${nixos-unstable}"
-        "nixos=${nixos-unstable}"
+        "nixpkgs=${inputs.nixpkgs-unstable}"
+        "nixos=${inputs.nixos-unstable}"
+        "nixpkgs-unstable=${inputs.nixpkgs-unstable}"
+        "nixos-unstable=${inputs.nixos-unstable}"
+        "nixos-24.05=${inputs."nixos-24.05"}"
       ];
     };
   };
