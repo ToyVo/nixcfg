@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   profiles = {
     defaults.enable = true;
@@ -17,7 +17,7 @@
     }
   ];
   nix.settings.trusted-users = [ "_github-runner" ];
-  users.users._github-runner.home = "/private/var/lib/github-runners";
+  users.users._github-runner.home = lib.mkForce "/private/var/lib/github-runners";
   services.github-runners = {
     nh_darwin = {
       enable = true;
