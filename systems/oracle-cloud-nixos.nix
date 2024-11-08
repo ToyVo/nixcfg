@@ -72,7 +72,7 @@
     };
     surrealdb = {
       enable = true;
-      dbPath = "rocksdb:///var/lib/surrealdb/";
+      extraFlags = [ "--user" "root" "--pass" "$(cat ${config.sops.secrets.surreal_pass})" ];
     };
     remote-builds.server.enable = true;
     github-runners = {
