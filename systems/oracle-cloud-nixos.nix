@@ -72,7 +72,7 @@
     };
     surrealdb = {
       enable = true;
-      extraFlags = [ "--user" "root" "--pass" "$(cat ${config.sops.secrets.surreal_pass})" ];
+      extraFlags = [ "--user" "root" "--pass" "$(cat ${config.sops.secrets.surreal_pass.path})" ];
     };
     remote-builds.server.enable = true;
     github-runners = {
