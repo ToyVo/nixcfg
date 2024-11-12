@@ -224,6 +224,13 @@ in
         "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix"
       ];
     };
+    oracle = nixosSystem {
+      system = "aarch64-linux";
+      nixosModules = [
+        ./oracle.nix
+        "${nixos-unstable}/nixos/modules/virtualisation/oci-image.nix"
+      ];
+    };
     oracle-cloud-nixos = nixosSystem {
       system = "aarch64-linux";
       nixosModules = [

@@ -25,7 +25,6 @@ in
     jax
     openai
     pymongo
-    sagemaker
     torch
     transformers
     typer
@@ -44,10 +43,6 @@ in
       }
       {
         name = "mongodb-compass";
-        greedy = true;
-      }
-      {
-        name = "thunderbird";
         greedy = true;
       }
       {
