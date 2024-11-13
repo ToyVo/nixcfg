@@ -70,10 +70,6 @@
       enable = true;
       root = "/var/www/";
     };
-    surrealdb = {
-      enable = true;
-      extraFlags = [ "--user" "root" "--pass" "$(cat ${config.sops.secrets.surreal_pass.path})" ];
-    };
     remote-builds.server.enable = true;
     github-runners = {
       discord_bot = {
