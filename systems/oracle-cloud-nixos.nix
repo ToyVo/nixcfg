@@ -70,7 +70,7 @@
       enable = true;
       root = "/var/www/";
     };
-    surrealdb.extraFlags = [ "--user" "--pass" ];
+    surrealdb.extraFlags = [ "--user" "$SURREAL_USER" "--pass" "$SURREAL_PASS" ];
     remote-builds.server.enable = true;
     github-runners = {
       discord_bot = {
