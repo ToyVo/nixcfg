@@ -147,7 +147,7 @@ in
       };
     };
     environment.systemPackages = [
-      config.sops.package
+      (pkgs.writeShellScriptBin "sops-nix-system" "${config.system.activationScripts.setupSecrets.text}")
     ];
   };
 }
