@@ -110,6 +110,10 @@
       };
     };
   };
+  systemd.services.surrealdb.preStart = ''
+    export SURREAL_USER=root
+    export SURREAL_PASS=$(cat ${config.sops.secrets.surreal_pass.path})
+  '';
   security.acme = {
     acceptTerms = true;
     certs =
