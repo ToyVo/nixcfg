@@ -70,7 +70,7 @@
       enable = true;
       root = "/var/www/";
     };
-    surrealdb.extraFlags = [ "--user" "$SURREAL_USER" "--pass" "$SURREAL_PASS" ];
+    surrealdb.extraFlags = [ "--user" "root" "--pass" "\"$(cat ${config.sops.secrets.surreal_pass.path})\"" ];
     remote-builds.server.enable = true;
     github-runners = {
       discord_bot = {
@@ -111,10 +111,6 @@
       };
     };
   };
-  systemd.services.surrealdb.preStart = ''
-    export SURREAL_USER=root
-    export SURREAL_PASS=$(cat ${config.sops.secrets.surreal_pass.path})
-  '';
   security.acme = {
     acceptTerms = true;
     certs =
