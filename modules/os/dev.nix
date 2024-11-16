@@ -77,7 +77,8 @@ in
         ++
           lib.optionals
             (builtins.elem system [
-              "aarch64-darwin"
+              # TODO: undo
+              # "aarch64-darwin"
               "aarch64-linux"
               "x86_64-linux"
             ])

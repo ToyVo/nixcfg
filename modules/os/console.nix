@@ -59,6 +59,7 @@ in
             nvd
             openssh
             openssl
+            rclone
             ripgrep
             rsync
             sops

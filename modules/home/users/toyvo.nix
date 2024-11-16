@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.profiles;
 in
@@ -13,7 +13,8 @@ in
         enable = true;
         nix-direnv.enable = true;
       };
-      rio.enable = cfg.gui.enable;
+      # TODO: undo
+      rio.enable = cfg.gui.enable && pkgs.stdenv.isLinux;
       vscode.enable = cfg.gui.enable;
       wezterm.enable = cfg.gui.enable;
       kitty.enable = cfg.gui.enable;
