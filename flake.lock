@@ -714,11 +714,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1731353950,
-        "narHash": "sha256-HTbIBNrQeKcb3PkqGSx/EKGzTcI/MshKFjFu+1yCFKY=",
+        "lastModified": 1731795167,
+        "narHash": "sha256-0JXBwNGoSWLlNk1TI+g/ifQCoK+Ix9eWpsMLzq9VRIg=",
         "owner": "toyvo",
         "repo": "discord_bot",
-        "rev": "bbeb0285403453f2de068d4fa4395e91725a99cc",
+        "rev": "3bf7722ca3c93b4f78fa4744f4a1df0202bc2a26",
         "type": "github"
       },
       "original": {
