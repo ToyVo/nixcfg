@@ -9,11 +9,11 @@
   users.users._github-runner.home = lib.mkForce "/private/var/lib/github-runners";
   nix.settings.trusted-users = [ "_github-runner" ];
   services.github-runners = {
-    nh_darwin = {
+    nh_plus = {
       enable = true;
       name = "MacMini-Intel_nh";
-      tokenFile = "/var/secrets/gha_nh_darwin";
-      url = "https://github.com/toyvo/nh_darwin";
+      tokenFile = "/var/secrets/gha_nh_plus";
+      url = "https://github.com/toyvo/nh_plus";
       extraPackages = with pkgs; [
         nixVersions.nix_2_22
         cachix

@@ -24,7 +24,7 @@
     };
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     mkAlias.url = "github:reckenrode/mkAlias";
-    nh_darwin.url = "github:toyvo/nh_darwin";
+    nh_plus.url = "github:toyvo/nh_plus";
     nix-darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixos-unstable";
@@ -36,7 +36,7 @@
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    "nixos-24.05".url = "github:nixos/nixpkgs/nixos-24.05";
+    "nixos-24.11".url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixos-wsl.url = "github:nix-community/nixos-wsl";
     nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";

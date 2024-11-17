@@ -58,7 +58,7 @@ in
         "nixos=${inputs.nixos-unstable}"
         "nixpkgs-unstable=${inputs.nixpkgs-unstable}"
         "nixos-unstable=${inputs.nixos-unstable}"
-        "nixos-24.05=${inputs."nixos-24.05"}"
+        "nixos-24.11=${inputs."nixos-24.11"}"
       ];
     };
   };

@@ -5,7 +5,7 @@
   home-manager,
   jovian,
   discord_bot,
-  nh_darwin,
+  nh_plus,
   nix-darwin,
   nix-index-database,
   nixos-cosmic,
@@ -40,7 +40,7 @@ let
       pkgs = self.lib.import_nixpkgs { inherit system; };
       pkgsStable = self.lib.import_nixpkgs {
         inherit system;
-        nixpkgs = inputs."nixos-24.05";
+        nixpkgs = inputs."nixos-24.11";
       };
       specialArgs = inputs // {
         inherit system pkgsStable;
@@ -55,7 +55,7 @@ let
         disko.nixosModules.disko
         home-manager.nixosModules.default
         discord_bot.nixosModules.discord_bot
-        nh_darwin.nixosModules.default
+        nh_plus.nixosModules.default
         nix-index-database.nixosModules.nix-index
         nixos-cosmic.nixosModules.default
         nixos-unstable.nixosModules.notDetected
@@ -83,7 +83,7 @@ let
       pkgs = self.lib.import_nixpkgs { inherit system; };
       pkgsStable = self.lib.import_nixpkgs {
         inherit system;
-        nixpkgs = inputs."nixos-24.05";
+        nixpkgs = inputs."nixos-24.11";
       };
       specialArgs = inputs // {
         inherit system pkgsStable;
@@ -94,7 +94,7 @@ let
       specialArgs = specialArgs;
       modules = [
         home-manager.darwinModules.default
-        nh_darwin.nixDarwinModules.prebuiltin
+        nh_plus.nixDarwinModules.prebuiltin
         nix-index-database.darwinModules.nix-index
         self.darwinModules.default
         nur.nixosModules.nur
@@ -115,7 +115,7 @@ let
       pkgs = self.lib.import_nixpkgs { inherit system; };
       pkgsStable = self.lib.import_nixpkgs {
         inherit system;
-        nixpkgs = inputs."nixos-24.05";
+        nixpkgs = inputs."nixos-24.11";
       };
       specialArgs = inputs // {
         inherit system pkgsStable;

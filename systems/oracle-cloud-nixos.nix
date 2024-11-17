@@ -85,13 +85,13 @@
           cachix
         ];
       };
-      nh_darwin = {
+      nh_plus = {
         enable = true;
         name = config.networking.hostName;
-        tokenFile = config.sops.secrets.gha_nh_darwin.path;
+        tokenFile = config.sops.secrets.gha_nh_plus.path;
         user = "nixremote";
         group = "nixremote";
-        url = "https://github.com/toyvo/nh_darwin";
+        url = "https://github.com/toyvo/nh_plus";
         extraPackages = with pkgs; [
           nixVersions.nix_2_22
           cachix
@@ -139,7 +139,7 @@
       owner = "nixremote";
       group = "nixremote";
     };
-    gha_nh_darwin = {
+    gha_nh_plus = {
       format = "yaml";
       sopsFile = ../secrets/oracle.yaml;
       owner = "nixremote";
