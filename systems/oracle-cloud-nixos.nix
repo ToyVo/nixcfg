@@ -34,7 +34,7 @@
     discord_bot = {
       enable = true;
       env_file = config.sops.secrets."discord_bot.env".path;
-      rclone_dir = "${config.users.users.${config.userPresets.toyvo.name}.home}/.config/rclone";
+      rclone_conf_file = "${config.users.users.${config.userPresets.toyvo.name}.home}/.config/rclone/rclone.conf";
       minecraft = {
         openFirewall = true;
         datadir = "/minecraft-modded-data";
