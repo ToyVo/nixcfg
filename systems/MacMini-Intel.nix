@@ -11,7 +11,7 @@
   services.github-runners = {
     nh_plus = {
       enable = true;
-      name = "MacMini-Intel_nh";
+      name = "MacMini-Intel_nh_plus";
       tokenFile = "/var/secrets/gha_nh_plus";
       url = "https://github.com/toyvo/nh_plus";
       extraPackages = with pkgs; [
