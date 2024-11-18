@@ -25,7 +25,7 @@ in
       mangohud
       prismlauncher
       protonup
-      r2modman
+      gale
       steam
       steamcmd
       (wrapOBS {
