@@ -146,7 +146,7 @@ in
         sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       };
     };
-    environment.systemPackages = [
+    environment.systemPackages = lib.optionals (config.system.activationScripts ? setupSecrets) [
       (pkgs.writeShellScriptBin "sops-nix-system" "${config.system.activationScripts.setupSecrets.text}")
     ];
   };
