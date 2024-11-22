@@ -12,6 +12,7 @@ keys:
   - &server_router age18gma0mvyr7kmg50ynev3d5rjqher3t92gutakw3m6jswzg72t9xqlpr3nl
   - &server_thinkpad age1cxc0z4q8mtsn7xzleaty2qazhe5zwdnkqe0uv6yeftmlea9j9clqefy4a3
   - &server_hp_envy age1eqy3c77fxulja8sjasp98lfvav3e7fc84wk3wd9jtnm427t8lf8qcf70pm
+  - &server_steamdeck_nixos age1wlrat6ckl34359tnqrww8jc0tlyedy33puzw9uvhszralfzcpaaqesg4ts
   - &admin_toyvo fcab5705add00d89bbf2e66cfab3032cc9513440
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini|nix)$
@@ -25,6 +26,7 @@ creation_rules:
       - *server_nas
       - *server_router
       - *server_thinkpad
+      - *server_steamdeck_nixos
       - *server_hp_envy
       pgp:
       - *admin_toyvo
