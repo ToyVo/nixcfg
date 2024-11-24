@@ -33,10 +33,6 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixos-unstable";
     };
-    nix-snapd = {
-      url = "github:nix-community/nix-snapd";
-      inputs.nixpkgs.follows = "nixos-unstable";
-    };
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";

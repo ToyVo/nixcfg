@@ -66,7 +66,6 @@
         };
       };
     };
-    snap.enable = true;
     static-web-server = {
       enable = true;
       root = "/var/www/";

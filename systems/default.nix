@@ -8,7 +8,6 @@
   nh_plus,
   nix-darwin,
   nix-index-database,
-  nix-snapd,
   nixos-cosmic,
   nixos-hardware,
   nixos-unstable,
@@ -58,7 +57,6 @@ let
         discord_bot.nixosModules.discord_bot
         nh_plus.nixosModules.default
         nix-index-database.nixosModules.nix-index
-        nix-snapd.nixosModules.default
         nixos-cosmic.nixosModules.default
         nixos-unstable.nixosModules.notDetected
         self.nixosModules.default
