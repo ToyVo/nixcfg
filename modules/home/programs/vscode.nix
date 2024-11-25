@@ -80,8 +80,10 @@ in
         };
         "[json]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[jsonc]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+        "[markdown]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[scss]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+        "[typescriptreact]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "diffEditor.ignoreTrimWhitespace" = false;
         "editor.codeActionsOnSave"."source.fixAll" = "always";
         "editor.fontFamily" = "'MonaspiceNe Nerd Font'";
