@@ -21,7 +21,7 @@ in
 
   config = lib.mkIf cfg.defaults.enable {
     home = {
-      stateVersion = "24.11";
+      stateVersion = "25.05";
       sessionPath =
         lib.optionals config.programs.volta.enable [
           "${config.programs.volta.voltaHome}/bin"
