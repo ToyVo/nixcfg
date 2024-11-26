@@ -85,5 +85,7 @@ in
             yubikey-personalization
           ];
       };
+
+    services.tailscale.enable = true;
   };
 }
