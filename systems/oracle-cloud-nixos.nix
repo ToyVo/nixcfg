@@ -34,7 +34,9 @@
     discord_bot = {
       enable = true;
       env_file = config.sops.secrets."discord_bot.env".path;
-      rclone_conf_file = "${config.users.users.${config.userPresets.toyvo.name}.home}/.config/rclone/rclone.conf";
+      rclone_conf_file = "${
+        config.users.users.${config.userPresets.toyvo.name}.home
+      }/.config/rclone/rclone.conf";
       minecraft = {
         openFirewall = true;
         datadir = "/minecraft-modded-data";
@@ -70,7 +72,12 @@
       enable = true;
       root = "/var/www/";
     };
-    surrealdb.extraFlags = [ "--user" "root" "--pass" "changeme" ];
+    surrealdb.extraFlags = [
+      "--user"
+      "root"
+      "--pass"
+      "changeme"
+    ];
     remote-builds.server.enable = true;
     github-runners = {
       discord_bot = {

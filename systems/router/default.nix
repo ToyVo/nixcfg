@@ -80,7 +80,7 @@
         networkConfig.Bridge = "br0";
       };
       networks.br0 = {
-        matchConfig.Name  = "br0";
+        matchConfig.Name = "br0";
         networkConfig = {
           Address = "10.1.0.1/24";
           IPMasquerade = "ipv4";

@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 {
   hardware.cpu.amd.updateMicrocode = true;
   networking.hostName = "HP-Envy";
@@ -32,11 +37,7 @@
   services.displayManager.cosmic-greeter.enable = lib.mkForce false;
   services.xserver.videoDrivers = [ "amdgpu" ];
   hardware.graphics = {
-    extraPackages = with pkgs; [
-      rocm-opencl-icd
-      rocm-opencl-runtime
-      amdvlk
-    ];
+    extraPackages = with pkgs; [ amdvlk ];
     extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
     enable = true;
     enable32Bit = true;
