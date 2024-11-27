@@ -1,10 +1,11 @@
 {
   apple-silicon-support,
+  arion,
   catppuccin,
+  discord_bot,
   disko,
   home-manager,
   jovian,
-  discord_bot,
   minecraft_modpack,
   nh_plus,
   nix-darwin,
@@ -12,13 +13,12 @@
   nixos-cosmic,
   nixos-hardware,
   nixos-unstable,
+  nixos-wsl,
   nixvim,
+  nur,
   plasma-manager,
   self,
   sops-nix,
-  nur,
-  nixos-wsl,
-  arion,
   ...
 }@inputs:
 let
@@ -26,9 +26,9 @@ let
     catppuccin.homeManagerModules.catppuccin
     nix-index-database.hmModules.nix-index
     nixvim.homeManagerModules.nixvim
+    nur.nixosModules.nur
     self.homeManagerModules.default
     sops-nix.homeManagerModules.sops
-    nur.nixosModules.nur
   ];
   lib = nixos-unstable.lib;
   nixosSystem =
@@ -53,17 +53,17 @@ let
       modules = [
         arion.nixosModules.arion
         catppuccin.nixosModules.catppuccin
+        discord_bot.nixosModules.discord_bot
         disko.nixosModules.disko
         home-manager.nixosModules.default
-        discord_bot.nixosModules.discord_bot
         minecraft_modpack.nixosModules.default
         nh_plus.nixosModules.default
         nix-index-database.nixosModules.nix-index
         nixos-cosmic.nixosModules.default
         nixos-unstable.nixosModules.notDetected
+        nur.nixosModules.nur
         self.nixosModules.default
         sops-nix.nixosModules.sops
-        nur.nixosModules.nur
         {
           home-manager = {
             extraSpecialArgs = specialArgs;
@@ -98,8 +98,8 @@ let
         home-manager.darwinModules.default
         nh_plus.nixDarwinModules.prebuiltin
         nix-index-database.darwinModules.nix-index
-        self.darwinModules.default
         nur.nixosModules.nur
+        self.darwinModules.default
         {
           home-manager = {
             extraSpecialArgs = specialArgs;
@@ -177,6 +177,13 @@ in
       system = "x86_64-linux";
       nixosModules = [ ./nas ];
     };
+    oracle-cloud-nixos = nixosSystem {
+      system = "aarch64-linux";
+      nixosModules = [
+        ./oracle-cloud-nixos.nix
+        "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix"
+      ];
+    };
     PineBook-Pro = nixosSystem {
       system = "aarch64-linux";
       nixosModules = [
@@ -223,13 +230,6 @@ in
       system = "aarch64-linux";
       nixosModules = [
         ./utm.nix
-        "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix"
-      ];
-    };
-    oracle-cloud-nixos = nixosSystem {
-      system = "aarch64-linux";
-      nixosModules = [
-        ./oracle-cloud-nixos.nix
         "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix"
       ];
     };
