@@ -129,7 +129,6 @@
       enable = true;
       email = "collin@diekvoss.com";
     };
-    packwiz.enable = true;
   };
   security.acme = rec {
     acceptTerms = true;

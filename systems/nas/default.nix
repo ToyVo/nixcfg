@@ -45,6 +45,7 @@
       hostName = "nextcloud.diekvoss.net";
       config.adminpassFile = config.sops.secrets.nextcloud_admin_password.path;
     };
+    packwiz.enable = true;
   };
   sops.secrets = {
     nextcloud_admin_password = {
