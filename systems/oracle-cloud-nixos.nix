@@ -60,15 +60,8 @@
             reverse_proxy http://0.0.0.0:8080
           '';
         };
-        "https://packwiz.toyvo.dev:443" = {
-          useACMEHost = "packwiz.toyvo.dev";
-          extraConfig = ''
-            reverse_proxy http://0.0.0.0:8787
-          '';
-        };
       };
     };
-    packwiz.enable = true;
     surrealdb.extraFlags = [
       "--user"
       "root"
@@ -117,24 +110,17 @@
   };
   security.acme = {
     acceptTerms = true;
-    certs =
-      let
-        cf = {
-          email = "collin@diekvoss.com";
-          dnsProvider = "cloudflare";
-          credentialFiles = {
-            "CF_API_EMAIL_FILE" = "${pkgs.writeText "cfemail" ''
-              collin@diekvoss.com
-            ''}";
-            "CF_API_KEY_FILE" = config.sops.secrets.cloudflare_global_api_key.path;
-            "CF_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
-          };
-        };
-      in
-      {
-        "mc.toyvo.dev" = cf;
-        "packwiz.toyvo.dev" = cf;
+    certs."mc.toyvo.dev" = {
+      email = "collin@diekvoss.com";
+      dnsProvider = "cloudflare";
+      credentialFiles = {
+        "CF_API_EMAIL_FILE" = "${pkgs.writeText "cfemail" ''
+          collin@diekvoss.com
+        ''}";
+        "CF_API_KEY_FILE" = config.sops.secrets.cloudflare_global_api_key.path;
+        "CF_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
       };
+    };
   };
   sops.secrets = {
     gha_discord_bot = {
