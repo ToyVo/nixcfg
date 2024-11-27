@@ -5,7 +5,7 @@
   hardware.cpu.amd.updateMicrocode = true;
   networking = {
     hostName = "nas";
-    firewall.allowedTCPPorts = [ 80 ];
+    firewall.allowedTCPPorts = [ 80 config.services.packwiz.port ];
   };
   boot = {
     loader = {
