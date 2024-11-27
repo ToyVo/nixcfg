@@ -444,11 +444,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1732157474,
-        "narHash": "sha256-ScPw8t4oABbNl1x3tiTs7M02Zog9VFTg/t8XWUqnhkU=",
+        "lastModified": 1732749594,
+        "narHash": "sha256-LCCg/B98NB2NyJkn+efM2zOPzU8BGu8aLPKxhb02CgY=",
         "owner": "toyvo",
         "repo": "discord_bot",
-        "rev": "4b6a8e9c894a90fabfe43c1163b0fec847c1abd2",
+        "rev": "f6b304fe5db67ab7f260683bbb0ef4aad4abc5b2",
         "type": "github"
       },
       "original": {
@@ -1270,6 +1270,21 @@
         "type": "github"
       }
     },
+    "minecraft_modpack": {
+      "locked": {
+        "lastModified": 1732746578,
+        "narHash": "sha256-vsiwlRbiLYPYzxYNYRfFFQ6xT9VP4K1TZAw62KNiYy0=",
+        "owner": "ToyVo",
+        "repo": "minecraft_modpack",
+        "rev": "c3454ba9a4341adc11acc579583d8401c93484fb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ToyVo",
+        "repo": "minecraft_modpack",
+        "type": "github"
+      }
+    },
     "mkAlias": {
       "inputs": {
         "nixpkgs": "nixpkgs_10"
@@ -2072,6 +2087,7 @@
         "flake-parts": "flake-parts_9",
         "home-manager": "home-manager",
         "jovian": "jovian",
+        "minecraft_modpack": "minecraft_modpack",
         "mkAlias": "mkAlias",
         "nh_plus": "nh_plus",
         "nix-darwin": "nix-darwin",

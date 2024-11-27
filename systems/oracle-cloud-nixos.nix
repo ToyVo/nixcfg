@@ -60,18 +60,15 @@
             reverse_proxy http://0.0.0.0:8080
           '';
         };
-        "https://static.toyvo.dev:443" = {
-          useACMEHost = "static.toyvo.dev";
+        "https://packwiz.toyvo.dev:443" = {
+          useACMEHost = "packwiz.toyvo.dev";
           extraConfig = ''
             reverse_proxy http://0.0.0.0:8787
           '';
         };
       };
     };
-    static-web-server = {
-      enable = true;
-      root = "/var/www/";
-    };
+    packwiz.enable = true;
     surrealdb.extraFlags = [
       "--user"
       "root"
@@ -136,7 +133,7 @@
       in
       {
         "mc.toyvo.dev" = cf;
-        "static.toyvo.dev" = cf;
+        "packwiz.toyvo.dev" = cf;
       };
   };
   sops.secrets = {
