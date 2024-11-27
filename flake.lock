@@ -1272,11 +1272,11 @@
     },
     "minecraft_modpack": {
       "locked": {
-        "lastModified": 1732746578,
-        "narHash": "sha256-vsiwlRbiLYPYzxYNYRfFFQ6xT9VP4K1TZAw62KNiYy0=",
+        "lastModified": 1732751627,
+        "narHash": "sha256-HyrzGl9LSF23zvzt3ols034MzitNE7Hxg9eZY65M+Tw=",
         "owner": "ToyVo",
         "repo": "minecraft_modpack",
-        "rev": "c3454ba9a4341adc11acc579583d8401c93484fb",
+        "rev": "ad9702e22efb3d65e48439f865cd773cb11bedae",
         "type": "github"
       },
       "original": {
