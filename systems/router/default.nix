@@ -29,6 +29,15 @@
     firewall = {
       enable = true;
       # Port 53 is for DNS, 22 is for SSH, 67/68 is for DHCP, 80 is for HTTP, 443 is for HTTPS
+      interfaces.enp2s0 = {
+        allowedTCPPorts = [
+          80
+          443
+        ];
+        allowedUDPPorts = [
+          443
+        ];
+      };
       interfaces.br0 = {
         allowedTCPPorts = [
           53
