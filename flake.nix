@@ -42,6 +42,7 @@
     nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
     nixvim.url = "github:nix-community/nixvim";
     nur.url = "github:nix-community/nur";
+    nur-packages.url = "github:ToyVo/nur-packages";
     plasma-manager.url = "github:pjones/plasma-manager";
     rust-overlay.url = "github:oxalica/rust-overlay";
     sops-nix.url = "github:Mic92/sops-nix";

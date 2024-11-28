@@ -106,82 +106,6 @@
         linkConfig.MACAddressPolicy = "none";
       };
     };
-    services = {
-      cfdyndns = {
-        serviceConfig.Type = "oneshot";
-        after = [ "network.target" ];
-        path = with pkgs; [
-          curl
-          iproute2
-          gawk
-          dig
-          jq
-        ];
-        script = ''
-          declare -a DOMAINS=(
-            "toyvo.dev"
-          )
-          TOKEN=$(cat ${config.sops.secrets.cloudflare_w_dns_r_zone_token.path})
-
-          function put_record() {
-            curl -sS -X PUT \
-              -H "Content-Type: application/json" \
-              -H "Authorization: Bearer $TOKEN" \
-              -d "{\"type\":\"A\",\"name\":\"$3\",\"content\":\"$4\",\"ttl\":1,\"proxied\":false}" \
-              "https://api.cloudflare.com/client/v4/zones/$1/dns_records/$2"
-          }
-
-          function get_ip() {
-            curl -sS \
-               -H "Content-Type: application/json" \
-               -H "Authorization: Bearer $TOKEN" \
-               https://api.cloudflare.com/client/v4/zones/$1/dns_records/$2 | jq -r '.result.content'
-          }
-
-          function get_zone() {
-            curl -sS \
-               -H "Content-Type: application/json" \
-               -H "Authorization: Bearer $TOKEN" \
-               https://api.cloudflare.com/client/v4/zones?name=$1 | jq -r '.result.[].id'
-          }
-
-          function get_record() {
-            curl -sS \
-               -H "Content-Type: application/json" \
-               -H "Authorization: Bearer $TOKEN" \
-               https://api.cloudflare.com/client/v4/zones/$1/dns_records?name=$2 | jq -r '.result.[].id'
-          }
-
-          NEW_IP=$(ip addr show dev enp2s0 | awk '/inet / {print $2}' | cut -d '/' -f1)
-          echo "The IP Address of this machine is $NEW_IP"
-          for DOMAIN in "''${DOMAINS[@]}"
-          do
-              CURRENT_IP=$(dig +short $DOMAIN)
-              echo "DNS for $DOMAIN is currently set to $CURRENT_IP"
-              if [ "$CURRENT_IP" != "$NEW_IP" ]; then
-                echo "DNS for $DOMAIN Doesn't point to $NEW_IP, checking for confirmation..."
-                BASE_DOMAIN=$(awk -F'.' '{gsub(/^\*\./, ""); print $(NF-1) "." $NF}' <<< "$DOMAIN")
-                echo "Base for $DOMAIN is $BASE_DOMAIN"
-                ZONE=$(get_zone "$BASE_DOMAIN")
-                echo "Zone ID for $BASE_DOMAIN is $ZONE"
-                RECORD=$(get_record "$ZONE" "$DOMAIN")
-                echo "Record ID for $DOMAIN is $RECORD"
-                CONFIRM_IP=$(get_ip "$ZONE" "$RECORD")
-                echo "DNS for $DOMAIN is confirmed set to $CONFIRM_IP"
-                if [ "$CONFIRM_IP" != "$NEW_IP" ]; then
-                  echo "Updating DNS record for $DOMAIN to $NEW_IP"
-                  put_record "$ZONE" "$RECORD" "$DOMAIN" "$NEW_IP"
-                else
-                  echo "DNS record for $DOMAIN is already set to $NEW_IP, skipping update. Assuming TTL."
-                fi
-              else
-                echo "DNS record for $DOMAIN is $NEW_IP, skipping update."
-              fi
-          done
-        '';
-        startAt = "*:0/5";
-      };
-    };
   };
   services = {
     openssh = {
@@ -206,6 +130,13 @@
     caddy = {
       enable = true;
       email = "collin@diekvoss.com";
+    };
+    cloudflare-ddns = {
+      enable = true;
+      records = [
+        "toyvo.dev"
+      ];
+      tokenFile = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
     };
   };
   security.acme = rec {

@@ -15,6 +15,7 @@
   nixos-wsl,
   nixvim,
   nur,
+  nur-packages,
   plasma-manager,
   self,
   sops-nix,
@@ -60,6 +61,7 @@ let
         nixos-cosmic.nixosModules.default
         nixos-unstable.nixosModules.notDetected
         nur.nixosModules.nur
+        nur-packages.nixosModules.cloudflare-ddns
         self.nixosModules.default
         sops-nix.nixosModules.sops
         {
