@@ -4,6 +4,9 @@
     globalConfig = ''
       debug
     '';
+    logFormat = ''
+      log INFO
+    '';
     virtualHosts = {
       "https://adguard.diekvoss.net:443" = {
         useACMEHost = "diekvoss.net";
