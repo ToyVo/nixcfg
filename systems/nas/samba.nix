@@ -18,8 +18,6 @@
           "guest account" = "nobody";
           "map to guest" = "bad user";
         };
-      };
-      shares = {
         public = {
           path = "/mnt/POOL/Public";
           browseable = "yes";
