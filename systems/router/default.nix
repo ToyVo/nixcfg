@@ -120,7 +120,7 @@
         script = ''
           declare -a DOMAINS=(
             "*.diekvoss.net"
-            "packwiz.toyvo.dev"
+            "toyvo.dev"
           )
           TOKEN=$(cat ${config.sops.secrets.cloudflare_w_dns_r_zone_token.path})
 
@@ -224,7 +224,7 @@
           "CF_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
         };
       };
-      "packwiz.toyvo.dev" = certs."diekvoss.net";
+      "toyvo.dev" = certs."diekvoss.net";
     };
   };
   sops.secrets = {

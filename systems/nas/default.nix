@@ -5,7 +5,7 @@
   hardware.cpu.amd.updateMicrocode = true;
   networking = {
     hostName = "nas";
-    firewall.allowedTCPPorts = [ 80 config.services.packwiz.port ];
+    firewall.allowedTCPPorts = [ 80 ];
   };
   boot = {
     loader = {
@@ -45,7 +45,6 @@
       hostName = "nextcloud.diekvoss.net";
       config.adminpassFile = config.sops.secrets.nextcloud_admin_password.path;
     };
-    packwiz.enable = true;
   };
   sops.secrets = {
     nextcloud_admin_password = {

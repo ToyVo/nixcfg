@@ -63,12 +63,6 @@
           reverse_proxy http://10.1.0.3:11435
         '';
       };
-      "https://packwiz.toyvo.dev:443" = {
-        useACMEHost = "packwiz.toyvo.dev";
-        extraConfig = ''
-          reverse_proxy http://10.1.0.3:8787
-        '';
-      };
     };
   };
 }
