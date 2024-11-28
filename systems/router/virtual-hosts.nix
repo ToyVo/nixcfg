@@ -5,7 +5,7 @@
       debug
     '';
     logFormat = ''
-      log INFO
+      level DEBUG
     '';
     virtualHosts = {
       "https://adguard.diekvoss.net:443" = {
