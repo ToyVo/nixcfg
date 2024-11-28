@@ -9,7 +9,23 @@
     ];
     binfmt.emulatedSystems = [ "x86_64-linux" ];
   };
-  containerPresets.podman.enable = true;
+  containerPresets = {
+    podman.enable = true;
+    minecraft-modded = {
+      openFirewall = true;
+      datadir = "/minecraft-modded-data";
+      env_file = config.sops.secrets."discord_bot.env".path;
+    };
+    minecraft-geyser = {
+      openFirewall = true;
+      datadir = "/minecraft-geyser-data";
+      env_file = config.sops.secrets."discord_bot.env".path;
+    };
+    terraria = {
+      openFirewall = true;
+      datadir = "/terraria-data";
+    };
+  };
   networking = {
     hostName = "oracle-cloud-nixos";
     firewall = {
@@ -37,18 +53,6 @@
       rclone_conf_file = "${
         config.users.users.${config.userPresets.toyvo.name}.home
       }/.config/rclone/rclone.conf";
-      minecraft = {
-        openFirewall = true;
-        datadir = "/minecraft-modded-data";
-      };
-      minecraft_geyser = {
-        openFirewall = true;
-        datadir = "/minecraft-geyser-data";
-      };
-      terraria = {
-        openFirewall = true;
-        datadir = "/terraria-data";
-      };
     };
     caddy = {
       enable = true;

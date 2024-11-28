@@ -6,6 +6,9 @@ in
   imports = [
     ./chat.nix
     ./homepage.nix
+    ./minecraft-modded.nix
+    ./minecraft-geyser.nix
+    ./terraria.nix
   ];
 
   options.containerPresets = {
