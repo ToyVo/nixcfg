@@ -12,16 +12,19 @@
   containerPresets = {
     podman.enable = true;
     minecraft-modded = {
+      enable = true;
       openFirewall = true;
       datadir = "/minecraft-modded-data";
       env_file = config.sops.secrets."discord_bot.env".path;
     };
     minecraft-geyser = {
+      enable = true;
       openFirewall = true;
       datadir = "/minecraft-geyser-data";
       env_file = config.sops.secrets."discord_bot.env".path;
     };
     terraria = {
+      enable = true;
       openFirewall = true;
       datadir = "/terraria-data";
     };
