@@ -23,7 +23,6 @@
       inputs.nixpkgs.follows = "nixos-unstable";
     };
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
-    minecraft_modpack.url = "github:ToyVo/minecraft_modpack";
     mkAlias.url = "github:reckenrode/mkAlias";
     nh_plus.url = "github:toyvo/nh_plus";
     nix-darwin = {

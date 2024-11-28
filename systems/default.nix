@@ -6,7 +6,6 @@
   disko,
   home-manager,
   jovian,
-  minecraft_modpack,
   nh_plus,
   nix-darwin,
   nix-index-database,
@@ -56,7 +55,6 @@ let
         discord_bot.nixosModules.discord_bot
         disko.nixosModules.disko
         home-manager.nixosModules.default
-        minecraft_modpack.nixosModules.default
         nh_plus.nixosModules.default
         nix-index-database.nixosModules.nix-index
         nixos-cosmic.nixosModules.default

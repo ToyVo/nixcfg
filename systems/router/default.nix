@@ -119,7 +119,6 @@
         ];
         script = ''
           declare -a DOMAINS=(
-            "*.diekvoss.net"
             "toyvo.dev"
           )
           TOKEN=$(cat ${config.sops.secrets.cloudflare_w_dns_r_zone_token.path})
