@@ -444,11 +444,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1732857050,
-        "narHash": "sha256-v0BwRsf2AH48XVSCOjjIU9RYS5hpSwlthnyM/CjQvZA=",
+        "lastModified": 1732860734,
+        "narHash": "sha256-B/FQo0fkmWt84G0xjIn1rXkrbT+srNSl88cyK/CCrRM=",
         "owner": "toyvo",
         "repo": "discord_bot",
-        "rev": "cf60856e2c228567cd64ae27713bd64fc84d69eb",
+        "rev": "ab477064ce7d0b7d31fdd8937f93228974af4417",
         "type": "github"
       },
       "original": {
