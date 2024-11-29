@@ -14,19 +14,19 @@
     minecraft-modded = {
       enable = true;
       openFirewall = true;
-      datadir = "/minecraft-modded-data";
+      dataDir = "/minecraft-modded-data";
       env_file = config.sops.secrets."discord_bot.env".path;
     };
     minecraft-geyser = {
       enable = true;
       openFirewall = true;
-      datadir = "/minecraft-geyser-data";
+      dataDir = "/minecraft-geyser-data";
       env_file = config.sops.secrets."discord_bot.env".path;
     };
     terraria = {
       enable = true;
       openFirewall = true;
-      datadir = "/terraria-data";
+      dataDir = "/terraria-data";
     };
   };
   networking = {

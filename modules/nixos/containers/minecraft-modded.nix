@@ -34,7 +34,7 @@ in
       default = 24454;
       description = "Port to expose minecraft simple voice chat on";
     };
-    datadir = lib.mkOption {
+    dataDir = lib.mkOption {
       type = lib.types.path;
       description = "Path to store minecraft data";
     };
@@ -83,7 +83,7 @@ in
         RCON_CMDS_STARTUP = "gamerule playersSleepingPercentage 0\ngamerule mobGriefing false\ngamerule doFireTick false\ngamerule doInsomnia false";
       };
       volumes = [
-        "${cfg.datadir}:/data"
+        "${cfg.dataDir}:/data"
       ];
     };
     systemd.services.arion-minecraft-modded.wantedBy = lib.mkIf (!cfg.autoStart) (lib.mkForce [ ]);

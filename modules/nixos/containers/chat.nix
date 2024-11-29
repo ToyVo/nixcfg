@@ -10,7 +10,7 @@ in
       default = 11435;
       description = "Port to expose open-webui on";
     };
-    datadir = lib.mkOption {
+    dataDir = lib.mkOption {
       type = lib.types.path;
       default = "/mnt/POOL/open-webui";
       description = "Path to store open-webui data";
@@ -24,7 +24,7 @@ in
       image = "ghcr.io/open-webui/open-webui:main";
       ports = [ "${toString cfg.port}:8080" ];
       volumes = [
-        "${cfg.datadir}:/app/backend/data"
+        "${cfg.dataDir}:/app/backend/data"
       ];
       environment = {
         OLLAMA_BASE_URL = "https://ollama.diekvoss.net";

@@ -20,7 +20,7 @@ in
       default = 7878;
       description = "Port to expose terarria rest api on";
     };
-    datadir = lib.mkOption {
+    dataDir = lib.mkOption {
       type = lib.types.path;
       description = "Path to store terraria data";
     };
@@ -42,7 +42,7 @@ in
         "${toString cfg.RestPort}:7878"
       ];
       volumes = [
-        "${cfg.datadir}:/root/.local/share/Terraria/Worlds"
+        "${cfg.dataDir}:/root/.local/share/Terraria/Worlds"
       ];
       environment = {
         WORLD_FILENAME = "large_master_crimson.wld";

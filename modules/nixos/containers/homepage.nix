@@ -10,7 +10,7 @@ in
       default = 3000;
       description = "Port to expose Homepage dashboard on";
     };
-    datadir = lib.mkOption {
+    dataDir = lib.mkOption {
       type = lib.types.path;
       default = "/mnt/POOL/homepage";
       description = "Path to store Homepage dashboard data";
@@ -24,7 +24,7 @@ in
       image = "ghcr.io/gethomepage/homepage:latest";
       ports = [ "${toString cfg.port}:3000" ];
       volumes = [
-        "${cfg.datadir}:/app/config"
+        "${cfg.dataDir}:/app/config"
         "/var/run/podman/podman.sock:/var/run/docker.sock:ro"
       ];
     };
