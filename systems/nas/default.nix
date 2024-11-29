@@ -5,7 +5,10 @@
   hardware.cpu.amd.updateMicrocode = true;
   networking = {
     hostName = "nas";
-    firewall.allowedTCPPorts = [ 80 ];
+    firewall = {
+      allowedTCPPorts = [ 80 ];
+      allowedUDPPorts = [ 53 ];
+    };
   };
   boot = {
     loader = {
