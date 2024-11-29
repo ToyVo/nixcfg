@@ -15,12 +15,14 @@
       enable = true;
       openFirewall = true;
       dataDir = "/minecraft-modded-data";
+      backupDir = "/minecraft-modded-backups";
       env_file = config.sops.secrets."discord_bot.env".path;
     };
     minecraft-geyser = {
       enable = true;
       openFirewall = true;
       dataDir = "/minecraft-geyser-data";
+      backupDir = "/minecraft-geyser-backups";
       env_file = config.sops.secrets."discord_bot.env".path;
     };
     terraria = {
@@ -53,9 +55,7 @@
     discord_bot = {
       enable = true;
       env_file = config.sops.secrets."discord_bot.env".path;
-      rclone_conf_file = "${
-        config.users.users.${config.userPresets.toyvo.name}.home
-      }/.config/rclone/rclone.conf";
+      rclone_conf_file = config.sops.secrets."rclone.conf".path;
     };
     caddy = {
       enable = true;
@@ -151,6 +151,7 @@
     cloudflare_global_api_key = { };
     cloudflare_w_dns_r_zone_token = { };
     "discord_bot.env" = { };
+    "rclone.conf" = { };
     surreal_pass = { };
   };
   users.users.caddy.extraGroups = [ "acme" ];

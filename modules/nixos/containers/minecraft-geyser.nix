@@ -85,10 +85,10 @@ in
         depends_on.mc.condition = "service_healthy";
         env_file = [ cfg.env_file ];
         environment = {
-          BACKUP_INTERVAL = "5m";
+          BACKUP_INTERVAL = "2h";
           BACKUP_METHOD = "rclone";
           INITIAL_DELAY = 0;
-          PAUSE_IF_NO_PLAYERS = "false";
+          PAUSE_IF_NO_PLAYERS = "true";
           RCLONE_COMPRESS_METHOD = "zstd";
           RCLONE_DEST_DIR = "minecraft_geyser";
           RCLONE_REMOTE = "protondrive";
@@ -97,12 +97,11 @@ in
         volumes = [
           "${cfg.dataDir}:/data:ro"
           "${cfg.backupDir}:/backups"
-          "${
-            config.users.users.${config.userPresets.toyvo.name}.home
-          }/.config/rclone/rclone.conf:/config/rclone/rclone.conf:ro"
+          "${config.sops.secrets."rclone.conf".path}:/config/rclone/rclone.conf:ro"
         ];
       };
     };
     systemd.services.arion-minecraft-geyser.wantedBy = lib.mkIf (!cfg.autoStart) (lib.mkForce [ ]);
+    sops.secrets."rclone.conf" = { };
   };
 }
