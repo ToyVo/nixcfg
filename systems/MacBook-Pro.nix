@@ -14,11 +14,15 @@
   ];
   homebrew.casks = [
     {
-      name = "prusaslicer";
+      name = "discord";
       greedy = true;
     }
     {
-      name = "discord";
+      name = "obs";
+      greedy = true;
+    }
+    {
+      name = "prusaslicer";
       greedy = true;
     }
     {
