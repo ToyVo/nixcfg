@@ -86,16 +86,20 @@ in
         env_file = [ cfg.env_file ];
         environment = {
           BACKUP_INTERVAL = "5m";
-          RCON_HOST = "mc";
+          BACKUP_METHOD = "rclone";
           INITIAL_DELAY = 0;
           PAUSE_IF_NO_PLAYERS = "false";
-          RCLONE_REMOTE = "protondrive";
           RCLONE_COMPRESS_METHOD = "zstd";
           RCLONE_DEST_DIR = "minecraft_geyser";
+          RCLONE_REMOTE = "protondrive";
+          RCON_HOST = "mc";
         };
         volumes = [
           "${cfg.dataDir}:/data:ro"
-          "${cfg.backupDir}:/backups:ro"
+          "${cfg.backupDir}:/backups"
+          "${
+            config.users.users.${config.userPresets.toyvo.name}.home
+          }/.config/rclone/rclone.conf:/config/rclone/rclone.conf:ro"
         ];
       };
     };
