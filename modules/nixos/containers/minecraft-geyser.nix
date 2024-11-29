@@ -91,6 +91,7 @@ in
           PAUSE_IF_NO_PLAYERS = "false";
           RCLONE_REMOTE = "protondrive";
           RCLONE_COMPRESS_METHOD = "zstd";
+          RCLONE_DEST_DIR = "minecraft_geyser";
         };
         volumes = [
           "${cfg.dataDir}:/data:ro"
