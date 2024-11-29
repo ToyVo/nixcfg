@@ -6,8 +6,14 @@
   networking = {
     hostName = "nas";
     firewall = {
-      allowedTCPPorts = [ 80 ];
-      allowedUDPPorts = [ 53 ];
+      allowedTCPPorts = [
+        80
+        443
+      ];
+      allowedUDPPorts = [
+        53
+        443
+      ];
     };
   };
   boot = {
