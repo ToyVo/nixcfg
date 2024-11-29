@@ -73,14 +73,6 @@
       enable = true;
       openFirewall = true;
     };
-    minecraft-geyser = {
-      enable = true;
-      openFirewall = true;
-      autoStart = true;
-      dataDir = "/minecraft-geyser-data";
-      backupDir = "/minecraft-geyser-backups";
-      env_file = config.sops.secrets."discord_bot.env".path;
-    };
   };
   fileSystems."/mnt/POOL" = {
     device = "/dev/disk/by-label/POOL";
