@@ -15,6 +15,8 @@
         53
         443
       ];
+      interfaces.podman1.allowedUDPPorts = [53];
+      trustedInterfaces = ["podman1"];
     };
   };
   boot = {
@@ -63,6 +65,7 @@
     "discord_bot.env" = { };
   };
   containerPresets = {
+    podman.enable = true;
     homepage = {
       enable = true;
       openFirewall = true;
