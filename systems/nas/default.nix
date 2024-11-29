@@ -8,6 +8,7 @@
     firewall = {
       allowedTCPPorts = [
         80
+        53
         443
       ];
       allowedUDPPorts = [
