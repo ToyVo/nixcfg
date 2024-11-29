@@ -15,8 +15,7 @@
         53
         443
       ];
-      interfaces.podman1.allowedUDPPorts = [53];
-      trustedInterfaces = ["podman1"];
+      interfaces."podman+".allowedUDPPorts = [53 5353];
     };
   };
   boot = {
