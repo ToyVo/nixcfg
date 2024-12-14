@@ -24,6 +24,7 @@
     };
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     mkAlias.url = "github:reckenrode/mkAlias";
+    nh.url = "github:viperml/nh";
     nh_plus.url = "github:toyvo/nh_plus";
     nix-darwin = {
       url = "github:lnl7/nix-darwin";

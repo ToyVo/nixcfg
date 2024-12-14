@@ -56,7 +56,6 @@ let
         discord_bot.nixosModules.discord_bot
         disko.nixosModules.disko
         home-manager.nixosModules.default
-        nh_plus.nixosModules.default
         nix-index-database.nixosModules.nix-index
         nixos-cosmic.nixosModules.default
         nixos-unstable.nixosModules.notDetected

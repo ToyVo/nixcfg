@@ -9,16 +9,6 @@
   nix.settings.trusted-users = [ "_github-runner" ];
   users.users._github-runner.home = lib.mkForce "/private/var/lib/github-runners";
   services.github-runners = {
-    nh_plus = {
-      enable = true;
-      name = "MacMini-M1_nh_plus";
-      tokenFile = "/var/secrets/gha_nh_plus";
-      url = "https://github.com/toyvo/nh_plus";
-      extraPackages = with pkgs; [
-        nixVersions.nix_2_22
-        cachix
-      ];
-    };
     nur-packages = {
       enable = true;
       name = "MacMini-M1_nur";

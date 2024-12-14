@@ -46,6 +46,10 @@ in
         greedy = true;
       }
       {
+        name = "obs";
+        greedy = true;
+      }
+      {
         name = "slack";
         greedy = true;
       }
