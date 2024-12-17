@@ -3,30 +3,32 @@
 # Also see https://github.com/Mic92/dotfiles/blob/master/nixos/.sops.yaml
 # for a more complex example.
 keys:
-  - &server_work age1hftc90y0377ekg80a6e2080fl7qtve6jqrx3wwzmtpm7fcucqu2sn7mema
+  - &admin_toyvo fcab5705add00d89bbf2e66cfab3032cc9513440
+  - &server_hp_envy age1eqy3c77fxulja8sjasp98lfvav3e7fc84wk3wd9jtnm427t8lf8qcf70pm
+  - &server_hp_zbook age1vkeg2mfn7z2rvrymcvp6c9ytzdtmn44g4nw0kdz0ak9e5yhpr39s8nrh4c
+  - &server_mac_mini_m1 age1whatefc8ty5gs0la7phh5srx9d8unpkhh6xh670ekwjysm9azcaqx9kkue
   - &server_macbook_pro age1yaqnllg9s44u9kw9e656jg8rcru33d3m2sc2tckv8lypzv8r9ujqmce4mf
   - &server_macbook_pro_nixos age1yyj54s6gy9gtuemasxy7dq9y5a5r9hvnnjd2fxy4pcd5589uuyqqg88qkl
-  - &server_mac_mini_m1 age1whatefc8ty5gs0la7phh5srx9d8unpkhh6xh670ekwjysm9azcaqx9kkue
-  - &server_oracle_cloud_nixos age1wvmgkw6ud4xxt8fp65v0wcvkste8qgkrcjlrau7mu0z27ey2zq3qtpqpcl
   - &server_nas age1hxnk8ds8x45w7cvddx8t2s9f0z68h8x3nxhv2u3v9zlh404t7p3qvtdvld
+  - &server_oracle_cloud_nixos age1wvmgkw6ud4xxt8fp65v0wcvkste8qgkrcjlrau7mu0z27ey2zq3qtpqpcl
   - &server_router age18gma0mvyr7kmg50ynev3d5rjqher3t92gutakw3m6jswzg72t9xqlpr3nl
-  - &server_thinkpad age1cxc0z4q8mtsn7xzleaty2qazhe5zwdnkqe0uv6yeftmlea9j9clqefy4a3
-  - &server_hp_envy age1eqy3c77fxulja8sjasp98lfvav3e7fc84wk3wd9jtnm427t8lf8qcf70pm
   - &server_steamdeck_nixos age1wlrat6ckl34359tnqrww8jc0tlyedy33puzw9uvhszralfzcpaaqesg4ts
-  - &admin_toyvo fcab5705add00d89bbf2e66cfab3032cc9513440
+  - &server_thinkpad age1cxc0z4q8mtsn7xzleaty2qazhe5zwdnkqe0uv6yeftmlea9j9clqefy4a3
+  - &server_work age1hftc90y0377ekg80a6e2080fl7qtve6jqrx3wwzmtpm7fcucqu2sn7mema
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini|nix)$
     key_groups:
     - age:
-      - *server_work
+      - *server_hp_envy
+      - *server_hp_zbook
+      - *server_mac_mini_m1
       - *server_macbook_pro
       - *server_macbook_pro_nixos
-      - *server_mac_mini_m1
-      - *server_oracle_cloud_nixos
       - *server_nas
+      - *server_oracle_cloud_nixos
       - *server_router
-      - *server_thinkpad
       - *server_steamdeck_nixos
-      - *server_hp_envy
+      - *server_thinkpad
+      - *server_work
       pgp:
       - *admin_toyvo
