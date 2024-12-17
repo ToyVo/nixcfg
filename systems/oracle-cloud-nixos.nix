@@ -85,7 +85,6 @@
         group = "nixremote";
         url = "https://github.com/toyvo/discord_bot";
         extraPackages = with pkgs; [
-          nixVersions.nix_2_22
           cachix
         ];
       };
@@ -97,7 +96,6 @@
         group = "nixremote";
         url = "https://github.com/toyvo/nur-packages";
         extraPackages = with pkgs; [
-          nixVersions.nix_2_22
           cachix
         ];
       };

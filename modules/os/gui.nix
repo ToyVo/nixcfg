@@ -20,12 +20,8 @@ in
       noto-fonts-emoji-blob-bin
       noto-fonts-monochrome-emoji
       monaspace
-      (nerdfonts.override {
-        fonts = [
-          "Monaspace"
-          "NerdFontsSymbolsOnly"
-        ];
-      })
+      nerd-fonts.monaspace
+      nerd-fonts.symbols-only
     ];
     environment = {
       systemPackages =

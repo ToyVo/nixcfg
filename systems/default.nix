@@ -26,7 +26,7 @@ let
     catppuccin.homeManagerModules.catppuccin
     nix-index-database.hmModules.nix-index
     nixvim.homeManagerModules.nixvim
-    nur.nixosModules.nur
+    nur.modules.homeManager.default
     self.homeManagerModules.default
     sops-nix.homeManagerModules.sops
   ];
@@ -59,7 +59,7 @@ let
         nix-index-database.nixosModules.nix-index
         nixos-cosmic.nixosModules.default
         nixos-unstable.nixosModules.notDetected
-        nur.nixosModules.nur
+        nur.modules.nixos.default
         nur-packages.nixosModules.cloudflare-ddns
         self.nixosModules.default
         sops-nix.nixosModules.sops
@@ -97,7 +97,7 @@ let
         home-manager.darwinModules.default
         nh_plus.nixDarwinModules.prebuiltin
         nix-index-database.darwinModules.nix-index
-        nur.nixosModules.nur
+        nur.modules.nixos.default
         self.darwinModules.default
         {
           home-manager = {
