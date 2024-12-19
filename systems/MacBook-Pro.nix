@@ -11,6 +11,7 @@
     ollama
     prismlauncher
     packwiz
+    vlc-bin
   ];
   homebrew.casks = [
     {

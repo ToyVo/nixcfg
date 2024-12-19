@@ -4,16 +4,21 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    catppuccin = {
+      delta = {
+        enable = true;
+        flavor = config.catppuccin.flavor;
+      };
+      lazygit = {
+        enable = true;
+        flavor = config.catppuccin.flavor;
+        accent = config.catppuccin.accent;
+      };
+    };
     programs = {
       git = {
         lfs.enable = true;
-        delta = {
-          enable = true;
-          catppuccin = {
-            enable = true;
-            flavor = config.catppuccin.flavor;
-          };
-        };
+        delta.enable = true;
         extraConfig = {
           pull.rebase = "true";
           rebase.autostash = "true";
@@ -47,14 +52,7 @@ in
           rbc = "-c core.editor=true rebase --continue";
         };
       };
-      lazygit = {
-        enable = true;
-        catppuccin = {
-          enable = true;
-          flavor = config.catppuccin.flavor;
-          accent = config.catppuccin.accent;
-        };
-      };
+      lazygit.enable = true;
     };
   };
 }

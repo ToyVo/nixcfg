@@ -20,11 +20,11 @@ in
       yaml-language-server
       lldb
     ];
+    catppuccin.helix = {
+      enable = true;
+      flavor = config.catppuccin.flavor;
+    };
     programs.helix = {
-      catppuccin = {
-        enable = true;
-        flavor = config.catppuccin.flavor;
-      };
       settings = {
         editor = {
           line-number = "relative";

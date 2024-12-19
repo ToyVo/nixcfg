@@ -17,6 +17,7 @@ in
     awscli2
     llama-cpp
     ollama
+    vlc-bin
   ];
   environment.pythonPackages = with pkgs.python312Packages; [
     boto3

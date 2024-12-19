@@ -9,11 +9,11 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    catppuccin.kitty = {
+      enable = true;
+      flavor = config.catppuccin.flavor;
+    };
     programs.kitty = {
-      catppuccin = {
-        enable = true;
-        flavor = config.catppuccin.flavor;
-      };
       font = {
         name = "MonaspiceNe Nerd Font Mono Regular";
         size = 14;

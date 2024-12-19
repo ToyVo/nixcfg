@@ -4,7 +4,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    programs.bat.catppuccin = {
+    catppuccin.bat = {
       enable = true;
       flavor = config.catppuccin.flavor;
     };

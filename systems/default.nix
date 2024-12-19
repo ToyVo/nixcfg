@@ -97,7 +97,6 @@ let
         home-manager.darwinModules.default
         nh_plus.nixDarwinModules.prebuiltin
         nix-index-database.darwinModules.nix-index
-        nur.modules.nixos.default
         self.darwinModules.default
         {
           home-manager = {

@@ -10,11 +10,11 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    catppuccin.alacritty = {
+      enable = true;
+      flavor = config.catppuccin.flavor;
+    };
     programs.alacritty = {
-      catppuccin = {
-        enable = true;
-        flavor = config.catppuccin.flavor;
-      };
       settings = {
         shell = {
           program = "${pkgs.bashInteractive}/bin/bash";

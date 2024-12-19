@@ -93,6 +93,10 @@
           name = "protonvpn";
           greedy = true;
         }
+        {
+          name = "proton-mail";
+          greedy = true;
+        }
       ];
     };
     home-manager.sharedModules = [
