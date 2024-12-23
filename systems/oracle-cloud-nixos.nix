@@ -15,14 +15,12 @@
       enable = true;
       openFirewall = true;
       dataDir = "/minecraft-modded-data";
-      backupDir = "/minecraft-modded-backups";
       env_file = config.sops.secrets."discord_bot.env".path;
     };
     minecraft-geyser = {
       enable = true;
       openFirewall = true;
       dataDir = "/minecraft-geyser-data";
-      backupDir = "/minecraft-geyser-backups";
       env_file = config.sops.secrets."discord_bot.env".path;
     };
     terraria = {
