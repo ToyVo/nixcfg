@@ -21,5 +21,9 @@
     home.packages = lib.optionals (config.launchd.agents ? sops-nix) [
       (pkgs.writeShellScriptBin "sops-nix-user" "${config.launchd.agents.sops-nix.config.Program}")
     ];
+    home.file.".local/share/dioxus/wasm-bindgen/wasm-bindgen-${pkgs.wasm-bindgen-cli.version}" = {
+      source = lib.getExe pkgs.wasm-bindgen-cli;
+      executable = true;
+    };
   };
 }
