@@ -36,14 +36,12 @@ in
       enable = true;
       flavor = "frappe";
       accent = "red";
-    };
-    console = {
-      useXkbConfig = true;
-      catppuccin = {
+      tty = {
         enable = true;
         flavor = config.catppuccin.flavor;
       };
     };
+    console.useXkbConfig = true;
     programs = {
       bash.blesh.enable = true;
       ssh.startAgent = false;
