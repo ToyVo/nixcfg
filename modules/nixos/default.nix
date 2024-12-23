@@ -32,14 +32,15 @@ in
         LC_TIME = "C.UTF-8";
       };
     };
-    catppuccin = {
+    catppuccin = rec {
       enable = true;
       flavor = "frappe";
       accent = "red";
       tty = {
         enable = true;
-        flavor = config.catppuccin.flavor;
+        flavor = flavor;
       };
+      plymouth.enable = true;
     };
     console.useXkbConfig = true;
     programs = {
@@ -133,10 +134,7 @@ in
         mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
         magicOrExtension = ''\x7fELF....AI\x02'';
       };
-      plymouth = {
-        enable = true;
-        catppuccin.enable = true;
-      };
+      plymouth.enable = true;
     };
     sops = {
       defaultSopsFile = ../../secrets/secrets.yaml;
