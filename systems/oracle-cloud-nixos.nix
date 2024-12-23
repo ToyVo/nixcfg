@@ -69,12 +69,6 @@
         };
       };
     };
-    surrealdb.extraFlags = [
-      "--user"
-      "root"
-      "--pass"
-      "changeme"
-    ];
     remote-builds.server.enable = true;
     github-runners = {
       discord_bot = {
@@ -132,7 +126,6 @@
     cloudflare_w_dns_r_zone_token = { };
     "discord_bot.env" = { };
     "rclone.conf" = { };
-    surreal_pass = { };
   };
   users.users.caddy.extraGroups = [ "acme" ];
   userPresets.toyvo.enable = true;

@@ -15,6 +15,10 @@
   ];
   homebrew.casks = [
     {
+      name = "freecad";
+      greedy = true;
+    }
+    {
       name = "discord";
       greedy = true;
     }
