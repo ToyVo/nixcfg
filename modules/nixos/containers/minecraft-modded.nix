@@ -38,10 +38,6 @@ in
       type = lib.types.path;
       description = "Path to store minecraft data";
     };
-    backupDir = lib.mkOption {
-      type = lib.types.path;
-      description = "Path to store minecraft backups";
-    };
     openFirewall = lib.mkEnableOption "Open firewall for minecraft";
   };
   config = lib.mkIf cfg.enable {
@@ -107,7 +103,6 @@ in
         };
         volumes = [
           "${cfg.dataDir}:/data:ro"
-          "${cfg.backupDir}:/backups"
           "${config.sops.secrets."rclone.conf".path}:/config/rclone/rclone.conf:ro"
         ];
       };

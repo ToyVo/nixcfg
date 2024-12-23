@@ -36,10 +36,6 @@ in
       type = lib.types.path;
       description = "Path to store minecraft data";
     };
-    backupDir = lib.mkOption {
-      type = lib.types.path;
-      description = "Path to store minecraft backups";
-    };
     openFirewall = lib.mkEnableOption "Open firewall for minecraft";
   };
   config = lib.mkIf cfg.enable {
@@ -75,6 +71,12 @@ in
           CREATE_CONSOLE_IN_PIPE = "true";
           ALLOW_FLIGHT = "TRUE";
           DIFFICULTY = "hard";
+          VIEW_DISTANCE = "8";
+          SIMULATION_DISTANCE = "8";
+          MAX_CHAINED_NEIGHBOR_UPDATES = "10000";
+          MAX_WORLD_SIZE = "12500";
+          RATE_LIMIT = "100";
+          RCON_CMDS_STARTUP = "gamerule playersSleepingPercentage 0\ngamerule mobGriefing false\ngamerule doFireTick false\ngamerule doInsomnia false";
         };
         volumes = [
           "${cfg.dataDir}:/data"
@@ -96,7 +98,6 @@ in
         };
         volumes = [
           "${cfg.dataDir}:/data:ro"
-          "${cfg.backupDir}:/backups"
           "${config.sops.secrets."rclone.conf".path}:/config/rclone/rclone.conf:ro"
         ];
       };
