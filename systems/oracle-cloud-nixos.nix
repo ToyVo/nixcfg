@@ -53,7 +53,6 @@
     discord_bot = {
       enable = true;
       env_file = config.sops.secrets."discord_bot.env".path;
-      rclone_conf_file = config.sops.secrets."rclone.conf".path;
     };
     caddy = {
       enable = true;
