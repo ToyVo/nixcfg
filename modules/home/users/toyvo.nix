@@ -11,10 +11,7 @@ in
   options.profiles.toyvo.enable = lib.mkEnableOption "Enable toyvo profile";
 
   config = lib.mkIf cfg.toyvo.enable {
-    home.sessionVariables = {
-      EDITOR = "nvim";
-      NH_FLAKE = "~/nixcfg";
-    };
+    home.sessionVariables.EDITOR = "nvim";
     programs = {
       alacritty.enable = cfg.gui.enable;
       direnv = {
