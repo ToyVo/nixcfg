@@ -139,12 +139,10 @@
       tokenFile = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
     };
   };
-  security.acme = rec {
-    acceptTerms = true;
-    certs = {
-      "diekvoss.net" = {
+  security.acme =
+    let
+      cloudflare = {
         email = "collin@diekvoss.com";
-        extraDomainNames = [ "*.diekvoss.net" ];
         dnsProvider = "cloudflare";
         credentialFiles = {
           "CF_API_EMAIL_FILE" = "${pkgs.writeText "cfemail" ''
@@ -154,9 +152,16 @@
           "CF_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
         };
       };
-      "toyvo.dev" = certs."diekvoss.net";
+    in
+    {
+      acceptTerms = true;
+      certs = {
+        "diekvoss.net" = cloudflare // {
+          extraDomainNames = [ "*.diekvoss.net" ];
+        };
+        "toyvo.dev" = cloudflare;
+      };
     };
-  };
   sops.secrets = {
     cloudflare_global_api_key = { };
     cloudflare_w_dns_r_zone_token = { };

@@ -33,12 +33,6 @@
           reverse_proxy http://10.1.0.3:80
         '';
       };
-      "https://octoprint.diekvoss.net:443" = {
-        useACMEHost = "diekvoss.net";
-        extraConfig = ''
-          reverse_proxy http://10.1.0.7:5000
-        '';
-      };
       "https://omada.diekvoss.net:443" = {
         useACMEHost = "diekvoss.net";
         extraConfig = ''
@@ -54,13 +48,19 @@
       "https://ollama.diekvoss.net:443" = {
         useACMEHost = "diekvoss.net";
         extraConfig = ''
-          reverse_proxy http://10.1.0.3:11434
+          reverse_proxy http://10.1.0.11:11434
         '';
       };
       "https://chat.diekvoss.net:443" = {
         useACMEHost = "diekvoss.net";
         extraConfig = ''
           reverse_proxy http://10.1.0.3:11435
+        '';
+      };
+      "https://toyvo.dev:443" = {
+        useACMEHost = "toyvo.dev";
+        extraConfig = ''
+          reverse_proxy http://10.1.0.3:8080
         '';
       };
     };

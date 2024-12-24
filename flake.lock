@@ -42,29 +42,6 @@
         "type": "github"
       }
     },
-    "arion_2": {
-      "inputs": {
-        "flake-parts": "flake-parts_2",
-        "haskell-flake": "haskell-flake_2",
-        "nixpkgs": [
-          "discord_bot",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1733918465,
-        "narHash": "sha256-hSuGa8Hh67EHr2x812Ay6WFyFT2BGKn+zk+FJWeKXPg=",
-        "owner": "hercules-ci",
-        "repo": "arion",
-        "rev": "f01c95c10f9d4f04bb08d97b3233b530b180f12e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "arion",
-        "type": "github"
-      }
-    },
     "catppuccin": {
       "locked": {
         "lastModified": 1734734291,
@@ -165,18 +142,17 @@
     },
     "discord_bot": {
       "inputs": {
-        "arion": "arion_2",
         "devshell": "devshell_2",
-        "flake-parts": "flake-parts_3",
+        "flake-parts": "flake-parts_2",
         "nixpkgs": "nixpkgs_2",
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1735011774,
-        "narHash": "sha256-ATSwhbFvZR2OzKpARzIeM5QPq8QKHgq16Fe2X8NrEmk=",
+        "lastModified": 1735059744,
+        "narHash": "sha256-0LT+61cjJ6yBSzihzIRwObH5ovkvUcvJi24RgKOCuMY=",
         "owner": "toyvo",
         "repo": "discord_bot",
-        "rev": "42bef7bbcac80cbc9fa9de60164215242d27e3b0",
+        "rev": "67ef8d658f5def4ec723f1564975253d00a2f93a",
         "type": "github"
       },
       "original": {
@@ -291,7 +267,6 @@
       "inputs": {
         "nixpkgs-lib": [
           "discord_bot",
-          "arion",
           "nixpkgs"
         ]
       },
@@ -311,27 +286,6 @@
     },
     "flake-parts_3": {
       "inputs": {
-        "nixpkgs-lib": [
-          "discord_bot",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1733312601,
-        "narHash": "sha256-4pDvzqnegAfRkPwO3wmwBhVi/Sye1mzps0zHWYnP88c=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "205b12d8b7cd4802fbcb8e8ef6a0f1408781a4f9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
-      }
-    },
-    "flake-parts_4": {
-      "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
       },
       "locked": {
@@ -348,7 +302,7 @@
         "type": "github"
       }
     },
-    "flake-parts_5": {
+    "flake-parts_4": {
       "inputs": {
         "nixpkgs-lib": [
           "nh_plus",
@@ -369,7 +323,7 @@
         "type": "github"
       }
     },
-    "flake-parts_6": {
+    "flake-parts_5": {
       "inputs": {
         "nixpkgs-lib": [
           "nixvim",
@@ -390,7 +344,7 @@
         "type": "github"
       }
     },
-    "flake-parts_7": {
+    "flake-parts_6": {
       "inputs": {
         "nixpkgs-lib": [
           "nur",
@@ -518,22 +472,6 @@
       }
     },
     "haskell-flake": {
-      "locked": {
-        "lastModified": 1675296942,
-        "narHash": "sha256-u1X1sblozi5qYEcLp1hxcyo8FfDHnRUVX3dJ/tW19jY=",
-        "owner": "srid",
-        "repo": "haskell-flake",
-        "rev": "c2cafce9d57bfca41794dc3b99c593155006c71e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "srid",
-        "ref": "0.1.0",
-        "repo": "haskell-flake",
-        "type": "github"
-      }
-    },
-    "haskell-flake_2": {
       "locked": {
         "lastModified": 1675296942,
         "narHash": "sha256-u1X1sblozi5qYEcLp1hxcyo8FfDHnRUVX3dJ/tW19jY=",
@@ -697,7 +635,7 @@
     "nh_plus": {
       "inputs": {
         "devshell": "devshell_3",
-        "flake-parts": "flake-parts_5",
+        "flake-parts": "flake-parts_4",
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
@@ -1239,7 +1177,7 @@
       "inputs": {
         "devshell": "devshell_4",
         "flake-compat": "flake-compat_4",
-        "flake-parts": "flake-parts_6",
+        "flake-parts": "flake-parts_5",
         "git-hooks": "git-hooks",
         "home-manager": "home-manager_2",
         "nix-darwin": "nix-darwin_2",
@@ -1263,7 +1201,7 @@
     },
     "nur": {
       "inputs": {
-        "flake-parts": "flake-parts_7",
+        "flake-parts": "flake-parts_6",
         "nixpkgs": "nixpkgs_12",
         "treefmt-nix": "treefmt-nix_2"
       },
@@ -1351,7 +1289,7 @@
         "devshell": "devshell",
         "discord_bot": "discord_bot",
         "disko": "disko",
-        "flake-parts": "flake-parts_4",
+        "flake-parts": "flake-parts_3",
         "home-manager": "home-manager",
         "jovian": "jovian",
         "mkAlias": "mkAlias",

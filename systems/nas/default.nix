@@ -55,6 +55,15 @@
       hostName = "nextcloud.diekvoss.net";
       config.adminpassFile = config.sops.secrets.nextcloud_admin_password.path;
     };
+    discord_bot = {
+      enable = true;
+      env_file = config.sops.secrets."discord_bot.env".path;
+      env = {
+        MINECRAFT_GEYSER_RCON_ADDRESS = "100.89.118.92:25576";
+        MINECRAFT_MODDED_RCON_ADDRESS = "100.89.118.92:25575";
+        TSHOCK_REST_BASE_URL = "http://100.89.118.92:7878";
+      };
+    };
   };
   sops.secrets = {
     nextcloud_admin_password = {
