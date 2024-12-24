@@ -58,7 +58,7 @@ in
         env_file = [ cfg.env_file ];
         environment = {
           EULA = "TRUE";
-          TYPE = "PAPER";
+          TYPE = "FABRIC";
           VERSION = "1.20.1";
           MEMORY = "4g";
           OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
