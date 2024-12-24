@@ -51,10 +51,6 @@
       enable = true;
       settings.PasswordAuthentication = false;
     };
-    discord_bot = {
-      enable = true;
-      env_file = config.sops.secrets."discord_bot.env".path;
-    };
     caddy = {
       enable = true;
       email = "collin@diekvoss.com";
@@ -69,17 +65,6 @@
     };
     remote-builds.server.enable = true;
     github-runners = {
-      discord_bot = {
-        enable = true;
-        name = config.networking.hostName;
-        tokenFile = config.sops.secrets.gha_discord_bot.path;
-        user = "nixremote";
-        group = "nixremote";
-        url = "https://github.com/toyvo/discord_bot";
-        extraPackages = with pkgs; [
-          cachix
-        ];
-      };
       nur-packages = {
         enable = true;
         name = config.networking.hostName;
@@ -108,12 +93,6 @@
     };
   };
   sops.secrets = {
-    gha_discord_bot = {
-      format = "yaml";
-      sopsFile = ../secrets/oracle.yaml;
-      owner = "nixremote";
-      group = "nixremote";
-    };
     gha_nur = {
       format = "yaml";
       sopsFile = ../secrets/oracle.yaml;
