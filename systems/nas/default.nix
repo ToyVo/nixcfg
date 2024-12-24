@@ -69,6 +69,7 @@
     nextcloud_admin_password = {
       owner = "nextcloud";
     };
+    "discord_bot.env" = { };
   };
   containerPresets = {
     podman.enable = true;
