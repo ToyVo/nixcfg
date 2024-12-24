@@ -42,6 +42,7 @@
     };
   };
   profiles.defaults.enable = true;
+  profiles.dev.enable = true;
   environment.systemPackages = with pkgs; [
     packwiz
   ];
