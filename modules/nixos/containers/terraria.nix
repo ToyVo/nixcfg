@@ -43,7 +43,7 @@ in
       ];
       volumes = [
         "${cfg.dataDir}/Worlds:/root/.local/share/Terraria/Worlds"
-        "${cfg.dataDir}/ServerPlugins:/plugins"
+        "${cfg.dataDir}/ServerPlugins:/tshock/ServerPlugins"
       ];
       environment = {
         WORLD_FILENAME = "large_master_crimson.wld";
