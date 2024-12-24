@@ -64,6 +64,7 @@
         MINECRAFT_GEYSER_RCON_ADDRESS = "100.89.118.92:25576";
         MINECRAFT_MODDED_RCON_ADDRESS = "100.89.118.92:25575";
         TSHOCK_REST_BASE_URL = "http://100.89.118.92:7878";
+        IP = "0.0.0.0";
       };
     };
   };
