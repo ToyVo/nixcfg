@@ -42,7 +42,8 @@ in
         "${toString cfg.RestPort}:7878"
       ];
       volumes = [
-        "${cfg.dataDir}:/root/.local/share/Terraria/Worlds"
+        "${cfg.dataDir}/Worlds:/root/.local/share/Terraria/Worlds"
+        "${cfg.dataDir}/ServerPlugins:/plugins"
       ];
       environment = {
         WORLD_FILENAME = "large_master_crimson.wld";
