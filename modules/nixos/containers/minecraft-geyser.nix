@@ -49,7 +49,7 @@ in
     };
     virtualisation.arion.projects.minecraft-geyser.settings.services = {
       mc.service = {
-        image = "docker.io/itzg/minecraft-server:java17";
+        image = "docker.io/itzg/minecraft-server:java21";
         ports = [
           "${toString cfg.MCport}:25565"
           "${toString cfg.RCONPort}:25575"
@@ -59,7 +59,7 @@ in
         environment = {
           EULA = "TRUE";
           TYPE = "FABRIC";
-          VERSION = "1.20.1";
+          VERSION = "1.21.4";
           MEMORY = "4g";
           OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
           EXISTING_OPS_FILE = "MERGE";
