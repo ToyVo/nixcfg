@@ -104,7 +104,10 @@
     "discord_bot.env" = { };
     "rclone.conf" = { };
   };
-  users.users.caddy.extraGroups = [ "acme" ];
+  users.users = {
+    caddy.extraGroups = [ "acme" ];
+    root.openssh.authorizedKeys.keyFiles = [../secrets/cloud_ssh_ed25519.pub];
+  };
   userPresets.toyvo.enable = true;
   disko.devices.disk.sda = {
     type = "disk";

@@ -69,6 +69,7 @@
         # TODO root user is obviously bad, but we need to interact with journalctl and systemctl to stop/restart
         # services and view logs, maybe we can host needed services with a specific user and systemd user services?
         CLOUD_SSH_HOST = "root@100.89.118.92";
+        CLOUD_SSH_KEY = config.sops.secrets.cloud_ssh_ed25519.path;
       };
     };
   };
@@ -77,6 +78,7 @@
       owner = "nextcloud";
     };
     "discord_bot.env" = { };
+    cloud_ssh_ed25519 = { };
   };
   containerPresets = {
     podman.enable = true;
