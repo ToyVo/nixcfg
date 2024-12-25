@@ -148,11 +148,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1735078758,
-        "narHash": "sha256-iOLJmu7I5r3WQccEe59OhiwBvY4athLwEgz9lamrWSg=",
+        "lastModified": 1735086001,
+        "narHash": "sha256-PPEMHTWPZe75dt/RcpLk7dtCbTBPwr5aabx9ukuJWck=",
         "owner": "toyvo",
         "repo": "discord_bot",
-        "rev": "6ef7820a09693dd3ad3e2f0d421d22061de9988b",
+        "rev": "1a2191b2c5cf40a7a04602472885ce4ed52d77d9",
         "type": "github"
       },
       "original": {
