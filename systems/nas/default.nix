@@ -78,7 +78,9 @@
       owner = "nextcloud";
     };
     "discord_bot.env" = { };
-    cloud_ssh_ed25519 = { };
+    cloud_ssh_ed25519 = {
+      owner = "discord_bot";
+    };
   };
   containerPresets = {
     podman.enable = true;
