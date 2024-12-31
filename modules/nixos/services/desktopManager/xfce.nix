@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.services.xserver.desktopManager.xfce;
 in
@@ -10,6 +10,10 @@ in
         displayManager.lightdm.enable = true;
       };
       libinput.enable = true;
+    };
+    xdg.portal = {
+      enable = true;
+      extraPortals = with pkgs; [xdg-desktop-portal-gtk xdg-desktop-portal-kde];
     };
   };
 }

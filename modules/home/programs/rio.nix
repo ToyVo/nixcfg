@@ -20,10 +20,10 @@ in
           args = [ ];
         };
       };
-      catppuccin = {
-        enable = true;
-        flavor = config.catppuccin.flavor;
-      };
+    };
+    catppuccin.rio = {
+      enable = true;
+      flavor = config.catppuccin.flavor;
     };
   };
 }

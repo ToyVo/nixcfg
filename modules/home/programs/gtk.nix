@@ -28,7 +28,7 @@ in
         size = 24;
       };
     };
-    catppuccin.pointerCursor = {
+    catppuccin.cursors = {
       enable = lib.mkDefault true;
       flavor = config.catppuccin.flavor;
       accent = config.catppuccin.accent;
