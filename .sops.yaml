@@ -8,7 +8,7 @@ keys:
   - &server_hp_zbook age1vkeg2mfn7z2rvrymcvp6c9ytzdtmn44g4nw0kdz0ak9e5yhpr39s8nrh4c
   - &server_mac_mini_m1 age1whatefc8ty5gs0la7phh5srx9d8unpkhh6xh670ekwjysm9azcaqx9kkue
   - &server_macbook_pro age1yaqnllg9s44u9kw9e656jg8rcru33d3m2sc2tckv8lypzv8r9ujqmce4mf
-  - &server_macbook_pro_nixos age1yyj54s6gy9gtuemasxy7dq9y5a5r9hvnnjd2fxy4pcd5589uuyqqg88qkl
+  - &server_macbook_pro_nixos age1v3frajfater66nykc3rynceg359qwjpwlg48ne338w0zlkgr0ecq542f9f
   - &server_nas age1hxnk8ds8x45w7cvddx8t2s9f0z68h8x3nxhv2u3v9zlh404t7p3qvtdvld
   - &server_oracle_cloud_nixos age1wvmgkw6ud4xxt8fp65v0wcvkste8qgkrcjlrau7mu0z27ey2zq3qtpqpcl
   - &server_router age18gma0mvyr7kmg50ynev3d5rjqher3t92gutakw3m6jswzg72t9xqlpr3nl

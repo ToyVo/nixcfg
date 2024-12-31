@@ -1,4 +1,4 @@
-{ }:
+{ ... }:
 {
   networking.hostName = "MacBook-Pro-Nixos";
   boot = {
@@ -22,6 +22,6 @@
       extras.enable = true;
     };
   };
-  services.xserver.desktopManager.gnome.enable = true;
+  services.desktopManager.cosmic.enable = true;
   hardware.asahi.peripheralFirmwareDirectory = ./firmware;
 }
