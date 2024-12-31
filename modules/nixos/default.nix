@@ -128,7 +128,7 @@ in
       loader.systemd-boot.configurationLimit = lib.mkIf config.boot.loader.systemd-boot.enable 3;
       binfmt.registrations.appimage = {
         wrapInterpreterInShell = false;
-        interpreter = "${pkgs.appimage-run}/bin/appimage-run";
+        interpreter = lib.getExe pkgs.appimage-run;
         recognitionType = "magic";
         offset = 0;
         mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';

@@ -20,7 +20,7 @@ in
       default = ''
         module.exports = {
           config: {
-            shell: '${pkgs.powershell}/bin/pwsh',
+            shell: '${lib.getExe pkgs.powershell}',
             shellArgs: ['-Nologo'],
             bell: false,
           },

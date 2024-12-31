@@ -33,6 +33,7 @@ in
         ++ lib.optionals stdenv.isLinux [
           element-desktop
           firefox
+          ghostty
           yubikey-manager-qt
           yubioath-flutter
         ]

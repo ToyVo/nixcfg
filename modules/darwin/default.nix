@@ -59,18 +59,12 @@
         cleanup = "zap";
       };
       casks = [
-        # Nix package doesn't exist
-        {
-          name = "grammarly";
-          greedy = true;
-        }
-        {
-          name = "proton-drive";
-          greedy = true;
-        }
-        # Nix package exists but unavailable on darwin
         {
           name = "firefox";
+          greedy = true;
+        }
+        {
+          name = "ghostty";
           greedy = true;
         }
         {
@@ -86,15 +80,19 @@
           greedy = true;
         }
         {
+          name = "proton-drive";
+          greedy = true;
+        }
+        {
+          name = "proton-mail";
+          greedy = true;
+        }
+        {
           name = "proton-pass";
           greedy = true;
         }
         {
           name = "protonvpn";
-          greedy = true;
-        }
-        {
-          name = "proton-mail";
           greedy = true;
         }
       ];
@@ -103,8 +101,8 @@
       (
         {
           config,
-          pkgs,
           lib,
+          pkgs,
           ...
         }:
         {

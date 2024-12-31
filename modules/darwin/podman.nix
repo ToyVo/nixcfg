@@ -29,7 +29,7 @@
           }
           ''
             mkdir -p $out/bin
-            ln -s ${podman}/bin/podman $out/bin/docker
+            ln -s ${lib.getExe podman} $out/bin/docker
 
             mkdir -p $man/share/man/man1
             for f in ${podman.man}/share/man/man1/*; do

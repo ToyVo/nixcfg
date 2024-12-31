@@ -91,6 +91,7 @@ in
       zsh.enable = true;
       bash.enable = true;
       fish.enable = true;
+      ion.enable = true;
       nushell.enable = true;
       powershell.enable = true;
       nvim.enable = true;

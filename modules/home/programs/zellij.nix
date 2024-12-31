@@ -37,7 +37,7 @@ in
             ) cfg.restrictedVariables
           )
         }; then
-          ${pkgs.zellij}/bin/zellij options --default-shell ${pkgs.bashInteractive}/bin/bash --session-name bash --attach-to-session true
+          ${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.bashInteractive} --session-name bash --attach-to-session true
         fi
       '';
       zsh.initExtra = ''
@@ -48,7 +48,7 @@ in
             ) cfg.restrictedVariables
           )
         }; then
-          ${pkgs.zellij}/bin/zellij options --default-shell ${pkgs.zsh}/bin/zsh --session-name zsh --attach-to-session true
+          ${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.zsh} --session-name zsh --attach-to-session true
         fi
       '';
       fish.interactiveShellInit = ''
@@ -59,7 +59,7 @@ in
             ) cfg.restrictedVariables
           )
         }
-          ${pkgs.zellij}/bin/zellij options --default-shell ${pkgs.fish}/bin/fish --session-name fish --attach-to-session true
+          ${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.fish} --session-name fish --attach-to-session true
         end
       '';
       nushell.configFile.text = ''
@@ -70,7 +70,7 @@ in
             ) cfg.restrictedVariables
           )
         } {
-          ${pkgs.zellij}/bin/zellij options --default-shell ${pkgs.nushell}/bin/nu --session-name nu --attach-to-session true
+          ${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.nushell} --session-name nu --attach-to-session true
         }
       '';
       powershell.profileExtra = ''
@@ -84,8 +84,20 @@ in
             ) cfg.restrictedVariables
           )
         }) {
-          ${pkgs.zellij}/bin/zellij options --default-shell ${pkgs.powershell}/bin/pwsh --session-name pwsh --attach-to-session true
+          ${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.powershell} --session-name pwsh --attach-to-session true
         }
+      '';
+      ion.initExtraEnd = ''
+        if not exists -s ZELLIJ && not exists -s SSH_CONNECTION && ${
+          lib.concatStringsSep " && " (
+            lib.mapAttrsToList (
+              # TODO: not checking if the variable is set to the right value because doing `test \$${name} != \"${value}\"` doesn't work because the variable might be undefined and ion doesn't seem to have order of operations with parenthese to protect it with `exists -s ${name}`
+              name: values: "not exists -S ${name}"
+            ) cfg.restrictedVariables
+          )
+        }
+          ${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.ion} --session-name ion --attach-to-session true
+        end
       '';
     };
   };

@@ -2,11 +2,11 @@
   description = "Collin Diekvoss Nix Configurations";
 
   inputs = {
+    apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
     arion = {
       url = "github:hercules-ci/arion";
       inputs.nixpkgs.follows = "nixos-unstable";
     };
-    apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
     catppuccin.url = "github:catppuccin/nix";
     devshell = {
       url = "github:numtide/devshell";
@@ -18,6 +18,7 @@
       inputs.nixpkgs.follows = "nixos-unstable";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
+    ghostty.url = "github:ghostty-org/ghostty";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixos-unstable";
@@ -34,16 +35,16 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixos-unstable";
     };
+    "nixos-24.11".url = "github:nixos/nixpkgs/nixos-24.11";
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    "nixos-24.11".url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixos-wsl.url = "github:nix-community/nixos-wsl";
     nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixvim.url = "github:nix-community/nixvim";
-    nur.url = "github:nix-community/nur";
     nur-packages.url = "github:ToyVo/nur-packages";
+    nur.url = "github:nix-community/nur";
     plasma-manager.url = "github:pjones/plasma-manager";
     rust-overlay.url = "github:oxalica/rust-overlay";
     sops-nix.url = "github:Mic92/sops-nix";
@@ -51,11 +52,12 @@
 
   outputs =
     inputs@{
-      flake-parts,
-      rust-overlay,
-      nixpkgs-esp-dev,
-      nixos-unstable,
       devshell,
+      flake-parts,
+      ghostty,
+      nixos-unstable,
+      nixpkgs-esp-dev,
+      rust-overlay,
       ...
     }:
     let
@@ -69,6 +71,7 @@
           inherit system;
           overlays = [
             (import rust-overlay)
+            ghostty.overlays.default
             nixpkgs-esp-dev.overlays.default
           ];
           config = {
@@ -103,6 +106,7 @@
         {
           config,
           pkgs,
+          lib,
           system,
           self',
           ...
@@ -162,8 +166,8 @@
               git checkout secrets/secrets.nix
             '';
             sops-ssh-to-age = pkgs.writeShellScriptBin "sops-ssh-to-age" ''
-              private_key="$(${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key)"
-              public_key="$(${pkgs.ssh-to-age}/bin/ssh-to-age -i /etc/ssh/ssh_host_ed25519_key.pub)"
+              private_key="$(${lib.getExe pkgs.ssh-to-age} -private-key -i /etc/ssh/ssh_host_ed25519_key)"
+              public_key="$(${lib.getExe pkgs.ssh-to-age} -i /etc/ssh/ssh_host_ed25519_key.pub)"
               destination="$HOME/${
                 if pkgs.stdenv.isDarwin then "Library/Application Support" else ".config"
               }/sops/age/keys.txt"

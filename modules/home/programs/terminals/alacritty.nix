@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  system,
   ...
 }:
 let
@@ -17,7 +16,7 @@ in
     programs.alacritty = {
       settings = {
         shell = {
-          program = "${pkgs.bashInteractive}/bin/bash";
+          program = "${lib.getExe pkgs.bashInteractive}";
           args = [ "-l" ];
         };
       };

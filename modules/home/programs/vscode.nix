@@ -23,7 +23,7 @@ in
           catppuccin.catppuccin-vsc
           catppuccin.catppuccin-vsc-icons
           ms-vscode.cmake-tools
-          vadimcn.vscode-lldb
+          # vadimcn.vscode-lldb
           continue.continue
           fill-labs.dependi
           ms-vscode-remote.remote-containers

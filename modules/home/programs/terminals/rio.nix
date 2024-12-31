@@ -16,7 +16,7 @@ in
           height = 800;
         };
         shell = {
-          program = "${pkgs.nushell}/bin/nu";
+          program = "${lib.getExe pkgs.nushell}";
           args = [ ];
         };
       };

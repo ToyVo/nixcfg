@@ -30,7 +30,7 @@ in
         config.hide_tab_bar_if_only_one_tab = true;
         config.audible_bell = "Disabled";
         config.enable_kitty_keyboard = true;
-        config.default_prog = { '${pkgs.fish}/bin/fish' };
+        config.default_prog = { '${lib.getExe pkgs.zsh}' };
         config.front_end = "WebGpu";
         return config;
       '';

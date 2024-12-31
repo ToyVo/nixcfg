@@ -7,7 +7,7 @@
   };
   userPresets.toyvo.enable = true;
   environment.systemPackages = with pkgs; [
-    openscad
+    # openscad
     ollama
     prismlauncher
     packwiz

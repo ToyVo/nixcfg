@@ -22,7 +22,7 @@ in
       if [[ -d "$app_path" ]]; then
         $DRY_RUN_CMD rm -rf "$app_path"
       fi
-      $DRY_RUN_CMD ${pkgs.fd}/bin/fd -t l -d 1 . ${apps}/Applications -x ${mkalias} -L {} "$tmp_path/{/}"
+      $DRY_RUN_CMD ${lib.getExe pkgs.fd} -t l -d 1 . ${apps}/Applications -x ${mkalias} -L {} "$tmp_path/{/}"
       $DRY_RUN_CMD mv "$tmp_path" "$app_path"
       $DRY_RUN_CMD chmod -R 775 "$app_path"
       $DRY_RUN_CMD chgrp -R staff "$app_path"

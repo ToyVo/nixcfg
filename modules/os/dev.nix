@@ -49,7 +49,6 @@ in
           cmake
           config.environment.pythonPackage
           dfu-util
-          dioxus-cli
           flex
           gnumake
           gperf
