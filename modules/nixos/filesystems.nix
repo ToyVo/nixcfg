@@ -7,6 +7,7 @@ in
     sd.enable = lib.mkEnableOption "SD card image partition ext4";
     boot.enable = lib.mkEnableOption "boot partition";
     btrfs.enable = lib.mkEnableOption "root btrfs partition";
+    btrfs.extras.enable = lib.mkEnableOption "var and tmp btrfs partition";
     efi.enable = lib.mkEnableOption "efi partition";
     ext4.enable = lib.mkEnableOption "root ext4 partition";
   };
@@ -38,6 +39,18 @@ in
         device = "/dev/disk/by-label/NIXOS";
         fsType = "btrfs";
         options = [ "subvol=@nix" ];
+      };
+
+      "/tmp" = lib.mkIf (cfg.btrfs.enable && cfg.btrfs.extras.enable) {
+        device = "/dev/disk/by-label/NIXOS";
+        fsType = "btrfs";
+        options = [ "subvol=@tmp" ];
+      };
+
+      "/var" = lib.mkIf (cfg.btrfs.enable && cfg.btrfs.extras.enable) {
+        device = "/dev/disk/by-label/NIXOS";
+        fsType = "btrfs";
+        options = [ "subvol=@var" ];
       };
 
       "/boot" = lib.mkIf cfg.boot.enable {
