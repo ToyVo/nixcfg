@@ -25,7 +25,7 @@ in
       '';
     };
     home.shellAliases = {
-      gpg-scan-card = ''gpg-connect-agent "scd serialno" "learn --force" /bye'';
+      gpg-scan-card = "gpg-connect-agent \"scd serialno\" \"learn --force\" /bye";
     };
     home.sessionVariables = {
       GPG_TTY = "$(tty)";

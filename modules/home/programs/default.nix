@@ -1,31 +1,31 @@
 { ... }:
 {
   imports = [
-    ./terminals/alacritty.nix
-    ./shells/bash.nix
     ./bat.nix
+    ./editors/helix.nix
+    ./editors/ideavim.nix
+    ./editors/neovim
+    ./editors/vscode.nix
+    ./editors/zed.nix
     ./eza.nix
-    ./shells/fish.nix
-    ./terminals/ghostty.nix
     ./git.nix
     ./gpg.nix
     ./gtk.nix
-    ./helix.nix
-    ./terminals/hyper.nix
-    ./ideavim.nix
-    ./shells/ion.nix
     ./kde.nix
-    ./terminals/kitty.nix
-    ./neovim.nix
+    ./shells/bash.nix
+    ./shells/fish.nix
+    ./shells/ion.nix
     ./shells/nushell.nix
     ./shells/powershell.nix
-    ./terminals/rio.nix
-    ./ssh.nix
-    ./volta.nix
-    ./vscode.nix
-    ./terminals/wezterm.nix
-    ./zed.nix
-    ./zellij.nix
     ./shells/zsh.nix
+    ./ssh.nix
+    ./terminals/alacritty.nix
+    ./terminals/ghostty.nix
+    ./terminals/hyper.nix
+    ./terminals/kitty.nix
+    ./terminals/rio.nix
+    ./terminals/wezterm.nix
+    ./volta.nix
+    ./zellij.nix
   ];
 }

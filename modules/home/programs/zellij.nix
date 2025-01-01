@@ -26,6 +26,14 @@ in
         theme = "catppuccin-${config.catppuccin.flavor}";
       };
     };
+    home.shellAliases = {
+      zellij-bash = "${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.bashInteractive} --session-name bash --attach-to-session true";
+      zellij-fish = "${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.fish} --session-name fish --attach-to-session true";
+      zellij-ion = "${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.ion} --session-name ion --attach-to-session true";
+      zellij-nushell = "${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.nushell} --session-name nu --attach-to-session true";
+      zellij-powershell = "${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.powershell} --session-name pwsh --attach-to-session true";
+      zellij-zsh = "${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.zsh} --session-name zsh --attach-to-session true";
+    };
     programs = {
       # extension of zellij setup --generate-auto-start $SHELL because the code generated doesn't start zellij with a window with the shell that started it, but the default shell of the user. Additionally generation doesn't support nushell
       # Don't auto start zellij within zellij, when connected via ssh, or when used as the shell within ides
@@ -37,7 +45,7 @@ in
             ) cfg.restrictedVariables
           )
         }; then
-          ${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.bashInteractive} --session-name bash --attach-to-session true
+          zellij-bash
         fi
       '';
       zsh.initExtra = ''
@@ -48,7 +56,7 @@ in
             ) cfg.restrictedVariables
           )
         }; then
-          ${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.zsh} --session-name zsh --attach-to-session true
+          zellij-zsh
         fi
       '';
       fish.interactiveShellInit = ''
@@ -59,7 +67,7 @@ in
             ) cfg.restrictedVariables
           )
         }
-          ${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.fish} --session-name fish --attach-to-session true
+          zellij-fish
         end
       '';
       nushell.configFile.text = ''
@@ -70,7 +78,7 @@ in
             ) cfg.restrictedVariables
           )
         } {
-          ${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.nushell} --session-name nu --attach-to-session true
+          zellij-nushell
         }
       '';
       powershell.profileExtra = ''
@@ -84,7 +92,7 @@ in
             ) cfg.restrictedVariables
           )
         }) {
-          ${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.powershell} --session-name pwsh --attach-to-session true
+          zellij-powershell
         }
       '';
       ion.initExtraEnd = ''
@@ -96,7 +104,7 @@ in
             ) cfg.restrictedVariables
           )
         }
-          ${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.ion} --session-name ion --attach-to-session true
+          zellij-ion
         end
       '';
     };
