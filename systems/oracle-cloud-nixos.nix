@@ -74,6 +74,7 @@
         url = "https://github.com/toyvo/nur-packages";
         extraPackages = with pkgs; [
           cachix
+          curl
         ];
       };
     };
