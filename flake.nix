@@ -24,7 +24,6 @@
       inputs.nixpkgs.follows = "nixos-unstable";
     };
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
-    mkAlias.url = "github:reckenrode/mkAlias";
     nh.url = "github:viperml/nh";
     nh_plus.url = "github:toyvo/nh_plus";
     nix-darwin = {
@@ -42,9 +41,9 @@
     nixos-wsl.url = "github:nix-community/nixos-wsl";
     nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixvim.url = "github:nix-community/nixvim";
     nur-packages.url = "github:ToyVo/nur-packages";
     nur.url = "github:nix-community/nur";
+    nvf.url = "github:NotAShelf/nvf";
     plasma-manager.url = "github:pjones/plasma-manager";
     rust-overlay.url = "github:oxalica/rust-overlay";
     sops-nix.url = "github:Mic92/sops-nix";

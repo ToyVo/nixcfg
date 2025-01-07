@@ -23,7 +23,6 @@ in
     boto3
     datasets
     huggingface-hub
-    jax
     openai
     pymongo
     torch

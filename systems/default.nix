@@ -13,9 +13,9 @@
   nixos-hardware,
   nixos-unstable,
   nixos-wsl,
-  nixvim,
   nur,
   nur-packages,
+  nvf,
   plasma-manager,
   self,
   sops-nix,
@@ -25,8 +25,8 @@ let
   sharedHomeManagerModules = [
     catppuccin.homeManagerModules.catppuccin
     nix-index-database.hmModules.nix-index
-    nixvim.homeManagerModules.nixvim
     nur.modules.homeManager.default
+    nvf.homeManagerModules.nvf
     self.homeManagerModules.default
     sops-nix.homeManagerModules.sops
   ];
@@ -97,11 +97,14 @@ let
         home-manager.darwinModules.default
         nh_plus.nixDarwinModules.prebuiltin
         nix-index-database.darwinModules.nix-index
+        nur-packages.darwinModules.nix-finder-alias
         self.darwinModules.default
         {
           home-manager = {
             extraSpecialArgs = specialArgs;
-            sharedModules = homeManagerModules ++ sharedHomeManagerModules;
+            sharedModules = [
+              nur-packages.homeManagerModules.nix-finder-alias
+            ] ++ homeManagerModules ++ sharedHomeManagerModules;
           };
         }
       ] ++ darwinModules;

@@ -4,7 +4,7 @@
     ./bat.nix
     ./editors/helix.nix
     ./editors/ideavim.nix
-    ./editors/neovim
+    ./editors/neovim.nix
     ./editors/vscode.nix
     ./editors/zed.nix
     ./eza.nix
