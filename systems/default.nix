@@ -6,12 +6,13 @@
   disko,
   home-manager,
   jovian,
+  mac-app-util,
   nh_plus,
   nix-darwin,
   nix-index-database,
   nixos-cosmic,
   nixos-hardware,
-  nixos-unstable,
+  nixpkgs,
   nixos-wsl,
   nur,
   nur-packages,
@@ -30,7 +31,7 @@ let
     self.homeManagerModules.default
     sops-nix.homeManagerModules.sops
   ];
-  lib = nixos-unstable.lib;
+  lib = nixpkgs.lib;
   nixosSystem =
     {
       system,
@@ -39,12 +40,8 @@ let
     }:
     let
       pkgs = self.lib.import_nixpkgs { inherit system; };
-      pkgsStable = self.lib.import_nixpkgs {
-        inherit system;
-        nixpkgs = inputs."nixos-24.11";
-      };
       specialArgs = inputs // {
-        inherit system pkgsStable;
+        inherit system;
       };
     in
     lib.nixosSystem {
@@ -58,7 +55,7 @@ let
         home-manager.nixosModules.default
         nix-index-database.nixosModules.nix-index
         nixos-cosmic.nixosModules.default
-        nixos-unstable.nixosModules.notDetected
+        nixpkgs.nixosModules.notDetected
         nur.modules.nixos.default
         nur-packages.nixosModules.cloudflare-ddns
         self.nixosModules.default
@@ -82,12 +79,8 @@ let
     }:
     let
       pkgs = self.lib.import_nixpkgs { inherit system; };
-      pkgsStable = self.lib.import_nixpkgs {
-        inherit system;
-        nixpkgs = inputs."nixos-24.11";
-      };
       specialArgs = inputs // {
-        inherit system pkgsStable;
+        inherit system;
       };
     in
     nix-darwin.lib.darwinSystem {
@@ -95,15 +88,15 @@ let
       specialArgs = specialArgs;
       modules = [
         home-manager.darwinModules.default
+        mac-app-util.darwinModules.default
         nh_plus.nixDarwinModules.prebuiltin
         nix-index-database.darwinModules.nix-index
-        nur-packages.darwinModules.nix-finder-alias
         self.darwinModules.default
         {
           home-manager = {
             extraSpecialArgs = specialArgs;
             sharedModules = [
-              nur-packages.homeManagerModules.nix-finder-alias
+              mac-app-util.homeManagerModules.default
             ] ++ homeManagerModules ++ sharedHomeManagerModules;
           };
         }
@@ -116,12 +109,8 @@ let
     }:
     let
       pkgs = self.lib.import_nixpkgs { inherit system; };
-      pkgsStable = self.lib.import_nixpkgs {
-        inherit system;
-        nixpkgs = inputs."nixos-24.11";
-      };
       specialArgs = inputs // {
-        inherit system pkgsStable;
+        inherit system;
       };
     in
     home-manager.lib.homeManagerConfiguration {
@@ -182,7 +171,7 @@ in
       system = "aarch64-linux";
       nixosModules = [
         ./oracle-cloud-nixos.nix
-        "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix"
+        "${nixpkgs}/nixos/modules/profiles/qemu-guest.nix"
       ];
     };
     PineBook-Pro = nixosSystem {
@@ -231,7 +220,7 @@ in
       system = "aarch64-linux";
       nixosModules = [
         ./utm.nix
-        "${nixos-unstable}/nixos/modules/profiles/qemu-guest.nix"
+        "${nixpkgs}/nixos/modules/profiles/qemu-guest.nix"
       ];
     };
     wsl = nixosSystem {

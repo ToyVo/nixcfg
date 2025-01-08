@@ -18,7 +18,6 @@
         enableKeyMapping = true;
         remapCapsLockToControl = true;
       };
-      defaults.finder.AliasSystemApplications = true;
     };
     programs = {
       bash = {
@@ -96,18 +95,5 @@
         }
       ];
     };
-    home-manager.sharedModules = [
-      (
-        {
-          config,
-          lib,
-          pkgs,
-          ...
-        }:
-        {
-          targets.darwin.aliasHomeApplications = true;
-        }
-      )
-    ];
   };
 }

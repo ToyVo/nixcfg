@@ -117,12 +117,11 @@ in
         randomizedDelaySec = "45min";
         flags = [
           "--update-input"
-          "nixos-unstable"
+          "nixpkgs"
         ];
       };
     };
     security.rtkit.enable = true;
-    hardware.pulseaudio.enable = lib.mkForce false;
     nix.optimise.automatic = true;
     boot = {
       loader.systemd-boot.configurationLimit = lib.mkIf config.boot.loader.systemd-boot.enable 3;

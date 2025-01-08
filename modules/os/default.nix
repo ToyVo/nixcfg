@@ -2,7 +2,6 @@
   config,
   lib,
   self,
-  pkgs,
   ...
 }@inputs:
 let
@@ -51,11 +50,7 @@ in
         ];
       };
       nixPath = [
-        "nixpkgs=${inputs.nixpkgs-unstable}"
-        "nixos=${inputs.nixos-unstable}"
-        "nixpkgs-unstable=${inputs.nixpkgs-unstable}"
-        "nixos-unstable=${inputs.nixos-unstable}"
-        "nixos-24.11=${inputs."nixos-24.11"}"
+        "nixpkgs=${inputs.nixpkgs}"
       ];
     };
   };

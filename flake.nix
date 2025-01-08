@@ -5,42 +5,41 @@
     apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
     arion = {
       url = "github:hercules-ci/arion";
-      inputs.nixpkgs.follows = "nixos-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     catppuccin.url = "github:catppuccin/nix";
     devshell = {
       url = "github:numtide/devshell";
-      inputs.nixpkgs.follows = "nixos-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     discord_bot.url = "github:toyvo/discord_bot";
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixos-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
     ghostty.url = "github:ghostty-org/ghostty";
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixos-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
+    mac-app-util.url = "github:hraban/mac-app-util";
     nh.url = "github:viperml/nh";
     nh_plus.url = "github:toyvo/nh_plus";
     nix-darwin = {
       url = "github:lnl7/nix-darwin";
-      inputs.nixpkgs.follows = "nixos-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixos-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-    "nixos-24.11".url = "github:nixos/nixpkgs/nixos-24.11";
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     nixos-hardware.url = "github:nixos/nixos-hardware";
-    nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-wsl.url = "github:nix-community/nixos-wsl";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nur-packages.url = "github:ToyVo/nur-packages";
     nur.url = "github:nix-community/nur";
     nvf.url = "github:NotAShelf/nvf";
@@ -54,7 +53,7 @@
       devshell,
       flake-parts,
       ghostty,
-      nixos-unstable,
+      nixpkgs,
       nixpkgs-esp-dev,
       rust-overlay,
       ...
@@ -64,7 +63,6 @@
       import_nixpkgs =
         {
           system,
-          nixpkgs ? nixos-unstable,
         }:
         import nixpkgs {
           inherit system;
@@ -114,10 +112,6 @@
           _module.args = {
             pkgs = import_nixpkgs {
               inherit system;
-            };
-            pkgsStable = import_nixpkgs {
-              inherit system;
-              nixpkg = inputs.nixos;
             };
           };
 
