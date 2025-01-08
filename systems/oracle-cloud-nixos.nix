@@ -63,20 +63,6 @@
       };
     };
     remote-builds.server.enable = true;
-    github-runners = {
-      nur-packages = {
-        enable = true;
-        name = config.networking.hostName;
-        tokenFile = config.sops.secrets.gha_nur.path;
-        user = "nixremote";
-        group = "nixremote";
-        url = "https://github.com/toyvo/nur-packages";
-        extraPackages = with pkgs; [
-          cachix
-          curl
-        ];
-      };
-    };
   };
   security.acme = {
     acceptTerms = true;
