@@ -18,5 +18,7 @@
     font-feature = liga
     theme = catppuccin-frappe
     command = ${lib.getExe pkgs.fish}
+    confirm-close-surface = false
+    quit-after-last-window-closed = true
   '';
 }

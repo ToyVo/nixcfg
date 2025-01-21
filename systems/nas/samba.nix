@@ -13,7 +13,9 @@
           "netbios name" = "nas";
           security = "user";
           "server role" = "standalone";
-          "hosts allow" = "10.1.0.0/24 127.0.0.1 localhost";
+          # 10.1.0.0/24 is the local network,
+          # 100.89.0.0/16 is NetBird's network,
+          "hosts allow" = "10.1.0.0/24 100.89.0.0/16 127.0.0.1 localhost";
           "hosts deny" = "0.0.0.0/0";
           "guest account" = "nobody";
           "map to guest" = "bad user";
