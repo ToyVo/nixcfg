@@ -64,7 +64,7 @@ in
           FORGE_VERSION = "47.3.10";
           VERSION = "1.20.1";
           MEMORY = "12g";
-          OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
+          OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d, 2f3205e9-d01f-4b07-9f1c-6aa96bea8911, 921f3122-1b87-4727-9304-35960e038981";
           EXISTING_OPS_FILE = "MERGE";
           EXISTING_WHITELIST_FILE = "MERGE";
           MOTD = "ToyVo Modded Server";

@@ -61,7 +61,7 @@ in
           TYPE = "FABRIC";
           VERSION = "1.21.4";
           MEMORY = "4g";
-          OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d";
+          OPS = "4cb4aff4-a0ed-4eaf-b912-47825b2ed30d, 2f3205e9-d01f-4b07-9f1c-6aa96bea8911, 921f3122-1b87-4727-9304-35960e038981";
           EXISTING_OPS_FILE = "MERGE";
           EXISTING_WHITELIST_FILE = "MERGE";
           MOTD = "ToyVo Geyser Server";
