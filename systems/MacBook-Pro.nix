@@ -19,8 +19,14 @@
       greedy = true;
     }
     {
-      name = "discord";
+      name = "blender";
       greedy = true;
+    }
+    {
+      name = "discord";
+    }
+    {
+      name = "steam";
     }
     {
       name = "obs";

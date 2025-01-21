@@ -158,16 +158,12 @@
               rm secrets/secrets.nix
               git checkout secrets/secrets.nix
             '';
-            sops-ssh-to-age = pkgs.writeShellScriptBin "sops-ssh-to-age" ''
-              private_key="$(${lib.getExe pkgs.ssh-to-age} -private-key -i /etc/ssh/ssh_host_ed25519_key)"
-              public_key="$(${lib.getExe pkgs.ssh-to-age} -i /etc/ssh/ssh_host_ed25519_key.pub)"
+            setup-sops = pkgs.writeShellScriptBin "setup-sops" ''
               destination="$HOME/${
                 if pkgs.stdenv.isDarwin then "Library/Application Support" else ".config"
-              }/sops/age/keys.txt"
-              echo "# created: $(date -I seconds)" > "$destination"
-              echo "# public key: $public_key" >> "$destination"
-              echo "$private_key" >> "$destination"
-              echo "$public_key"
+              }/sops/age"
+              mkdir -p "$destination"
+              echo "$(${pkgs.age}/bin/age-keygen)" > "$destination/keys.txt"
             '';
           };
 

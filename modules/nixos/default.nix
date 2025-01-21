@@ -141,7 +141,7 @@ in
     sops = {
       defaultSopsFile = ../../secrets/secrets.yaml;
       age = {
-        sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+        keyFile = "${config.users.users.${config.userPresets.toyvo.name}.home}/.config/sops/age/keys.txt";
       };
     };
     environment.systemPackages = lib.optionals (config.system.activationScripts ? setupSecrets) [
