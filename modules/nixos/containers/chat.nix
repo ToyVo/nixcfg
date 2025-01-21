@@ -30,8 +30,6 @@ in
         OLLAMA_BASE_URL = "https://ollama.diekvoss.net";
       };
     };
-    networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedTCPPorts = [ cfg.port ];
-    };
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
   };
 }

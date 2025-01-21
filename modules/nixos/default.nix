@@ -16,7 +16,10 @@ in
     ./gaming.nix
   ];
   config = lib.mkIf cfg.defaults.enable {
-    networking.networkmanager.enable = true;
+    networking = {
+      networkmanager.enable = true;
+      nftables.enable = true;
+    };
     time.timeZone = "America/Chicago";
     i18n = {
       defaultLocale = "en_US.UTF-8";

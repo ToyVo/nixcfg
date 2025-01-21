@@ -28,8 +28,6 @@ in
         "/var/run/podman/podman.sock:/var/run/docker.sock:ro"
       ];
     };
-    networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedTCPPorts = [ cfg.port ];
-    };
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
   };
 }
