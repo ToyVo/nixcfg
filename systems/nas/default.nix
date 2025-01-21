@@ -51,12 +51,6 @@
     remote-builds.server.enable = true;
     ollama.enable = true;
     spice-vdagentd.enable = true;
-    nextcloud = {
-      enable = true;
-      home = "/mnt/POOL/nextcloud";
-      hostName = "nextcloud.diekvoss.net";
-      config.adminpassFile = config.sops.secrets.nextcloud_admin_password.path;
-    };
     discord_bot = {
       enable = true;
       env_file = config.sops.secrets."discord_bot.env".path;
@@ -74,9 +68,6 @@
     };
   };
   sops.secrets = {
-    nextcloud_admin_password = {
-      owner = "nextcloud";
-    };
     "discord_bot.env" = {
       owner = "discord_bot";
     };
