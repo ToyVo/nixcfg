@@ -19,6 +19,7 @@
           "hosts deny" = "0.0.0.0/0";
           "guest account" = "nobody";
           "map to guest" = "bad user";
+          "log level" = "2 auth_audit:5";
         };
         public = {
           path = "/mnt/POOL/Public";
