@@ -77,7 +77,9 @@
     nextcloud_admin_password = {
       owner = "nextcloud";
     };
-    "discord_bot.env" = { };
+    "discord_bot.env" = {
+      owner = "discord_bot";
+    };
     cloud_ssh_ed25519 = {
       owner = "discord_bot";
     };
