@@ -97,8 +97,8 @@ in
           INITIAL_DELAY = 0;
           PAUSE_IF_NO_PLAYERS = "true";
           RCLONE_COMPRESS_METHOD = "zstd";
-          RCLONE_DEST_DIR = "minecraft_modded";
-          RCLONE_REMOTE = "protondrive";
+          RCLONE_DEST_DIR = "public/minecraft_modded";
+          RCLONE_REMOTE = "nas";
           RCON_HOST = "mc";
         };
         volumes = [
