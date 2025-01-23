@@ -164,6 +164,8 @@
               }/sops/age"
               mkdir -p "$destination"
               echo "$(${pkgs.age}/bin/age-keygen)" > "$destination/keys.txt"
+              sudo mkdir -p /var/sops/age
+              sudo cp "$destination/keys.txt" /var/sops/age/keys.txt
             '';
           };
 

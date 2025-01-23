@@ -140,9 +140,7 @@ in
     };
     sops = {
       defaultSopsFile = ../../secrets/secrets.yaml;
-      age = {
-        keyFile = "${config.users.users.${config.userPresets.toyvo.name}.home}/.config/sops/age/keys.txt";
-      };
+      age.keyFile = "/var/sops/age/keys.txt";
     };
     environment.systemPackages = lib.optionals (config.system.activationScripts ? setupSecrets) [
       (pkgs.writeShellScriptBin "sops-nix-system" "${config.system.activationScripts.setupSecrets.text}")
