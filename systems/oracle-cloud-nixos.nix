@@ -84,27 +84,27 @@
         users = [ "discord_bot" ];
         commands = [
           {
-            command = "${pkgs.systemd}/bin/systemctl stop ${config.vitualization.arion.projects.terraria.serviceName}.service";
+            command = "${pkgs.systemd}/bin/systemctl stop ${config.virtualisation.arion.projects.terraria.serviceName}.service";
             options = [ "NOPASSWD" ];
           }
           {
-            command = "${pkgs.systemd}/bin/systemctl stop ${config.vitualization.arion.projects.minecraft-geyser.serviceName}.service";
+            command = "${pkgs.systemd}/bin/systemctl stop ${config.virtualisation.arion.projects.minecraft-geyser.serviceName}.service";
             options = [ "NOPASSWD" ];
           }
           {
-            command = "${pkgs.systemd}/bin/systemctl stop ${config.vitualization.arion.projects.minecraft-modded.serviceName}.service";
+            command = "${pkgs.systemd}/bin/systemctl stop ${config.virtualisation.arion.projects.minecraft-modded.serviceName}.service";
             options = [ "NOPASSWD" ];
           }
           {
-            command = "${pkgs.systemd}/bin/systemctl restart ${config.vitualization.arion.projects.terraria.serviceName}.service";
+            command = "${pkgs.systemd}/bin/systemctl restart ${config.virtualisation.arion.projects.terraria.serviceName}.service";
             options = [ "NOPASSWD" ];
           }
           {
-            command = "${pkgs.systemd}/bin/systemctl restart ${config.vitualization.arion.projects.minecraft-geyser.serviceName}.service";
+            command = "${pkgs.systemd}/bin/systemctl restart ${config.virtualisation.arion.projects.minecraft-geyser.serviceName}.service";
             options = [ "NOPASSWD" ];
           }
           {
-            command = "${pkgs.systemd}/bin/systemctl restart ${config.vitualization.arion.projects.minecraft-modded.serviceName}.service";
+            command = "${pkgs.systemd}/bin/systemctl restart ${config.virtualisation.arion.projects.minecraft-modded.serviceName}.service";
             options = [ "NOPASSWD" ];
           }
         ];
