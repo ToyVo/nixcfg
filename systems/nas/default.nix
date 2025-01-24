@@ -57,10 +57,11 @@
       env = {
         MINECRAFT_GEYSER_ADDRESS = "mc.toyvo.dev:25566";
         MINECRAFT_MODDED_ADDRESS = "mc.toyvo.dev:25565";
-        TSHOCK_REST_BASE_URL = "http://100.89.118.92:7878";
+        TERRARIA_ADDRESS = "mc.toyvo.dev:7777";
+        TSHOCK_REST_BASE_URL = "https://mc.toyvo.dev";
         IP = "0.0.0.0";
         BASE_URL = "https://toyvo.dev";
-        CLOUD_SSH_HOST = "discord_bot@100.89.118.92";
+        CLOUD_SSH_HOST = "discord_bot@mc.toyvo.dev";
         CLOUD_SSH_KEY = config.sops.secrets.cloud_ssh_ed25519.path;
       };
     };

@@ -57,7 +57,7 @@
         "https://mc.toyvo.dev:443" = {
           useACMEHost = "mc.toyvo.dev";
           extraConfig = ''
-            reverse_proxy http://0.0.0.0:8080
+            reverse_proxy http://0.0.0.0:7878
           '';
         };
       };
