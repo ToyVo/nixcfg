@@ -142,8 +142,10 @@ in
       defaultSopsFile = ../../secrets/secrets.yaml;
       age.keyFile = "/var/sops/age/keys.txt";
     };
-    environment.systemPackages = lib.optionals (config.system.activationScripts ? setupSecrets) [
-      (pkgs.writeShellScriptBin "sops-nix-system" "${config.system.activationScripts.setupSecrets.text}")
+    environment.systemPackages = with pkgs; [
+      cifs-utils
+    ] ++ lib.optionals (config.system.activationScripts ? setupSecrets) [
+      (writeShellScriptBin "sops-nix-system" "${config.system.activationScripts.setupSecrets.text}")
     ];
   };
 }

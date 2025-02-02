@@ -35,23 +35,23 @@ in
           firefox
           ghostty
           yubikey-manager-qt
-          yubioath-flutter
+          # yubioath-flutter
         ]
         ++ lib.optionals (stdenv.system == "x86_64-linux") [
           proton-pass
           protonvpn-gui
           protonmail-desktop
         ]
-        ++
-          lib.optionals
-            (builtins.elem system [
-              "aarch64-darwin"
-              "x86_64-darwin"
-              "x86_64-linux"
-            ])
-            [
-              logseq
-            ]
+        # ++
+        #   lib.optionals
+        #     (builtins.elem system [
+        #       "aarch64-darwin"
+        #       "x86_64-darwin"
+        #       "x86_64-linux"
+        #     ])
+        #     [
+        #       logseq
+        #     ]
         ++ lib.optionals stdenv.isDarwin [
           appcleaner
           pinentry_mac

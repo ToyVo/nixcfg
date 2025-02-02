@@ -63,7 +63,7 @@ in
           rustup
           systemfd
           # esp-idf-full
-          # zed-editor
+          zed-editor
         ]
         ++ lib.optionals stdenv.isLinux [
           gcc
