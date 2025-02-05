@@ -95,9 +95,12 @@ let
         {
           home-manager = {
             extraSpecialArgs = specialArgs;
-            sharedModules = [
-              mac-app-util.homeManagerModules.default
-            ] ++ homeManagerModules ++ sharedHomeManagerModules;
+            sharedModules =
+              [
+                mac-app-util.homeManagerModules.default
+              ]
+              ++ homeManagerModules
+              ++ sharedHomeManagerModules;
           };
         }
       ] ++ darwinModules;

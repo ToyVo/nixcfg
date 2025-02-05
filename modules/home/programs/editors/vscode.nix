@@ -67,6 +67,7 @@ in
         ++ lib.optionals (builtins.elem system [ "x86_64-linux" ]) [
           ms-vscode.cpptools
         ];
+      # TODO: see if we can make this file mutable
       userSettings = {
         "[css]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
         "[html]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
@@ -95,7 +96,8 @@ in
         "diffEditor.ignoreTrimWhitespace" = false;
         "editor.codeActionsOnSave"."source.fixAll" = "always";
         "editor.fontFamily" = "'MonaspiceNe Nerd Font'";
-        "editor.fontLigatures" = "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'";
+        "editor.fontLigatures" =
+          "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'";
         "editor.fontSize" = 14;
         "editor.formatOnSave" = true;
         "editor.formatOnSaveMode" = "modificationsIfAvailable";
@@ -113,14 +115,17 @@ in
         "git.autofetch" = true;
         "git.enableSmartCommit" = true;
         "git.rebaseWhenSync" = true;
-        "idf.customExtraPaths" = "${config.home.homeDirectory}/.espressif/tools/xtensa-esp-elf-gdb/14.2_20240403/xtensa-esp-elf-gdb/bin:${config.home.homeDirectory}/.espressif/tools/riscv32-esp-elf-gdb/14.2_20240403/riscv32-esp-elf-gdb/bin:${config.home.homeDirectory}/.espressif/tools/xtensa-esp-elf/esp-13.2.0_20240530/xtensa-esp-elf/bin:${config.home.homeDirectory}/.espressif/tools/riscv32-esp-elf/esp-13.2.0_20240530/riscv32-esp-elf/bin:${config.home.homeDirectory}/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin:${config.home.homeDirectory}/.espressif/tools/openocd-esp32/v0.12.0-esp32-20240318/openocd-esp32/bin:${config.home.homeDirectory}/.espressif/tools/esp-rom-elfs/20240305";
+        "idf.customExtraPaths" =
+          "${config.home.homeDirectory}/.espressif/tools/xtensa-esp-elf-gdb/14.2_20240403/xtensa-esp-elf-gdb/bin:${config.home.homeDirectory}/.espressif/tools/riscv32-esp-elf-gdb/14.2_20240403/riscv32-esp-elf-gdb/bin:${config.home.homeDirectory}/.espressif/tools/xtensa-esp-elf/esp-13.2.0_20240530/xtensa-esp-elf/bin:${config.home.homeDirectory}/.espressif/tools/riscv32-esp-elf/esp-13.2.0_20240530/riscv32-esp-elf/bin:${config.home.homeDirectory}/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin:${config.home.homeDirectory}/.espressif/tools/openocd-esp32/v0.12.0-esp32-20240318/openocd-esp32/bin:${config.home.homeDirectory}/.espressif/tools/esp-rom-elfs/20240305";
         "idf.customExtraVars" = {
-          "OPENOCD_SCRIPTS" = "${config.home.homeDirectory}/.espressif/tools/openocd-esp32/v0.12.0-esp32-20240318/openocd-esp32/share/openocd/scripts";
+          "OPENOCD_SCRIPTS" =
+            "${config.home.homeDirectory}/.espressif/tools/openocd-esp32/v0.12.0-esp32-20240318/openocd-esp32/share/openocd/scripts";
           "ESP_ROM_ELF_DIR" = "${config.home.homeDirectory}/.espressif/tools/esp-rom-elfs/20240305/";
         };
         "idf.espIdfPath" = "${config.home.homeDirectory}/Clone/esp/master/esp-idf";
         "idf.gitPath" = "git";
-        "idf.pythonBinPath" = "${config.home.homeDirectory}/.espressif/python_env/idf5.4_py3.9_env/bin/python";
+        "idf.pythonBinPath" =
+          "${config.home.homeDirectory}/.espressif/python_env/idf5.4_py3.9_env/bin/python";
         "idf.toolsPath" = "${config.home.homeDirectory}/.espressif";
         "jupyter.askForKernelRestart" = false;
         "mypy-type-checker.args" = [ "--ignore-missing-imports" ];

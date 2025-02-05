@@ -18,6 +18,7 @@ in
     llama-cpp
     ollama
     vlc-bin
+    losslesscut-bin
   ];
   environment.pythonPackages = with pkgs.python312Packages; [
     boto3

@@ -122,9 +122,87 @@
     adguardhome = {
       enable = true;
       mutableSettings = false;
-      settings.dns = {
-        bind_hosts = [ "127.0.1.53" ];
-        bootstrap_dns = [ "9.9.9.9" ];
+      settings = {
+        dns = {
+          bind_hosts = [ "127.0.1.53" ];
+          bootstrap_dns = [ "9.9.9.9" ];
+        };
+        filters = [
+          {
+            enabled = true;
+            url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt";
+            name = "AdGuard DNS filter";
+            id = 1;
+          }
+          {
+            enabled = true;
+            url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_2.txt";
+            name = "AdAway Default Blocklist";
+            id = 2;
+          }
+          {
+            enabled = true;
+            url = "https://blocklistproject.github.io/Lists/adguard/porn-ags.txt";
+            name = "BlocklistProject Porn Blocklist";
+            id = 3;
+          }
+        ];
+        filtering = {
+          protection_enabled = true;
+          filtering_enabled = true;
+          parental_enabled = true;
+          safe_search = true;
+          rewrites = [
+            {
+              domain = "router.internal";
+              address = "10.1.0.1";
+            }
+            {
+              domain = "omada.internal";
+              answer = "10.1.0.2";
+            }
+            {
+              domain = "nas.internal";
+              answer = "10.1.0.3";
+            }
+            {
+              domain = "canon-printer.internal";
+              answer = "10.1.0.4";
+            }
+            {
+              domain = "hp-printer.internal";
+              answer = "10.1.0.5";
+            }
+            {
+              domain = "protectli.internal";
+              answer = "10.1.0.6";
+            }
+            {
+              domain = "rpi4b8a.internal";
+              answer = "10.1.0.7";
+            }
+            {
+              domain = "rpi4b8b.internal";
+              answer = "10.1.0.8";
+            }
+            {
+              domain = "rpi4b8c.internal";
+              answer = "10.1.0.9";
+            }
+            {
+              domain = "rpi4b4a.internal";
+              answer = "10.1.0.10";
+            }
+            {
+              domain = "macmini-m1.internal";
+              answer = "10.1.0.11";
+            }
+            {
+              domain = "macmini-intel.internal";
+              answer = "10.1.0.12";
+            }
+          ];
+        };
       };
     };
     caddy = {

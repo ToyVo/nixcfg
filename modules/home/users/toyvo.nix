@@ -68,15 +68,15 @@ in
           };
           matchBlocks."router" = identityConfig // {
             user = "toyvo";
-            hostname = "10.1.0.1";
+            hostname = "router.internal";
           };
           matchBlocks."nas" = identityConfig // {
             user = "toyvo";
-            hostname = "10.1.0.3";
+            hostname = "nas.internal";
           };
           matchBlocks."protectli" = identityConfig // {
             user = "toyvo";
-            hostname = "10.1.0.6";
+            hostname = "protectli.internal";
           };
           matchBlocks."10.1.0.*" = identityConfig;
         };
