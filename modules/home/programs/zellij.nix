@@ -11,6 +11,7 @@ in
   options.programs.zellij.restrictedVariables = lib.mkOption {
     description = "List of environment variables that will prevent zellij from starting if they are set. This is useful for preventing zellij from starting when it is not desired, such as when used as the shell within various ides.";
     default = {
+      TERM = [ "xterm-ghostty" ];
       TERMINAL_EMULATOR = [ "JetBrains-JediTerm" ];
       TERM_PROGRAM = [
         "vscode"
@@ -25,6 +26,9 @@ in
       settings = {
         theme = "catppuccin-${config.catppuccin.flavor}";
       };
+      enableFishIntegration = lib.mkForce false;
+      enableBashIntegration = lib.mkForce false;
+      enableZshIntegration = lib.mkForce false;
     };
     home.shellAliases = {
       zellij-bash = "${lib.getExe pkgs.zellij} options --default-shell ${lib.getExe pkgs.bashInteractive} --session-name bash --attach-to-session true";
