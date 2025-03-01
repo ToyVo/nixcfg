@@ -28,6 +28,11 @@
       openFirewall = true;
       dataDir = "/terraria-data";
     };
+    vintage-story = {
+      enable = true;
+      openFirewall = true;
+      dataDir = "/vintage-story-data";
+    };
   };
   networking = {
     hostName = "oracle-cloud-nixos";
