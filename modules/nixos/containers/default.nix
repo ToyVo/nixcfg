@@ -9,6 +9,7 @@ in
     ./minecraft-modded.nix
     ./minecraft-geyser.nix
     ./terraria.nix
+    ./vintage-story.nix
   ];
 
   options.containerPresets = {

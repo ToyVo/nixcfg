@@ -46,7 +46,6 @@ in
           "${cfg.dataDir}:/home/app/.config/VintagestorData"
         ];
         restart = "on-failure";
-        stdin_open = true;
         tty = true;
       };
     };
