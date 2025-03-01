@@ -28,7 +28,7 @@ in
       enable = lib.mkDefault true;
       matchBlocks."builder" = {
         user = "nixremote";
-        hostname = "10.1.0.3";
+        hostname = "nas.internal";
         identitiesOnly = true;
         identityFile = config.sops.secrets.nixremote_ed25519.path;
       };
