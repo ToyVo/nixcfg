@@ -1243,7 +1243,8 @@
         "nvf": "nvf",
         "plasma-manager": "plasma-manager",
         "rust-overlay": "rust-overlay_4",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "vintage-story-arm-server": "vintage-story-arm-server"
       }
     },
     "rust-overlay": {
@@ -1431,6 +1432,22 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "vintage-story-arm-server": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1736250671,
+        "narHash": "sha256-1Bs0xtXCMqB5Ib1mmvgDxtGUexoRYN86p/PLGTJcxgs=",
+        "owner": "anegostudios",
+        "repo": "VintagestoryServerArm64",
+        "rev": "87157c9a29621518d77ad7945686d15b23208110",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anegostudios",
+        "repo": "VintagestoryServerArm64",
         "type": "github"
       }
     },
