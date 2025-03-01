@@ -10,8 +10,7 @@
     ./podman.nix
   ];
   config = lib.mkIf config.profiles.defaults.enable {
-    services.nix-daemon.enable = true;
-    security.pam.enableSudoTouchIdAuth = true;
+    security.pam.services.sudo_local.touchIdAuth = true;
     system = {
       stateVersion = 4;
       keyboard = {

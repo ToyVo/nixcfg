@@ -122,9 +122,31 @@
     adguardhome = {
       enable = true;
       mutableSettings = false;
-      settings.dns = {
-        bind_hosts = [ "127.0.1.53" ];
-        bootstrap_dns = [ "9.9.9.9" ];
+      settings = {
+        dns = {
+          bind_hosts = [ "127.0.1.53" ];
+          bootstrap_dns = [ "9.9.9.9" ];
+        };
+        filters = [
+          {
+            enabled = true;
+            url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt";
+            name = "AdGuard DNS filter";
+            id = 1;
+          }
+          {
+            enabled = true;
+            url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_2.txt";
+            name = "AdAway Default Blocklist";
+            id = 2;
+          }
+          {
+            enabled = true;
+            url = "https://blocklistproject.github.io/Lists/adguard/porn-ags.txt";
+            name = "BlocklistProject Porn Blocklist";
+            id = 3;
+          }
+        ];
       };
     };
     caddy = {

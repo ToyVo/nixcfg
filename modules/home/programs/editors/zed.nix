@@ -8,8 +8,16 @@
   options.programs.zed.enable = lib.mkEnableOption "enable zed";
 
   config = lib.mkIf config.programs.zed.enable {
+    # TODO: see if we can make this file mutable
     xdg.configFile."zed/settings.json".text = ''
       {
+          "assistant": {
+            "default_model": {
+              "provider": "ollama",
+              "model": "deepseek-r1:14b"
+            },
+            "version": "2"
+          },
           "theme": "Catppuccin Frappé",
           "ui_font_size": 16,
           "buffer_font_size": 16,
@@ -17,6 +25,18 @@
           "autosave": "on_focus_change",
           "auto_update": false,
           "buffer_font_family": "MonaspiceNe Nerd Font",
+          "buffer_font_features": {
+            "ss01": true,
+            "ss02": true,
+            "ss03": true,
+            "ss04": true,
+            "ss05": true,
+            "ss06": true,
+            "ss07": true,
+            "ss08": true,
+            "calt": true,
+            "dlig": true
+          },
           "formatter": [
               {
                   "language_server": {

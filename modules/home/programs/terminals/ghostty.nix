@@ -1,7 +1,15 @@
-{pkgs, lib, ...}: {
-  home.packages = with pkgs; lib.mkIf stdenv.isLinux [
-    ghostty
-  ];
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
+  home.packages =
+    with pkgs;
+    lib.mkIf (stdenv.isLinux && config.profiles.gui.enable) [
+      ghostty
+    ];
   xdg.configFile."ghostty/config".text = ''
     background-opacity = 0.8
     font-family = MonaspiceAr Nerd Font Mono

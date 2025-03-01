@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.programs.nvim;
-in {
+in
+{
   options.programs.nvim.enable = lib.mkEnableOption "Enable neovim";
 
   config = lib.mkIf cfg.enable {
@@ -42,6 +44,7 @@ in {
         telescope.enable = true;
         autocomplete.nvim-cmp.enable = true;
         binds.whichKey.enable = true;
+        git.enable = true;
       };
     };
   };
