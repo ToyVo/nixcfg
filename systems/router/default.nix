@@ -147,6 +147,56 @@
             id = 3;
           }
         ];
+        filtering.rewrites = [
+          {
+            domain = "router.internal";
+            answer = "10.1.0.1";
+          }
+          {
+            domain = "omada.internal";
+            answer = "10.1.0.2";
+          }
+          {
+            domain = "nas.internal";
+            answer = "10.1.0.3";
+          }
+          {
+            domain = "cannon-printer.internal";
+            answer = "10.1.0.4";
+          }
+          {
+            domain = "hp-printer.internal";
+            answer = "10.1.0.5";
+          }
+          {
+            domain = "protectli.internal";
+            answer = "10.1.0.6";
+          }
+          {
+            domain = "rpi4b8a.internal";
+            answer = "10.1.0.7";
+          }
+          {
+            domain = "rpi4b8b.internal";
+            answer = "10.1.0.8";
+          }
+          {
+            domain = "rpi4b8c.internal";
+            answer = "10.1.0.9";
+          }
+          {
+            domain = "rpi4b4a.internal";
+            answer = "10.1.0.10";
+          }
+          {
+            domain = "macmini-m1.internal";
+            answer = "10.1.0.11";
+          }
+          {
+            domain = "macmini-intel.internal";
+            answer = "10.1.0.12";
+          }
+        ];
       };
     };
     caddy = {

@@ -63,17 +63,13 @@
   "git.enableSmartCommit": true,
   "git.rebaseWhenSync": true,
   "jupyter.askForKernelRestart": false,
-  "mypy-type-checker.args": [
-    "--ignore-missing-imports"
-  ],
+  "mypy-type-checker.args": ["--ignore-missing-imports"],
   "nix.enableLanguageServer": true,
   "nix.serverPath": "nil",
   "nix.serverSettings": {
     "nil": {
       "formatting": {
-        "command": [
-          "nixfmt"
-        ]
+        "command": ["nixfmt"]
       }
     }
   },

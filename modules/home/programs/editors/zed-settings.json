@@ -1,11 +1,11 @@
 {
   "features": {
-    "inline_completion_provider": "zed"
+    "edit_prediction_provider": "zed"
   },
   "assistant": {
     "default_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-4o"
+      "provider": "ollama",
+      "model": "deepseek-r1:latest"
     },
     "version": "2"
   },
@@ -42,7 +42,7 @@
           "s/ *$//"
         ]
       }
-    },
+    }
   ],
   "languages": {
     "JavaScript": {
@@ -58,7 +58,7 @@
             "{buffer_path}"
           ]
         }
-      },
+      }
     }
   },
   "inlay_hints": {
