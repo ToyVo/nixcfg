@@ -38,7 +38,7 @@ in
     virtualisation.arion.projects.vintage-story.settings.services = {
       vs.service = {
         build.context = vintage-story-arm-server.outPath;
-        out.service.build.dockerfile = "Dockerfile";
+        build.dockerfile = "./Dockerfile";
         ports = [
           "${toString cfg.port}:42420"
           "${toString cfg.port}:42420/udp"
