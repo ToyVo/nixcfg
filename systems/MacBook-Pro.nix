@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-{
-  ids.gids.nixbld = 350;
+{pkgs, ...}: {
   profiles = {
     defaults.enable = true;
     dev.enable = true;

@@ -20,10 +20,10 @@ in
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.toyvo.enable {
     users = {
       users = {
-        ${cfg.toyvo.name} = lib.mkIf cfg.toyvo.enable (
+        ${cfg.toyvo.name} = (
           lib.mkMerge [
             {
               name = cfg.toyvo.name;
@@ -55,7 +55,7 @@ in
     nix.settings.trusted-users = [
       cfg.toyvo.name
     ];
-    home-manager.users.${cfg.toyvo.name} = lib.mkIf cfg.toyvo.enable {
+    home-manager.users.${cfg.toyvo.name} = {
       home.username = cfg.toyvo.name;
       home.homeDirectory = "${homePath}/${cfg.toyvo.name}";
       profiles = {
