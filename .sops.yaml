@@ -6,7 +6,7 @@ keys:
   - &server_hp_envy age1eqy3c77fxulja8sjasp98lfvav3e7fc84wk3wd9jtnm427t8lf8qcf70pm
   - &server_hp_zbook age1vkeg2mfn7z2rvrymcvp6c9ytzdtmn44g4nw0kdz0ak9e5yhpr39s8nrh4c
   - &server_mac_mini_m1 age1whatefc8ty5gs0la7phh5srx9d8unpkhh6xh670ekwjysm9azcaqx9kkue
-  - &server_macbook_pro age1uwffpt4482n3n65cj0q2n7prkegqzuxlts39eatpe7cdhmvl6vyqvwglh3
+  - &server_macbook_pro age1604q5hpr027v8dg4x96chgkf2cs2zgnq8ntg0ce6uat4umvn45ws6s6dhc
   - &server_macbook_pro_nixos age1v3frajfater66nykc3rynceg359qwjpwlg48ne338w0zlkgr0ecq542f9f
   - &server_nas age1cdhakptq68qa7w3kmszkmlygfgu94evze6x66l7ekafsr2jlyf0sfhq29x
   - &server_oracle_cloud_nixos age1wvmgkw6ud4xxt8fp65v0wcvkste8qgkrcjlrau7mu0z27ey2zq3qtpqpcl
@@ -17,15 +17,15 @@ keys:
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini|nix)$
     key_groups:
-    - age:
-      - *server_hp_envy
-      - *server_hp_zbook
-      - *server_mac_mini_m1
-      - *server_macbook_pro
-      - *server_macbook_pro_nixos
-      - *server_nas
-      - *server_oracle_cloud_nixos
-      - *server_router
-      - *server_steamdeck_nixos
-      - *server_thinkpad
-      - *server_work
+      - age:
+          - *server_hp_envy
+          - *server_hp_zbook
+          - *server_mac_mini_m1
+          - *server_macbook_pro
+          - *server_macbook_pro_nixos
+          - *server_nas
+          - *server_oracle_cloud_nixos
+          - *server_router
+          - *server_steamdeck_nixos
+          - *server_thinkpad
+          - *server_work

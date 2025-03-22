@@ -12,7 +12,7 @@
   config = lib.mkIf config.profiles.defaults.enable {
     security.pam.services.sudo_local.touchIdAuth = true;
     system = {
-      stateVersion = 4;
+      stateVersion = 6;
       keyboard = {
         enableKeyMapping = true;
         remapCapsLockToControl = true;
