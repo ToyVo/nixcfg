@@ -57,6 +57,7 @@ in
           libusb1
           ninja
           nodejs
+          nodePackages.prettier
           pipenv
           pkg-config
           poetry
@@ -76,8 +77,7 @@ in
         ++
           lib.optionals
             (builtins.elem system [
-              # TODO: undo
-              # "aarch64-darwin"
+              "aarch64-darwin"
               "aarch64-linux"
               "x86_64-linux"
             ])

@@ -40,23 +40,18 @@ in
     casks = [
       {
         name = "keybase";
-        greedy = true;
       }
       {
         name = "mongodb-compass";
-        greedy = true;
       }
       {
         name = "obs";
-        greedy = true;
       }
       {
         name = "slack";
-        greedy = true;
       }
       {
         name = "docker";
-        greedy = true;
       }
     ];
     taps = [

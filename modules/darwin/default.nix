@@ -58,39 +58,30 @@
       casks = [
         {
           name = "firefox";
-          greedy = true;
         }
         {
           name = "ghostty";
-          greedy = true;
         }
         {
           name = "jetbrains-toolbox";
-          greedy = true;
         }
         {
           name = "onlyoffice";
-          greedy = true;
         }
         {
           name = "podman-desktop";
-          greedy = true;
         }
         {
           name = "proton-drive";
-          greedy = true;
         }
         {
           name = "proton-mail";
-          greedy = true;
         }
         {
           name = "proton-pass";
-          greedy = true;
         }
         {
           name = "protonvpn";
-          greedy = true;
         }
       ];
     };

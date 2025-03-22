@@ -17,11 +17,9 @@
   homebrew.casks = [
     {
       name = "freecad";
-      greedy = true;
     }
     {
       name = "blender";
-      greedy = true;
     }
     {
       name = "discord";
@@ -31,15 +29,12 @@
     }
     {
       name = "obs";
-      greedy = true;
     }
     {
       name = "prusaslicer";
-      greedy = true;
     }
     {
       name = "whisky";
-      greedy = true;
     }
   ];
   homebrew.masApps = {
