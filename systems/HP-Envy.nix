@@ -33,8 +33,6 @@
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;
   services.desktopManager.cosmic.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  services.displayManager.cosmic-greeter.enable = lib.mkForce false;
   services.xserver.videoDrivers = [ "amdgpu" ];
   hardware.graphics = {
     extraPackages = with pkgs; [ amdvlk ];
@@ -42,5 +40,4 @@
     enable = true;
     enable32Bit = true;
   };
-  home-manager.users.${config.userPresets.toyvo.name}.programs.vscode.enable = lib.mkForce false;
 }
