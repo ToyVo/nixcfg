@@ -5,7 +5,8 @@
 keys:
   - &server_hp_envy age1eqy3c77fxulja8sjasp98lfvav3e7fc84wk3wd9jtnm427t8lf8qcf70pm
   - &server_hp_zbook age1vkeg2mfn7z2rvrymcvp6c9ytzdtmn44g4nw0kdz0ak9e5yhpr39s8nrh4c
-  - &server_mac_mini_m1 age1whatefc8ty5gs0la7phh5srx9d8unpkhh6xh670ekwjysm9azcaqx9kkue
+  - &server_mac_mini_m1 age1058m4v4ylsrg5wyedy3lxcc0lps9t6sqhqd9y8zyq8d740v84afsvsrke9
+  - &server_mac_mini_intel age19654camqtu0y2n6gdhttm4xrnm8sggnjztt0u40fgewlm9ku4f3qa347l0
   - &server_macbook_pro age1604q5hpr027v8dg4x96chgkf2cs2zgnq8ntg0ce6uat4umvn45ws6s6dhc
   - &server_macbook_pro_nixos age1v3frajfater66nykc3rynceg359qwjpwlg48ne338w0zlkgr0ecq542f9f
   - &server_nas age1cdhakptq68qa7w3kmszkmlygfgu94evze6x66l7ekafsr2jlyf0sfhq29x
@@ -21,6 +22,7 @@ creation_rules:
           - *server_hp_envy
           - *server_hp_zbook
           - *server_mac_mini_m1
+          - *server_mac_mini_intel
           - *server_macbook_pro
           - *server_macbook_pro_nixos
           - *server_nas
