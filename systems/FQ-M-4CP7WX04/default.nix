@@ -53,6 +53,9 @@ in
       {
         name = "docker";
       }
+      {
+        name = "ollama";
+      }
     ];
     taps = [
       "mongodb/brew"

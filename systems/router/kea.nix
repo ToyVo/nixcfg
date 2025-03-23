@@ -118,6 +118,14 @@
               # Wifi
               # hw-address = "f0:18:98:8a:6d:ee";
             }
+            {
+              hostname = "windows-desktop";
+              ip-address = "10.1.0.13";
+              # Ethernet
+              hw-address = "70:85:c2:8a:53:5b";
+              # Wifi
+              # hw-address = "b4:6b:fc:6c:b5:4c";
+            }
           ];
         }
       ];
