@@ -6,4 +6,9 @@
     gui.enable = true;
   };
   userPresets.toyvo.enable = true;
+  homebrew.casks = [
+    {
+      name = "ollama";
+    }
+  ];
 }
