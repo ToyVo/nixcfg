@@ -142,8 +142,8 @@
           }
           {
             enabled = true;
-            url = "https://blocklistproject.github.io/Lists/adguard/porn-ags.txt";
-            name = "BlocklistProject Porn Blocklist";
+            url = "https://nsfw-small.oisd.nl";
+            name = "OISD Blocklist NSFW Small";
             id = 3;
           }
         ];
