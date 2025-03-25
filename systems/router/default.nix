@@ -142,8 +142,8 @@
           }
           {
             enabled = true;
-            url = "https://nsfw-small.oisd.nl";
-            name = "OISD Blocklist NSFW Small";
+            url = "https://nsfw.oisd.nl";
+            name = "OISD Blocklist NSFW";
             id = 3;
           }
         ];
