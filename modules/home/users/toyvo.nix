@@ -78,6 +78,18 @@ in
             user = "toyvo";
             hostname = "protectli.internal";
           };
+          matchBlocks."macmini-m1" = identityConfig // {
+            user = "toyvo";
+            hostname = "macmini-m1.internal";
+          };
+          matchBlocks."macmini-intel" = identityConfig // {
+            user = "toyvo";
+            hostname = "macmini-intel.internal";
+          };
+          matchBlocks."windows" = identityConfig // {
+            user = "toyvo";
+            hostname = "windows.internal";
+          };
           matchBlocks."10.1.0.*" = identityConfig;
         };
       zed.enable = true;

@@ -196,6 +196,10 @@
             domain = "macmini-intel.internal";
             answer = "10.1.0.12";
           }
+          {
+            domain = "windows.internal";
+            answer = "10.1.0.13";
+          }
         ];
       };
     };
