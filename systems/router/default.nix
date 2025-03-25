@@ -142,9 +142,15 @@
           }
           {
             enabled = true;
+            url = "https://big.oisd.nl";
+            name = "OISD Blocklist Big";
+            id = 3;
+          }
+          {
+            enabled = true;
             url = "https://nsfw.oisd.nl";
             name = "OISD Blocklist NSFW";
-            id = 3;
+            id = 4;
           }
         ];
         filtering.rewrites = [
