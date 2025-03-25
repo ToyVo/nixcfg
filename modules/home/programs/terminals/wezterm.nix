@@ -15,7 +15,6 @@ in
 {
   config = lib.mkIf cfg.enable {
     programs.wezterm = {
-      package = if (system == "x86_64-darwin") then pkgs.emptyDirectory else pkgs.wezterm;
       extraConfig = ''
         local config = wezterm.config_builder();
         config.font = wezterm.font {
