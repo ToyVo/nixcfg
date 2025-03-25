@@ -47,8 +47,8 @@
     rust-overlay.url = "github:oxalica/rust-overlay";
     sops-nix.url = "github:Mic92/sops-nix";
     vintage-story-arm-server = {
-        url = "github:anegostudios/VintagestoryServerArm64";
-        flake = false;
+      url = "github:anegostudios/VintagestoryServerArm64";
+      flake = false;
     };
   };
 

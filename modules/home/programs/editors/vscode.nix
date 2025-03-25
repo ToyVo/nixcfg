@@ -71,9 +71,9 @@ in
       };
     };
 
-    home.file."${if pkgs.stdenv.hostPlatform.isDarwin then
-              "Library/Application Support"
-            else
-              config.xdg.configHome}/Code/User/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixcfg/modules/home/programs/editors/vscode-settings.json";
+    home.file."${
+      if pkgs.stdenv.hostPlatform.isDarwin then "Library/Application Support" else config.xdg.configHome
+    }/Code/User/settings.json".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixcfg/modules/home/programs/editors/vscode-settings.json";
   };
 }
