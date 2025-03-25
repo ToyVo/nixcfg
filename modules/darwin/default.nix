@@ -18,6 +18,11 @@
         remapCapsLockToControl = true;
       };
     };
+    environment.variables.TERMINFO_DIRS = lib.mkForce map (path: path + "/share/terminfo") config.environment.profiles ++ [
+      "/usr/share/terminfo"
+      # Add ghostty terminfo from homebrew
+      "/Applications/Ghostty.app/Contents/Resources/terminfo"
+    ];
     programs = {
       bash = {
         enable = true;
