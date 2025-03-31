@@ -65,6 +65,10 @@
         CLOUD_SSH_KEY = config.sops.secrets.cloud_ssh_ed25519.path;
       };
     };
+    jellyfin = {
+      enable = true;
+      openFirewall = true;
+    };
   };
   sops.secrets = {
     "discord_bot.env" = {
