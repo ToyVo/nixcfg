@@ -1,6 +1,9 @@
-{ config, pkgs, ... }:
 {
-  imports = [ ./samba.nix ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [./samba.nix];
 
   hardware.cpu.amd.updateMicrocode = true;
   networking = {
@@ -32,8 +35,8 @@
       "usb_storage"
       "sd_mod"
     ];
-    kernelModules = [ "kvm-amd" ];
-    binfmt.emulatedSystems = [ "aarch64-linux" ];
+    kernelModules = ["kvm-amd"];
+    binfmt.emulatedSystems = ["aarch64-linux"];
   };
   profiles = {
     defaults.enable = true;
@@ -51,33 +54,33 @@
     remote-builds.server.enable = true;
     ollama.enable = true;
     spice-vdagentd.enable = true;
-    discord_bot = {
-      enable = true;
-      env_file = config.sops.secrets."discord_bot.env".path;
-      env = {
-        MINECRAFT_GEYSER_ADDRESS = "mc.toyvo.dev:25566";
-        MINECRAFT_MODDED_ADDRESS = "mc.toyvo.dev:25565";
-        TERRARIA_ADDRESS = "mc.toyvo.dev:7777";
-        TSHOCK_REST_BASE_URL = "https://mc.toyvo.dev";
-        IP = "0.0.0.0";
-        BASE_URL = "https://toyvo.dev";
-        CLOUD_SSH_HOST = "discord_bot@mc.toyvo.dev";
-        CLOUD_SSH_KEY = config.sops.secrets.cloud_ssh_ed25519.path;
-      };
-    };
+    # discord_bot = {
+    #   enable = true;
+    #   env_file = config.sops.secrets."discord_bot.env".path;
+    #   env = {
+    #     MINECRAFT_GEYSER_ADDRESS = "mc.toyvo.dev:25566";
+    #     MINECRAFT_MODDED_ADDRESS = "mc.toyvo.dev:25565";
+    #     TERRARIA_ADDRESS = "mc.toyvo.dev:7777";
+    #     TSHOCK_REST_BASE_URL = "https://mc.toyvo.dev";
+    #     IP = "0.0.0.0";
+    #     BASE_URL = "https://toyvo.dev";
+    #     CLOUD_SSH_HOST = "discord_bot@mc.toyvo.dev";
+    #     CLOUD_SSH_KEY = config.sops.secrets.cloud_ssh_ed25519.path;
+    #   };
+    # };
     jellyfin = {
       enable = true;
       openFirewall = true;
     };
   };
-  sops.secrets = {
-    "discord_bot.env" = {
-      owner = "discord_bot";
-    };
-    cloud_ssh_ed25519 = {
-      owner = "discord_bot";
-    };
-  };
+  # sops.secrets = {
+  #   "discord_bot.env" = {
+  #     owner = "discord_bot";
+  #   };
+  #   cloud_ssh_ed25519 = {
+  #     owner = "discord_bot";
+  #   };
+  # };
   containerPresets = {
     podman.enable = true;
     homepage = {
@@ -94,7 +97,7 @@
     fsType = "btrfs";
   };
   users.users = {
-    toyvo.extraGroups = [ "libvirtd" ];
+    toyvo.extraGroups = ["libvirtd"];
   };
   programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [
@@ -116,7 +119,7 @@
       qemu = {
         swtpm.enable = true;
         ovmf.enable = true;
-        ovmf.packages = [ pkgs.OVMFFull.fd ];
+        ovmf.packages = [pkgs.OVMFFull.fd];
       };
     };
     spiceUSBRedirection.enable = true;
