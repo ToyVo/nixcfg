@@ -1,5 +1,8 @@
-{ pkgs, config, ... }:
 {
+  pkgs,
+  config,
+  ...
+}: {
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
@@ -7,42 +10,40 @@
       "xhci_pci"
       "virtio_scsi"
     ];
-    binfmt.emulatedSystems = [ "x86_64-linux" ];
+    binfmt.emulatedSystems = ["x86_64-linux"];
   };
   containerPresets = {
     podman.enable = true;
-    minecraft-modded = {
-      enable = true;
-      openFirewall = true;
-      dataDir = "/minecraft-modded-data";
-      env_file = config.sops.secrets."discord_bot.env".path;
-    };
-    minecraft-geyser = {
-      enable = true;
-      openFirewall = true;
-      dataDir = "/minecraft-geyser-data";
-      env_file = config.sops.secrets."discord_bot.env".path;
-    };
-    terraria = {
-      enable = true;
-      openFirewall = true;
-      dataDir = "/terraria-data";
-    };
-    vintage-story = {
-      enable = true;
-      openFirewall = true;
-      dataDir = "/vintage-story-data";
-    };
   };
   networking = {
     hostName = "oracle-cloud-nixos";
     firewall = {
       allowedTCPPorts = [
         443
+        # gmod
+        27015
+        # minecraft java
+        25565
+        25566
+        # terraria
+        7777
+        # vintage story
+        42420
       ];
       allowedUDPPorts = [
         53
         443
+        # gmod
+        27015
+        27005
+        # minecraft bedrock
+        19132
+        # mincraft voice mod
+        24454
+        # terraria
+        7777
+        # vintage story
+        42420
       ];
     };
   };
@@ -84,37 +85,6 @@
         };
       };
     };
-    sudo.extraRules = [
-      {
-        users = [ "discord_bot" ];
-        commands = [
-          {
-            command = "${pkgs.systemd}/bin/systemctl stop ${config.virtualisation.arion.projects.terraria.serviceName}.service";
-            options = [ "NOPASSWD" ];
-          }
-          {
-            command = "${pkgs.systemd}/bin/systemctl stop ${config.virtualisation.arion.projects.minecraft-geyser.serviceName}.service";
-            options = [ "NOPASSWD" ];
-          }
-          {
-            command = "${pkgs.systemd}/bin/systemctl stop ${config.virtualisation.arion.projects.minecraft-modded.serviceName}.service";
-            options = [ "NOPASSWD" ];
-          }
-          {
-            command = "${pkgs.systemd}/bin/systemctl restart ${config.virtualisation.arion.projects.terraria.serviceName}.service";
-            options = [ "NOPASSWD" ];
-          }
-          {
-            command = "${pkgs.systemd}/bin/systemctl restart ${config.virtualisation.arion.projects.minecraft-geyser.serviceName}.service";
-            options = [ "NOPASSWD" ];
-          }
-          {
-            command = "${pkgs.systemd}/bin/systemctl restart ${config.virtualisation.arion.projects.minecraft-modded.serviceName}.service";
-            options = [ "NOPASSWD" ];
-          }
-        ];
-      }
-    ];
   };
   sops.secrets = {
     gha_nur = {
@@ -123,22 +93,12 @@
       owner = "nixremote";
       group = "nixremote";
     };
-    cloudflare_global_api_key = { };
-    cloudflare_w_dns_r_zone_token = { };
-    "discord_bot.env" = { };
-    "rclone.conf" = { };
+    cloudflare_global_api_key = {};
+    cloudflare_w_dns_r_zone_token = {};
+    "discord_bot.env" = {};
+    "rclone.conf" = {};
   };
-  users = {
-    users = {
-      caddy.extraGroups = [ "acme" ];
-      discord_bot = {
-        isNormalUser = true;
-        group = "discord_bot";
-        openssh.authorizedKeys.keyFiles = [ ../secrets/cloud_ssh_ed25519.pub ];
-      };
-    };
-    groups.discord_bot = { };
-  };
+  users.users.caddy.extraGroups = ["acme"];
   userPresets.toyvo.enable = true;
   disko.devices.disk.sda = {
     type = "disk";
@@ -174,7 +134,7 @@
                 mountpoint = "/";
               };
               "@home" = {
-                mountOptions = [ "compress=zstd" ];
+                mountOptions = ["compress=zstd"];
                 mountpoint = "/home";
               };
               "@nix" = {

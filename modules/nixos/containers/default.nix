@@ -1,15 +1,14 @@
-{ config, lib, ... }:
-let
-  cfg = config.containerPresets;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.containerPresets;
+in {
   imports = [
     ./chat.nix
     ./homepage.nix
-    ./minecraft-modded.nix
-    ./minecraft-geyser.nix
-    ./terraria.nix
-    ./vintage-story.nix
+    ./portainer.nix
   ];
 
   options.containerPresets = {
@@ -17,7 +16,7 @@ in
   };
 
   config = lib.mkIf cfg.podman.enable {
-    users.groups.podman = { };
+    users.groups.podman = {};
     virtualisation.podman = {
       enable = true;
       defaultNetwork.settings.dns_enabled = true;
