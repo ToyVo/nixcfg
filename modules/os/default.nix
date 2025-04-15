@@ -21,7 +21,6 @@ in
   config = lib.mkIf cfg.defaults.enable {
     home-manager = {
       backupFileExtension = "${self.shortRev or self.dirtyShortRev}.old";
-      useGlobalPkgs = true;
       useUserPackages = true;
       sharedModules = [
         {

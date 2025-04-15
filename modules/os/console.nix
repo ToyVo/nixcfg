@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  nh,
   ...
 }:
 let
@@ -16,7 +15,6 @@ in
       nh = {
         enable = true;
         flake = "${config.users.users.${config.userPresets.toyvo.name}.home}/nixcfg";
-        package = nh.packages.${pkgs.stdenv.hostPlatform.system}.default;
         clean.enable = true;
       };
     };

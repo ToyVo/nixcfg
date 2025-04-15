@@ -4,32 +4,49 @@
   catppuccin,
   discord_bot,
   disko,
+  ghostty,
   home-manager,
   jovian,
   mac-app-util,
-  nh_plus,
+  nh,
   nix-darwin,
   nix-index-database,
   nixos-cosmic,
   nixos-hardware,
-  nixpkgs,
   nixos-wsl,
+  nixpkgs,
+  nixpkgs-esp-dev,
   nur,
   nur-packages,
   nvf,
   plasma-manager,
+  rust-overlay,
   self,
   sops-nix,
   ...
 }@inputs:
 let
   sharedHomeManagerModules = [
-    catppuccin.homeManagerModules.catppuccin
+    catppuccin.homeModules.catppuccin
+    nh.homeManagerModules.default
     nix-index-database.hmModules.nix-index
     nur.modules.homeManager.default
     nvf.homeManagerModules.nvf
     self.homeManagerModules.default
     sops-nix.homeManagerModules.sops
+    {
+      nixpkgs = {
+        overlays = [
+          (import rust-overlay)
+          ghostty.overlays.default
+          nixpkgs-esp-dev.overlays.default
+        ];
+        config = {
+          allowUnfree = true;
+          allowBroken = true;
+        };
+      };
+    }
   ];
   lib = nixpkgs.lib;
   nixosSystem =
@@ -53,11 +70,12 @@ let
         discord_bot.nixosModules.discord_bot
         disko.nixosModules.disko
         home-manager.nixosModules.default
+        nh.nixosModules.default
         nix-index-database.nixosModules.nix-index
         nixos-cosmic.nixosModules.default
         nixpkgs.nixosModules.notDetected
-        nur.modules.nixos.default
         nur-packages.nixosModules.cloudflare-ddns
+        nur.modules.nixos.default
         self.nixosModules.default
         sops-nix.nixosModules.sops
         {
@@ -89,7 +107,7 @@ let
       modules = [
         home-manager.darwinModules.default
         mac-app-util.darwinModules.default
-        nh_plus.nixDarwinModules.prebuiltin
+        nh.nixDarwinModules.prebuiltin
         nix-index-database.darwinModules.nix-index
         self.darwinModules.default
         {

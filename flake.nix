@@ -25,8 +25,7 @@
     };
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     mac-app-util.url = "github:hraban/mac-app-util";
-    nh.url = "github:viperml/nh";
-    nh_plus.url = "github:toyvo/nh_plus";
+    nh.url = "github:toyvo/nh";
     nix-darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
