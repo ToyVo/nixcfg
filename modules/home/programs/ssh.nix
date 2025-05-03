@@ -1,11 +1,13 @@
-{ config, lib, ... }:
-let
-  cfg = config.programs.ssh;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.programs.ssh;
+in {
   config = lib.mkIf cfg.enable {
     programs = {
-      zsh.initExtra = ''
+      zsh.initContent = ''
         ! (echo "$SSH_AUTH_SOCK" | rg ssh-\[a-zA-Z0-9\]+\/agent\.\\d+$) >/dev/null && eval $(ssh-agent -s) >/dev/null
       '';
       bash.initExtra = ''

@@ -3,17 +3,15 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.programs.zsh;
-in
-{
+in {
   config = lib.mkIf cfg.enable {
     programs.zsh = {
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       defaultKeymap = "viins";
-      initExtra = ''
+      initContent = ''
         setopt globdots
         zstyle ':completion:*' matcher-list ''' '+m:{a-zA-Z}={A-Za-z}' '+r:|[._-]=* r:|=*' '+l:|=* r:|=*'
       '';
