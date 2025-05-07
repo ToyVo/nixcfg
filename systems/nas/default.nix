@@ -86,8 +86,15 @@
     homepage = {
       enable = true;
       openFirewall = true;
+      dataDir = "/mnt/POOL/homepage";
     };
     open-webui = {
+      enable = true;
+      openFirewall = true;
+      dataDir = "/mnt/POOL/open-webui";
+      port = 11435;
+    };
+    portainer = {
       enable = true;
       openFirewall = true;
     };

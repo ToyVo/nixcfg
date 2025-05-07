@@ -12,7 +12,7 @@ in
     };
     dataDir = lib.mkOption {
       type = lib.types.path;
-      default = "/mnt/POOL/homepage";
+      default = "/var/lib/homepage";
       description = "Path to store Homepage dashboard data";
     };
     openFirewall = lib.mkEnableOption "Enable Homepage dashboard";

@@ -7,6 +7,16 @@
 in {
   options.containerPresets.portainer = {
     enable = lib.mkEnableOption "Enable portainer";
+    port = lib.mkOption {
+      type = lib.types.int;
+      default = 8000;
+      description = "Port to expose portainer on";
+    };
+    sport = lib.mkOption {
+      type = lib.types.int;
+      default = 9443;
+      description = "Port to expose portainer on with ssl";
+    };
     dataDir = lib.mkOption {
       type = lib.types.path;
       default = "/var/lib/portainer";
@@ -19,7 +29,7 @@ in {
     containerPresets.podman.enable = lib.mkDefault true;
     virtualisation.oci-containers.containers.portainer = {
       image = "docker.io/portainer/portainer-ce:latest";
-      ports = ["8000:8000" "9443:9443"];
+      ports = ["${cfg.port}:8000" "${cfg.sport}:9443"];
       volumes = [
         "${cfg.dataDir}:/data"
         "/var/run/podman/podman.sock:/var/run/docker.sock"
@@ -27,11 +37,10 @@ in {
       ];
       autoStart = true;
       extraOptions = [
-        "--pull=always"
-        "--restart=unless-stopped"
-        "--rm=false"
+        "--restart=always"
+        "--privileged"
       ];
     };
-    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [8000 9443];
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port cfg.sport];
   };
 }

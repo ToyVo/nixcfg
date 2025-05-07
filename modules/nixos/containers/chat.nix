@@ -7,12 +7,12 @@ in
     enable = lib.mkEnableOption "Enable open-webui";
     port = lib.mkOption {
       type = lib.types.int;
-      default = 11435;
+      default = 8080;
       description = "Port to expose open-webui on";
     };
     dataDir = lib.mkOption {
       type = lib.types.path;
-      default = "/mnt/POOL/open-webui";
+      default = "/var/lib/open-webui";
       description = "Path to store open-webui data";
     };
     openFirewall = lib.mkEnableOption "Enable open-webui firewall rules";
