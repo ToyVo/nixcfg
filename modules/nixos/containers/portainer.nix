@@ -29,7 +29,7 @@ in {
     containerPresets.podman.enable = lib.mkDefault true;
     virtualisation.oci-containers.containers.portainer = {
       image = "docker.io/portainer/portainer-ce:latest";
-      ports = ["${cfg.port}:8000" "${cfg.sport}:9443"];
+      ports = ["${toString cfg.port}:8000" "${toString cfg.sport}:9443"];
       volumes = [
         "${cfg.dataDir}:/data"
         "/var/run/podman/podman.sock:/var/run/docker.sock"
