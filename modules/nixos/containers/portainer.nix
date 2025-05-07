@@ -27,7 +27,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     containerPresets.podman.enable = lib.mkDefault true;
-    virtualisation.oci-containers.containers.portainer = {
+    virtualisation.arion.projects.portainer.settings.services.portainer.service = {
       image = "docker.io/portainer/portainer-ce:latest";
       ports = ["${toString cfg.port}:8000" "${toString cfg.sport}:9443"];
       volumes = [
@@ -35,11 +35,8 @@ in {
         "/var/run/podman/podman.sock:/var/run/docker.sock"
         "/etc/localtime:/etc/localtime"
       ];
-      autoStart = true;
-      extraOptions = [
-        "--restart=always"
-        "--privileged"
-      ];
+      privileged = true;
+      restart = "always";
     };
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port cfg.sport];
   };
