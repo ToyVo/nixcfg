@@ -60,6 +60,22 @@
           reverse_proxy http://10.1.0.3:8096
         '';
       };
+      "https://portainer.diekvoss.net:443" = {
+        useACMEHost = "diekvoss.net";
+        extraConfig = ''
+          reverse_proxy https://10.1.0.3:9443 {
+            transport http {
+              tls_insecure_skip_verify
+            }
+          }
+        '';
+      };
+      "https://coder.diekvoss.net:443" = {
+        useACMEHost = "diekvoss.net";
+        extraConfig = ''
+          reverse_proxy http://10.1.0.3:7080
+        '';
+      };
     };
   };
 }

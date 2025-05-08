@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [./samba.nix];
 
   hardware.cpu.amd.updateMicrocode = true;
@@ -14,11 +10,13 @@
         53
         443
         8080
+        7080
       ];
       allowedUDPPorts = [
         53
         443
         8080
+        7080
       ];
     };
   };
@@ -71,6 +69,11 @@
     jellyfin = {
       enable = true;
       openFirewall = true;
+    };
+    coder = {
+      enable = true;
+      accessUrl = "https://coder.diekvoss.net";
+      listenAddress = "0.0.0.0:7080";
     };
   };
   # sops.secrets = {
