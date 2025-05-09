@@ -82,6 +82,7 @@
     homepage-dashboard = {
       enable = true;
       openFirewall = true;
+      allowedHosts = "nas.internal:8082,diekvoss.net";
       bookmarks = [
         {
           Developer = [
