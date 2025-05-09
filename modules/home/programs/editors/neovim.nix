@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  pkgs,
+  system,
   ...
 }: let
   cfg = config.programs.nvim;
@@ -35,7 +35,7 @@ in {
           enableTreesitter = true;
           bash.enable = true;
           clang.enable = true;
-          csharp.enable = true;
+          csharp.enable = system != "aarch64-darwin";
           css.enable = true;
           html.enable = true;
           lua.enable = true;

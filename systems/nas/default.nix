@@ -75,6 +75,164 @@
       accessUrl = "https://coder.diekvoss.net";
       listenAddress = "0.0.0.0:7080";
     };
+    cockpit = {
+      enable = true;
+      openFirewall = true;
+    };
+    homepage-dashboard = {
+      enable = true;
+      openFirewall = true;
+      bookmarks = [
+        {
+          Developer = [
+            {
+              Github = [
+                {
+                  abbr = "GH";
+                  href = "https://github.com/";
+                }
+              ];
+            }
+          ];
+        }
+        {
+          Social = [
+            {
+              Lemmy = [
+                {
+                  abbr = "LM";
+                  href = "https://programming.dev/";
+                }
+              ];
+            }
+          ];
+        }
+        {
+          Entertainment = [
+            {
+              YouTube = [
+                {
+                  abbr = "YT";
+                  href = "https://youtube.com/";
+                }
+              ];
+            }
+          ];
+        }
+      ];
+      docker = [
+        {
+          Podman = [
+            {
+              socket = "/var/run/podman/podman.sock";
+            }
+          ];
+        }
+      ];
+      services = [
+        {
+          Networking = [
+            {
+              "Adguard Home" = [
+                {
+                  abbr = "AGH";
+                  href = "https://adguard.diekvoss.net/";
+                  description = "Adguard Home, DNS adblocker";
+                }
+              ];
+            }
+            {
+              Omada = [
+                {
+                  abbr = "OM";
+                  href = "https://omada.diekvoss.net/";
+                  description = "Omada cloud controller UI";
+                }
+              ];
+            }
+          ];
+        }
+        {
+          Printers = [
+            {
+              Cannon = [
+                {
+                  href = "https://canon.diekvoss.net/";
+                  description = "Cannon printer UI";
+                }
+              ];
+            }
+          ];
+        }
+        {
+          APIs = [
+            {
+              Ollama = [
+                {
+                  abbr = "OL";
+                  href = "https://ollama.diekvoss.net/";
+                  description = "Ollama API";
+                }
+              ];
+            }
+          ];
+        }
+        {
+          AI = [
+            {
+              "Open WebUI" = [
+                {
+                  abbr = "OW";
+                  href = "https://chat.diekvoss.net/";
+                  description = "Chat with LLMs";
+                }
+              ];
+            }
+          ];
+        }
+        {
+          "Published Sites" = [
+            {
+              "Discord Bot UI" = [
+                {
+                  abbr = "DB";
+                  href = "https://toyvo.dev/";
+                  description = "Discord Bot";
+                }
+              ];
+            }
+            {
+              "Minecraft modpack definition" = [
+                {
+                  abbr = "MC";
+                  href = "https://packwiz.toyvo.dev/";
+                  description = "Minecraft modpack definition";
+                }
+              ];
+            }
+          ];
+        }
+      ];
+      widgets = [
+        {
+          resources = [
+            {
+              cpu = true;
+              memory = true;
+              disk = "/";
+            }
+          ];
+        }
+        {
+          search = [
+            {
+              provider = "duckduckgo";
+              target = "_blank";
+            }
+          ];
+        }
+      ];
+    };
   };
   # sops.secrets = {
   #   "discord_bot.env" = {
@@ -86,11 +244,6 @@
   # };
   containerPresets = {
     podman.enable = true;
-    homepage = {
-      enable = true;
-      openFirewall = true;
-      dataDir = "/mnt/POOL/homepage";
-    };
     open-webui = {
       enable = true;
       openFirewall = true;
