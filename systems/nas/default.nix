@@ -1,5 +1,6 @@
-{pkgs, ...}: {
-  imports = [./samba.nix];
+{ pkgs, ... }:
+{
+  imports = [ ./samba.nix ];
 
   hardware.cpu.amd.updateMicrocode = true;
   networking = {
@@ -33,8 +34,8 @@
       "usb_storage"
       "sd_mod"
     ];
-    kernelModules = ["kvm-amd"];
-    binfmt.emulatedSystems = ["aarch64-linux"];
+    kernelModules = [ "kvm-amd" ];
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
   profiles = {
     defaults.enable = true;
@@ -134,90 +135,79 @@
         {
           Networking = [
             {
-              "Adguard Home" = [
-                {
-                  href = "https://adguard.diekvoss.net/";
-                }
-              ];
+              "Adguard Home" = {
+                href = "https://adguard.diekvoss.net/";
+                description = "Adguard Home, DNS adblocker";
+              };
             }
             {
-              Omada = [
-                {
-                  href = "https://omada.diekvoss.net/";
-                }
-              ];
+              Omada = {
+                href = "https://omada.diekvoss.net/";
+                description = "Omada cloud controller UI";
+              };
             }
           ];
         }
         {
           Printers = [
             {
-              Cannon = [
-                {
-                  href = "https://canon.diekvoss.net/";
-                }
-              ];
+              Cannon = {
+                href = "https://canon.diekvoss.net/";
+                description = "Cannon printer UI";
+              };
             }
           ];
         }
         {
           APIs = [
             {
-              Ollama = [
-                {
-                  href = "https://ollama.diekvoss.net/";
-                }
-              ];
+              Ollama = {
+                href = "https://ollama.diekvoss.net/";
+                description = "Ollama API";
+              };
             }
           ];
         }
         {
           AI = [
             {
-              "Open WebUI" = [
-                {
-                  href = "https://chat.diekvoss.net/";
-                }
-              ];
+              "Open WebUI" = {
+                href = "https://chat.diekvoss.net/";
+                description = "Chat with LLMs";
+              };
             }
           ];
         }
         {
           "Published Sites" = [
             {
-              "Discord Bot UI" = [
-                {
-                  href = "https://toyvo.dev/";
-                }
-              ];
+              "Discord Bot UI" = {
+                href = "https://toyvo.dev/";
+                description = "Discord Bot";
+              };
             }
             {
-              "Minecraft modpack definition" = [
-                {
-                  href = "https://packwiz.toyvo.dev/";
-                }
-              ];
+              "Minecraft modpack definition" = {
+                href = "https://packwiz.toyvo.dev/";
+                description = "Minecraft modpack definition";
+              };
             }
           ];
         }
       ];
       widgets = [
         {
-          resources = [
-            {
-              cpu = true;
-              memory = true;
-              disk = "/";
-            }
-          ];
+          resources = {
+            cpu = true;
+            disk = "/";
+            memory = true;
+          };
         }
         {
-          search = [
-            {
-              provider = "duckduckgo";
-              target = "_blank";
-            }
-          ];
+          search = {
+            provider = "duckduckgo";
+            target = "_blank";
+          };
         }
       ];
     };
@@ -248,7 +238,7 @@
     fsType = "btrfs";
   };
   users.users = {
-    toyvo.extraGroups = ["libvirtd"];
+    toyvo.extraGroups = [ "libvirtd" ];
   };
   programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [
@@ -270,7 +260,7 @@
       qemu = {
         swtpm.enable = true;
         ovmf.enable = true;
-        ovmf.packages = [pkgs.OVMFFull.fd];
+        ovmf.packages = [ pkgs.OVMFFull.fd ];
       };
     };
     spiceUSBRedirection.enable = true;
