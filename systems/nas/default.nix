@@ -136,18 +136,14 @@
             {
               "Adguard Home" = [
                 {
-                  abbr = "AGH";
                   href = "https://adguard.diekvoss.net/";
-                  description = "Adguard Home, DNS adblocker";
                 }
               ];
             }
             {
               Omada = [
                 {
-                  abbr = "OM";
                   href = "https://omada.diekvoss.net/";
-                  description = "Omada cloud controller UI";
                 }
               ];
             }
@@ -159,7 +155,6 @@
               Cannon = [
                 {
                   href = "https://canon.diekvoss.net/";
-                  description = "Cannon printer UI";
                 }
               ];
             }
@@ -170,9 +165,7 @@
             {
               Ollama = [
                 {
-                  abbr = "OL";
                   href = "https://ollama.diekvoss.net/";
-                  description = "Ollama API";
                 }
               ];
             }
@@ -183,9 +176,7 @@
             {
               "Open WebUI" = [
                 {
-                  abbr = "OW";
                   href = "https://chat.diekvoss.net/";
-                  description = "Chat with LLMs";
                 }
               ];
             }
@@ -196,18 +187,14 @@
             {
               "Discord Bot UI" = [
                 {
-                  abbr = "DB";
                   href = "https://toyvo.dev/";
-                  description = "Discord Bot";
                 }
               ];
             }
             {
               "Minecraft modpack definition" = [
                 {
-                  abbr = "MC";
                   href = "https://packwiz.toyvo.dev/";
-                  description = "Minecraft modpack definition";
                 }
               ];
             }
