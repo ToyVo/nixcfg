@@ -79,7 +79,7 @@
     cockpit = {
       enable = true;
       openFirewall = true;
-      allowed-origins = ["https://cockpit.diekvoss.net"];
+      allowed-origins = [ "https://cockpit.diekvoss.net" ];
     };
     homepage-dashboard = {
       enable = true;
@@ -226,6 +226,13 @@
     home-assistant = {
       enable = true;
       openFirewall = true;
+      config = {
+        homeassistant = {
+          name = "Home";
+          unit_system = "metric";
+          temperature_unit = "F";
+        };
+      };
     };
   };
   # sops.secrets = {
