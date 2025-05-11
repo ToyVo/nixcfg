@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   imports = [ ./samba.nix ];
 
@@ -295,16 +295,18 @@
     nextcloud = {
       enable = true;
       hostName = "nextcloud.diekvoss.net";
+      config.adminPassFile = config.sops.secrets.nextcloud_admin_password.path;
     };
   };
-  # sops.secrets = {
+  sops.secrets = {
+    nextcloud_admin_password.owner = "nextcloud";
   #   "discord_bot.env" = {
   #     owner = "discord_bot";
   #   };
   #   cloud_ssh_ed25519 = {
   #     owner = "discord_bot";
   #   };
-  # };
+  };
   containerPresets = {
     podman.enable = true;
     open-webui = {
