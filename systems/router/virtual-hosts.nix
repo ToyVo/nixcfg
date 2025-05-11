@@ -104,6 +104,12 @@
           reverse_proxy http://10.1.0.3:8123
         '';
       };
+      "https://nextcloud.diekvoss.net:443" = {
+        useACMEHost = "diekvoss.net";
+        extraConfig = ''
+          reverse_proxy http://10.1.0.3:8123
+        '';
+      };
     };
   };
 }

@@ -180,6 +180,58 @@
           ];
         }
         {
+          "To Sort" = [
+            {
+              "Jellyfin" = {
+                href = "https://jellyfin.diekvoss.net/";
+                description = "Jellyfin";
+              };
+            }
+            {
+              "Cockpit" = {
+                href = "https://cockpit.diekvoss.net/";
+                description = "Cockpit";
+              };
+            }
+            {
+              "Coder" = {
+                href = "https://coder.diekvoss.net/";
+                description = "Coder";
+              };
+            }
+            {
+              "Portainer" = {
+                href = "https://portainer.diekvoss.net/";
+                description = "Portainer";
+              };
+            }
+            {
+              "Immich" = {
+                href = "https://immich.diekvoss.net/";
+                description = "Immich";
+              };
+            }
+            {
+              "Deluge" = {
+                href = "https://deluge.diekvoss.net/";
+                description = "Deluge";
+              };
+            }
+            {
+              "Home Assistant" = {
+                href = "https://home-assistant.diekvoss.net/";
+                description = "Home Assistant";
+              };
+            }
+            {
+              "Nextcloud" = {
+                href = "https://nextcloud.diekvoss.net/";
+                description = "Nextcloud";
+              };
+            }
+          ];
+        }
+        {
           "Published Sites" = [
             {
               "Discord Bot UI" = {
@@ -239,6 +291,11 @@
           trusted_proxies = ["10.1.0.1"];
         };
       };
+    };
+    nextcloud = {
+      enable = true;
+      openFirewall = true;
+      hostName = "nextcloud.diekvoss.net";
     };
   };
   # sops.secrets = {
