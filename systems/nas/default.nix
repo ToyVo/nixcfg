@@ -295,7 +295,10 @@
     nextcloud = {
       enable = true;
       hostName = "nextcloud.diekvoss.net";
-      config.adminpassFile = config.sops.secrets.nextcloud_admin_password.path;
+      config = {
+        adminpassFile = config.sops.secrets.nextcloud_admin_password.path;
+        dbtype = "pgsql";
+      };
     };
   };
   sops.secrets = {
