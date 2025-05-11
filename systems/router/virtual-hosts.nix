@@ -79,7 +79,11 @@
       "https://cockpit.diekvoss.net:443" = {
         useACMEHost = "diekvoss.net";
         extraConfig = ''
-          reverse_proxy http://10.1.0.3:9090
+          reverse_proxy https://10.1.0.3:9090 {
+            transport http {
+              tls_insecure_skip_verify
+            }
+          }
         '';
       };
     };
