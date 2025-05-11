@@ -107,11 +107,7 @@
       "https://nextcloud.diekvoss.net:443" = {
         useACMEHost = "diekvoss.net";
         extraConfig = ''
-          reverse_proxy https://10.1.0.3:443 {
-            transport http {
-              tls_insecure_skip_verify
-            }
-          }
+          reverse_proxy http://10.1.0.3:80
         '';
       };
     };
