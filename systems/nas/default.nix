@@ -299,6 +299,7 @@
         adminpassFile = config.sops.secrets.nextcloud_admin_password.path;
         dbtype = "pgsql";
       };
+      package = pkgs.nextcloud31;
     };
   };
   sops.secrets = {
