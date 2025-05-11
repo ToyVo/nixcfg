@@ -79,6 +79,7 @@
     cockpit = {
       enable = true;
       openFirewall = true;
+      allowed-origins = ["https://cockpit.diekvoss.net"];
     };
     homepage-dashboard = {
       enable = true;
