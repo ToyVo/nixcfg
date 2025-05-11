@@ -212,6 +212,21 @@
         }
       ];
     };
+    deluge = {
+      enable = true;
+      web = {
+        enable = true;
+        openFirewall = true;
+      };
+    };
+    immich = {
+      enable = true;
+      openFirewall = true;
+    };
+    home-assistant = {
+      enable = true;
+      openFirewall = true;
+    };
   };
   # sops.secrets = {
   #   "discord_bot.env" = {

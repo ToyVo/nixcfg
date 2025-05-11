@@ -86,6 +86,24 @@
           }
         '';
       };
+      "https://deluge.diekvoss.net:443" = {
+        useACMEHost = "diekvoss.net";
+        extraConfig = ''
+          reverse_proxy http://10.1.0.3:8112
+        '';
+      };
+      "https://immich.diekvoss.net:443" = {
+        useACMEHost = "diekvoss.net";
+        extraConfig = ''
+          reverse_proxy http://10.1.0.3:2283
+        '';
+      };
+      "https://home-assistant.diekvoss.net:443" = {
+        useACMEHost = "diekvoss.net";
+        extraConfig = ''
+          reverse_proxy http://10.1.0.3:8123
+        '';
+      };
     };
   };
 }
