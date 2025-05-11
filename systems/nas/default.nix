@@ -295,7 +295,7 @@
     nextcloud = {
       enable = true;
       hostName = "nextcloud.diekvoss.net";
-      config.adminPassFile = config.sops.secrets.nextcloud_admin_password.path;
+      config.adminpassFile = config.sops.secrets.nextcloud_admin_password.path;
     };
   };
   sops.secrets = {
