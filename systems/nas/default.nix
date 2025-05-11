@@ -222,6 +222,7 @@
     immich = {
       enable = true;
       openFirewall = true;
+      host = "0.0.0.0";
     };
     home-assistant = {
       enable = true;
@@ -231,6 +232,11 @@
           name = "Home";
           unit_system = "metric";
           temperature_unit = "F";
+        };
+        http = {
+          base_url = "https://home-assistant.diekvoss.net";
+          use_x_forwarded_for = true;
+          trusted_proxies = ["10.1.0.1"];
         };
       };
     };
