@@ -294,7 +294,6 @@
     };
     nextcloud = {
       enable = true;
-      openFirewall = true;
       hostName = "nextcloud.diekvoss.net";
     };
   };
