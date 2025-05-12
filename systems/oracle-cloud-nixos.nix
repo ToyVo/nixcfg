@@ -86,6 +86,9 @@
       };
     };
   };
+  containerPresets.portainer = {
+    enable = true;
+  };
   sops.secrets = {
     gha_nur = {
       format = "yaml";
