@@ -30,7 +30,6 @@ in {
         languages = {
           enableDAP = true;
           enableExtraDiagnostics = true;
-          enableLSP = true;
           enableFormat = true;
           enableTreesitter = true;
           bash.enable = true;

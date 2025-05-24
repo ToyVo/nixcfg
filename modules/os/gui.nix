@@ -32,7 +32,7 @@ in {
           element-desktop
           firefox
           ghostty
-          yubikey-manager-qt
+          # yubikey-manager-qt
           # yubioath-flutter
         ]
         ++ lib.optionals (stdenv.system == "x86_64-linux") [

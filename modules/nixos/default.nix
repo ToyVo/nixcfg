@@ -107,7 +107,7 @@ in
       };
     };
     system = {
-      stateVersion = "25.05";
+      stateVersion = "25.11";
       autoUpgrade = {
         enable = true;
         flake = "${config.users.users.${config.userPresets.toyvo.name}.home}/nixcfg";
