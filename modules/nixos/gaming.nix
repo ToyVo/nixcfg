@@ -26,6 +26,7 @@ in
       prismlauncher
       protonup
       gale
+      r2modman
       steam
       steamcmd
       (wrapOBS {

@@ -50,9 +50,11 @@ in
           config.environment.pythonPackage
           dfu-util
           dioxus-cli
+          dotnet-sdk
           flex
           gnumake
           gperf
+          icu
           libffi
           libiconv
           libusb1
@@ -65,6 +67,9 @@ in
           rustup
           systemfd
           # esp-idf-full
+        ]
+        ++ lib.optionals cfg.gui.enable [
+          jetbrains-toolbox
           zed-editor
         ]
         ++ lib.optionals stdenv.isLinux [

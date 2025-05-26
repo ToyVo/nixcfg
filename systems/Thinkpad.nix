@@ -37,4 +37,8 @@
     enable = true;
     enable32Bit = true;
   };
+  environment.systemPackages = with pkgs; [
+    jetbrains.rider
+    jetbrains.rust-rover
+  ];
 }

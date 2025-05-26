@@ -4,14 +4,12 @@
   catppuccin,
   discord_bot,
   disko,
-  ghostty,
   home-manager,
   jovian,
   mac-app-util,
   nh,
   nix-darwin,
   nix-index-database,
-  nixos-cosmic,
   nixos-hardware,
   nixos-wsl,
   nixpkgs,
@@ -38,7 +36,6 @@ let
       nixpkgs = {
         overlays = [
           (import rust-overlay)
-          ghostty.overlays.default
           nixpkgs-esp-dev.overlays.default
         ];
         config = {
@@ -72,7 +69,6 @@ let
         home-manager.nixosModules.default
         nh.nixosModules.default
         nix-index-database.nixosModules.nix-index
-        nixos-cosmic.nixosModules.default
         nixpkgs.nixosModules.notDetected
         nur-packages.nixosModules.cloudflare-ddns
         nur.modules.nixos.default
