@@ -55,32 +55,33 @@ in
       };
       nix-ld = {
         enable = true;
-        libraries = with pkgs;
-        (appimageTools.defaultFhsEnvArgs.multiPkgs pkgs) ++
-        (appimageTools.defaultFhsEnvArgs.targetPkgs pkgs) ++
-        [
-          SDL
-          SDL_image
-          SDL_mixer
-          SDL_ttf
-          freeglut
-          fuse
-          fuse3
-          icu
-          libclang.lib
-          libdbusmenu
-          libgcc
-          libxcrypt-legacy
-          libxml2
-          mesa
-          pcre
-          pcre-cpp
-          pcre16
-          pcre2
-          python3
-          stdenv.cc.cc
-          xz
-        ];
+        libraries =
+          with pkgs;
+          (appimageTools.defaultFhsEnvArgs.multiPkgs pkgs)
+          ++ (appimageTools.defaultFhsEnvArgs.targetPkgs pkgs)
+          ++ [
+            SDL
+            SDL_image
+            SDL_mixer
+            SDL_ttf
+            freeglut
+            fuse
+            fuse3
+            icu
+            libclang.lib
+            libdbusmenu
+            libgcc
+            libxcrypt-legacy
+            libxml2
+            mesa
+            pcre
+            pcre-cpp
+            pcre16
+            pcre2
+            python3
+            stdenv.cc.cc
+            xz
+          ];
       };
       command-not-found.enable = false;
     };

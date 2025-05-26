@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.programs.zsh;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     programs.zsh = {
       autosuggestion.enable = true;

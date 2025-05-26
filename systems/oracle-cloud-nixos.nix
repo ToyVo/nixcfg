@@ -2,7 +2,8 @@
   pkgs,
   config,
   ...
-}: {
+}:
+{
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
@@ -10,7 +11,7 @@
       "xhci_pci"
       "virtio_scsi"
     ];
-    binfmt.emulatedSystems = ["x86_64-linux"];
+    binfmt.emulatedSystems = [ "x86_64-linux" ];
   };
   containerPresets = {
     podman.enable = true;
@@ -102,12 +103,12 @@
       owner = "nixremote";
       group = "nixremote";
     };
-    cloudflare_global_api_key = {};
-    cloudflare_w_dns_r_zone_token = {};
-    "discord_bot.env" = {};
-    "rclone.conf" = {};
+    cloudflare_global_api_key = { };
+    cloudflare_w_dns_r_zone_token = { };
+    "discord_bot.env" = { };
+    "rclone.conf" = { };
   };
-  users.users.caddy.extraGroups = ["acme"];
+  users.users.caddy.extraGroups = [ "acme" ];
   userPresets.toyvo.enable = true;
   disko.devices.disk.sda = {
     type = "disk";
@@ -143,7 +144,7 @@
                 mountpoint = "/";
               };
               "@home" = {
-                mountOptions = ["compress=zstd"];
+                mountOptions = [ "compress=zstd" ];
                 mountpoint = "/home";
               };
               "@nix" = {

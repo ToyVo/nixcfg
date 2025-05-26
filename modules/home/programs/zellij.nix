@@ -3,19 +3,21 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.programs.zellij;
-in {
+in
+{
   options.programs.zellij.restrictedVariables = lib.mkOption {
     description = "List of environment variables that will prevent zellij from starting if they are set. This is useful for preventing zellij from starting when it is not desired, such as when used as the shell within various ides.";
     default = {
-      TERM = ["xterm-ghostty"];
-      TERMINAL_EMULATOR = ["JetBrains-JediTerm"];
+      TERM = [ "xterm-ghostty" ];
+      TERMINAL_EMULATOR = [ "JetBrains-JediTerm" ];
       TERM_PROGRAM = [
         "vscode"
         "WarpTerminal"
       ];
-      ZED_TERM = ["true"];
+      ZED_TERM = [ "true" ];
     };
     type = lib.types.attrsOf (lib.types.listOf lib.types.str);
   };
@@ -44,8 +46,7 @@ in {
           lib.concatStringsSep " && " (
             lib.mapAttrsToList (
               name: values: lib.concatStringsSep " && " (map (v: "[ \"\$${name}\" != \"${v}\" ]") values)
-            )
-            cfg.restrictedVariables
+            ) cfg.restrictedVariables
           )
         }; then
           zellij-bash
@@ -56,8 +57,7 @@ in {
           lib.concatStringsSep " && " (
             lib.mapAttrsToList (
               name: values: lib.concatStringsSep " && " (map (v: "[ \"\$${name}\" != \"${v}\" ]") values)
-            )
-            cfg.restrictedVariables
+            ) cfg.restrictedVariables
           )
         }; then
           zellij-zsh
@@ -68,8 +68,7 @@ in {
           lib.concatStringsSep " && " (
             lib.mapAttrsToList (
               name: values: lib.concatStringsSep " && " (map (v: "not test \"\$${name}\" = \"${v}\"") values)
-            )
-            cfg.restrictedVariables
+            ) cfg.restrictedVariables
           )
         }
           zellij-fish
@@ -80,8 +79,7 @@ in {
           lib.concatStringsSep " and " (
             lib.mapAttrsToList (
               name: values: lib.concatStringsSep " and " (map (v: "$env.${name}? != \"${v}\"") values)
-            )
-            cfg.restrictedVariables
+            ) cfg.restrictedVariables
           )
         } {
           zellij-nushell
@@ -92,11 +90,10 @@ in {
           lib.concatStringsSep " -and " (
             lib.mapAttrsToList (
               name: values:
-                lib.concatStringsSep " -and " (
-                  map (v: "[Environment]::GetEnvironmentVariable(\"${name}\") -ne \"${v}\"") values
-                )
-            )
-            cfg.restrictedVariables
+              lib.concatStringsSep " -and " (
+                map (v: "[Environment]::GetEnvironmentVariable(\"${name}\") -ne \"${v}\"") values
+              )
+            ) cfg.restrictedVariables
           )
         }) {
           zellij-powershell
@@ -108,8 +105,7 @@ in {
             lib.mapAttrsToList (
               # TODO: not checking if the variable is set to the right value because doing `test \$${name} != \"${value}\"` doesn't work because the variable might be undefined and ion doesn't seem to have order of operations with parenthese to protect it with `exists -s ${name}`
               name: values: "not exists -S ${name}"
-            )
-            cfg.restrictedVariables
+            ) cfg.restrictedVariables
           )
         }
           zellij-ion

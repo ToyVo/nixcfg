@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.containerPresets;
-in {
+in
+{
   imports = [
     ./chat.nix
     ./homepage.nix
@@ -16,7 +18,7 @@ in {
   };
 
   config = lib.mkIf cfg.podman.enable {
-    users.groups.podman = {};
+    users.groups.podman = { };
     virtualisation.podman = {
       enable = true;
       defaultNetwork.settings.dns_enabled = true;

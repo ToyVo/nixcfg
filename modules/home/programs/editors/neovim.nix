@@ -3,9 +3,11 @@
   lib,
   system,
   ...
-}: let
+}:
+let
   cfg = config.programs.nvim;
-in {
+in
+{
   options.programs.nvim.enable = lib.mkEnableOption "Enable neovim";
 
   config = lib.mkIf cfg.enable {

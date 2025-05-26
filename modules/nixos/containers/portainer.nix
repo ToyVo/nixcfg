@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.containerPresets.portainer;
-in {
+in
+{
   options.containerPresets.portainer = {
     enable = lib.mkEnableOption "Enable portainer";
     port = lib.mkOption {
@@ -29,7 +31,10 @@ in {
     containerPresets.podman.enable = lib.mkDefault true;
     virtualisation.arion.projects.portainer.settings.services.portainer.service = {
       image = "docker.io/portainer/portainer-ce:latest";
-      ports = ["${toString cfg.port}:8000" "${toString cfg.sport}:9443"];
+      ports = [
+        "${toString cfg.port}:8000"
+        "${toString cfg.sport}:9443"
+      ];
       volumes = [
         "${cfg.dataDir}:/data"
         "/var/run/podman/podman.sock:/var/run/docker.sock"
@@ -38,6 +43,9 @@ in {
       privileged = true;
       restart = "always";
     };
-    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [cfg.port cfg.sport];
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [
+      cfg.port
+      cfg.sport
+    ];
   };
 }

@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.profiles;
-in {
+in
+{
   options.profiles.gui.enable = lib.mkEnableOption "GUI Applications";
 
   config = lib.mkIf cfg.gui.enable {
@@ -22,7 +24,8 @@ in {
       nerd-fonts.symbols-only
     ];
     environment = {
-      systemPackages = with pkgs;
+      systemPackages =
+        with pkgs;
         [
           brave
           gimp

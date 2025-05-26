@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.programs.ssh;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     programs = {
       zsh.initContent = ''

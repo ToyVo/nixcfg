@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.programs.gpg;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     programs.zsh.initContent = ''
       ${pkgs.gnupg}/bin/gpgconf --launch gpg-agent

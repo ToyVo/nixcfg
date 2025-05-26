@@ -1,4 +1,8 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  ...
+}:
 {
   imports = [ ./samba.nix ];
 
@@ -123,15 +127,15 @@
           ];
         }
       ];
-      docker = [
-        {
-          Podman = [
-            {
-              socket = "/var/run/podman/podman.sock";
-            }
-          ];
-        }
-      ];
+      # docker = [
+      #   {
+      #     Podman = [
+      #       {
+      #         socket = "/var/run/podman/podman.sock";
+      #       }
+      #     ];
+      #   }
+      # ];
       services = [
         {
           Networking = [
@@ -288,7 +292,7 @@
         http = {
           base_url = "https://home-assistant.diekvoss.net";
           use_x_forwarded_for = true;
-          trusted_proxies = ["10.1.0.1"];
+          trusted_proxies = [ "10.1.0.1" ];
         };
       };
     };
@@ -304,12 +308,12 @@
   };
   sops.secrets = {
     nextcloud_admin_password.owner = "nextcloud";
-  #   "discord_bot.env" = {
-  #     owner = "discord_bot";
-  #   };
-  #   cloud_ssh_ed25519 = {
-  #     owner = "discord_bot";
-  #   };
+    #   "discord_bot.env" = {
+    #     owner = "discord_bot";
+    #   };
+    #   cloud_ssh_ed25519 = {
+    #     owner = "discord_bot";
+    #   };
   };
   containerPresets = {
     podman.enable = true;
@@ -328,9 +332,7 @@
     device = "/dev/disk/by-label/POOL";
     fsType = "btrfs";
   };
-  users.users = {
-    toyvo.extraGroups = [ "libvirtd" ];
-  };
+  users.users.toyvo.extraGroups = [ "libvirtd" ];
   programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [
     bottles
