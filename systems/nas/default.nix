@@ -303,6 +303,7 @@
         adminpassFile = config.sops.secrets.nextcloud_admin_password.path;
         dbtype = "pgsql";
       };
+      database.createLocally = true;
       package = pkgs.nextcloud31;
     };
   };
