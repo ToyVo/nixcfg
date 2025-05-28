@@ -207,6 +207,10 @@
             answer = "10.1.0.13";
           }
           {
+            domain = "steamdeck-nixos.internal";
+            answer = "10.1.0.14";
+          }
+          {
             domain = "oracle.internal";
             answer = "164.152.108.113";
           }

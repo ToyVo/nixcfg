@@ -90,6 +90,10 @@ in
             user = "toyvo";
             hostname = "windows.internal";
           };
+          matchBlocks."steamdeck-nixos" = identityConfig // {
+            user = "toyvo";
+            hostname = "steamdeck-nixos.internal";
+          };
           matchBlocks."10.1.0.*" = identityConfig;
         };
       zed.enable = true;

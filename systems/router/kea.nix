@@ -126,6 +126,11 @@
               # Wifi
               # hw-address = "b4:6b:fc:6c:b5:4c";
             }
+            {
+              hostname = "steamdeck-nixos";
+              ip-address = "10.1.0.14";
+              hw-address = "b4:8c:9d:b9:5d:fb";
+            }
           ];
         }
       ];
