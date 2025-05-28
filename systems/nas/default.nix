@@ -1,11 +1,13 @@
 {
   pkgs,
-  config,
-  lib,
   ...
 }:
 {
-  imports = [ ./samba.nix ];
+  imports = [
+    ./samba.nix
+    ./nextcloud.nix
+    ./homepage.nix
+  ];
 
   hardware.cpu.amd.updateMicrocode = true;
   networking = {
@@ -17,13 +19,13 @@
         443
         8080
         7080
-      ] ++ lib.mkIf config.services.collabora-online.enable [ config.services.collabora-online.port ];
+      ];
       allowedUDPPorts = [
         53
         443
         8080
         7080
-      ] ++ lib.mkIf config.services.collabora-online.enable [ config.services.collabora-online.port ];
+      ];
     };
   };
   boot = {
@@ -86,189 +88,7 @@
       openFirewall = true;
       allowed-origins = [ "https://cockpit.diekvoss.net" ];
     };
-    homepage-dashboard = {
-      enable = true;
-      openFirewall = true;
-      allowedHosts = "nas.internal:8082,diekvoss.net";
-      bookmarks = [
-        {
-          Developer = [
-            {
-              Github = [
-                {
-                  abbr = "GH";
-                  href = "https://github.com/";
-                }
-              ];
-            }
-          ];
-        }
-        {
-          Social = [
-            {
-              Lemmy = [
-                {
-                  abbr = "LM";
-                  href = "https://programming.dev/";
-                }
-              ];
-            }
-          ];
-        }
-        {
-          Entertainment = [
-            {
-              YouTube = [
-                {
-                  abbr = "YT";
-                  href = "https://youtube.com/";
-                }
-              ];
-            }
-          ];
-        }
-      ];
-      # docker = [
-      #   {
-      #     Podman = [
-      #       {
-      #         socket = "/var/run/podman/podman.sock";
-      #       }
-      #     ];
-      #   }
-      # ];
-      services = [
-        {
-          Networking = [
-            {
-              "Adguard Home" = {
-                href = "https://adguard.diekvoss.net/";
-                description = "Adguard Home, DNS adblocker";
-              };
-            }
-            {
-              Omada = {
-                href = "https://omada.diekvoss.net/";
-                description = "Omada cloud controller UI";
-              };
-            }
-          ];
-        }
-        {
-          Printers = [
-            {
-              Cannon = {
-                href = "https://canon.diekvoss.net/";
-                description = "Cannon printer UI";
-              };
-            }
-          ];
-        }
-        {
-          APIs = [
-            {
-              Ollama = {
-                href = "https://ollama.diekvoss.net/";
-                description = "Ollama API";
-              };
-            }
-          ];
-        }
-        {
-          AI = [
-            {
-              "Open WebUI" = {
-                href = "https://chat.diekvoss.net/";
-                description = "Chat with LLMs";
-              };
-            }
-          ];
-        }
-        {
-          "To Sort" = [
-            {
-              "Jellyfin" = {
-                href = "https://jellyfin.diekvoss.net/";
-                description = "Jellyfin";
-              };
-            }
-            {
-              "Cockpit" = {
-                href = "https://cockpit.diekvoss.net/";
-                description = "Cockpit";
-              };
-            }
-            {
-              "Coder" = {
-                href = "https://coder.diekvoss.net/";
-                description = "Coder";
-              };
-            }
-            {
-              "Portainer" = {
-                href = "https://portainer.diekvoss.net/";
-                description = "Portainer";
-              };
-            }
-            {
-              "Immich" = {
-                href = "https://immich.diekvoss.net/";
-                description = "Immich";
-              };
-            }
-            {
-              "Deluge" = {
-                href = "https://deluge.diekvoss.net/";
-                description = "Deluge";
-              };
-            }
-            {
-              "Home Assistant" = {
-                href = "https://home-assistant.diekvoss.net/";
-                description = "Home Assistant";
-              };
-            }
-            {
-              "Nextcloud" = {
-                href = "https://nextcloud.diekvoss.net/";
-                description = "Nextcloud";
-              };
-            }
-          ];
-        }
-        {
-          "Published Sites" = [
-            {
-              "Discord Bot UI" = {
-                href = "https://toyvo.dev/";
-                description = "Discord Bot";
-              };
-            }
-            {
-              "Minecraft modpack definition" = {
-                href = "https://packwiz.toyvo.dev/";
-                description = "Minecraft modpack definition";
-              };
-            }
-          ];
-        }
-      ];
-      widgets = [
-        {
-          resources = {
-            cpu = true;
-            disk = "/";
-            memory = true;
-          };
-        }
-        {
-          search = {
-            provider = "duckduckgo";
-            target = "_blank";
-          };
-        }
-      ];
-    };
+    homepage-dashboard.enable = true;
     deluge = {
       enable = true;
       web = {
@@ -297,48 +117,7 @@
         };
       };
     };
-    nextcloud = {
-      enable = true;
-      hostName = "nextcloud.diekvoss.net";
-      config = {
-        adminpassFile = config.sops.secrets.nextcloud_admin_password.path;
-        adminuser = config.users.users.toyvo.name;
-        dbtype = "pgsql";
-      };
-      database.createLocally = true;
-      package = pkgs.nextcloud31;
-      extraApps = {
-        inherit (config.services.nextcloud.package.packages.apps) news contacts calendar tasks richdocuments bookmarks music mail notes cookbook;
-      };
-      extraAppsEnable = true;
-    };
-    collabora-online = {
-      enable = true;
-      settings = {
-        server_name = "collabora.diekvoss.net";
-        storage.wopi = {
-          "@allow" = true;
-          host = [ "nextcloud.diekvoss.net" ];
-        };
-        net = {
-          listen = "0.0.0.0";
-          post_allow.host = ["::"];
-        };
-        ssl = {
-          enable = false;
-          termination = true;
-        };
-      };
-    };
-  };
-  sops.secrets = {
-    nextcloud_admin_password.owner = "nextcloud";
-    #   "discord_bot.env" = {
-    #     owner = "discord_bot";
-    #   };
-    #   cloud_ssh_ed25519 = {
-    #     owner = "discord_bot";
-    #   };
+    nextcloud.enable = true;
   };
   containerPresets = {
     podman.enable = true;

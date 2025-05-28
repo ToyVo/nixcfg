@@ -11,7 +11,6 @@ in
 {
   config = lib.mkIf cfg.enable {
     programs.vscode = {
-      package = if pkgs.stdenv.isDarwin then pkgs.vscode else pkgs.vscode-fhs;
       profiles.default = {
         extensions =
           with pkgs.vscode-extensions;
