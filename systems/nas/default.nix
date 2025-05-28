@@ -296,7 +296,7 @@
         };
       };
     };
-    nextcloud = {
+    nextcloud = rec {
       enable = true;
       hostName = "nextcloud.diekvoss.net";
       config = {
@@ -306,6 +306,10 @@
       };
       database.createLocally = true;
       package = pkgs.nextcloud31;
+      extraApps = {
+        inherit (package.packages.apps) news contacts calendar tasks richdocuments bookmarks music mail notes cookbook;
+      };
+      extraAppsEnable = true;
     };
   };
   sops.secrets = {
