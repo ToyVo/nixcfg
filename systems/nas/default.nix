@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }:
 {
@@ -16,13 +17,13 @@
         443
         8080
         7080
-      ];
+      ] ++ lib.mkIf config.services.collabora-online.enable [ config.services.collabora-online.port ];
       allowedUDPPorts = [
         53
         443
         8080
         7080
-      ];
+      ] ++ lib.mkIf config.services.collabora-online.enable [ config.services.collabora-online.port ];
     };
   };
   boot = {
@@ -310,6 +311,24 @@
         inherit (config.services.nextcloud.package.packages.apps) news contacts calendar tasks richdocuments bookmarks music mail notes cookbook;
       };
       extraAppsEnable = true;
+    };
+    collabora-online = {
+      enable = true;
+      settings = {
+        server_name = "collabora.diekvoss.net";
+        storage.wopi = {
+          "@allow" = true;
+          host = [ "nextcloud.diekvoss.net" ];
+        };
+        net = {
+          listen = "0.0.0.0";
+          post_allow.host = ["::"];
+        };
+        ssl = {
+          enable = false;
+          termination = true;
+        };
+      };
     };
   };
   sops.secrets = {

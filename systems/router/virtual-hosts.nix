@@ -110,6 +110,12 @@
           reverse_proxy http://10.1.0.3:80
         '';
       };
+      "https://collabora.diekvoss.net:443" = {
+        useACMEHost = "diekvoss.net";
+        extraConfig = ''
+          reverse_proxy http://10.1.0.3:9980
+        '';
+      };
     };
   };
 }
