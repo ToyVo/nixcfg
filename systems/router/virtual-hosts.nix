@@ -50,24 +50,24 @@
           };
         };
       in {
-        "https://adguard.diekvoss.net:443" = proxy "http://10.1.0.1:3000/";
-        "https://canon.diekvoss.net:443" = proxy "https://10.1.0.4:443/";
-        "https://omada.diekvoss.net:443" = proxy "http://10.1.0.2:80/";
-        "https://diekvoss.net:443" = proxy "http://10.1.0.3:8082/";
-        "https://ollama.diekvoss.net:443" = proxy "http://10.1.0.11:11434/";
-        "https://chat.diekvoss.net:443" = proxy "http://10.1.0.3:11435/";
-        "https://toyvo.dev:443" = proxy "http://10.1.0.3:8080/" // {
+        "adguard.diekvoss.net" = proxy "http://10.1.0.1:3000/";
+        "canon.diekvoss.net" = proxy "https://10.1.0.4:443/";
+        "omada.diekvoss.net" = proxy "http://10.1.0.2:80/";
+        "diekvoss.net" = proxy "http://10.1.0.3:8082/";
+        "ollama.diekvoss.net" = proxy "http://10.1.0.11:11434/";
+        "chat.diekvoss.net" = proxy "http://10.1.0.3:11435/";
+        "toyvo.dev" = proxy "http://10.1.0.3:8080/" // {
           useACMEHost = lib.mkForce "toyvo.dev";
         };
-        "https://jellyfin.diekvoss.net:443" = proxy "http://10.1.0.3:8096/";
-        "https://portainer.diekvoss.net:443" = proxy "https://10.1.0.3:9443/";
-        "https://coder.diekvoss.net:443" = proxy "http://10.1.0.3:7080/";
-        "https://cockpit.diekvoss.net:443" = proxy "https://10.1.0.3:9090/";
-        "https://deluge.diekvoss.net:443" = proxy "http://10.1.0.3:8112/";
-        "https://immich.diekvoss.net:443" = proxy "http://10.1.0.3:2283/";
-        "https://home-assistant.diekvoss.net:443" = proxy "http://10.1.0.3:8123/";
-        "https://nextcloud.diekvoss.net:443" = proxy "http://10.1.0.3:80/";
-        "https://collabora.diekvoss.net:443" = base {
+        "jellyfin.diekvoss.net" = proxy "http://10.1.0.3:8096/";
+        "portainer.diekvoss.net" = proxy "https://10.1.0.3:9443/";
+        "coder.diekvoss.net" = proxy "http://10.1.0.3:7080/";
+        "cockpit.diekvoss.net" = proxy "https://10.1.0.3:9090/";
+        "deluge.diekvoss.net" = proxy "http://10.1.0.3:8112/";
+        "immich.diekvoss.net" = proxy "http://10.1.0.3:2283/";
+        "home-assistant.diekvoss.net" = proxy "http://10.1.0.3:8123/";
+        "nextcloud.diekvoss.net" = proxy "http://10.1.0.3:80/";
+        "collabora.diekvoss.net" = base {
           # static files
           "^~ /browser" = {
             proxyPass = "http://10.1.0.3:9980/";
