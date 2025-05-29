@@ -90,5 +90,6 @@
         "GitHub.copilot-chat",
         "GitHub.vscode-pull-request-github"
     ],
-    "terminal.integrated.enableMultiLinePasteWarning": "never"
+    "terminal.integrated.enableMultiLinePasteWarning": "never",
+    "github.copilot.nextEditSuggestions.enabled": true
 }

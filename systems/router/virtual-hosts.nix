@@ -50,53 +50,53 @@
           };
         };
       in {
-        "adguard.diekvoss.net" = proxy "http://10.1.0.1:3000/";
-        "canon.diekvoss.net" = proxy "https://10.1.0.4:443/";
-        "omada.diekvoss.net" = proxy "http://10.1.0.2:80/";
-        "diekvoss.net" = proxy "http://10.1.0.3:8082/";
-        "ollama.diekvoss.net" = proxy "http://10.1.0.11:11434/";
-        "chat.diekvoss.net" = proxy "http://10.1.0.3:11435/";
-        "toyvo.dev" = proxy "http://10.1.0.3:8080/" // {
+        "adguard.diekvoss.net" = proxy "http://10.1.0.1:3000";
+        "canon.diekvoss.net" = proxy "https://10.1.0.4:443";
+        "omada.diekvoss.net" = proxy "http://10.1.0.2:80";
+        "diekvoss.net" = proxy "http://10.1.0.3:8082";
+        "ollama.diekvoss.net" = proxy "http://10.1.0.11:11434";
+        "chat.diekvoss.net" = proxy "http://10.1.0.3:11435";
+        "toyvo.dev" = proxy "http://10.1.0.3:8080" // {
           useACMEHost = lib.mkForce "toyvo.dev";
         };
-        "jellyfin.diekvoss.net" = proxy "http://10.1.0.3:8096/";
-        "portainer.diekvoss.net" = proxy "https://10.1.0.3:9443/";
-        "coder.diekvoss.net" = proxy "http://10.1.0.3:7080/";
-        "cockpit.diekvoss.net" = proxy "https://10.1.0.3:9090/";
-        "deluge.diekvoss.net" = proxy "http://10.1.0.3:8112/";
-        "immich.diekvoss.net" = proxy "http://10.1.0.3:2283/";
-        "home-assistant.diekvoss.net" = proxy "http://10.1.0.3:8123/";
-        "nextcloud.diekvoss.net" = proxy "http://10.1.0.3:80/";
+        "jellyfin.diekvoss.net" = proxy "http://10.1.0.3:8096";
+        "portainer.diekvoss.net" = proxy "https://10.1.0.3:9443";
+        "coder.diekvoss.net" = proxy "http://10.1.0.3:7080";
+        "cockpit.diekvoss.net" = proxy "https://10.1.0.3:9090";
+        "deluge.diekvoss.net" = proxy "http://10.1.0.3:8112";
+        "immich.diekvoss.net" = proxy "http://10.1.0.3:2283";
+        "home-assistant.diekvoss.net" = proxy "http://10.1.0.3:8123";
+        "nextcloud.diekvoss.net" = proxy "http://10.1.0.3:80";
         "collabora.diekvoss.net" = base {
           # static files
           "^~ /browser" = {
-            proxyPass = "http://10.1.0.3:9980/";
+            proxyPass = "http://10.1.0.3:9980";
           };
 
           # WOPI discovery URL
           "^~ /hosting/discovery" = {
-            proxyPass = "http://10.1.0.3:9980/";
+            proxyPass = "http://10.1.0.3:9980";
           };
 
           # Capabilities
           "^~ /hosting/capabilities" = {
-            proxyPass = "http://10.1.0.3:9980/";
+            proxyPass = "http://10.1.0.3:9980";
           };
 
           # main websocket
           "~ ^/cool/(.*)/ws$" = {
-            proxyPass = "http://10.1.0.3:9980/";
+            proxyPass = "http://10.1.0.3:9980";
             proxyWebsockets = true;
           };
 
           # download, presentation and image upload
           "~ ^/(c|l)ool" = {
-            proxyPass = "http://10.1.0.3:9980/";
+            proxyPass = "http://10.1.0.3:9980";
           };
 
           # Admin Console websocket
           "^~ /cool/adminws" = {
-            proxyPass = "http://10.1.0.3:9980/";
+            proxyPass = "http://10.1.0.3:9980";
             proxyWebsockets = true;
           };
         };
