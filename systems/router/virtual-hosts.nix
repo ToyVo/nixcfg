@@ -46,7 +46,7 @@
         proxy = destination: base {
           "/" = {
             proxyPass = destination;
-            extraConfig = lib.mkIf (lib.strings.hasPrefix "https" destination) "proxy_ssl_verify off";
+            extraConfig = lib.mkIf (lib.strings.hasPrefix "https" destination) "proxy_ssl_verify off;";
           };
         };
       in {
