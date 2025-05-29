@@ -93,10 +93,10 @@
         proxy_cookie_path / "/; secure; HttpOnly; SameSite=strict";
       '';
 
-      virtualHosts."https://mc.toyvo.dev:443" = {
+      virtualHosts."mc.toyvo.dev" = {
         useACMEHost = "mc.toyvo.dev";
         forceSSL = true;
-        locations."/".proxyPass = "http://0.0.0.0:7878/";
+        locations."/".proxyPass = "http://0.0.0.0:7878";
       };
     };
     remote-builds.server.enable = true;
