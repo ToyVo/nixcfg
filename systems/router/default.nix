@@ -218,12 +218,13 @@
       };
     };
     nginx.enable = true;
-    cloudflare-ddns = {
+    cloudflare-dyndns = {
       enable = true;
-      records = [
+      domains = [
         "toyvo.dev"
       ];
-      tokenFile = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
+      proxied = true;
+      apiTokenFile = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
     };
   };
   security.acme =

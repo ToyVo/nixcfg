@@ -15,7 +15,6 @@
   nixpkgs,
   nixpkgs-esp-dev,
   nur,
-  nur-packages,
   nvf,
   plasma-manager,
   rust-overlay,
@@ -70,7 +69,6 @@ let
         nh.nixosModules.default
         nix-index-database.nixosModules.nix-index
         nixpkgs.nixosModules.notDetected
-        nur-packages.nixosModules.cloudflare-ddns
         nur.modules.nixos.default
         self.nixosModules.default
         sops-nix.nixosModules.sops
