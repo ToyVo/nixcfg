@@ -46,6 +46,7 @@
         proxy = destination: base {
           "/" = {
             proxyPass = destination;
+            proxyWebsockets = true;
             extraConfig = lib.mkIf (lib.strings.hasPrefix "https" destination) "proxy_ssl_verify off;";
           };
         };
