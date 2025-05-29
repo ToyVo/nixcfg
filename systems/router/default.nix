@@ -217,10 +217,7 @@
         ];
       };
     };
-    caddy = {
-      enable = true;
-      email = "collin@diekvoss.com";
-    };
+    nginx.enable = true;
     cloudflare-ddns = {
       enable = true;
       records = [
@@ -245,6 +242,7 @@
     in
     {
       acceptTerms = true;
+      defaults.email = cloudflare.email;
       certs = {
         "diekvoss.net" = cloudflare // {
           extraDomainNames = [ "*.diekvoss.net" ];
@@ -256,5 +254,4 @@
     cloudflare_global_api_key = { };
     cloudflare_w_dns_r_zone_token = { };
   };
-  users.users.caddy.extraGroups = [ "acme" ];
 }

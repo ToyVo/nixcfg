@@ -57,16 +57,46 @@
       enable = true;
       settings.PasswordAuthentication = false;
     };
-    caddy = {
+    nginx = {
       enable = true;
-      email = "collin@diekvoss.com";
-      virtualHosts = {
-        "https://mc.toyvo.dev:443" = {
-          useACMEHost = "mc.toyvo.dev";
-          extraConfig = ''
-            reverse_proxy http://0.0.0.0:7878
-          '';
-        };
+      # Use recommended settings
+      recommendedGzipSettings = true;
+      recommendedOptimisation = true;
+      recommendedProxySettings = true;
+      recommendedTlsSettings = true;
+      proxyTimeout = "36000s";
+
+      # Only allow PFS-enabled ciphers with AES256
+      sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
+
+      appendHttpConfig = ''
+        # Add HSTS header with preloading to HTTPS requests.
+        # Adding this header to HTTP requests is discouraged
+        map $scheme $hsts_header {
+            https   "max-age=31536000; includeSubdomains; preload";
+        }
+        add_header Strict-Transport-Security $hsts_header;
+
+        # Enable CSP for your services.
+        #add_header Content-Security-Policy "script-src 'self'; object-src 'none'; base-uri 'none';" always;
+
+        # Minimize information leaked to other domains
+        add_header 'Referrer-Policy' 'origin-when-cross-origin';
+
+        # Disable embedding as a frame
+        add_header X-Frame-Options DENY;
+
+        # Prevent injection of code in other mime types (XSS Attacks)
+        add_header X-Content-Type-Options nosniff;
+
+        # This might create errors
+        proxy_cookie_path / "/; secure; HttpOnly; SameSite=strict";
+      '';
+
+      virtualHosts."https://mc.toyvo.dev:443" = {
+        useACMEHost = "mc.toyvo.dev";
+        forceSSL = true;
+        locations."/".proxyPass = "http://0.0.0.0:7878/";
       };
     };
     remote-builds.server.enable = true;
@@ -108,7 +138,6 @@
     "discord_bot.env" = { };
     "rclone.conf" = { };
   };
-  users.users.caddy.extraGroups = [ "acme" ];
   userPresets.toyvo.enable = true;
   disko.devices.disk.sda = {
     type = "disk";
