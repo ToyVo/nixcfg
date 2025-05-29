@@ -138,6 +138,7 @@
     "discord_bot.env" = { };
     "rclone.conf" = { };
   };
+  users.users.nginx.extraGroups = [ "acme" ];
   userPresets.toyvo.enable = true;
   disko.devices.disk.sda = {
     type = "disk";

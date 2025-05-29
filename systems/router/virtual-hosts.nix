@@ -1,6 +1,7 @@
 { config, lib, ... }:
 {
   config = lib.mkIf config.services.nginx.enable {
+    users.users.nginx.extraGroups = [ "acme" ];
     services.nginx = {
       # Use recommended settings
       recommendedGzipSettings = true;
