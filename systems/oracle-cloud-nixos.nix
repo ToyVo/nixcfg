@@ -61,6 +61,8 @@
       enable = true;
       # Use recommended settings
       recommendedGzipSettings = true;
+      recommendedZstdSettings = true;
+      recommendedBrotliSettings = true;
       recommendedOptimisation = true;
       recommendedProxySettings = true;
       recommendedTlsSettings = true;

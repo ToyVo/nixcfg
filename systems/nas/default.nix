@@ -112,7 +112,6 @@
         };
         http = {
           base_url = "https://home-assistant.diekvoss.net";
-          use_x_forwarded_for = true;
           trusted_proxies = [ "10.1.0.1" ];
         };
       };
