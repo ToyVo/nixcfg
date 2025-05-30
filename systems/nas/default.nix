@@ -110,10 +110,7 @@
           unit_system = "metric";
           temperature_unit = "F";
         };
-        http = {
-          base_url = "https://home-assistant.diekvoss.net";
-          trusted_proxies = [ "10.1.0.1" ];
-        };
+        http.trusted_proxies = [ "10.1.0.1" ];
       };
     };
     nextcloud.enable = true;
