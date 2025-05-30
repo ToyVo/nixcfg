@@ -76,6 +76,7 @@
         "lidarr.diekvoss.net" = proxy "http://10.1.0.3:8686";
         "prowlarr.diekvoss.net" = proxy "http://10.1.0.3:9696";
         "readarr.diekvoss.net" = proxy "http://10.1.0.3:8787";
+        "flaresolverr.diekvoss.net" = proxy "http://10.1.0.3:8191";
         "collabora.diekvoss.net" = base {
           # static files
           "^~ /browser" = {
