@@ -68,6 +68,12 @@
         "immich.diekvoss.net" = proxy "http://10.1.0.3:2283";
         "home-assistant.diekvoss.net" = proxy "http://10.1.0.3:8123";
         "nextcloud.diekvoss.net" = proxy "http://10.1.0.3:80";
+        "bazarr.diekvoss.net" = proxy "http://10.1.0.3:6767";
+        "radarr.diekvoss.net" = proxy "http://10.1.0.3:7878";
+        "sonarr.diekvoss.net" = proxy "http://10.1.0.3:8989";
+        "lidarr.diekvoss.net" = proxy "http://10.1.0.3:8686";
+        "prowlarr.diekvoss.net" = proxy "http://10.1.0.3:9696";
+        "readarr.diekvoss.net" = proxy "http://10.1.0.3:8787";
         "collabora.diekvoss.net" = base {
           # static files
           "^~ /browser" = {

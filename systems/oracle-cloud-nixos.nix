@@ -96,7 +96,10 @@
       virtualHosts."mc.toyvo.dev" = {
         useACMEHost = "mc.toyvo.dev";
         forceSSL = true;
-        locations."/".proxyPass = "http://0.0.0.0:7878";
+        locations."/" = {
+          proxyPass = "http://0.0.0.0:7878";
+          proxyWebsockets = true;
+        };
       };
     };
     remote-builds.server.enable = true;

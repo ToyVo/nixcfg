@@ -99,6 +99,46 @@
           ];
         }
         {
+          "Servarr" = [
+            {
+              "Bazarr" = {
+                href = "https://bazarr.diekvoss.net/";
+                description = "Bazarr, subtitle management";
+              };
+            }
+            {
+              "Radarr" = {
+                href = "https://radarr.diekvoss.net/";
+                description = "Radarr, movie management";
+              };
+            }
+            {
+              "Sonarr" = {
+                href = "https://sonarr.diekvoss.net/";
+                description = "Sonarr, TV show management";
+              };
+            }
+            {
+              "Lidarr" = {
+                href = "https://lidarr.diekvoss.net/";
+                description = "Lidarr, music management";
+              };
+            }
+            {
+              "Prowlarr" = {
+                href = "https://prowlarr.diekvoss.net/";
+                description = "Prowlarr, indexer management";
+              };
+            }
+            {
+              "Readarr" = {
+                href = "https://readarr.diekvoss.net/";
+                description = "Readarr, ebook/audiobook management";
+              };
+            }
+          ];
+        }
+        {
           "To Sort" = [
             {
               "Jellyfin" = {
@@ -146,6 +186,18 @@
               "Nextcloud" = {
                 href = "https://nextcloud.diekvoss.net/";
                 description = "Nextcloud";
+              };
+            }
+            {
+              "Collabora Server" = {
+                href = "https://collabora.diekvoss.net/";
+                description = "Nextcloud Office";
+              };
+            }
+            {
+              "Minecraft" = {
+                href = "https://mc.toyvo.dev";
+                description = "Minecraft server";
               };
             }
           ];
