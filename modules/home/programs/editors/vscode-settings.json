@@ -78,6 +78,11 @@
           "nixfmt"
         ]
       }
+    },
+    "nix": {
+      "flake": {
+        "autoArchive": true
+      }
     }
   },
   "notebook.formatOnSave.enabled": true,

@@ -76,9 +76,7 @@ let
           home-manager = {
             extraSpecialArgs = specialArgs;
             sharedModules =
-              homeModules
-              ++ sharedHomeModules
-              ++ [ plasma-manager.homeManagerModules.plasma-manager ];
+              homeModules ++ sharedHomeModules ++ [ plasma-manager.homeManagerModules.plasma-manager ];
           };
         }
       ] ++ nixosModules;
