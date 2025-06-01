@@ -52,7 +52,7 @@ let
       homeManagerModules ? [ ],
     }:
     let
-      pkgs = self.lib.import_nixpkgs { inherit system; };
+      pkgs = self.lib.import_nixpkgs system;
       specialArgs = inputs // {
         inherit system;
       };
@@ -90,7 +90,7 @@ let
       homeManagerModules ? [ ],
     }:
     let
-      pkgs = self.lib.import_nixpkgs { inherit system; };
+      pkgs = self.lib.import_nixpkgs system;
       specialArgs = inputs // {
         inherit system;
       };
@@ -123,7 +123,7 @@ let
       homeManagerModules ? [ ],
     }:
     let
-      pkgs = self.lib.import_nixpkgs { inherit system; };
+      pkgs = self.lib.import_nixpkgs system;
       specialArgs = inputs // {
         inherit system;
       };

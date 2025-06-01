@@ -5,7 +5,7 @@
   ...
 }:
 let
-  cfg = config.services.xserver.desktopManager.gnome;
+  cfg = config.services.desktopManager.gnome;
 in
 {
   config = lib.mkIf cfg.enable {
