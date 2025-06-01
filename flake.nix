@@ -93,7 +93,7 @@
         };
         nixosModules.default = ./modules/nixos;
         darwinModules.default = ./modules/darwin;
-        homeManagerModules.default = ./modules/home;
+        homeModules.default = ./modules/home;
         nixosConfigurations = configurations.nixosConfigurations;
         darwinConfigurations = configurations.darwinConfigurations;
         homeConfigurations = configurations.homeConfigurations;

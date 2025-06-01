@@ -23,13 +23,13 @@
   ...
 }@inputs:
 let
-  sharedHomeManagerModules = [
+  sharedHomeModules = [
     catppuccin.homeModules.catppuccin
     nh.homeManagerModules.default
     nix-index-database.hmModules.nix-index
     nur.modules.homeManager.default
     nvf.homeManagerModules.nvf
-    self.homeManagerModules.default
+    self.homeModules.default
     sops-nix.homeManagerModules.sops
     {
       nixpkgs = {
@@ -49,7 +49,7 @@ let
     {
       system,
       nixosModules ? [ ],
-      homeManagerModules ? [ ],
+      homeModules ? [ ],
     }:
     let
       pkgs = self.lib.import_nixpkgs system;
@@ -76,8 +76,8 @@ let
           home-manager = {
             extraSpecialArgs = specialArgs;
             sharedModules =
-              homeManagerModules
-              ++ sharedHomeManagerModules
+              homeModules
+              ++ sharedHomeModules
               ++ [ plasma-manager.homeManagerModules.plasma-manager ];
           };
         }
@@ -87,7 +87,7 @@ let
     {
       system,
       darwinModules ? [ ],
-      homeManagerModules ? [ ],
+      homeModules ? [ ],
     }:
     let
       pkgs = self.lib.import_nixpkgs system;
@@ -111,8 +111,8 @@ let
               [
                 mac-app-util.homeManagerModules.default
               ]
-              ++ homeManagerModules
-              ++ sharedHomeManagerModules;
+              ++ homeModules
+              ++ sharedHomeModules;
           };
         }
       ] ++ darwinModules;
@@ -120,7 +120,7 @@ let
   homeConfiguration =
     {
       system,
-      homeManagerModules ? [ ],
+      homeModules ? [ ],
     }:
     let
       pkgs = self.lib.import_nixpkgs system;
@@ -131,7 +131,7 @@ let
     home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       extraSpecialArgs = specialArgs;
-      modules = homeManagerModules ++ sharedHomeManagerModules;
+      modules = homeModules ++ sharedHomeModules;
     };
 in
 {
@@ -156,7 +156,7 @@ in
   homeConfigurations = {
     "deck@steamdeck" = homeConfiguration {
       system = "x86_64-linux";
-      homeManagerModules = [
+      homeModules = [
         ./steamdeck.nix
         plasma-manager.homeManagerModules.plasma-manager
       ];
