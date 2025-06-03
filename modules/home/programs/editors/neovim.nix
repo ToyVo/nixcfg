@@ -2,6 +2,7 @@
   config,
   lib,
   system,
+  pkgs,
   ...
 }:
 let
@@ -22,6 +23,25 @@ in
           lightbulb.enable = true;
           trouble.enable = true;
           lspSignature.enable = true;
+          lspconfig.sources.nix-lsp = lib.mkForce ''
+            lspconfig.nil_ls.setup{
+              capabilities = capabilities,
+              on_attach = default_on_attach,
+              cmd = {"${lib.getExe pkgs.nil}"},
+              settings = {
+                ["nil"] = {
+                  formatting = {
+                    command = {"${lib.getExe pkgs.nixfmt-rfc-style}"},
+                  },
+                },
+                ["nix"] = {
+                  flake = {
+                    autoArchive = true,
+                  },
+                },
+              },
+            }
+          '';
         };
         theme = {
           enable = true;

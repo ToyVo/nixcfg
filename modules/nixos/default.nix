@@ -47,7 +47,6 @@ in
     };
     console.useXkbConfig = true;
     programs = {
-      bash.blesh.enable = true;
       ssh.startAgent = false;
       gnupg.agent = {
         enable = true;
@@ -76,7 +75,6 @@ in
             mesa
             pcre
             pcre-cpp
-            pcre16
             pcre2
             python3
             stdenv.cc.cc

@@ -33,8 +33,6 @@
         # bash-completion are installed into systemPackages, there are bash completions that collide.
         # I've taken the text from nixpkgs instead of nix-darwin, they are the same except for the if statement.
         interactiveShellInit = ''
-          [ -n "$PS1" ] && source ${pkgs.blesh}/share/blesh/ble.sh
-
           # Check whether we're running a version of Bash that has support for
           # programmable completion. If we do, enable all modules installed in
           # the system and user profile in obsolete /etc/bash_completion.d/
