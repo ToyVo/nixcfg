@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }:
 {
@@ -141,7 +142,17 @@
     flaresolverr = {
       enable = true;
       openFirewall = true;
-      package = pkgs.toyvo.byparr;
+      package = pkgs.flaresolverr.overrideAttrs (
+        finalAttrs: previousAttrs: rec {
+          version = "3.3.24";
+          src = pkgs.fetchFromGitHub {
+            owner = "FlareSolverr";
+            repo = "FlareSolverr";
+            rev = "v${version}";
+            hash = "sha256-BIV5+yLTgVQJtxi/F9FwtZ4pYcE2vGHmEgwigMtqwD8=";
+          };
+        }
+      );
     };
   };
   containerPresets = {
