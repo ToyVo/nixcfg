@@ -80,6 +80,7 @@
           overlays = [
             (import rust-overlay)
             nixpkgs-esp-dev.overlays.default
+            nur-packages.overlays.default
           ];
           config = {
             allowUnfree = true;

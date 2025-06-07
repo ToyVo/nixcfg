@@ -15,6 +15,7 @@
   nixpkgs,
   nixpkgs-esp-dev,
   nur,
+  nur-packages,
   nvf,
   plasma-manager,
   rust-overlay,
@@ -36,6 +37,7 @@ let
         overlays = [
           (import rust-overlay)
           nixpkgs-esp-dev.overlays.default
+          nur-packages.overlays.default
         ];
         config = {
           allowUnfree = true;

@@ -141,7 +141,7 @@
     flaresolverr = {
       enable = true;
       openFirewall = true;
-      package = pkgs.nur.repos.toyvo.byparr;
+      package = pkgs.toyvo.byparr;
     };
   };
   containerPresets = {
