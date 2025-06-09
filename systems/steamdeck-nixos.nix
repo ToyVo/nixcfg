@@ -28,7 +28,6 @@
   services = {
     openssh.enable = true;
     desktopManager.cosmic.enable = true;
-    # remote-builds.client.enable = true;
     displayManager.cosmic-greeter.enable = lib.mkForce false;
     kanata.enable = lib.mkForce false;
   };

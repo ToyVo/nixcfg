@@ -104,7 +104,6 @@
         };
       };
     };
-    remote-builds.server.enable = true;
     minecraft-server = {
       enable = true;
       eula = true;

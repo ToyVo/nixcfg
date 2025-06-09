@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   ...
 }:
 {
@@ -8,6 +7,7 @@
     ./samba.nix
     ./nextcloud.nix
     ./homepage.nix
+    ./starr.nix
   ];
 
   hardware.cpu.amd.updateMicrocode = true;
@@ -58,7 +58,6 @@
       enable = true;
       settings.PasswordAuthentication = false;
     };
-    remote-builds.server.enable = true;
     ollama.enable = true;
     spice-vdagentd.enable = true;
     # discord_bot = {
@@ -90,13 +89,6 @@
       allowed-origins = [ "https://cockpit.diekvoss.net" ];
     };
     homepage-dashboard.enable = true;
-    deluge = {
-      enable = true;
-      web = {
-        enable = true;
-        openFirewall = true;
-      };
-    };
     immich = {
       enable = true;
       openFirewall = true;
@@ -115,45 +107,6 @@
       };
     };
     nextcloud.enable = true;
-    sonarr = {
-      enable = true;
-      openFirewall = true;
-    };
-    lidarr = {
-      enable = true;
-      openFirewall = true;
-    };
-    radarr = {
-      enable = true;
-      openFirewall = true;
-    };
-    bazarr = {
-      enable = true;
-      openFirewall = true;
-    };
-    prowlarr = {
-      enable = true;
-      openFirewall = true;
-    };
-    readarr = {
-      enable = true;
-      openFirewall = true;
-    };
-    flaresolverr = {
-      enable = true;
-      openFirewall = true;
-      package = pkgs.flaresolverr.overrideAttrs (
-        finalAttrs: previousAttrs: rec {
-          version = "3.3.24";
-          src = pkgs.fetchFromGitHub {
-            owner = "FlareSolverr";
-            repo = "FlareSolverr";
-            rev = "v${version}";
-            hash = "sha256-BIV5+yLTgVQJtxi/F9FwtZ4pYcE2vGHmEgwigMtqwD8=";
-          };
-        }
-      );
-    };
   };
   containerPresets = {
     podman.enable = true;
