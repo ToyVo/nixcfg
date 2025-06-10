@@ -6,9 +6,9 @@
     gui.enable = true;
   };
   userPresets.toyvo.enable = true;
-  homebrew.casks = [
-    {
-      name = "ollama";
-    }
-  ];
+  services.ollama = {
+    enable = true;
+    models = "/var/lib/ollama/models";
+    host = "0.0.0.0";
+  };
 }

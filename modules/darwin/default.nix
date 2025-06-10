@@ -8,6 +8,7 @@
   imports = [
     ../os
     ./podman.nix
+    ./ollama.nix
   ];
   config = lib.mkIf config.profiles.defaults.enable {
     security.pam.services.sudo_local.touchIdAuth = true;

@@ -8,11 +8,17 @@
     "edit_prediction_provider": "zed"
   },
   "agent": {
+    "default_profile": "minimal",
     "default_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-4o"
+      "provider": "ollama",
+      "model": "llama3.2:latest"
     },
     "version": "2"
+  },
+  "language_models": {
+    "ollama": {
+      "api_url": "https://ollama.diekvoss.net"
+    }
   },
   "theme": "Catppuccin Frappé",
   "ui_font_size": 16,

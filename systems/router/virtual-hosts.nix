@@ -62,6 +62,7 @@
           "omada.diekvoss.net" = proxy "http://10.1.0.2:80";
           "diekvoss.net" = proxy "http://10.1.0.3:8082";
           "ollama.diekvoss.net" = proxy "http://10.1.0.11:11434";
+          "slollama.diekvoss.net" = proxy "http://10.1.0.3:11434";
           "chat.diekvoss.net" = proxy "http://10.1.0.3:11435";
           "toyvo.dev" = proxy "http://10.1.0.3:8080" // {
             useACMEHost = lib.mkForce "toyvo.dev";
