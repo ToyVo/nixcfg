@@ -67,7 +67,7 @@ in
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [ cfg.package ];
-    launchd.agents.ollama = {
+    launchd.user.agents.ollama = {
       path = [ config.environment.systemPath ];
       serviceConfig = {
         KeepAlive = true;

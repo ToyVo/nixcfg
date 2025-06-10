@@ -1,5 +1,6 @@
 {
   pkgs,
+  config,
   ...
 }:
 {
@@ -107,6 +108,11 @@
       };
     };
     nextcloud.enable = true;
+    nix-serve = {
+      enable = true;
+      openFirewall = true;
+      secretKeyFile = config.sops.secrets."cache-priv-key.pem".path;
+    };
   };
   containerPresets = {
     podman.enable = true;
@@ -156,5 +162,9 @@
     suspend.enable = false;
     hibernate.enable = false;
     hybrid-sleep.enable = false;
+  };
+  sops.secrets."cache-priv-key.pem" = {
+    owner = "nix-serve";
+    group = "nix-serve";
   };
 }
