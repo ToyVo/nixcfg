@@ -6,47 +6,46 @@
 }:
 let
   cfg = config.services.ollama;
+  primaryUser = config.users.users.${config.system.primaryUser};
 in
 {
-
   options = {
     services.ollama = {
-      enable = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "Whether to enable the Ollama Daemon.";
+      enable = lib.mkEnableOption "Whether to enable the Ollama Daemon.";
+      package = lib.mkPackageOption pkgs "ollama" { };
+      home = lib.mkOption {
+        type = lib.types.str;
+        default = "/var/lib/ollama";
+        example = "/home/foo";
+        description = ''
+          The home directory that the ollama service is started in.
+        '';
       };
-
-      package = lib.mkOption {
-        type = lib.types.path;
-        default = pkgs.ollama;
-        description = "This option specifies the ollama package to use.";
-      };
-
       host = lib.mkOption {
         type = lib.types.str;
         default = "127.0.0.1";
+        example = "[::]";
         description = ''
           The host address which the ollama server HTTP interface listens to.
         '';
       };
-
       port = lib.mkOption {
         type = lib.types.port;
         default = 11434;
+        example = 11111;
         description = ''
           Which port the ollama server listens to.
         '';
       };
-
       models = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
+        type = lib.types.str;
+        default = "${cfg.home}/models";
+        defaultText = "\${config.services.ollama.home}/models";
+        example = "/path/to/ollama/models";
         description = ''
           The directory that the ollama service will read models from and download new models to.
         '';
       };
-
       environmentVariables = lib.mkOption {
         type = lib.types.attrsOf lib.types.str;
         default = { };
@@ -67,24 +66,25 @@ in
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [ cfg.package ];
-    launchd.user.agents.ollama = {
-      path = [ config.environment.systemPath ];
+    launchd.daemons.ollama = {
       serviceConfig = {
-        KeepAlive = true;
-        RunAtLoad = true;
+        Label = "ollama";
+        StandardOutPath = "${primaryUser.home}/.ollama/launchd.stdout.log";
+        StandardErrorPath = "${primaryUser.home}/.ollama/launchd.stderr.log";
+        EnvironmentVariables = cfg.environmentVariables // {
+          HOME = cfg.home;
+          OLLAMA_MODELS = cfg.models;
+          OLLAMA_HOST = "${cfg.host}:${toString cfg.port}";
+        };
         ProgramArguments = [
-          "${cfg.package}/bin/ollama"
+          "${lib.getExe cfg.package}"
           "serve"
         ];
-
-        EnvironmentVariables =
-          cfg.environmentVariables
-          // {
-            OLLAMA_HOST = "${cfg.host}:${toString cfg.port}";
-          }
-          // (lib.optionalAttrs (cfg.models != null) {
-            OLLAMA_MODELS = cfg.models;
-          });
+        UserName = config.system.primaryUser;
+        GroupName = "staff";
+        ExitTimeOut = 30;
+        Disabled = false;
+        KeepAlive = true;
       };
     };
   };

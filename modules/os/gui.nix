@@ -8,7 +8,10 @@ let
   cfg = config.profiles;
 in
 {
-  options.profiles.gui.enable = lib.mkEnableOption "GUI Applications";
+  options.profiles.gui.enable = lib.mkEnableOption "GUI Applications" // {
+    # macs will always have GUI enabled
+    default = pkgs.stdenv.isDarwin;
+  };
 
   config = lib.mkIf cfg.gui.enable {
     fonts.packages = with pkgs; [
