@@ -7,43 +7,43 @@
       web = {
         enable = true;
         openFirewall = true;
-        port = config.homelab.${config.networking.hostname}.services.deluge.port;
+        port = config.homelab.${config.networking.hostName}.services.deluge.port;
       };
     };
     sonarr = {
       enable = true;
       openFirewall = true;
-      settings.server.port = config.homelab.${config.networking.hostname}.services.sonarr.port;
+      settings.server.port = config.homelab.${config.networking.hostName}.services.sonarr.port;
     };
     lidarr = {
       enable = true;
       openFirewall = true;
-      settings.server.port = config.homelab.${config.networking.hostname}.services.lidarr.port;
+      settings.server.port = config.homelab.${config.networking.hostName}.services.lidarr.port;
     };
     radarr = {
       enable = true;
       openFirewall = true;
-      settings.server.port = config.homelab.${config.networking.hostname}.services.radarr.port;
+      settings.server.port = config.homelab.${config.networking.hostName}.services.radarr.port;
     };
     bazarr = {
       enable = true;
       openFirewall = true;
-      listenPort = config.homelab.${config.networking.hostname}.services.bazarr.port;
+      listenPort = config.homelab.${config.networking.hostName}.services.bazarr.port;
     };
     prowlarr = {
       enable = true;
       openFirewall = true;
-      settings.server.port = config.homelab.${config.networking.hostname}.services.prowlarr.port;
+      settings.server.port = config.homelab.${config.networking.hostName}.services.prowlarr.port;
     };
     readarr = {
       enable = true;
       openFirewall = true;
-      settings.server.port = config.homelab.${config.networking.hostname}.services.readarr.port;
+      settings.server.port = config.homelab.${config.networking.hostName}.services.readarr.port;
     };
     flaresolverr = {
       enable = true;
       openFirewall = true;
-      port = config.homelab.${config.networking.hostname}.services.flaresolverr.port;
+      port = config.homelab.${config.networking.hostName}.services.flaresolverr.port;
       package = pkgs.flaresolverr.overrideAttrs (
         finalAttrs: previousAttrs: rec {
           version = "3.3.24";

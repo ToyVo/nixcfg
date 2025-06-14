@@ -38,7 +38,7 @@
       };
       collabora-online = {
         enable = true;
-        port = config.homelab.${config.networking.hostname}.services.collabora.port;
+        port = config.homelab.${config.networking.hostName}.services.collabora.port;
         settings = {
           server_name = "collabora.diekvoss.net";
           storage.wopi = {

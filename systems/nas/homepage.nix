@@ -3,7 +3,7 @@
   config = lib.mkIf config.services.homepage-dashboard.enable {
     services.homepage-dashboard = {
       openFirewall = true;
-      listenPort = config.homelab.${config.networking.hostname}.services.homepage.port;
+      listenPort = config.homelab.${config.networking.hostName}.services.homepage.port;
       allowedHosts = "nas.internal:8082,diekvoss.net";
       bookmarks = [
         {

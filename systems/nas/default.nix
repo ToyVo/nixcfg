@@ -61,7 +61,7 @@
     };
     ollama = {
       enable = true;
-      port = config.homelab.${config.networking.hostname}.services.ollama.port;
+      port = config.homelab.${config.networking.hostName}.services.ollama.port;
     };
     spice-vdagentd.enable = true;
     # discord_bot = {
@@ -74,7 +74,7 @@
     #     TSHOCK_REST_BASE_URL = "https://mc.toyvo.dev";
     #     IP = "0.0.0.0";
     #     ADDR = "0.0.0.0";
-    #     PORT = config.homelab.${config.networking.hostname}.services.discord_bot.port;
+    #     PORT = config.homelab.${config.networking.hostName}.services.discord_bot.port;
     #     BASE_URL = "https://toyvo.dev";
     #     CLOUD_SSH_HOST = "discord_bot@mc.toyvo.dev";
     #     CLOUD_SSH_KEY = config.sops.secrets.cloud_ssh_ed25519.path;
@@ -87,12 +87,12 @@
     coder = {
       enable = true;
       accessUrl = "https://coder.diekvoss.net";
-      listenAddress = "0.0.0.0:${config.homelab.${config.networking.hostname}.services.coder.port}";
+      listenAddress = "0.0.0.0:${config.homelab.${config.networking.hostName}.services.coder.port}";
     };
     cockpit = {
       enable = true;
       openFirewall = true;
-      port = config.homelab.${config.networking.hostname}.services.cockpit.port;
+      port = config.homelab.${config.networking.hostName}.services.cockpit.port;
       allowed-origins = [ "https://cockpit.diekvoss.net" ];
     };
     homepage-dashboard.enable = true;
@@ -100,7 +100,7 @@
       enable = true;
       openFirewall = true;
       host = "0.0.0.0";
-      port = config.homelab.${config.networking.hostname}.services.immich.port;
+      port = config.homelab.${config.networking.hostName}.services.immich.port;
     };
     home-assistant = {
       enable = true;
@@ -113,7 +113,7 @@
         };
         http = {
           trusted_proxies = [ config.homelab.router.ip ];
-          server_port = config.homelab.${config.networking.hostname}.services.home-assistant.port;
+          server_port = config.homelab.${config.networking.hostName}.services.home-assistant.port;
         };
       };
     };
@@ -122,7 +122,7 @@
       enable = true;
       openFirewall = true;
       secretKeyFile = config.sops.secrets."cache-priv-key.pem".path;
-      port = config.homelab.${config.networking.hostname}.services.nix-serve.port;
+      port = config.homelab.${config.networking.hostName}.services.nix-serve.port;
     };
   };
   containerPresets = {
@@ -131,12 +131,12 @@
       enable = true;
       openFirewall = true;
       dataDir = "/mnt/POOL/open-webui";
-      port = config.homelab.${config.networking.hostname}.services.open-webui.port;
+      port = config.homelab.${config.networking.hostName}.services.open-webui.port;
     };
     portainer = {
       enable = true;
       openFirewall = true;
-      sport = config.homelab.${config.networking.hostname}.services.portainer.port;
+      sport = config.homelab.${config.networking.hostName}.services.portainer.port;
     };
   };
   fileSystems."/mnt/POOL" = {

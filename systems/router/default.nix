@@ -121,7 +121,7 @@
     };
     adguardhome = {
       enable = true;
-      port = config.homelab.${config.networking.hostname}.services.adguard.port;
+      port = config.homelab.${config.networking.hostName}.services.adguard.port;
       mutableSettings = false;
       settings = {
         dns = {

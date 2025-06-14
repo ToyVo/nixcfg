@@ -8,6 +8,6 @@
   services.ollama = {
     enable = true;
     host = "0.0.0.0";
-    port = config.homelab.${config.networking.hostname}.services.ollama.port;
+    port = config.homelab.${config.networking.hostName}.services.ollama.port;
   };
 }
