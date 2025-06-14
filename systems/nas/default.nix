@@ -175,8 +175,5 @@
     hibernate.enable = false;
     hybrid-sleep.enable = false;
   };
-  sops.secrets."cache-priv-key.pem" = {
-    owner = "nix-serve";
-    group = "nix-serve";
-  };
+  sops.secrets."cache-priv-key.pem" = {};
 }
