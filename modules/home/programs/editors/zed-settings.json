@@ -8,7 +8,7 @@
     "edit_prediction_provider": "zed"
   },
   "agent": {
-    "default_profile": "minimal",
+    "default_profile": "write",
     "default_model": {
       "provider": "copilot_chat",
       "model": "gpt-4o"

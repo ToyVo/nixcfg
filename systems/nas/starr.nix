@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   sops.secrets."starr-protonvpn-US-IL-503.conf" = { };
   services = {
@@ -7,35 +7,43 @@
       web = {
         enable = true;
         openFirewall = true;
+        port = config.homelab.${config.networking.hostname}.services.deluge.port;
       };
     };
     sonarr = {
       enable = true;
       openFirewall = true;
+      settings.server.port = config.homelab.${config.networking.hostname}.services.sonarr.port;
     };
     lidarr = {
       enable = true;
       openFirewall = true;
+      settings.server.port = config.homelab.${config.networking.hostname}.services.lidarr.port;
     };
     radarr = {
       enable = true;
       openFirewall = true;
+      settings.server.port = config.homelab.${config.networking.hostname}.services.radarr.port;
     };
     bazarr = {
       enable = true;
       openFirewall = true;
+      listenPort = config.homelab.${config.networking.hostname}.services.bazarr.port;
     };
     prowlarr = {
       enable = true;
       openFirewall = true;
+      settings.server.port = config.homelab.${config.networking.hostname}.services.prowlarr.port;
     };
     readarr = {
       enable = true;
       openFirewall = true;
+      settings.server.port = config.homelab.${config.networking.hostname}.services.readarr.port;
     };
     flaresolverr = {
       enable = true;
       openFirewall = true;
+      port = config.homelab.${config.networking.hostname}.services.flaresolverr.port;
       package = pkgs.flaresolverr.overrideAttrs (
         finalAttrs: previousAttrs: rec {
           version = "3.3.24";

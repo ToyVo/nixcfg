@@ -59,7 +59,10 @@
       enable = true;
       settings.PasswordAuthentication = false;
     };
-    ollama.enable = true;
+    ollama = {
+      enable = true;
+      port = config.homelab.${config.networking.hostname}.services.ollama.port;
+    };
     spice-vdagentd.enable = true;
     # discord_bot = {
     #   enable = true;
@@ -70,6 +73,8 @@
     #     TERRARIA_ADDRESS = "mc.toyvo.dev:7777";
     #     TSHOCK_REST_BASE_URL = "https://mc.toyvo.dev";
     #     IP = "0.0.0.0";
+    #     ADDR = "0.0.0.0";
+    #     PORT = config.homelab.${config.networking.hostname}.services.discord_bot.port;
     #     BASE_URL = "https://toyvo.dev";
     #     CLOUD_SSH_HOST = "discord_bot@mc.toyvo.dev";
     #     CLOUD_SSH_KEY = config.sops.secrets.cloud_ssh_ed25519.path;
@@ -82,11 +87,12 @@
     coder = {
       enable = true;
       accessUrl = "https://coder.diekvoss.net";
-      listenAddress = "0.0.0.0:7080";
+      listenAddress = "0.0.0.0:${config.homelab.${config.networking.hostname}.services.coder.port}";
     };
     cockpit = {
       enable = true;
       openFirewall = true;
+      port = config.homelab.${config.networking.hostname}.services.cockpit.port;
       allowed-origins = [ "https://cockpit.diekvoss.net" ];
     };
     homepage-dashboard.enable = true;
@@ -94,6 +100,7 @@
       enable = true;
       openFirewall = true;
       host = "0.0.0.0";
+      port = config.homelab.${config.networking.hostname}.services.immich.port;
     };
     home-assistant = {
       enable = true;
@@ -104,7 +111,10 @@
           unit_system = "metric";
           temperature_unit = "F";
         };
-        http.trusted_proxies = [ "10.1.0.1" ];
+        http = {
+          trusted_proxies = [ config.homelab.router.ip ];
+          server_port = config.homelab.${config.networking.hostname}.services.home-assistant.port;
+        };
       };
     };
     nextcloud.enable = true;
@@ -112,6 +122,7 @@
       enable = true;
       openFirewall = true;
       secretKeyFile = config.sops.secrets."cache-priv-key.pem".path;
+      port = config.homelab.${config.networking.hostname}.services.nix-serve.port;
     };
   };
   containerPresets = {
@@ -120,11 +131,12 @@
       enable = true;
       openFirewall = true;
       dataDir = "/mnt/POOL/open-webui";
-      port = 11435;
+      port = config.homelab.${config.networking.hostname}.services.open-webui.port;
     };
     portainer = {
       enable = true;
       openFirewall = true;
+      sport = config.homelab.${config.networking.hostname}.services.portainer.port;
     };
   };
   fileSystems."/mnt/POOL" = {

@@ -16,7 +16,14 @@ in
     ./console.nix
   ];
 
-  options.profiles.defaults.enable = lib.mkEnableOption "Enable Defaults";
+  options = {
+    profiles.defaults.enable = lib.mkEnableOption "Enable Defaults";
+    homelab = lib.mkOption {
+      description = "Reference to centralized exposed services within the homelab";
+      type = lib.types.anything;
+      default = import ../../homelab.nix;
+    };
+  };
 
   config = lib.mkIf cfg.defaults.enable {
     home-manager = {

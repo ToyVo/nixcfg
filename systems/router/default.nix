@@ -121,6 +121,7 @@
     };
     adguardhome = {
       enable = true;
+      port = config.homelab.${config.networking.hostname}.services.adguard.port;
       mutableSettings = false;
       settings = {
         dns = {
@@ -153,68 +154,14 @@
             id = 4;
           }
         ];
-        filtering.rewrites = [
+        filtering.rewrites = lib.mapAttrsToList (
+          hostname:
+          { ip, ... }:
           {
-            domain = "router.internal";
-            answer = "10.1.0.1";
+            domain = "${lib.toLower hostname}.internal";
+            answer = ip;
           }
-          {
-            domain = "omada.internal";
-            answer = "10.1.0.2";
-          }
-          {
-            domain = "nas.internal";
-            answer = "10.1.0.3";
-          }
-          {
-            domain = "cannon-printer.internal";
-            answer = "10.1.0.4";
-          }
-          {
-            domain = "hp-printer.internal";
-            answer = "10.1.0.5";
-          }
-          {
-            domain = "protectli.internal";
-            answer = "10.1.0.6";
-          }
-          {
-            domain = "rpi4b8a.internal";
-            answer = "10.1.0.7";
-          }
-          {
-            domain = "rpi4b8b.internal";
-            answer = "10.1.0.8";
-          }
-          {
-            domain = "rpi4b8c.internal";
-            answer = "10.1.0.9";
-          }
-          {
-            domain = "rpi4b4a.internal";
-            answer = "10.1.0.10";
-          }
-          {
-            domain = "macmini-m1.internal";
-            answer = "10.1.0.11";
-          }
-          {
-            domain = "macmini-intel.internal";
-            answer = "10.1.0.12";
-          }
-          {
-            domain = "windows.internal";
-            answer = "10.1.0.13";
-          }
-          {
-            domain = "steamdeck-nixos.internal";
-            answer = "10.1.0.14";
-          }
-          {
-            domain = "oracle.internal";
-            answer = "164.152.108.113";
-          }
-        ];
+        ) config.homelab;
       };
     };
     nginx.enable = true;

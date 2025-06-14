@@ -64,7 +64,7 @@ in
           };
           matchBlocks."oracle" = identityConfig // {
             user = "toyvo";
-            hostname = "164.152.108.113";
+            hostname = "oracle.internal";
           };
           matchBlocks."router" = identityConfig // {
             user = "toyvo";
@@ -86,9 +86,9 @@ in
             user = "toyvo";
             hostname = "macmini-intel.internal";
           };
-          matchBlocks."windows" = identityConfig // {
+          matchBlocks."windows-desktop" = identityConfig // {
             user = "toyvo";
-            hostname = "windows.internal";
+            hostname = "windows-desktop.internal";
           };
           matchBlocks."steamdeck-nixos" = identityConfig // {
             user = "toyvo";

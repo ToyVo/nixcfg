@@ -1,3 +1,4 @@
+{ config, lib, ... }:
 {
   services.kea.dhcp4 = {
     enable = true;
@@ -33,105 +34,28 @@
               data = "10.1.0.1";
             }
           ];
-          reservations = [
-            {
-              hostname = "omada";
-              ip-address = "10.1.0.2";
-              # Ethernet
-              hw-address = "10:27:f5:bd:04:97";
-            }
-            {
-              hostname = "nas";
-              # if changing ip, change A record on cloudflare
-              ip-address = "10.1.0.3";
-              # Ethernet
-              hw-address = "30:9c:23:ad:79:43";
-            }
-            {
-              hostname = "canon-printer";
-              ip-address = "10.1.0.4";
-              # Wifi
-              hw-address = "c4:ac:59:a6:63:33";
-            }
-            {
-              hostname = "hp-printer";
-              ip-address = "10.1.0.5";
-              # Wifi
-              hw-address = "7c:4d:8f:91:d3:9f";
-            }
-            {
-              hostname = "protectli";
-              ip-address = "10.1.0.6";
-              # Ethernet
-              hw-address = "00:e0:67:2c:15:f0";
-              # other ethernet ports
-              # hw-address = "00:e0:67:2c:15:f1";
-              # hw-address = "00:e0:67:2c:15:f2";
-              # hw-address = "00:e0:67:2c:15:f3";
-            }
-            {
-              hostname = "rpi4b8a";
-              ip-address = "10.1.0.7";
-              # Ethernet
-              # hw-address = "e4:5f:01:ad:81:3b";
-              # Wifi
-              hw-address = "e4:5f:01:ad:81:3d";
-            }
-            {
-              hostname = "rpi4b8b";
-              ip-address = "10.1.0.8";
-              # Ethernet
-              # hw-address = "e4:5f:01:ad:a0:da";
-              # Wifi
-              hw-address = "e4:5f:01:ad:a0:db";
-            }
-            {
-              hostname = "rpi4b8c";
-              ip-address = "10.1.0.9";
-              # Ethernet
-              # hw-address = "e4:5f:01:ad:9f:27";
-              # Wifi
-              hw-address = "e4:5f:01:ad:9f:28";
-            }
-            {
-              hostname = "rpi4b4a";
-              ip-address = "10.1.0.10";
-              # Ethernet
-              # hw-address = "dc:a6:32:09:ce:24";
-              # Wifi
-              hw-address = "dc:a6:32:09:ce:25";
-            }
-            # Mac Mini m1 (Ethernet)
-            {
-              hostname = "MacMini-M1";
-              ip-address = "10.1.0.11";
-              # Ethernet
-              hw-address = "4c:20:b8:de:e4:01";
-              # Wifi
-              # hw-address = "4c:20:b8:df:d1:5b";
-            }
-            {
-              hostname = "MacMini-Intel";
-              ip-address = "10.1.0.12";
-              # Ethernet
-              hw-address = "14:c2:13:ed:e6:ed";
-              # Wifi
-              # hw-address = "f0:18:98:8a:6d:ee";
-            }
-            {
-              hostname = "windows-desktop";
-              ip-address = "10.1.0.13";
-              # Ethernet
-              hw-address = "70:85:c2:8a:53:5b";
-              # Wifi
-              # hw-address = "b4:6b:fc:6c:b5:4c";
-            }
-            {
-              hostname = "steamdeck-nixos";
-              ip-address = "10.1.0.14";
-              hw-address = "b4:8c:9d:b9:5d:fb";
-            }
-          ];
+          reservations =
+            lib.mapAttrsToList
+              (
+                hostname:
+                { ip, mac, ... }:
+                {
+                  inherit hostname;
+                  ip-address = ip;
+                  hw-address = mac;
+                }
+              )
+              (
+                lib.filterAttrs (
+                  hostname:
+                  { ip, ... }:
+                  let
+                    inSubnet = lib.hasPrefix "10.1.0." ip;
+                    hostAddress = lib.strings.toInt (lib.last (lib.splitString "." ip));
+                  in
+                  inSubnet && hostAddress > 1 && hostAddress < 64
+                ) config.homelab
+              );
         }
       ];
       option-data = [

@@ -40,83 +40,72 @@
       '';
 
       virtualHosts =
-        let
-          base = locations: {
-            useACMEHost = "diekvoss.net";
-            forceSSL = true;
-            inherit locations;
-          };
-          proxy =
-            destination:
-            base {
-              "/" = {
-                proxyPass = destination;
+        lib.recursiveUpdate
+          (lib.concatMapAttrs (
+            hostname:
+            {
+              ip,
+              services ? { },
+              ...
+            }:
+            (lib.mapAttrs' (
+              service:
+              {
+                port,
+                subdomain ? service,
+                domain ? "diekvoss.net",
+                selfSigned ? false,
+                ...
+              }:
+              {
+                name = if subdomain == "@" then domain else "${subdomain}.${domain}";
+                value = {
+                  useACMEHost = domain;
+                  forceSSL = true;
+                  locations."/" = {
+                    proxyPass = "http${if selfSigned then "s" else ""}://${ip}:${toString port}";
+                    proxyWebsockets = true;
+                    extraConfig = lib.mkIf selfSigned "proxy_ssl_verify off;";
+                  };
+                };
+              }
+            ) services)
+          ) config.homelab)
+          {
+            "collabora.diekvoss.net".locations = {
+              # static files
+              "^~ /browser" = {
+                proxyPass = "http://${config.homelab.nas.ip}:${toString config.homelab.nas.services.collabora.port}";
+              };
+
+              # WOPI discovery URL
+              "^~ /hosting/discovery" = {
+                proxyPass = "http://${config.homelab.nas.ip}:${toString config.homelab.nas.services.collabora.port}";
+              };
+
+              # Capabilities
+              "^~ /hosting/capabilities" = {
+                proxyPass = "http://${config.homelab.nas.ip}:${toString config.homelab.nas.services.collabora.port}";
+              };
+
+              # main websocket
+              "~ ^/cool/(.*)/ws$" = {
+                proxyPass = "http://${config.homelab.nas.ip}:${toString config.homelab.nas.services.collabora.port}";
                 proxyWebsockets = true;
-                extraConfig = lib.mkIf (lib.strings.hasPrefix "https" destination) "proxy_ssl_verify off;";
+              };
+
+              # download, presentation and image upload
+              "~ ^/(c|l)ool" = {
+                proxyPass = "http://${config.homelab.nas.ip}:${toString config.homelab.nas.services.collabora.port}";
+              };
+
+              # Admin Console websocket
+              "^~ /cool/adminws" = {
+                proxyPass = "http://${config.homelab.nas.ip}:${toString config.homelab.nas.services.collabora.port}";
+                proxyWebsockets = true;
               };
             };
-        in
-        {
-          "adguard.diekvoss.net" = proxy "http://10.1.0.1:3000";
-          "canon.diekvoss.net" = proxy "https://10.1.0.4:443";
-          "omada.diekvoss.net" = proxy "http://10.1.0.2:80";
-          "diekvoss.net" = proxy "http://10.1.0.3:8082";
-          "ollama.diekvoss.net" = proxy "http://10.1.0.11:11434";
-          "slollama.diekvoss.net" = proxy "http://10.1.0.3:11434";
-          "chat.diekvoss.net" = proxy "http://10.1.0.3:11435";
-          "toyvo.dev" = proxy "http://10.1.0.3:8080" // {
-            useACMEHost = lib.mkForce "toyvo.dev";
           };
-          "jellyfin.diekvoss.net" = proxy "http://10.1.0.3:8096";
-          "portainer.diekvoss.net" = proxy "https://10.1.0.3:9443";
-          "coder.diekvoss.net" = proxy "http://10.1.0.3:7080";
-          "cockpit.diekvoss.net" = proxy "https://10.1.0.3:9090";
-          "deluge.diekvoss.net" = proxy "http://10.1.0.3:8112";
-          "immich.diekvoss.net" = proxy "http://10.1.0.3:2283";
-          "home-assistant.diekvoss.net" = proxy "http://10.1.0.3:8123";
-          "nextcloud.diekvoss.net" = proxy "http://10.1.0.3:80";
-          "bazarr.diekvoss.net" = proxy "http://10.1.0.3:6767";
-          "radarr.diekvoss.net" = proxy "http://10.1.0.3:7878";
-          "sonarr.diekvoss.net" = proxy "http://10.1.0.3:8989";
-          "lidarr.diekvoss.net" = proxy "http://10.1.0.3:8686";
-          "prowlarr.diekvoss.net" = proxy "http://10.1.0.3:9696";
-          "readarr.diekvoss.net" = proxy "http://10.1.0.3:8787";
-          "flaresolverr.diekvoss.net" = proxy "http://10.1.0.3:8191";
-          "nixcache.diekvoss.net" = proxy "http://10.1.0.3:5000";
-          "collabora.diekvoss.net" = base {
-            # static files
-            "^~ /browser" = {
-              proxyPass = "http://10.1.0.3:9980";
-            };
-
-            # WOPI discovery URL
-            "^~ /hosting/discovery" = {
-              proxyPass = "http://10.1.0.3:9980";
-            };
-
-            # Capabilities
-            "^~ /hosting/capabilities" = {
-              proxyPass = "http://10.1.0.3:9980";
-            };
-
-            # main websocket
-            "~ ^/cool/(.*)/ws$" = {
-              proxyPass = "http://10.1.0.3:9980";
-              proxyWebsockets = true;
-            };
-
-            # download, presentation and image upload
-            "~ ^/(c|l)ool" = {
-              proxyPass = "http://10.1.0.3:9980";
-            };
-
-            # Admin Console websocket
-            "^~ /cool/adminws" = {
-              proxyPass = "http://10.1.0.3:9980";
-              proxyWebsockets = true;
-            };
-          };
-        };
     };
   };
 }
