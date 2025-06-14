@@ -87,7 +87,9 @@
     coder = {
       enable = true;
       accessUrl = "https://coder.diekvoss.net";
-      listenAddress = "0.0.0.0:${config.homelab.${config.networking.hostName}.services.coder.port}";
+      listenAddress = "0.0.0.0:${
+        toString config.homelab.${config.networking.hostName}.services.coder.port
+      }";
     };
     cockpit = {
       enable = true;
@@ -175,5 +177,5 @@
     hibernate.enable = false;
     hybrid-sleep.enable = false;
   };
-  sops.secrets."cache-priv-key.pem" = {};
+  sops.secrets."cache-priv-key.pem" = { };
 }
