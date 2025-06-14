@@ -127,7 +127,7 @@ in
       stateVersion = "25.11";
       autoUpgrade = {
         enable = true;
-        flake = "${config.users.users.${config.userPresets.toyvo.name}.home}/nixcfg";
+        flake = "github:ToyVo/nixcfg";
         persistent = true;
         allowReboot = true;
         rebootWindow = {
@@ -135,10 +135,6 @@ in
           upper = "05:00";
         };
         randomizedDelaySec = "45min";
-        flags = [
-          "--update-input"
-          "nixpkgs"
-        ];
       };
     };
     security.rtkit.enable = true;
