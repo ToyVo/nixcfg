@@ -29,6 +29,7 @@
         bind-address-ipv4 = "10.2.0.2";
         rpc-bind-address = "0.0.0.0";
         rpc-whitelist = "127.0.0.1,10.1.0.*";
+        rpc-host-whitelist = "${config.networking.hostName}.internal,transmission.diekvoss.net";
       };
     };
     sonarr = {
