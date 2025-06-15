@@ -1,35 +1,21 @@
 { pkgs, config, ... }:
 {
-  sops.secrets = {
-    "starr-protonvpn-US-IL-503.conf" = { };
-    "starr-protonvpn-US-IL-503.privatekey" = { };
-    deluge-auth.owner = "deluge";
-  };
+  sops.secrets."starr-protonvpn-US-IL-503.conf" = { };
   services = {
-    deluge = {
-      enable = true;
-      declarative = true;
-      config = {
-        enabled_plugins = [ "Label" ];
-        outgoing_interface = "wg0";
-      };
-      authFile = config.sops.secrets.deluge-auth.path;
-      web = {
-        enable = true;
-        openFirewall = true;
-        port = config.homelab.${config.networking.hostName}.services.deluge.port;
-      };
-    };
     transmission = {
       enable = true;
       package = pkgs.transmission_4;
       openRPCPort = true;
       settings = {
         rpc-port = config.homelab.${config.networking.hostName}.services.transmission.port;
+        # ip address from vpn conf file
         bind-address-ipv4 = "10.2.0.2";
+        # expose web interface on all interfaces
         rpc-bind-address = "0.0.0.0";
+        # allow connections from localhost and lan
         rpc-whitelist = "127.0.0.1,10.1.0.*";
-        rpc-host-whitelist = "${config.networking.hostName}.internal,transmission.diekvoss.net";
+        # allow connecting from domain names
+        rpc-host-whitelist = "localhost,${config.networking.hostName}.internal,transmission.diekvoss.net";
       };
     };
     sonarr = {
@@ -80,7 +66,14 @@
     };
   };
   networking = {
-    firewall.allowedUDPPorts = [ 51820 ];
+    firewall = {
+      # number comes from conf file
+      allowedUDPPorts = [ 51820 ];
+      interfaces.wg0 = {
+        allowedTCPPorts = [ config.services.transmission.settings.peer-port ];
+        allowedUDPPorts = [ config.services.transmission.settings.peer-port ];
+      };
+    };
     wg-quick.interfaces.wg0.configFile = config.sops.secrets."starr-protonvpn-US-IL-503.conf".path;
   };
 }

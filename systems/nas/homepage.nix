@@ -172,9 +172,9 @@
               };
             }
             {
-              "Deluge" = {
-                href = "https://deluge.diekvoss.net/";
-                description = "Deluge";
+              "Transmission" = {
+                href = "https://transmission.diekvoss.net/";
+                description = "Transmission";
               };
             }
             {

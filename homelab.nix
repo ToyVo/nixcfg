@@ -51,7 +51,6 @@
         port = 9090;
         selfSigned = true;
       };
-      deluge.port = 8112;
       transmission.port = 9091;
       immich.port = 2283;
       home-assistant.port = 8123;
