@@ -15,27 +15,32 @@
         # allow connections from localhost and lan
         rpc-whitelist = "127.0.0.1,10.1.0.*";
         # allow connecting from domain names
-        rpc-host-whitelist = "localhost,${config.networking.hostName}.internal,transmission.diekvoss.net";
+        rpc-host-whitelist = "${config.networking.hostName}.internal,transmission.diekvoss.net";
       };
+      group = "multimedia";
     };
     sonarr = {
       enable = true;
       openFirewall = true;
+      group = "multimedia";
       settings.server.port = config.homelab.${config.networking.hostName}.services.sonarr.port;
     };
     lidarr = {
       enable = true;
       openFirewall = true;
+      group = "multimedia";
       settings.server.port = config.homelab.${config.networking.hostName}.services.lidarr.port;
     };
     radarr = {
       enable = true;
       openFirewall = true;
+      group = "multimedia";
       settings.server.port = config.homelab.${config.networking.hostName}.services.radarr.port;
     };
     bazarr = {
       enable = true;
       openFirewall = true;
+      group = "multimedia";
       listenPort = config.homelab.${config.networking.hostName}.services.bazarr.port;
     };
     prowlarr = {
@@ -46,6 +51,7 @@
     readarr = {
       enable = true;
       openFirewall = true;
+      group = "multimedia";
       settings.server.port = config.homelab.${config.networking.hostName}.services.readarr.port;
     };
     flaresolverr = {
@@ -65,6 +71,7 @@
       );
     };
   };
+  users.groups.multimedia = { };
   networking = {
     firewall = {
       # number comes from conf file
