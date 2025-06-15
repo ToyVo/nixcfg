@@ -20,6 +20,11 @@
         port = config.homelab.${config.networking.hostName}.services.deluge.port;
       };
     };
+    transmission = {
+      enable = true;
+      package = pkgs.transmission_4;
+      settings.bind-address-ipv4 = "10.2.0.2";
+    };
     sonarr = {
       enable = true;
       openFirewall = true;

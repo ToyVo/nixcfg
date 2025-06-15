@@ -21,17 +21,17 @@ creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini|nix)$
     key_groups:
       - age:
-          - *server_hp_envy
-          - *server_hp_zbook
-          - *server_mac_mini_m1
-          - *server_mac_mini_intel
-          - *server_macbook_pro
-          - *server_macbook_pro_nixos
-          - *server_nas
-          - *server_oracle_cloud_nixos
-          - *server_pinebook_pro
-          - *server_protectli
-          - *server_router
-          - *server_steamdeck_nixos
-          - *server_thinkpad
-          - *server_work
+          - *server_hp_envy 
+          - *server_hp_zbook 
+          - *server_mac_mini_m1 
+          - *server_mac_mini_intel 
+          - *server_macbook_pro 
+          - *server_macbook_pro_nixos 
+          - *server_nas 
+          - *server_oracle_cloud_nixos 
+          - *server_pinebook_pro 
+          - *server_protectli 
+          - *server_router 
+          - *server_steamdeck_nixos 
+          - *server_thinkpad 
+          - *server_work 
