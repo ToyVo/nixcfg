@@ -28,7 +28,7 @@
         rpc-port = config.homelab.${config.networking.hostName}.services.transmission.port;
         bind-address-ipv4 = "10.2.0.2";
         rpc-bind-address = "0.0.0.0";
-        rpc-whitelist = "127.0.0.1,10.1.0.1";
+        rpc-whitelist = "127.0.0.1,10.1.0.*";
       };
     };
     sonarr = {
