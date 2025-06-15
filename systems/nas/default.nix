@@ -52,6 +52,11 @@
   };
   userPresets.chloe.enable = true;
   userPresets.toyvo.enable = true;
+  users.groups.multimedia.members = [
+    "chloe"
+    "toyvo"
+    "nextcloud"
+  ];
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;
   services = {
@@ -83,6 +88,7 @@
     jellyfin = {
       enable = true;
       openFirewall = true;
+      group = "multimedia";
     };
     coder = {
       enable = true;
@@ -103,6 +109,7 @@
       openFirewall = true;
       host = "0.0.0.0";
       port = config.homelab.${config.networking.hostName}.services.immich.port;
+      group = "multimedia";
     };
     home-assistant = {
       enable = true;

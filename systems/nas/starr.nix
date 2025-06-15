@@ -71,7 +71,6 @@
       );
     };
   };
-  users.groups.multimedia = { };
   networking = {
     firewall = {
       # number comes from conf file
