@@ -16,6 +16,7 @@
         rpc-whitelist = "127.0.0.1,10.1.0.*";
         # allow connecting from domain names
         rpc-host-whitelist = "${config.networking.hostName}.internal,transmission.diekvoss.net";
+        download-dir = "/mnt/POOL/transmission/Downloads";
       };
       group = "multimedia";
     };
