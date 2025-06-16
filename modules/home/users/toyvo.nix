@@ -12,8 +12,12 @@ in
 
   config = lib.mkIf cfg.toyvo.enable {
     home.sessionVariables.EDITOR = "nvim";
+    xdg.configFile."beets/config.yaml".source = lib.mkForce (
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixcfg/modules/home/programs/beets-config.yaml"
+    );
     programs = {
       alacritty.enable = cfg.gui.enable;
+      beets.enable = true;
       direnv = {
         enable = true;
         nix-direnv.enable = true;
