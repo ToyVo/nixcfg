@@ -15,7 +15,7 @@ in
     programs = {
       alacritty.enable = cfg.gui.enable;
       beets = {
-        enable = true;
+        enable = pkgs.stdenv.isLinux;
         settings = {
           directory = "/mnt/POOL/Public/Music";
           plugins = [ "fetchart" ];
