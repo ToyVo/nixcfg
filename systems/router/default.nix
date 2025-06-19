@@ -164,7 +164,7 @@
         ) config.homelab;
       };
     };
-    nginx.enable = true;
+    caddy.enable = true;
     cloudflare-dyndns = {
       enable = true;
       domains = [
