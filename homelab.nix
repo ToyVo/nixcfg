@@ -15,7 +15,10 @@
     # Ethernet
     mac = "10:27:f5:bd:04:97";
     # port not configured through nix
-    services.omada.port = 80;
+    services.omada = {
+      port = 443;
+      selfSigned = true;
+    };
   };
   nas = {
     ip = "10.1.0.3";
