@@ -12,12 +12,48 @@ in
 
   config = lib.mkIf cfg.toyvo.enable {
     home.sessionVariables.EDITOR = "nvim";
-    xdg.configFile."beets/config.yaml".source = lib.mkForce (
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixcfg/modules/home/programs/beets-config.yaml"
-    );
     programs = {
       alacritty.enable = cfg.gui.enable;
-      beets.enable = true;
+      beets = {
+        enable = true;
+        settings = {
+          directory = "/mnt/POOL/Public/Music";
+          plugins = [ "fetchart" ];
+          import.move = true;
+          replace = {
+            # Replace bad characters with _
+            # prohibited in many filesystem paths
+            "[<>:\\?\\*\\|]" = "_";
+            # double quotation mark "
+            "\\\"" = "_";
+            # path separators: \ or /
+            "[\\\\/]" = "_";
+            # starting and closing periods
+            "^\\." = "_";
+            "\\.$" = "_";
+            # control characters
+            "[\\x00-\\x1f]" = "_";
+            # dash at the start of a filename (causes command line ambiguity)
+            "^-" = "_";
+            # Replace bad characters with nothing
+            # starting and closing whitespace
+            "\\s+$" = "";
+            "^\\s+" = "";
+            # Use simple single quote
+            "’" = "'";
+          };
+          paths = {
+            default = "$albumartist/$album%aunique{} ($year)/$track - $albumartist - $album - $title";
+            singleton = "Non-Album/$artist/$title";
+            comp = "Compilations/$album%aunique{}/$track $title";
+          };
+          match.preferred = {
+            countries = [ "US" ];
+            media = [ "Digital Media|File" ];
+            original_year = true;
+          };
+        };
+      };
       direnv = {
         enable = true;
         nix-direnv.enable = true;
