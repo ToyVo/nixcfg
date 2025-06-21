@@ -188,9 +188,6 @@
     ip = "10.1.0.5";
     # Wifi
     mac = "7c:4d:8f:91:d3:9f";
-    option-data = [
-      { name = "domain-name"; code = 15; value = "hp-printer.diekvoss.net"; }
-    ];
     services.hp-printer = {
       # port not configured through nix
       port = 443;

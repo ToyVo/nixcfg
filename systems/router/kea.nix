@@ -38,9 +38,9 @@
             lib.mapAttrsToList
               (
                 hostname:
-                { ip, mac, option-data ? [], ... }:
+                { ip, mac, ... }:
                 {
-                  inherit hostname option-data;
+                  inherit hostname;
                   ip-address = ip;
                   hw-address = mac;
                 }
