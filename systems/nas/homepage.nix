@@ -52,174 +52,35 @@
       #     ];
       #   }
       # ];
-      services = [
-        {
-          Networking = [
-            {
-              "Adguard Home" = {
-                href = "https://adguard.diekvoss.net/";
-                description = "Adguard Home, DNS adblocker";
-              };
+      services = lib.mapAttrsToList (category: services: { "${category}" = services; }) (
+        lib.foldl' (
+          acc: hostname:
+          let
+            services = config.homelab.${hostname}.services or { };
+          in
+          lib.foldl' (
+            accInner: service:
+            let
+              displayName = services.${service}.displayName or service;
+              subdomain = services.${service}.subdomain or service;
+              domain = services.${service}.domain or "diekvoss.net";
+              category = services.${service}.category or "TODO";
+              description = services.${service}.description or "TODO";
+              href = if subdomain == "@" then "https://${domain}" else "https://${subdomain}.${domain}";
+            in
+            accInner
+            // {
+              ${category} = (accInner.${category} or [ ]) ++ [
+                {
+                  "${displayName}" = {
+                    inherit href description;
+                  };
+                }
+              ];
             }
-            {
-              Omada = {
-                href = "https://omada.diekvoss.net/";
-                description = "Omada cloud controller UI";
-              };
-            }
-          ];
-        }
-        {
-          Printers = [
-            {
-              Cannon = {
-                href = "https://canon.diekvoss.net/";
-                description = "Cannon printer UI";
-              };
-            }
-          ];
-        }
-        {
-          APIs = [
-            {
-              Ollama = {
-                href = "https://ollama.diekvoss.net/";
-                description = "Ollama API";
-              };
-            }
-          ];
-        }
-        {
-          AI = [
-            {
-              "Open WebUI" = {
-                href = "https://chat.diekvoss.net/";
-                description = "Chat with LLMs";
-              };
-            }
-          ];
-        }
-        {
-          "Servarr" = [
-            {
-              "Bazarr" = {
-                href = "https://bazarr.diekvoss.net/";
-                description = "Bazarr, subtitle management";
-              };
-            }
-            {
-              "Radarr" = {
-                href = "https://radarr.diekvoss.net/";
-                description = "Radarr, movie management";
-              };
-            }
-            {
-              "Sonarr" = {
-                href = "https://sonarr.diekvoss.net/";
-                description = "Sonarr, TV show management";
-              };
-            }
-            {
-              "Lidarr" = {
-                href = "https://lidarr.diekvoss.net/";
-                description = "Lidarr, music management";
-              };
-            }
-            {
-              "Prowlarr" = {
-                href = "https://prowlarr.diekvoss.net/";
-                description = "Prowlarr, indexer management";
-              };
-            }
-            {
-              "Readarr" = {
-                href = "https://readarr.diekvoss.net/";
-                description = "Readarr, ebook/audiobook management";
-              };
-            }
-          ];
-        }
-        {
-          "To Sort" = [
-            {
-              "Jellyfin" = {
-                href = "https://jellyfin.diekvoss.net/";
-                description = "Jellyfin";
-              };
-            }
-            {
-              "Cockpit" = {
-                href = "https://cockpit.diekvoss.net/";
-                description = "Cockpit";
-              };
-            }
-            {
-              "Coder" = {
-                href = "https://coder.diekvoss.net/";
-                description = "Coder";
-              };
-            }
-            {
-              "Portainer" = {
-                href = "https://portainer.diekvoss.net/";
-                description = "Portainer";
-              };
-            }
-            {
-              "Immich" = {
-                href = "https://immich.diekvoss.net/";
-                description = "Immich";
-              };
-            }
-            {
-              "Transmission" = {
-                href = "https://transmission.diekvoss.net/";
-                description = "Transmission";
-              };
-            }
-            {
-              "Home Assistant" = {
-                href = "https://home-assistant.diekvoss.net/";
-                description = "Home Assistant";
-              };
-            }
-            {
-              "Nextcloud" = {
-                href = "https://nextcloud.diekvoss.net/";
-                description = "Nextcloud";
-              };
-            }
-            {
-              "Collabora Server" = {
-                href = "https://collabora.diekvoss.net/";
-                description = "Nextcloud Office";
-              };
-            }
-            {
-              "Minecraft" = {
-                href = "https://mc.toyvo.dev";
-                description = "Minecraft server";
-              };
-            }
-          ];
-        }
-        {
-          "Published Sites" = [
-            {
-              "Discord Bot UI" = {
-                href = "https://toyvo.dev/";
-                description = "Discord Bot";
-              };
-            }
-            {
-              "Minecraft modpack definition" = {
-                href = "https://packwiz.toyvo.dev/";
-                description = "Minecraft modpack definition";
-              };
-            }
-          ];
-        }
-      ];
+          ) acc (lib.attrNames services)
+        ) { } (lib.attrNames config.homelab)
+      );
       widgets = [
         {
           resources = {

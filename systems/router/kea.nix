@@ -48,7 +48,10 @@
               (
                 lib.filterAttrs (
                   hostname:
-                  { ip, ... }:
+                  {
+                    ip ? "",
+                    ...
+                  }:
                   let
                     inSubnet = lib.hasPrefix "10.1.0." ip;
                     hostAddress = lib.strings.toInt (lib.last (lib.splitString "." ip));

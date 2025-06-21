@@ -9,7 +9,6 @@ in
 {
   imports = [
     ./chat.nix
-    ./homepage.nix
     ./portainer.nix
   ];
 

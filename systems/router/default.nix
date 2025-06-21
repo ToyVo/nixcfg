@@ -161,7 +161,7 @@
             domain = "${lib.toLower hostname}.internal";
             answer = ip;
           }
-        ) config.homelab;
+        ) (lib.filterAttrs (hostname: hostConf: lib.hasAttr "ip" hostConf) config.homelab);
       };
     };
     caddy.enable = true;
