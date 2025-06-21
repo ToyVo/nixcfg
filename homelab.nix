@@ -277,7 +277,7 @@
     };
   };
   github.services = {
-    schedue1 = {
+    schedule1 = {
       domain = "toyvo.dev";
       category = "Games";
       displayName = "Schedule I Calculator";
