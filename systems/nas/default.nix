@@ -111,6 +111,8 @@
       port = config.homelab.${config.networking.hostName}.services.immich.port;
       group = "multimedia";
     };
+    # Immich doesn't support postgresql_17 yet;
+    postgresql.package = pkgs.postgresql_16;
     home-assistant = {
       enable = true;
       openFirewall = true;
