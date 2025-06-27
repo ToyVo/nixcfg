@@ -43,7 +43,7 @@ in
             "’" = "'";
           };
           paths = {
-            default = "$albumartist/$album%aunique{} ($year)/$track - $albumartist - $album - $title";
+            default = "$albumartist/$album%aunique{} ($year)/$albumartist - $album - $track - $title";
             singleton = "Non-Album/$artist/$title";
             comp = "Compilations/$album%aunique{}/$track $title";
           };
