@@ -38,6 +38,43 @@ let
           (import rust-overlay)
           nixpkgs-esp-dev.overlays.default
           nur-packages.overlays.default
+          (final: prev: {
+            vscode-extensions = prev.vscode-extensions // {
+              continue = prev.vscode-extensions.continue // {
+                continue = prev.vscode-extensions.continue.continue.overrideAttrs rec {
+                  version = "1.1.49";
+                  src =
+                    let
+                      sources = {
+                        "x86_64-linux" = {
+                          arch = "linux-x64";
+                          hash = "sha256-mm7/ITiXuSrFrAwRPVYYJ6l5b4ODyiCPv5H+WioDAWY=";
+                        };
+                        "x86_64-darwin" = {
+                          arch = "darwin-x64";
+                          hash = "sha256-ySFiSJ+6AgxECzekBIlPl2BhWJvt5Rf1DFqg6b/6PDs=";
+                        };
+                        "aarch64-linux" = {
+                          arch = "linux-arm64";
+                          hash = "sha256-zqvhlA9APWtJowCOceB52HsfU3PaAWciZWxY/QcOYgg=";
+                        };
+                        "aarch64-darwin" = {
+                          arch = "darwin-arm64";
+                          hash = "sha256-CjzAntSjbYlauVptCnqE/HpwdudoGaTMML6Fyzj48pU=";
+                        };
+                      };
+                    in
+                    prev.vscode-utils.fetchVsixFromVscodeMarketplace
+                    ({
+                      name = "continue";
+                      publisher = "Continue";
+                      inherit version;
+                    }
+                    // sources.${prev.stdenv.system});
+                };
+              };
+            };
+          })
         ];
         config = {
           allowUnfree = true;

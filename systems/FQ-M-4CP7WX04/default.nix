@@ -53,7 +53,7 @@ in
         name = "docker";
       }
       {
-        name = "ollama";
+        name = "ollama-app";
       }
     ];
     taps = [

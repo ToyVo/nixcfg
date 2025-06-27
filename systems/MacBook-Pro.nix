@@ -35,7 +35,7 @@
       name = "whisky";
     }
     {
-      name = "ollama";
+      name = "ollama-app";
     }
   ];
   homebrew.masApps = {
