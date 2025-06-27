@@ -31,6 +31,13 @@
       openFirewall = true;
       group = "multimedia";
       settings.server.port = config.homelab.${config.networking.hostName}.services.lidarr.port;
+      package = pkgs.lidarr.overrideAttrs rec {
+        version = "2.12.4.4658";
+        src = pkgs.fetchurl {
+          url = "https://github.com/lidarr/Lidarr/releases/download/v${version}/Lidarr.master.${version}.linux-core-x64.tar.gz";
+          sha256 = "";
+        };
+      };
     };
     radarr = {
       enable = true;
