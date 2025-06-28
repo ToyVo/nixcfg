@@ -17,8 +17,7 @@ in
       beets = {
         enable = pkgs.stdenv.isLinux;
         settings = {
-          directory = "/mnt/POOL/Public/Music";
-          plugins = [ "fetchart" ];
+          plugins = [ "fetchart" "embedart" ];
           import.move = true;
           replace = {
             # Replace bad characters with _

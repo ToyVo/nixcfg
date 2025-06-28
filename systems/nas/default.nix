@@ -155,6 +155,7 @@
     fsType = "btrfs";
   };
   users.users.toyvo.extraGroups = [ "libvirtd" ];
+  home-manager.users.toyvo.programs.beets.settings.directory = "/mnt/POOL/Public/Music";
   programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [
     bottles
