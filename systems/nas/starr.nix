@@ -35,7 +35,7 @@
         version = "2.12.4.4658";
         src = pkgs.fetchurl {
           url = "https://github.com/lidarr/Lidarr/releases/download/v${version}/Lidarr.master.${version}.linux-core-x64.tar.gz";
-          sha256 = "";
+          sha256 = "sha256-ttbQj6GYuKedDEdF8vUZcmc0AluZS6pPC5GCQTUu7OM=";
         };
       };
     };
