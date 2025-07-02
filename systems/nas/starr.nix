@@ -100,10 +100,12 @@
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
+        ExecStart = ''
+          ${pkgs.iproute2}/bin/ip netns add %I
+          ${pkgs.iproute2}/bin/ip netns exec %I ip link set lo up
+        '';
+        ExecStop = "${pkgs.iproute2}/bin/ip netns del %I";
       };
-      script = "${pkgs.iproute2}/bin/ip netns add %I";
-      postStop = "${pkgs.iproute2}/bin/ip netns del %I";
-      postStart = "${pkgs.iproute2}/bin/ip netns exec %I ip link set lo up";
     };
     wg-quick-wg0 = {
       bindsTo = [ "netns@protonvpnwgns.service" ];
