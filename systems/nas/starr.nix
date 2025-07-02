@@ -88,10 +88,7 @@
         allowedUDPPorts = [ config.services.transmission.settings.peer-port ];
       };
     };
-    wg-quick.interfaces.wg0 = {
-      configFile = config.sops.secrets."starr-protonvpn-US-IL-503.conf".path;
-      postUp = "${pkgs.iproute2}/bin/ip link set wg0 netns protonvpnwgns";
-    };
+    wg-quick.interfaces.wg0.configFile = config.sops.secrets."starr-protonvpn-US-IL-503.conf".path;
   };
   systemd.services = {
     "netns@" = {
@@ -108,6 +105,7 @@
     wg-quick-wg0 = {
       bindsTo = [ "netns@protonvpnwgns.service" ];
       after = [ "netns@protonvpnwgns.service" ];
+      ExecStartPost = "${pkgs.iproute2}/bin/ip link set wg0 netns protonvpnwgns";
     };
     # protonvpn-wgns =
     #   let
