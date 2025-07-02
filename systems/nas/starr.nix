@@ -111,20 +111,19 @@
         bindsTo = [ "netns@${namespace}.service" ];
         requires = [ "network-online.target" ];
         after = [ "netns@${namespace}.service" ];
-        path = with pkgs; [ iproute2 wireguard-tools ];
         script = ''
           set -e
-          ip link add ${interface} type wireguard
-          ip link set ${interface} netns ${namespace}
-          ip -n ${namespace} address add ${ip} dev ${interface}
-          ip netns exec ${namespace} wg setconf ${interface} ${confFile}
-          ip -n ${namespace} link set ${interface} up
-          ip -n ${namespace} link set lo up
-          ip -n ${namespace} route add default dev ${interface}
+          ${pkgs.iproute2}/bin/ip link add ${interface} type wireguard
+          ${pkgs.iproute2}/bin/ip link set ${interface} netns ${namespace}
+          ${pkgs.iproute2}/bin/ip -n ${namespace} address add ${ip} dev ${interface}
+          ${pkgs.iproute2}/bin/ip netns exec ${namespace} ${pkgs.wireguard-tools}/bin/wg setconf ${interface} ${confFile}
+          ${pkgs.iproute2}/bin/ip -n ${namespace} link set ${interface} up
+          ${pkgs.iproute2}/bin/ip -n ${namespace} link set lo up
+          ${pkgs.iproute2}/bin/ip -n ${namespace} route add default dev ${interface}
         '';
         postStop = ''
-          ip -n ${namespace} route del default dev ${interface}
-          ip -n ${namespace} link del ${interface}
+          ${pkgs.iproute2}/bin/ip -n ${namespace} route del default dev ${interface}
+          ${pkgs.iproute2}/bin/ip -n ${namespace} link del ${interface}
         '';
       };
   };
