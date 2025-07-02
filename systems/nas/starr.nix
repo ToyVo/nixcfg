@@ -105,7 +105,7 @@
     wg-quick-wg0 = {
       bindsTo = [ "netns@protonvpnwgns.service" ];
       after = [ "netns@protonvpnwgns.service" ];
-      ExecStartPost = "${pkgs.iproute2}/bin/ip link set wg0 netns protonvpnwgns";
+      serviceConfig.ExecStartPost = "${pkgs.iproute2}/bin/ip link set wg0 netns protonvpnwgns";
     };
     # protonvpn-wgns =
     #   let
