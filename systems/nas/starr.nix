@@ -101,7 +101,7 @@
         Type = "oneshot";
         RemainAfterExit = true;
         ExecStart = "${pkgs.iproute2}/bin/ip netns add %I";
-        ExecStartPost = "${pkgs.iproute2}/bin/ip netns exec %I ip link set lo up";
+        ExecStartPost = "${pkgs.iproute2}/bin/ip -n %I link set lo up";
         ExecStop = "${pkgs.iproute2}/bin/ip netns del %I";
       };
     };
