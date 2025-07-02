@@ -88,6 +88,10 @@
         allowedUDPPorts = [ config.services.transmission.settings.peer-port ];
       };
     };
+    wg-quick.interfaces.wg0 = {
+      configFile = config.sops.secrets."starr-protonvpn-US-IL-503.conf".path;
+      postUp = "${pkgs.iproute2}/bin/ip link set wg0 netns protonvpnwgns";
+    };
   };
   systemd.services = {
     "netns@" = {
@@ -96,35 +100,39 @@
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
-        ExecStart = "${pkgs.iproute2}/bin/ip netns add %I";
-        ExecStop = "${pkgs.iproute2}/bin/ip netns del %I";
       };
+      script = "${pkgs.iproute2}/bin/ip netns add %I";
+      postStop = "${pkgs.iproute2}/bin/ip netns del %I";
+      postStart = "${pkgs.iproute2}/bin/ip netns exec %I ip link set lo up";
     };
-    protonvpn-wgns =
-      let
-        interface = "wg0";
-        namespace = "proton0";
-        ip = "10.2.0.2/32";
-        confFile = config.sops.secrets."starr-protonvpn-US-IL-503.conf".path;
-      in
-      {
-        bindsTo = [ "netns@${namespace}.service" ];
-        requires = [ "network-online.target" ];
-        after = [ "netns@${namespace}.service" ];
-        script = ''
-          set -e
-          ${pkgs.iproute2}/bin/ip link add ${interface} type wireguard
-          ${pkgs.iproute2}/bin/ip link set ${interface} netns ${namespace}
-          ${pkgs.iproute2}/bin/ip -n ${namespace} address add ${ip} dev ${interface}
-          ${pkgs.iproute2}/bin/ip netns exec ${namespace} ${pkgs.wireguard-tools}/bin/wg setconf ${interface} ${confFile}
-          ${pkgs.iproute2}/bin/ip -n ${namespace} link set ${interface} up
-          ${pkgs.iproute2}/bin/ip -n ${namespace} link set lo up
-          ${pkgs.iproute2}/bin/ip -n ${namespace} route add default dev ${interface}
-        '';
-        postStop = ''
-          ${pkgs.iproute2}/bin/ip -n ${namespace} route del default dev ${interface}
-          ${pkgs.iproute2}/bin/ip -n ${namespace} link del ${interface}
-        '';
-      };
+    wg-quick-wg0 = {
+      bindsTo = [ "netns@protonvpnwgns.service" ];
+      after = [ "netns@protonvpnwgns.service" ];
+    };
+    # protonvpn-wgns =
+    #   let
+    #     interface = "wg1";
+    #     namespace = "proton0";
+    #     ip = "10.2.0.2/32";
+    #     confFile = config.sops.secrets."starr-protonvpn-US-IL-503.conf".path;
+    #   in
+    #   {
+    #     bindsTo = [ "netns@${namespace}.service" ];
+    #     requires = [ "network-online.target" ];
+    #     after = [ "netns@${namespace}.service" ];
+    #     script = ''
+    #       ${pkgs.iproute2}/bin/ip link add ${interface} type wireguard
+    #       ${pkgs.iproute2}/bin/ip link set ${interface} netns ${namespace}
+    #       ${pkgs.iproute2}/bin/ip -n ${namespace} address add ${ip} dev ${interface}
+    #       ${pkgs.iproute2}/bin/ip netns exec ${namespace} ${pkgs.wireguard-tools}/bin/wg setconf ${interface} ${confFile}
+    #       ${pkgs.iproute2}/bin/ip -n ${namespace} link set ${interface} up
+    #       ${pkgs.iproute2}/bin/ip -n ${namespace} link set lo up
+    #       ${pkgs.iproute2}/bin/ip -n ${namespace} route add default dev ${interface}
+    #     '';
+    #     postStop = ''
+    #       ${pkgs.iproute2}/bin/ip -n ${namespace} route del default dev ${interface}
+    #       ${pkgs.iproute2}/bin/ip -n ${namespace} link del ${interface}
+    #     '';
+    #   };
   };
 }
