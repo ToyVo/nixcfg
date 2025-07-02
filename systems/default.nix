@@ -64,13 +64,14 @@ let
                         };
                       };
                     in
-                    prev.vscode-utils.fetchVsixFromVscodeMarketplace
-                    ({
-                      name = "continue";
-                      publisher = "Continue";
-                      inherit version;
-                    }
-                    // sources.${prev.stdenv.system});
+                    prev.vscode-utils.fetchVsixFromVscodeMarketplace (
+                      {
+                        name = "continue";
+                        publisher = "Continue";
+                        inherit version;
+                      }
+                      // sources.${prev.stdenv.system}
+                    );
                 };
               };
             };

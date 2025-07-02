@@ -88,6 +88,44 @@
         allowedUDPPorts = [ config.services.transmission.settings.peer-port ];
       };
     };
-    wg-quick.interfaces.wg0.configFile = config.sops.secrets."starr-protonvpn-US-IL-503.conf".path;
+  };
+  systemd.services = {
+    "netns@" = {
+      description = "%I network namespace";
+      before = [ "network.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = "${pkgs.iproute2}/bin/ip netns add %I";
+        ExecStop = "${pkgs.iproute2}/bin/ip netns del %I";
+      };
+    };
+    protonvpn-wgns =
+      let
+        interface = "wg0";
+        namespace = "proton0";
+        ip = "10.2.0.2/32";
+        confFile = config.sops.secrets."starr-protonvpn-US-IL-503.conf".path;
+      in
+      {
+        bindsTo = [ "netns@${namespace}" ];
+        requires = [ "network-online.target" ];
+        after = [ "netns@${namespace}" ];
+        path = with pkgs; [ iproute2 wireguard-tools ];
+        script = ''
+          set -e
+          ip link add ${interface} type wireguard
+          ip link set ${interface} netns ${namespace}
+          ip -n ${namespace} address add ${ip} dev ${interface}
+          ip netns exec ${namespace} wg setconf ${interface} ${confFile}
+          ip -n ${namespace} link set ${interface} up
+          ip -n ${namespace} link set lo up
+          ip -n ${namespace} route add default dev ${interface}
+        '';
+        postStop = ''
+          ip -n ${namespace} route del default dev ${interface}
+          ip -n ${namespace} link del ${interface}
+        '';
+      };
   };
 }

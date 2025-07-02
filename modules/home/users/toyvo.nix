@@ -17,7 +17,10 @@ in
       beets = {
         enable = pkgs.stdenv.isLinux;
         settings = {
-          plugins = [ "fetchart" "embedart" ];
+          plugins = [
+            "fetchart"
+            "embedart"
+          ];
           import.move = true;
           replace = {
             # Replace bad characters with _
