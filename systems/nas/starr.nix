@@ -108,9 +108,9 @@
         confFile = config.sops.secrets."starr-protonvpn-US-IL-503.conf".path;
       in
       {
-        bindsTo = [ "netns@${namespace}" ];
+        bindsTo = [ "netns@${namespace}.service" ];
         requires = [ "network-online.target" ];
-        after = [ "netns@${namespace}" ];
+        after = [ "netns@${namespace}.service" ];
         path = with pkgs; [ iproute2 wireguard-tools ];
         script = ''
           set -e
