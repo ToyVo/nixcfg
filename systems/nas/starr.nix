@@ -105,49 +105,11 @@
         postSetup = ''
           ip -n "${interfaceNamespace}" link set up dev "lo"
           ip -n "${interfaceNamespace}" route add default dev "${interface}"
-          ${pkgs.openresolv}/bin/resolvconf -a "${interface}" -m 0 -x <<< "nameserver 10.2.0.1"
+          ip netns exec "${interfaceNamespace}" ${pkgs.openresolv}/bin/resolvconf -a "${interface}" -m 0 -x <<< "nameserver 10.2.0.1"
         '';
         preShutdown = ''ip -n "${interfaceNamespace}" route del default dev "${interface}"'';
         postShutdown = ''ip netns del "${interfaceNamespace}"'';
       };
     };
-  };
-  systemd.services = {
-    "netns@" = {
-      description = "%I network namespace";
-      before = [ "network.target" ];
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        ExecStart = "${pkgs.iproute2}/bin/ip netns add %I";
-        ExecStartPost = "${pkgs.iproute2}/bin/ip -n %I link set lo up";
-        ExecStop = "${pkgs.iproute2}/bin/ip netns del %I";
-      };
-    };
-    # protonvpn-wg =
-    #   let
-    #     interface = "protonwg0";
-    #     namespace = "protonwgns0";
-    #     ip = "10.2.0.2/32";
-    #     confFile = config.sops.secrets."starr-protonvpn-US-IL-503.conf".path;
-    #   in
-    #   {
-    #     bindsTo = [ "netns@${namespace}.service" ];
-    #     requires = [ "network-online.target" ];
-    #     after = [ "netns@${namespace}.service" ];
-    #     script = ''
-    #       ${pkgs.iproute2}/bin/ip link add ${interface} type wireguard
-    #       ${pkgs.iproute2}/bin/ip link set ${interface} netns ${namespace}
-    #       ${pkgs.iproute2}/bin/ip -n ${namespace} address add ${ip} dev ${interface}
-    #       ${pkgs.iproute2}/bin/ip netns exec ${namespace} ${pkgs.wireguard-tools}/bin/wg setconf ${interface} ${confFile}
-    #       ${pkgs.iproute2}/bin/ip -n ${namespace} link set ${interface} up
-    #       ${pkgs.iproute2}/bin/ip -n ${namespace} link set lo up
-    #       ${pkgs.iproute2}/bin/ip -n ${namespace} route add default dev ${interface}
-    #     '';
-    #     postStop = ''
-    #       ${pkgs.iproute2}/bin/ip -n ${namespace} route del default dev ${interface}
-    #       ${pkgs.iproute2}/bin/ip -n ${namespace} link del ${interface}
-    #     '';
-    #   };
   };
 }
