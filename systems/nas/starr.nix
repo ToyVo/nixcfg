@@ -2,6 +2,7 @@
 let
   wireguardInterface = "wg0";
   wireguardInterfaceNamespace = "protonvpn0";
+  wireguardGateway = "10.2.0.1";
 in
 {
   sops.secrets."protonvpn-US-IL-503.key" = { };
@@ -106,7 +107,8 @@ in
       postShutdown = ''ip netns del "${wireguardInterfaceNamespace}"'';
     };
   };
-  environment.etc."netns/${wireguardInterfaceNamespace}/resolv.conf".text = "nameserver 10.2.0.1";
+  environment.etc."netns/${wireguardInterfaceNamespace}/resolv.conf".text =
+    "nameserver ${wireguardGateway}";
   systemd = {
     services = {
       transmission = {
@@ -114,6 +116,7 @@ in
         requires = [
           "network-online.target"
           "wireguard-${wireguardInterface}.service"
+          "port-forward-protonvpn.service"
         ];
         serviceConfig.NetworkNamespacePath = "/var/run/netns/${wireguardInterfaceNamespace}";
       };
@@ -156,8 +159,8 @@ in
         script = ''
           while true ; do
             date
-            ${pkgs.libnatpmp}/bin/natpmpc -a 1 0 udp 60 -g 10.2.0.1 && \
-            ${pkgs.libnatpmp}/bin/natpmpc -a 1 0 tcp 60 -g 10.2.0.1 || {
+            ${pkgs.libnatpmp}/bin/natpmpc -a 1 0 udp 60 -g ${wireguardGateway} && \
+            ${pkgs.libnatpmp}/bin/natpmpc -a 1 0 tcp 60 -g ${wireguardGateway} || {
               echo -e "ERROR with natpmpc command \a"
               break
             }
