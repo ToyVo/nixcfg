@@ -85,9 +85,7 @@ in
   };
   networking = {
     firewall = {
-      # number comes from conf file
-      allowedUDPPorts = [ 51820 ];
-      interfaces.wg0 = {
+      interfaces.${wireguardInterface} = {
         allowedTCPPorts = [ config.services.transmission.settings.peer-port ];
         allowedUDPPorts = [ config.services.transmission.settings.peer-port ];
       };
