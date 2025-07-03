@@ -1,6 +1,6 @@
 { pkgs, config, ... }:
 {
-  sops.secrets."starr-protonvpn-US-IL-503.conf" = { };
+  sops.secrets."protonvpn-US-IL-503.key" = { };
   services = {
     transmission = {
       enable = true;
@@ -88,7 +88,29 @@
         allowedUDPPorts = [ config.services.transmission.settings.peer-port ];
       };
     };
-    wg-quick.interfaces.wg0.configFile = config.sops.secrets."starr-protonvpn-US-IL-503.conf".path;
+    wireguard.interfaces = let
+      interface = "wg0";
+      interfaceNamespace = "protonvpn0";
+    in {
+      ${interface} = {
+        privateKeyFile = config.sops.secrets."protonvpn-US-IL-503.key".path;
+        ips = [ "10.2.0.2/32" ];
+        peers = [{
+          publicKey = "Ad0UnBi3NeIgVpM1baC8HAp6wfSli0wGS1OCmS7uYRo=";
+          allowedIPs = [ "0.0.0.0/0" ];
+          endpoint = "79.127.187.156:51820";
+        }];
+        inherit interfaceNamespace;
+        preSetup = ''ip netns add "${interfaceNamespace}"'';
+        postSetup = ''
+          ip -n "${interfaceNamespace}" link set up dev "lo"
+          ip -n "${interfaceNamespace}" route add default dev "${interface}"
+          ${pkgs.openresolv}/bin/resolvconf -a "${interface}" -m 0 -x <<< "nameserver 10.2.0.1"
+        '';
+        preShutdown = ''ip -n "${interfaceNamespace}" route del default dev "${interface}"'';
+        postShutdown = ''ip netns del "${interfaceNamespace}"'';
+      };
+    };
   };
   systemd.services = {
     "netns@" = {
@@ -102,15 +124,10 @@
         ExecStop = "${pkgs.iproute2}/bin/ip netns del %I";
       };
     };
-    wg-quick-wg0 = {
-      bindsTo = [ "netns@protonvpnwgns.service" ];
-      after = [ "netns@protonvpnwgns.service" ];
-      serviceConfig.ExecStartPost = "${pkgs.iproute2}/bin/ip link set wg0 netns protonvpnwgns";
-    };
-    # protonvpn-wgns =
+    # protonvpn-wg =
     #   let
-    #     interface = "wg1";
-    #     namespace = "proton0";
+    #     interface = "protonwg0";
+    #     namespace = "protonwgns0";
     #     ip = "10.2.0.2/32";
     #     confFile = config.sops.secrets."starr-protonvpn-US-IL-503.conf".path;
     #   in
