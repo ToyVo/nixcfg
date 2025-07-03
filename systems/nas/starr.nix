@@ -12,13 +12,9 @@ in
       openRPCPort = true;
       settings = {
         rpc-port = config.homelab.${config.networking.hostName}.services.transmission.port;
-        # ip address from vpn conf file
         bind-address-ipv4 = "0.0.0.0";
-        # expose web interface on all interfaces
         rpc-bind-address = "0.0.0.0";
-        # allow connections from localhost and lan
         rpc-whitelist = "127.0.0.1,10.1.0.*";
-        # allow connecting from domain names
         rpc-host-whitelist = "${config.networking.hostName}.internal,transmission.diekvoss.net";
         download-dir = "/mnt/POOL/transmission/Downloads";
       };
@@ -142,6 +138,32 @@ in
           ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=5min 127.0.0.1:${toString config.services.transmission.settings.rpc-port}";
           PrivateNetwork = "yes";
         };
+      };
+      port-forward-protonvpn = {
+        enable = true;
+        bindsTo = [ "wireguard-${wireguardInterface}.service" ];
+        requires = [
+          "network-online.target"
+          "wireguard-${wireguardInterface}.service"
+        ];
+        description = "Port Forwarding for ProtonVPN";
+        serviceConfig = {
+          User = "transmission";
+          Group = "multimedia";
+          PrivateNetwork = "yes";
+          NetworkNamespacePath = "/var/run/netns/${wireguardInterfaceNamespace}";
+        };
+        script = ''
+          while true ; do
+            date
+            ${pkgs.libnatpmp}/bin/natpmpc -a 1 0 udp 60 -g 10.2.0.1 && \
+            ${pkgs.libnatpmp}/bin/natpmpc -a 1 0 tcp 60 -g 10.2.0.1 || {
+              echo -e "ERROR with natpmpc command \a"
+              break
+            }
+            sleep 45
+          done
+        '';
       };
     };
     # allowing caddy to access transmission in network namespace, a socket is necesarry
