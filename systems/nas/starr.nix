@@ -159,8 +159,8 @@ in
         script = ''
           while true ; do
             date
-            ${pkgs.libnatpmp}/bin/natpmpc -a 1 ${config.services.transmission.settings.peer-port} udp 60 -g ${wireguardGateway} && \
-            ${pkgs.libnatpmp}/bin/natpmpc -a 1 ${config.services.transmission.settings.peer-port} tcp 60 -g ${wireguardGateway} || {
+            ${pkgs.libnatpmp}/bin/natpmpc -a ${toString config.services.transmission.settings.peer-port} 0 udp 60 -g ${wireguardGateway} && \
+            ${pkgs.libnatpmp}/bin/natpmpc -a ${toString config.services.transmission.settings.peer-port} 0 tcp 60 -g ${wireguardGateway} || {
               echo -e "ERROR with natpmpc command \a"
               break
             }
