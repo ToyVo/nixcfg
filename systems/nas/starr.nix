@@ -1,4 +1,8 @@
 { pkgs, config, ... }:
+let
+wireguardInterface = "wg0";
+wireguardInterfaceNamespace = "protonvpn0";
+in
 {
   sops.secrets."protonvpn-US-IL-503.key" = { };
   services = {
@@ -88,11 +92,7 @@
         allowedUDPPorts = [ config.services.transmission.settings.peer-port ];
       };
     };
-    wireguard.interfaces = let
-      interface = "wg0";
-      interfaceNamespace = "protonvpn0";
-    in {
-      ${interface} = {
+    wireguard.interfaces.${wireguardInterface} = {
         privateKeyFile = config.sops.secrets."protonvpn-US-IL-503.key".path;
         ips = [ "10.2.0.2/32" ];
         peers = [{
@@ -100,16 +100,15 @@
           allowedIPs = [ "0.0.0.0/0" ];
           endpoint = "79.127.187.156:51820";
         }];
-        inherit interfaceNamespace;
-        preSetup = ''ip netns add "${interfaceNamespace}"'';
+        interfaceNamespace = wireguardInterfaceNamespace;
+        preSetup = ''ip netns add "${wireguardInterfaceNamespace}"'';
         postSetup = ''
-          ip -n "${interfaceNamespace}" link set up dev "lo"
-          ip -n "${interfaceNamespace}" route add default dev "${interface}"
-          ip netns exec "${interfaceNamespace}" ${pkgs.openresolv}/bin/resolvconf -a "${interface}" -m 0 -x <<< "nameserver 10.2.0.1"
+          ip -n "${wireguardInterfaceNamespace}" link set up dev "lo"
+          ip -n "${wireguardInterfaceNamespace}" route add default dev "${wireguardInterface}"
         '';
-        preShutdown = ''ip -n "${interfaceNamespace}" route del default dev "${interface}"'';
-        postShutdown = ''ip netns del "${interfaceNamespace}"'';
-      };
+        preShutdown = ''ip -n "${wireguardInterfaceNamespace}" route del default dev "${wireguardInterface}"'';
+        postShutdown = ''ip netns del "${wireguardInterfaceNamespace}"'';
     };
   };
+  environment.etc."netns/${wireguardInterfaceNamespace}/resolv.conf" = "nameserver 10.2.0.1";
 }
