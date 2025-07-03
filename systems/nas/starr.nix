@@ -110,5 +110,5 @@ in
         postShutdown = ''ip netns del "${wireguardInterfaceNamespace}"'';
     };
   };
-  environment.etc."netns/${wireguardInterfaceNamespace}/resolv.conf" = "nameserver 10.2.0.1";
+  environment.etc."netns/${wireguardInterfaceNamespace}/resolv.conf".text = "nameserver 10.2.0.1";
 }
