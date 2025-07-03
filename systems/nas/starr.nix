@@ -13,7 +13,7 @@ in
       settings = {
         rpc-port = config.homelab.${config.networking.hostName}.services.transmission.port;
         # ip address from vpn conf file
-        bind-address-ipv4 = "10.2.0.2";
+        bind-address-ipv4 = "0.0.0.0";
         # expose web interface on all interfaces
         rpc-bind-address = "0.0.0.0";
         # allow connections from localhost and lan
