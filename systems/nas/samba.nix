@@ -1,12 +1,11 @@
-{ ... }:
+{ lib, config, ... }:
 {
-  services = {
+  config.services = lib.mkIf config.services.samba.enable {
     samba-wsdd = {
       enable = true;
       openFirewall = true;
     };
     samba = {
-      enable = true;
       openFirewall = true;
       settings = {
         global = {
