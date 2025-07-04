@@ -98,7 +98,7 @@ in
               import subprocess
               import transmission_rpc
 
-              transmission = transmission_rpc.Client(port=${config.services.transmission.settings.rpc-port})
+              transmission = transmission_rpc.Client(port=${toString config.services.transmission.settings.rpc-port})
 
               while True:
                   try:
