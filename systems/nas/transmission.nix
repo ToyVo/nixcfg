@@ -54,6 +54,7 @@ in
             "network-online.target"
             "wireguard-${wireguardInterface}.service"
             "port-forward-transmission.service"
+            "proxy-to-transmission.service"
           ];
           serviceConfig.NetworkNamespacePath = "/var/run/netns/${wireguardInterfaceNamespace}";
         };
@@ -62,7 +63,6 @@ in
           enable = true;
           description = "Proxy to Transmission in Network Namespace";
           requires = [
-            "transmission.service"
             "proxy-to-transmission.socket"
           ];
           after = [
@@ -86,12 +86,15 @@ in
             "network-online.target"
             "wireguard-${wireguardInterface}.service"
           ];
+          after = [ "transmission.service" ];
           description = "Port Forwarding for Transmission through ProtonVPN";
+          unitConfig = {
+            JoinsNamespaceOf = "transmission.service";
+          };
           serviceConfig = {
             User = "transmission";
             Group = "multimedia";
             PrivateNetwork = "yes";
-            NetworkNamespacePath = "/var/run/netns/${wireguardInterfaceNamespace}";
             ExecStart = pkgs.writeScript "port-forward-transmission.py" ''
               #!${pkgs.python3.withPackages (p: with p; [ transmission-rpc ])}/bin/python3
               import time
