@@ -53,7 +53,7 @@ in
           requires = [
             "network-online.target"
             "wireguard-${wireguardInterface}.service"
-            "port-forward-protonvpn.service"
+            "port-forward-transmission.service"
           ];
           serviceConfig.NetworkNamespacePath = "/var/run/netns/${wireguardInterfaceNamespace}";
         };
