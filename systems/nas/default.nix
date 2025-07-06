@@ -152,6 +152,12 @@
         };
       };
     };
+    minecraft-server = {
+      enable = true;
+      eula = true;
+      openFirewall = true;
+      package = pkgs.papermc;
+    };
     nextcloud.enable = true;
     nix-serve = {
       enable = true;
