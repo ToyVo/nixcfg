@@ -78,6 +78,7 @@ in
         max-world-size = 50000;
       };
     };
+    systemd.sockets.minecraft-server.enable = false;
     systemd.services.minecraft-server = {
       path = [ pkgs.jre ];
       serviceConfig = {
