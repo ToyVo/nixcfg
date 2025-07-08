@@ -81,6 +81,8 @@ in
     systemd.sockets.minecraft-server.enable = false;
     systemd.services.minecraft-server = {
       path = [ pkgs.jre ];
+      # don't require socket as we don't use it
+      requires = lib.mkForce [ ];
       serviceConfig = {
         ExecStart = lib.mkForce (lib.getExe pkgs.minecraft-server-hibernation);
         ExecStop = lib.mkForce "";
