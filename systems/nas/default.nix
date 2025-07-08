@@ -155,7 +155,7 @@
     minecraft-server = {
       enable = true;
       eula = true;
-      openFirewall = true;
+      enableHibernation = true;
       package = pkgs.papermc;
     };
     nextcloud.enable = true;
