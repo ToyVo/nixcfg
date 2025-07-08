@@ -79,6 +79,7 @@ in
       };
     };
     systemd.services.minecraft-server = {
+      path = [ pkgs.jre ];
       serviceConfig = {
         ExecStart = lib.mkForce (lib.getExe pkgs.minecraft-server-hibernation);
         ExecStop = lib.mkForce "";
