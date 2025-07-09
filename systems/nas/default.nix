@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }:
 {
@@ -157,6 +158,50 @@
       eula = true;
       enableHibernation = true;
       package = pkgs.papermc;
+      declarative = true;
+      openFirewall = true;
+      serverProperties = {
+        server-port = 25566;
+        "query.port" = 25566;
+        difficulty = 3;
+        enable-query = true;
+        allow-flight = true;
+        spawn-protection = 0;
+        max-world-size = 50000;
+      };
+      mshConfig = {
+        Server = {
+          Folder = config.services.minecraft-server.dataDir;
+          # cfg.package will be linked to cfg.dataDir/minecraft-server
+          FileName = "minecraft-server";
+          # Version = "1.19.2";
+          # Protocol = 760;
+        };
+        Commands = {
+          StartServer = "${lib.getExe config.services.minecraft-server.package} ${config.services.minecraft-server.jvmOpts}";
+          # StartServerParam = "-Xmx1024M -Xms1024M";
+          StopServer = "stop";
+          StopServerAllowKill = 10;
+        };
+        Msh = {
+          Debug = 2;
+          ID = "";
+          MshPort = 25565;
+          MshPortQuery = 25565;
+          EnableQuery = true;
+          TimeBeforeStoppingEmptyServer = 30;
+          SuspendAllow = false;
+          SuspendRefresh = -1;
+          InfoHibernation = "                   §fserver status:\n                   §b§lHIBERNATING";
+          InfoStarting = "                   §fserver status:\n                    §6§lWARMING UP";
+          NotifyUpdate = true;
+          NotifyMessage = true;
+          Whitelist = [ ];
+          WhitelistImport = false;
+          ShowResourceUsage = false;
+          ShowInternetUsage = false;
+        };
+      };
     };
     nextcloud.enable = true;
     nix-serve = {
