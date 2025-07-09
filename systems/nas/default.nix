@@ -157,7 +157,7 @@
       enable = true;
       eula = true;
       enableHibernation = true;
-      package = pkgs.papermc;
+      package = pkgs.papermcServers.papermc-1_21_6;
       declarative = true;
       openFirewall = true;
       serverProperties = {
@@ -174,8 +174,8 @@
           Folder = config.services.minecraft-server.dataDir;
           # cfg.package will be linked to cfg.dataDir/minecraft-server
           FileName = "minecraft-server";
-          # Version = "1.19.2";
-          # Protocol = 760;
+          Version = "1.21.6";
+          Protocol = 771;
         };
         Commands = {
           StartServer = "${lib.getExe config.services.minecraft-server.package} ${config.services.minecraft-server.jvmOpts}";
@@ -184,8 +184,8 @@
           StopServerAllowKill = 10;
         };
         Msh = {
-          Debug = 2;
-          ID = "";
+          Debug = 3;
+          ID = "f4630b63f6d3fe6323cfc823d5afce65a854224e";
           MshPort = 25565;
           MshPortQuery = 25565;
           EnableQuery = true;
