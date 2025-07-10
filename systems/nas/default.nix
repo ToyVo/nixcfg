@@ -154,53 +154,34 @@
       };
     };
     minecraft-server = {
+      declarative = true;
       enable = true;
       eula = true;
-      enableHibernation = true;
-      package = pkgs.papermcServers.papermc-1_21_6;
-      declarative = true;
       openFirewall = true;
+      package = pkgs.papermcServers.papermc-1_21_6;
+      msh = {
+        enable = true;
+        config = {
+          Msh = {
+            Debug = 3;
+            ID = "a8b5f0e12f7def4fe2dc710cdd43993548ff03a3";
+            MshPort = 25565;
+            MshPortQuery = 25565;
+          };
+          Server = {
+            Protocol = 771;
+            Version = "1.21.6";
+          };
+        };
+      };
       serverProperties = {
-        server-port = 25566;
-        "query.port" = 25566;
+        allow-flight = true;
         difficulty = 3;
         enable-query = true;
-        allow-flight = true;
-        spawn-protection = 0;
         max-world-size = 50000;
-      };
-      mshConfig = {
-        Server = {
-          Folder = config.services.minecraft-server.dataDir;
-          # cfg.package will be linked to cfg.dataDir/minecraft-server
-          FileName = "minecraft-server";
-          Version = "1.21.6";
-          Protocol = 771;
-        };
-        Commands = {
-          StartServer = "${lib.getExe config.services.minecraft-server.package} ${config.services.minecraft-server.jvmOpts}";
-          # StartServerParam = "-Xmx1024M -Xms1024M";
-          StopServer = "stop";
-          StopServerAllowKill = 10;
-        };
-        Msh = {
-          Debug = 3;
-          ID = "a8b5f0e12f7def4fe2dc710cdd43993548ff03a3";
-          MshPort = 25565;
-          MshPortQuery = 25565;
-          EnableQuery = true;
-          TimeBeforeStoppingEmptyServer = 30;
-          SuspendAllow = false;
-          SuspendRefresh = -1;
-          InfoHibernation = "                   §fserver status:\n                   §b§lHIBERNATING";
-          InfoStarting = "                   §fserver status:\n                    §6§lWARMING UP";
-          NotifyUpdate = true;
-          NotifyMessage = true;
-          Whitelist = [ ];
-          WhitelistImport = false;
-          ShowResourceUsage = false;
-          ShowInternetUsage = false;
-        };
+        "query.port" = 25566;
+        server-port = 25566;
+        spawn-protection = 0;
       };
     };
     nextcloud.enable = true;

@@ -49,8 +49,8 @@ let
   defaultServerPort = 25565;
 
   serverPort =
-    if cfg.enableHibernation then
-      cfg.mshConfig.Msh.MshPort
+    if cfg.msh.enable then
+      cfg.msh.config.Msh.MshPort
     else
       cfg.serverProperties.server-port or defaultServerPort;
 
@@ -61,8 +61,8 @@ let
       null;
 
   queryPort =
-    if cfg.enableHibernation then
-      cfg.mshConfig.Msh.MshPortQuery
+    if cfg.msh.enable then
+      cfg.msh.config.Msh.MshPortQuery
     else if cfg.serverProperties.enable-query or false then
       cfg.serverProperties."query.port" or 25565
     else
@@ -182,61 +182,6 @@ in
         '';
       };
 
-      mshConfig = lib.mkOption {
-        type =
-          with lib.types;
-          attrsOf (
-            attrsOf (oneOf [
-              bool
-              int
-              str
-              (listOf str)
-            ])
-          );
-        default = { };
-        example = lib.literalExpression ''
-          {
-            Server = {
-              Folder = "{path/to/server/folder}";
-              FileName = "{server.jar}";
-              Version = "1.19.2";
-              Protocol = 760;
-            };
-            Commands = {
-              StartServer = "java <Commands.StartServerParam> -jar <Server.FileName> nogui";
-              StartServerParam = "-Xmx1024M -Xms1024M";
-              StopServer = "stop";
-              StopServerAllowKill = 10;
-            };
-            Msh = {
-              Debug = 1;
-              ID = "";
-              MshPort = 25555;
-              MshPortQuery = 25555;
-              EnableQuery = true;
-              TimeBeforeStoppingEmptyServer = 30;
-              SuspendAllow = false;
-              SuspendRefresh = -1;
-              InfoHibernation = "                   §fserver status:\n                   §b§lHIBERNATING";
-              InfoStarting = "                   §fserver status:\n                    §6§lWARMING UP";
-              NotifyUpdate = true;
-              NotifyMessage = true;
-              Whitelist = [];
-              WhitelistImport = false;
-              ShowResourceUsage = false;
-              ShowInternetUsage = false;
-            };
-          }
-        '';
-        description = ''
-          Minecraft server hibernation configuration file. Only has
-          an effect when {option}`services.minecraft-server.declarative`
-          is set to `true`. See
-          <https://github.com/gekware/minecraft-server-hibernation/tree/v${pkgs.minecraft-server-hibernation.version}?tab=readme-ov-file>
-          for documentation on these values.
-        '';
-      };
-
       package = lib.mkPackageOption pkgs "minecraft-server" {
         example = "pkgs.minecraft-server_1_12_2";
       };
@@ -252,13 +197,400 @@ in
         description = "JVM options for the Minecraft server.";
       };
 
-      enableHibernation = lib.mkEnableOption "Use minecraft-server-hibernation as a proxy to save resources";
-      frozenIcon = lib.mkOption {
-        type = lib.types.nullOr lib.types.path;
-        default = null;
-        description = "The icon to use when the server is frozen.";
+      msh = {
+        enable = lib.mkEnableOption "Use minecraft-server-hibernation as a proxy to save resources";
+        frozenIcon = lib.mkOption {
+          type = lib.types.nullOr lib.types.path;
+          default = null;
+          description = "The icon to use when the server is frozen.";
+        };
+        symlinkMainProgram = lib.mkEnableOption "Symlink `config.services.minecraft-server.program.meta.mainProgram` to `config.services.minecraft-server.dataDir/config.services.minecraft-server.msh.config.Server.FileName`";
+        config = lib.mkOption {
+          type = lib.types.submodule ({
+            options = {
+              Server = {
+                FileName = lib.mkOption {
+                  type = lib.types.string;
+                  default = cfg.package.meta.mainProgram;
+                  example = "server.jar";
+                  description = "The name of the Minecraft server jar file. Used as <Server.FileName> in the StartServer command. If the file is not a jar file, automatic version and protocol detection will not work.";
+                };
+                Folder = lib.mkOption {
+                  type = lib.types.path;
+                  default = cfg.dataDir;
+                  description = "The folder where the Minecraft server files are located.";
+                };
+                Version = lib.mkOption {
+                  type = lib.types.string;
+                  default = "1.19.2";
+                  description = "The version of the Minecraft server.";
+                };
+                Protocol = lib.mkOption {
+                  type = lib.types.int;
+                  default = 760;
+                  description = "The protocol version of the Minecraft server.";
+                };
+              };
+              Commands = {
+                StartServer = lib.mkOption {
+                  type = lib.types.string;
+                  default = "${lib.getExe cfg.package} ${cfg.jvmOpts}";
+                  example = "java <Commands.StartServerParam> -jar <Server.FileName> nogui";
+                  description = "The command to start the Minecraft server. <Commands.StartServerParam> and <Server.FileName> are valid substitution keys at runtime.";
+                };
+                StartServerParam = lib.mkOption {
+                  type = lib.types.string;
+                  default = cfg.jvmOpts;
+                  description = "The JVM options for the Minecraft server. If <Commands.StartServerParam> is not used in StartServer, then this has no effect.";
+                };
+                StopServer = lib.mkOption {
+                  type = lib.types.string;
+                  default = "stop";
+                  description = "The command to stop the Minecraft server.";
+                };
+                StopServerAllowKill = lib.mkOption {
+                  type = lib.types.int;
+                  default = 10;
+                  description = "Allows to kill the server after a certain amount of time (in seconds) when it's not responding. Set to -1 to disable.";
+                };
+              };
+              Msh = {
+                Debug = lib.mkOption {
+                  type = lib.types.int;
+                  default = 1;
+                  description = ''
+                    The debug level for msh.
+                    0 - NONE: no log.
+                    1 - BASE: basic log.
+                    2 - SERV: minecraft server log.
+                    3 - DEVE: developement log.
+                    4 - BYTE: connection bytes log.
+                  '';
+                };
+                ID = lib.mkOption {
+                  type = lib.types.string;
+                  default = "";
+                  description = "The ID for msh. msh will exit if not set.";
+                };
+                MshPort = lib.mkOption {
+                  type = lib.types.int;
+                  default = 25555;
+                  description = "The public port for msh players will connect through. Must be different from the server-port in server.properties.";
+                };
+                MshPortQuery = lib.mkOption {
+                  type = lib.types.int;
+                  default = 25555;
+                  description = "The public port for msh query. Must be different from the query.port in server.properties.";
+                };
+                EnableQuery = lib.mkOption {
+                  type = lib.types.bool;
+                  default = true;
+                  description = "Whether to enable query for msh. Query must also be enabled in the server.properties file.";
+                };
+                TimeBeforeStoppingEmptyServer = lib.mkOption {
+                  type = lib.types.int;
+                  default = 30;
+                  description = "Sets the time (after the last player disconnected) that msh waits before hibernating the minecraft server.";
+                };
+                SuspendAllow = lib.mkEnableOption "Enables msh to suspend minecraft server process when there are no players online. To mitigate ram usage you can set a high swappiness. * pro: player wait time to join frozen server is ~0 * cons: ram usage as minecraft server without msh (cpu remains ~0)";
+                SuspendRefresh = lib.mkOption {
+                  type = lib.types.int;
+                  default = -1;
+                  description = ''
+                    Enables refresh of minecraft server suspension every set seconds (to avoid watchdog crash at unsuspension).
+                    Setting these variables and SuspendRefresh might prevent minecraft server watchdog crash when SuspendAllow is enabled.
+                    server.properties max-tick-time= -1
+                    spigot.yml timeout-time: -1, restart-on-crash: false
+                    bukkit.yml warn-on-overload: false
+                    paper-global.yml early-warning-delay: -1, early-warning-every: -1
+                    set -1 to disable, advised value: 120 (reduce if minecraft server keeps crashing)
+                  '';
+                };
+                InfoHibernation = lib.mkOption {
+                  type = lib.types.string;
+                  default = "                   §fserver status:\n                   §b§lHIBERNATING";
+                  description = "The message to display when the server is hibernating.";
+                };
+                InfoStarting = lib.mkOption {
+                  type = lib.types.string;
+                  default = "                   §fserver status:\n                    §6§lWARMING UP";
+                  description = "The message to display when the server is starting.";
+                };
+                NotifyUpdate = lib.mkOption {
+                  type = lib.types.bool;
+                  default = true;
+                  description = "Set to false if you don't want notifications (every 20 minutes)";
+                };
+                NotifyMessage = lib.mkOption {
+                  type = lib.types.bool;
+                  default = true;
+                  description = "Set to false if you don't want notifications (every 20 minutes)";
+                };
+                Whitelist = lib.mkOption {
+                  type = lib.types.listOf lib.types.str;
+                  default = [ ];
+                  description = "Contains IPs and player names that are allowed to start the server (leave empty to allow everyone)";
+                  example = lib.literalExpression ''["127.0.0.1" "gekigek99"]'';
+                };
+                WhitelistImport = lib.mkEnableOption "Adds whitelist.json to player names that are allowed to start the server. Unknown clients are not allowed to start the server, but can join";
+                ShowResourceUsage = lib.mkEnableOption "enables the logging of the msh tree process cpu/ram usage percent. for debug purposes (debug level 3 required)";
+                ShowInternetUsage = lib.mkEnableOption "enables the logging of the msh connection usage. for debug purposes (debug level 3 required)";
+              };
+            };
+          });
+          default = { };
+          description = ''
+            Minecraft server hibernation configuration file. Only has
+            an effect when {option}`services.minecraft-server.declarative`
+            is set to `true`. See
+            <https://github.com/gekware/minecraft-server-hibernation/tree/v${pkgs.minecraft-server-hibernation.version}?tab=readme-ov-file>
+            for documentation on these values.
+          '';
+        };
       };
-      runningIcon = lib.mkOption {
+
+      lazymc = {
+        enable = lib.mkEnableOption "Use lazymc as a proxy to save resources";
+        config = lib.mkOption {
+          type = lib.types.submodule ({
+            options = {
+              public = {
+                address = lib.mkOption {
+                  type = lib.types.str;
+                  default = "0.0.0.0:25565";
+                  description = "Public address. IP and port users connect to. Shows sleeping status, starts server on connect, and proxies to server.";
+                };
+                version = lib.mkOption {
+                  type = lib.types.str;
+                  default = "1.20.3";
+                  description = "Server version hint. Sent to clients until actual server version is known. See: https://git.io/J1Fvx";
+                };
+                protocol = lib.mkOption {
+                  type = lib.types.int;
+                  default = 765;
+                  description = "Server protocol hint. Sent to clients until actual server version is known. See: https://git.io/J1Fvx";
+                };
+              };
+              server = {
+                address = lib.mkOption {
+                  type = lib.types.str;
+                  default = "127.0.0.1:${cfg.serverProperties.server-port}";
+                  example = "127.0.0.1:25566";
+                  description = "Server address. Internal IP and port of server started by lazymc to proxy to. Port must be different from public port.";
+                };
+                directory = lib.mkOption {
+                  type = lib.types.str;
+                  default = cfg.dataDir;
+                  example = ".";
+                  description = "Server directory. Defaults to current directory.";
+                };
+                command = lib.mkOption {
+                  type = lib.types.str;
+                  default = "${lib.getExe cfg.program} ${cfg.jvmOpts}";
+                  example = "java -Xmx1G -Xms1G -jar server.jar --nogui";
+                  description = "Command to start the server. Warning: if using a bash script read: https://git.io/JMIKH";
+                };
+                freeze_process = lib.mkOption {
+                  type = lib.types.bool;
+                  description = "Freeze the server process instead of restarting it when no players online, making it resume faster.";
+                  default = true;
+                };
+                wake_on_start = lib.mkEnableOption "Immediately wake server when starting lazymc.";
+                wake_on_crash = lib.mkEnableOption "Immediately wake server after crashes.";
+                probe_on_start = lib.mkEnableOption "Probe required server details when starting lazymc, wakes server on start. Improves client compatibility. Automatically enabled if required by other config properties.";
+                forge = lib.mkEnableOption "Set to true if this server runs Forge.";
+                start_timeout = lib.mkOption {
+                  type = lib.types.int;
+                  default = 300;
+                  description = "Server start timeout in seconds. Force kill server process if it takes too long.";
+                };
+                stop_timeout = lib.mkOption {
+                  type = lib.types.int;
+                  default = 150;
+                  description = "Server stop timeout in seconds. Force kill server process if it takes too long.";
+                };
+                wake_whitelist = lib.mkOption {
+                  type = lib.types.bool;
+                  default = true;
+                  description = "To wake server, user must be in server whitelist if enabled on server.";
+                };
+                block_banned_ips = lib.mkOption {
+                  type = lib.types.bool;
+                  default = true;
+                  description = "Block banned IPs as listed in banned-ips.json in server directory.";
+                };
+                drop_banned_ips = lib.mkEnableOption "Drop connections from banned IPs. Banned IPs won't be able to ping or request server status. On connect, clients show a 'Disconnected' message rather than the ban reason.";
+                send_proxy_v2 = lib.mkEnableOption "Add HAProxy v2 header to proxied connections. See: https://git.io/J1bYb";
+              };
+              time = {
+                sleep_after = lib.mkOption {
+                  type = lib.types.int;
+                  default = 60;
+                  description = "Sleep after number of seconds.";
+                };
+                minimum_online_time = lib.mkOption {
+                  type = lib.types.int;
+                  default = 60;
+                  description = "Minimum time in seconds to stay online when server is started.";
+                };
+              };
+              motd = {
+                sleeping = lib.mkOption {
+                  type = lib.types.str;
+                  default = "☠ Server is sleeping\n§2☻ Join to start it up";
+                  description = "MOTD, shown in server browser.";
+                };
+                starting = lib.mkOption {
+                  type = lib.types.str;
+                  default = "§2☻ Server is starting...\n§7⌛ Please wait...";
+                  description = "MOTD, shown in server browser.";
+                };
+                stopping = lib.mkOption {
+                  type = lib.types.str;
+                  default = "☠ Server going to sleep...\n⌛ Please wait...";
+                  description = "MOTD, shown in server browser.";
+                };
+                from_server = lib.mkEnableOption "Use MOTD from Minecraft server once known.";
+              };
+              join = {
+                methods = lib.mkOption {
+                  type = lib.types.listOf lib.types.str;
+                  default = [
+                    "hold"
+                    "kick"
+                  ];
+                  description = "Methods to use to occupy a client on join while the server is starting. Read about all methods and configure them below. Methods are used in order, if none is set, the client disconnects without a message.";
+                };
+                kick = {
+                  # Kick occupation method.
+                  # Instantly kicks a client with a message.
+                  starting = lib.mkOption {
+                    type = lib.types.str;
+                    default = "Server is starting... §c♥§r\n\nThis may take some time.\n\nPlease try to reconnect in a minute.";
+                    description = "Message shown when client is kicked while server is starting.";
+                  };
+                  stopping = lib.mkOption {
+                    type = lib.types.str;
+                    default = "Server is going to sleep... §7☠§r\n\nPlease try to reconnect in a minute to wake it again.";
+                    description = "Message shown when client is kicked while server is stopping.";
+                  };
+                };
+                hold = {
+                  # Hold occupation method.
+                  # Holds back a joining client while the server is started until it is ready.
+                  # 'Connecting the server...' is shown on the client while it's held back.
+                  # If the server starts fast enough, the client won't notice it was sleeping at all.
+                  # This works for a limited time of 30 seconds, after which the Minecraft client times out.
+                  timeout = lib.mkOption {
+                    type = lib.types.int;
+                    default = 25;
+                    description = "Hold client for number of seconds on connect while server starts. Keep below Minecraft timeout of 30 seconds.";
+                  };
+                };
+                forward = {
+                  # Forward occupation method.
+                  # Instantly forwards (proxies) the client to a different address.
+                  # You may need to configure target server for it, such as allowing proxies.
+                  # Consumes client, not allowing other join methods afterwards.
+                  address = lib.mkOption {
+                    type = lib.types.str;
+                    default = "127.0.0.1:25565";
+                    description = "IP and port to forward to. The target server will receive original client handshake and login request as received by lazymc.";
+                  };
+                  send_proxy_v2 = lib.mkEnableOption "Add HAProxy v2 header to forwarded connections. See: https://git.io/J1bYb";
+                };
+                lobby = {
+                  # Lobby occupation method.
+                  # The client joins a fake lobby server with an empty world, floating in space.
+                  # A message is overlayed on screen to notify the server is starting.
+                  # The client will be teleported to the real server once it is ready.
+                  # This may keep the client occupied forever if no timeout is set.
+                  # Consumes client, not allowing other join methods afterwards.
+                  # See: https://git.io/JMIi4
+
+                  # !!! WARNING !!!
+                  # This is highly experimental, incomplete and unstable.
+                  # This may break the game and crash clients.
+                  # Don't enable this unless you know what you're doing.
+                  #
+                  # - Server must be in offline mode
+                  # - Server must use Minecraft version 1.16.3 to 1.17.1 (tested with 1.17.1)
+                  # - Server must use vanilla Minecraft
+                  #   - May work with Forge, enable in config, depends on used mods, test before use
+                  #   - Does not work with other mods, such as FTB
+
+                  timeout = lib.mkOption {
+                    type = lib.types.int;
+                    default = 600;
+                    description = "Maximum time in seconds in the lobby while the server starts.";
+                  };
+                  message = lib.mkOption {
+                    type = lib.types.string;
+                    default = "§2Server is starting\n§7⌛ Please wait...";
+                    description = "Message banner in lobby shown to client.";
+                  };
+                  ready_sound = lib.mkOption {
+                    type = lib.types.string;
+                    default = "block.note_block.chime";
+                    description = "Sound effect to play when server is ready.";
+                  };
+                };
+              };
+              lockout = {
+                enabled = lib.mkEnableOption "Enable to prevent everybody from connecting through lazymc. Instantly kicks player.";
+                message = lib.mkOption {
+                  type = lib.types.string;
+                  default = "Server is closed §7☠§r\n\nPlease try to reconnect in a minute.";
+                  description = "Kick players with following message.";
+                };
+              };
+              rcon = {
+                enabled = lib.mkEnableOption "Enable sleeping server through RCON.";
+                port = lib.mkOption {
+                  type = lib.types.int;
+                  default = 25575;
+                  description = "Server RCON port. Must differ from public and server port.";
+                };
+                password = lib.mkOption {
+                  type = lib.types.string;
+                  default = lib.mkPassword;
+                  description = "Server RCON password.";
+                };
+                randomize_password = lib.mkOption {
+                  type = lib.types.bool;
+                  default = true;
+                  description = "Whether to randomize password each start (recommended).";
+                };
+                send_proxy_v2 = lib.mkEnableOption "Add HAProxy v2 header to RCON connections. See: https://git.io/J1bYb";
+              };
+              advanced = {
+                rewrite_server_properties = lib.mkOption {
+                  type = lib.types.bool;
+                  default = true;
+                  description = "Automatically update values in Minecraft server.properties file as required.";
+                };
+              };
+              config = {
+                version = lib.mkOption {
+                  type = lib.types.string;
+                  default = "0.2.11";
+                  description = "lazymc version this configuration is for. Don't change unless you know what you're doing.";
+                };
+              };
+            };
+          });
+          default = { };
+          description = ''
+            lazymc configuration
+
+            You must configure your server directory and start command, see:
+            - server.directory
+            - server.command
+          '';
+        };
+      };
+
+      icon = lib.mkOption {
         type = lib.types.nullOr lib.types.path;
         default = null;
         description = "The icon to use when the server is running.";
@@ -277,7 +609,7 @@ in
     };
     users.groups.minecraft = { };
 
-    systemd.sockets.minecraft-server = lib.mkIf (!cfg.enableHibernation) {
+    systemd.sockets.minecraft-server = lib.mkIf (!cfg.msh.enable) {
       bindsTo = [ "minecraft-server.service" ];
       socketConfig = {
         ListenFIFO = "/run/minecraft-server.stdin";
@@ -290,26 +622,26 @@ in
     };
 
     systemd.services.minecraft-server = {
-      path = lib.mkIf cfg.enableHibernation [ pkgs.jre ];
+      path = lib.mkIf cfg.msh.enable [ pkgs.jre ];
       description = "Minecraft Server Service";
       wantedBy = [ "multi-user.target" ];
-      requires = lib.mkIf (!cfg.enableHibernation) [ "minecraft-server.socket" ];
+      requires = lib.mkIf (!cfg.msh.enable) [ "minecraft-server.socket" ];
       after = [
         "network.target"
-      ] ++ lib.optionals (!cfg.enableHibernation) [ "minecraft-server.socket" ];
+      ] ++ lib.optionals (!cfg.msh.enable) [ "minecraft-server.socket" ];
 
       serviceConfig = {
         ExecStart =
-          if cfg.enableHibernation then
+          if cfg.msh.enable then
             (lib.getExe pkgs.minecraft-server-hibernation)
           else
             "${cfg.package}/bin/minecraft-server ${cfg.jvmOpts}";
-        ExecStop = lib.mkIf (!cfg.enableHibernation) "${stopScript} $MAINPID";
+        ExecStop = lib.mkIf (!cfg.msh.enable) "${stopScript} $MAINPID";
         Restart = "always";
         User = "minecraft";
         WorkingDirectory = cfg.dataDir;
 
-        StandardInput = lib.mkIf (!cfg.enableHibernation) "socket";
+        StandardInput = lib.mkIf (!cfg.msh.enable) "socket";
         StandardOutput = "journal";
         StandardError = "journal";
 
@@ -367,15 +699,20 @@ in
 
               fi
             ''
-            + lib.optionalString cfg.enableHibernation ''
-              ln -sf "${lib.getExe cfg.package}" "${cfg.dataDir}/${cfg.mshConfig.Server.FileName}"
-              ln -sf "${(pkgs.writeText "msh-config.json" (builtins.toJSON cfg.mshConfig))}" "${cfg.dataDir}/msh-config.json"
+            + lib.optionalString (cfg.msh.enable && cfg.msh.symlinkMainProgram) ''
+              ln -sf "${lib.getExe cfg.package}" "${cfg.dataDir}/${cfg.msh.config.Server.FileName}"
             ''
-            + lib.optionalString (cfg.runningIcon != null) ''
-              ln -sf "${cfg.runningIcon}" "${cfg.dataDir}/server-icon.png"
+            + lib.optionalString cfg.msh.enable ''
+              ln -sf "${(pkgs.writeText "msh-config.json" (builtins.toJSON cfg.msh.config))}" "${cfg.dataDir}/msh-config.json"
             ''
-            + lib.optionalString (cfg.enableHibernation && cfg.frozenIcon != null) ''
-              ln -sf "${cfg.frozenIcon}" "${cfg.dataDir}/server-icon-frozen.png"
+            + lib.optionalString cfg.lazymc.enable ''
+              ln -sf "${(pkgs.writeText "lazymc.toml" (builtins.toTOML cfg.lazymc.config))}" "${cfg.dataDir}/lazymc.toml"
+            ''
+            + lib.optionalString (cfg.icon != null) ''
+              ln -sf "${cfg.icon}" "${cfg.dataDir}/server-icon.png"
+            ''
+            + lib.optionalString (cfg.msh.enable && cfg.msh.frozenIcon != null) ''
+              ln -sf "${cfg.msh.frozenIcon}" "${cfg.dataDir}/server-icon-frozen.png"
             ''
           else
             ''

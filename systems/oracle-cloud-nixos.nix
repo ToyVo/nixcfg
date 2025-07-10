@@ -66,10 +66,35 @@
       };
     };
     minecraft-server = {
+      declarative = true;
       enable = true;
       eula = true;
       openFirewall = true;
-      package = pkgs.papermc;
+      package = pkgs.papermcServers.papermc-1_21_6;
+      msh = {
+        enable = true;
+        config = {
+          Msh = {
+            Debug = 3;
+            ID = "a8b5f0e12f7def4fe2dc710cdd43993548ff03a3";
+            MshPort = 25565;
+            MshPortQuery = 25565;
+          };
+          Server = {
+            Protocol = 771;
+            Version = "1.21.6";
+          };
+        };
+      };
+      serverProperties = {
+        allow-flight = true;
+        difficulty = 3;
+        enable-query = true;
+        max-world-size = 50000;
+        "query.port" = 25566;
+        server-port = 25566;
+        spawn-protection = 0;
+      };
     };
   };
   security = {
