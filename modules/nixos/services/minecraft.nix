@@ -49,9 +49,7 @@ let
   defaultServerPort = 25565;
 
   serverPort =
-    if cfg.msh.enable then
-      cfg.msh.config.Msh.MshPort
-    else if cfg.lazymc.enable then
+    if cfg.lazymc.enable then
       lib.strings.toInt (lib.lists.last (lib.strings.splitString ":" cfg.lazymc.config.public.address))
     else
       cfg.serverProperties.server-port or defaultServerPort;
@@ -63,9 +61,7 @@ let
       null;
 
   queryPort =
-    if cfg.msh.enable then
-      cfg.msh.config.Msh.MshPortQuery
-    else if cfg.serverProperties.enable-query or false then
+    if cfg.serverProperties.enable-query or false then
       cfg.serverProperties."query.port" or 25565
     else
       null;
@@ -197,158 +193,6 @@ in
           + "-XX:+CMSClassUnloadingEnabled -XX:ParallelGCThreads=2 "
           + "-XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10";
         description = "JVM options for the Minecraft server.";
-      };
-
-      msh = {
-        enable = lib.mkEnableOption "Use minecraft-server-hibernation as a proxy to save resources";
-        frozenIcon = lib.mkOption {
-          type = lib.types.nullOr lib.types.path;
-          default = null;
-          description = "The icon to use when the server is frozen.";
-        };
-        symlinkMainProgram = lib.mkEnableOption "Symlink `config.services.minecraft-server.program.meta.mainProgram` to `config.services.minecraft-server.dataDir/config.services.minecraft-server.msh.config.Server.FileName`";
-        config = lib.mkOption {
-          type = lib.types.submodule ({
-            options = {
-              Server = {
-                FileName = lib.mkOption {
-                  type = lib.types.str;
-                  default = cfg.package.meta.mainProgram;
-                  example = "server.jar";
-                  description = "The name of the Minecraft server jar file. Used as <Server.FileName> in the StartServer command. If the file is not a jar file, automatic version and protocol detection will not work.";
-                };
-                Folder = lib.mkOption {
-                  type = lib.types.path;
-                  default = cfg.dataDir;
-                  description = "The folder where the Minecraft server files are located.";
-                };
-                Version = lib.mkOption {
-                  type = lib.types.str;
-                  default = "1.19.2";
-                  description = "The version of the Minecraft server.";
-                };
-                Protocol = lib.mkOption {
-                  type = lib.types.int;
-                  default = 760;
-                  description = "The protocol version of the Minecraft server.";
-                };
-              };
-              Commands = {
-                StartServer = lib.mkOption {
-                  type = lib.types.str;
-                  default = "${lib.getExe cfg.package} ${cfg.jvmOpts}";
-                  example = "java <Commands.StartServerParam> -jar <Server.FileName> nogui";
-                  description = "The command to start the Minecraft server. <Commands.StartServerParam> and <Server.FileName> are valid substitution keys at runtime.";
-                };
-                StartServerParam = lib.mkOption {
-                  type = lib.types.str;
-                  default = cfg.jvmOpts;
-                  description = "The JVM options for the Minecraft server. If <Commands.StartServerParam> is not used in StartServer, then this has no effect.";
-                };
-                StopServer = lib.mkOption {
-                  type = lib.types.str;
-                  default = "stop";
-                  description = "The command to stop the Minecraft server.";
-                };
-                StopServerAllowKill = lib.mkOption {
-                  type = lib.types.int;
-                  default = 10;
-                  description = "Allows to kill the server after a certain amount of time (in seconds) when it's not responding. Set to -1 to disable.";
-                };
-              };
-              Msh = {
-                Debug = lib.mkOption {
-                  type = lib.types.int;
-                  default = 1;
-                  description = ''
-                    The debug level for msh.
-                    0 - NONE: no log.
-                    1 - BASE: basic log.
-                    2 - SERV: minecraft server log.
-                    3 - DEVE: developement log.
-                    4 - BYTE: connection bytes log.
-                  '';
-                };
-                ID = lib.mkOption {
-                  type = lib.types.str;
-                  default = "";
-                  description = "The ID for msh. msh will exit if not set.";
-                };
-                MshPort = lib.mkOption {
-                  type = lib.types.int;
-                  default = 25555;
-                  description = "The public port for msh players will connect through. Must be different from the server-port in server.properties.";
-                };
-                MshPortQuery = lib.mkOption {
-                  type = lib.types.int;
-                  default = 25555;
-                  description = "The public port for msh query. Must be different from the query.port in server.properties.";
-                };
-                EnableQuery = lib.mkOption {
-                  type = lib.types.bool;
-                  default = true;
-                  description = "Whether to enable query for msh. Query must also be enabled in the server.properties file.";
-                };
-                TimeBeforeStoppingEmptyServer = lib.mkOption {
-                  type = lib.types.int;
-                  default = 30;
-                  description = "Sets the time (after the last player disconnected) that msh waits before hibernating the minecraft server.";
-                };
-                SuspendAllow = lib.mkEnableOption "Enables msh to suspend minecraft server process when there are no players online. To mitigate ram usage you can set a high swappiness. * pro: player wait time to join frozen server is ~0 * cons: ram usage as minecraft server without msh (cpu remains ~0)";
-                SuspendRefresh = lib.mkOption {
-                  type = lib.types.int;
-                  default = -1;
-                  description = ''
-                    Enables refresh of minecraft server suspension every set seconds (to avoid watchdog crash at unsuspension).
-                    Setting these variables and SuspendRefresh might prevent minecraft server watchdog crash when SuspendAllow is enabled.
-                    server.properties max-tick-time= -1
-                    spigot.yml timeout-time: -1, restart-on-crash: false
-                    bukkit.yml warn-on-overload: false
-                    paper-global.yml early-warning-delay: -1, early-warning-every: -1
-                    set -1 to disable, advised value: 120 (reduce if minecraft server keeps crashing)
-                  '';
-                };
-                InfoHibernation = lib.mkOption {
-                  type = lib.types.str;
-                  default = "                   §fserver status:\n                   §b§lHIBERNATING";
-                  description = "The message to display when the server is hibernating.";
-                };
-                InfoStarting = lib.mkOption {
-                  type = lib.types.str;
-                  default = "                   §fserver status:\n                    §6§lWARMING UP";
-                  description = "The message to display when the server is starting.";
-                };
-                NotifyUpdate = lib.mkOption {
-                  type = lib.types.bool;
-                  default = true;
-                  description = "Set to false if you don't want notifications (every 20 minutes)";
-                };
-                NotifyMessage = lib.mkOption {
-                  type = lib.types.bool;
-                  default = true;
-                  description = "Set to false if you don't want notifications (every 20 minutes)";
-                };
-                Whitelist = lib.mkOption {
-                  type = lib.types.listOf lib.types.str;
-                  default = [ ];
-                  description = "Contains IPs and player names that are allowed to start the server (leave empty to allow everyone)";
-                  example = lib.literalExpression ''["127.0.0.1" "gekigek99"]'';
-                };
-                WhitelistImport = lib.mkEnableOption "Adds whitelist.json to player names that are allowed to start the server. Unknown clients are not allowed to start the server, but can join";
-                ShowResourceUsage = lib.mkEnableOption "enables the logging of the msh tree process cpu/ram usage percent. for debug purposes (debug level 3 required)";
-                ShowInternetUsage = lib.mkEnableOption "enables the logging of the msh connection usage. for debug purposes (debug level 3 required)";
-              };
-            };
-          });
-          default = { };
-          description = ''
-            Minecraft server hibernation configuration file. Only has
-            an effect when {option}`services.minecraft-server.declarative`
-            is set to `true`. See
-            <https://github.com/gekware/minecraft-server-hibernation/tree/v${pkgs.minecraft-server-hibernation.version}?tab=readme-ov-file>
-            for documentation on these values.
-          '';
-        };
       };
 
       lazymc = {
@@ -612,7 +456,7 @@ in
     };
     users.groups.minecraft = { };
 
-    systemd.sockets.minecraft-server = lib.mkIf (!cfg.msh.enable && !cfg.lazymc.enable) {
+    systemd.sockets.minecraft-server = lib.mkIf (!cfg.lazymc.enable) {
       bindsTo = [ "minecraft-server.service" ];
       socketConfig = {
         ListenFIFO = "/run/minecraft-server.stdin";
@@ -625,28 +469,25 @@ in
     };
 
     systemd.services.minecraft-server = {
-      path = lib.mkIf cfg.msh.enable [ pkgs.jre ];
       description = "Minecraft Server Service";
       wantedBy = [ "multi-user.target" ];
-      requires = lib.mkIf (!cfg.msh.enable && !cfg.lazymc.enable) [ "minecraft-server.socket" ];
+      requires = lib.mkIf (!cfg.lazymc.enable) [ "minecraft-server.socket" ];
       after = [
         "network.target"
-      ] ++ lib.optionals (!cfg.msh.enable && !cfg.lazymc.enable) [ "minecraft-server.socket" ];
+      ] ++ lib.optionals (!cfg.lazymc.enable) [ "minecraft-server.socket" ];
 
       serviceConfig = {
         ExecStart =
-          if cfg.msh.enable then
-            (lib.getExe pkgs.minecraft-server-hibernation)
-          else if cfg.lazymc.enable then
+          if cfg.lazymc.enable then
             "${lib.getExe pkgs.lazymc} start"
           else
             "${cfg.package}/bin/minecraft-server ${cfg.jvmOpts}";
-        ExecStop = lib.mkIf (!cfg.msh.enable && !cfg.lazymc.enable) "${stopScript} $MAINPID";
+        ExecStop = lib.mkIf (!cfg.lazymc.enable) "${stopScript} $MAINPID";
         Restart = "always";
         User = "minecraft";
         WorkingDirectory = cfg.dataDir;
 
-        StandardInput = lib.mkIf (!cfg.msh.enable && !cfg.lazymc.enable) "socket";
+        StandardInput = lib.mkIf (!cfg.lazymc.enable) "socket";
         StandardOutput = "journal";
         StandardError = "journal";
 
@@ -704,22 +545,10 @@ in
 
               fi
             ''
-            + lib.optionalString (cfg.msh.enable && cfg.msh.symlinkMainProgram) ''
-              ln -sf "${lib.getExe cfg.package}" "${cfg.dataDir}/${cfg.msh.config.Server.FileName}"
-            ''
-            + lib.optionalString cfg.msh.enable ''
-              ln -sf "${(pkgs.writeText "msh-config.json" (builtins.toJSON cfg.msh.config))}" "${cfg.dataDir}/msh-config.json"
-            ''
             + lib.optionalString cfg.lazymc.enable ''
               ln -sf "${
                 ((pkgs.formats.toml { }).generate "lazymc.toml" cfg.lazymc.config)
               }" "${cfg.dataDir}/lazymc.toml"
-            ''
-            + lib.optionalString (cfg.icon != null) ''
-              ln -sf "${cfg.icon}" "${cfg.dataDir}/server-icon.png"
-            ''
-            + lib.optionalString (cfg.msh.enable && cfg.msh.frozenIcon != null) ''
-              ln -sf "${cfg.msh.frozenIcon}" "${cfg.dataDir}/server-icon-frozen.png"
             ''
           else
             ''
@@ -727,7 +556,10 @@ in
                 rm .declarative
               fi
             ''
-        );
+        )
+        + lib.optionalString (cfg.icon != null) ''
+          ln -sf "${cfg.icon}" "${cfg.dataDir}/server-icon.png"
+        '';
     };
 
     networking.firewall = lib.mkIf cfg.openFirewall (
