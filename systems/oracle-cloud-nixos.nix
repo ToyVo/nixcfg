@@ -112,12 +112,6 @@
     enable = true;
   };
   sops.secrets = {
-    gha_nur = {
-      format = "yaml";
-      sopsFile = ../secrets/oracle.yaml;
-      owner = "nixremote";
-      group = "nixremote";
-    };
     cloudflare_global_api_key = { };
     cloudflare_w_dns_r_zone_token = { };
     "discord_bot.env" = { };
