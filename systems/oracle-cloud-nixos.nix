@@ -69,23 +69,18 @@
       declarative = true;
       enable = true;
       eula = true;
-      openFirewall = true;
-      package = pkgs.papermcServers.papermc-1_21_6;
-      msh = {
+      lazymc = {
         enable = true;
         config = {
-          Msh = {
-            Debug = 3;
-            ID = "a8b5f0e12f7def4fe2dc710cdd43993548ff03a3";
-            MshPort = 25565;
-            MshPortQuery = 25565;
+          public = {
+            protocol = 771;
+            version = "1.21.6";
           };
-          Server = {
-            Protocol = 771;
-            Version = "1.21.6";
-          };
+          advanced.rewrite_server_properties = false;
         };
       };
+      openFirewall = true;
+      package = pkgs.papermcServers.papermc-1_21_6;
       serverProperties = {
         allow-flight = true;
         difficulty = 3;
