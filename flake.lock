@@ -936,11 +936,11 @@
         "nixpkgs": "nixpkgs_11"
       },
       "locked": {
-        "lastModified": 1752179901,
-        "narHash": "sha256-q1+/NfIAXqaCy25+ojX/CVSaWTnHIFhKO/cvNlFvrnY=",
+        "lastModified": 1752184139,
+        "narHash": "sha256-z0v9/qrQmpeq6dClMRjT97fTOUkkM8ypbCJRhqtfE38=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "2a4bbc316af0ab4590abd9053da223e4fbe45e48",
+        "rev": "baeb98e3f16ab735682ca218deda9334af2874f9",
         "type": "github"
       },
       "original": {
