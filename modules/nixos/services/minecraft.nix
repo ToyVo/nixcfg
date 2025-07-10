@@ -708,7 +708,7 @@ in
             ''
             + lib.optionalString cfg.lazymc.enable ''
               ln -sf "${
-                ((pkgs.formats.toml { }).generate "lazymc.toml" (builtins.toTOML cfg.lazymc.config))
+                ((pkgs.formats.toml { }).generate "lazymc.toml" cfg.lazymc.config)
               }" "${cfg.dataDir}/lazymc.toml"
             ''
             + lib.optionalString (cfg.icon != null) ''
