@@ -707,7 +707,9 @@ in
               ln -sf "${(pkgs.writeText "msh-config.json" (builtins.toJSON cfg.msh.config))}" "${cfg.dataDir}/msh-config.json"
             ''
             + lib.optionalString cfg.lazymc.enable ''
-              ln -sf "${(pkgs.writeText "lazymc.toml" (builtins.toTOML cfg.lazymc.config))}" "${cfg.dataDir}/lazymc.toml"
+              ln -sf "${
+                ((pkgs.formats.toml { }).generate "lazymc.toml" (builtins.toTOML cfg.lazymc.config))
+              }" "${cfg.dataDir}/lazymc.toml"
             ''
             + lib.optionalString (cfg.icon != null) ''
               ln -sf "${cfg.icon}" "${cfg.dataDir}/server-icon.png"
