@@ -51,6 +51,8 @@ let
   serverPort =
     if cfg.msh.enable then
       cfg.msh.config.Msh.MshPort
+    else if cfg.lazymc.enable then
+      lib.strings.toInt (lib.lists.last (lib.strings.splitString ":" cfg.lazymc.config.public.address))
     else
       cfg.serverProperties.server-port or defaultServerPort;
 
@@ -610,7 +612,7 @@ in
     };
     users.groups.minecraft = { };
 
-    systemd.sockets.minecraft-server = lib.mkIf (!cfg.msh.enable) {
+    systemd.sockets.minecraft-server = lib.mkIf (!cfg.msh.enable && !cfg.lazymc.enable) {
       bindsTo = [ "minecraft-server.service" ];
       socketConfig = {
         ListenFIFO = "/run/minecraft-server.stdin";
@@ -626,10 +628,10 @@ in
       path = lib.mkIf cfg.msh.enable [ pkgs.jre ];
       description = "Minecraft Server Service";
       wantedBy = [ "multi-user.target" ];
-      requires = lib.mkIf (!cfg.msh.enable) [ "minecraft-server.socket" ];
+      requires = lib.mkIf (!cfg.msh.enable && !cfg.lazymc.enable) [ "minecraft-server.socket" ];
       after = [
         "network.target"
-      ] ++ lib.optionals (!cfg.msh.enable) [ "minecraft-server.socket" ];
+      ] ++ lib.optionals (!cfg.msh.enable && !cfg.lazymc.enable) [ "minecraft-server.socket" ];
 
       serviceConfig = {
         ExecStart =
@@ -639,12 +641,12 @@ in
             "${lib.getExe pkgs.lazymc} start"
           else
             "${cfg.package}/bin/minecraft-server ${cfg.jvmOpts}";
-        ExecStop = lib.mkIf (!cfg.msh.enable) "${stopScript} $MAINPID";
+        ExecStop = lib.mkIf (!cfg.msh.enable && !cfg.lazymc.enable) "${stopScript} $MAINPID";
         Restart = "always";
         User = "minecraft";
         WorkingDirectory = cfg.dataDir;
 
-        StandardInput = lib.mkIf (!cfg.msh.enable) "socket";
+        StandardInput = lib.mkIf (!cfg.msh.enable && !cfg.lazymc.enable) "socket";
         StandardOutput = "journal";
         StandardError = "journal";
 
