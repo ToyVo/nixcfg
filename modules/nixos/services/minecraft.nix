@@ -548,12 +548,13 @@ in
                 enabled = lib.mkEnableOption "Enable sleeping server through RCON.";
                 port = lib.mkOption {
                   type = lib.types.int;
-                  default = 25575;
+                  default = cfg.serverProperties."rcon.port";
+                  example = 25575;
                   description = "Server RCON port. Must differ from public and server port.";
                 };
                 password = lib.mkOption {
                   type = lib.types.str;
-                  default = lib.mkPassword;
+                  default = cfg.serverProperties."rcon.password";
                   description = "Server RCON password.";
                 };
                 randomize_password = lib.mkOption {

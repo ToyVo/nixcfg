@@ -159,8 +159,17 @@
       eula = true;
       openFirewall = true;
       package = pkgs.papermcServers.papermc-1_21_6;
-      msh = {
+      lazymc = {
         enable = true;
+        config = {
+          public = {
+            protocol = 771;
+            version = "1.21.6";
+          };
+          advanced.rewrite_server_properties = false;
+        };
+      };
+      msh = {
         config = {
           Msh = {
             Debug = 3;
