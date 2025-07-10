@@ -210,7 +210,7 @@ in
             options = {
               Server = {
                 FileName = lib.mkOption {
-                  type = lib.types.string;
+                  type = lib.types.str;
                   default = cfg.package.meta.mainProgram;
                   example = "server.jar";
                   description = "The name of the Minecraft server jar file. Used as <Server.FileName> in the StartServer command. If the file is not a jar file, automatic version and protocol detection will not work.";
@@ -221,7 +221,7 @@ in
                   description = "The folder where the Minecraft server files are located.";
                 };
                 Version = lib.mkOption {
-                  type = lib.types.string;
+                  type = lib.types.str;
                   default = "1.19.2";
                   description = "The version of the Minecraft server.";
                 };
@@ -233,18 +233,18 @@ in
               };
               Commands = {
                 StartServer = lib.mkOption {
-                  type = lib.types.string;
+                  type = lib.types.str;
                   default = "${lib.getExe cfg.package} ${cfg.jvmOpts}";
                   example = "java <Commands.StartServerParam> -jar <Server.FileName> nogui";
                   description = "The command to start the Minecraft server. <Commands.StartServerParam> and <Server.FileName> are valid substitution keys at runtime.";
                 };
                 StartServerParam = lib.mkOption {
-                  type = lib.types.string;
+                  type = lib.types.str;
                   default = cfg.jvmOpts;
                   description = "The JVM options for the Minecraft server. If <Commands.StartServerParam> is not used in StartServer, then this has no effect.";
                 };
                 StopServer = lib.mkOption {
-                  type = lib.types.string;
+                  type = lib.types.str;
                   default = "stop";
                   description = "The command to stop the Minecraft server.";
                 };
@@ -268,7 +268,7 @@ in
                   '';
                 };
                 ID = lib.mkOption {
-                  type = lib.types.string;
+                  type = lib.types.str;
                   default = "";
                   description = "The ID for msh. msh will exit if not set.";
                 };
@@ -307,12 +307,12 @@ in
                   '';
                 };
                 InfoHibernation = lib.mkOption {
-                  type = lib.types.string;
+                  type = lib.types.str;
                   default = "                   §fserver status:\n                   §b§lHIBERNATING";
                   description = "The message to display when the server is hibernating.";
                 };
                 InfoStarting = lib.mkOption {
-                  type = lib.types.string;
+                  type = lib.types.str;
                   default = "                   §fserver status:\n                    §6§lWARMING UP";
                   description = "The message to display when the server is starting.";
                 };
@@ -525,12 +525,12 @@ in
                     description = "Maximum time in seconds in the lobby while the server starts.";
                   };
                   message = lib.mkOption {
-                    type = lib.types.string;
+                    type = lib.types.str;
                     default = "§2Server is starting\n§7⌛ Please wait...";
                     description = "Message banner in lobby shown to client.";
                   };
                   ready_sound = lib.mkOption {
-                    type = lib.types.string;
+                    type = lib.types.str;
                     default = "block.note_block.chime";
                     description = "Sound effect to play when server is ready.";
                   };
@@ -539,7 +539,7 @@ in
               lockout = {
                 enabled = lib.mkEnableOption "Enable to prevent everybody from connecting through lazymc. Instantly kicks player.";
                 message = lib.mkOption {
-                  type = lib.types.string;
+                  type = lib.types.str;
                   default = "Server is closed §7☠§r\n\nPlease try to reconnect in a minute.";
                   description = "Kick players with following message.";
                 };
@@ -552,7 +552,7 @@ in
                   description = "Server RCON port. Must differ from public and server port.";
                 };
                 password = lib.mkOption {
-                  type = lib.types.string;
+                  type = lib.types.str;
                   default = lib.mkPassword;
                   description = "Server RCON password.";
                 };
@@ -572,7 +572,7 @@ in
               };
               config = {
                 version = lib.mkOption {
-                  type = lib.types.string;
+                  type = lib.types.str;
                   default = "0.2.11";
                   description = "lazymc version this configuration is for. Don't change unless you know what you're doing.";
                 };
