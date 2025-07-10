@@ -374,7 +374,7 @@ in
               server = {
                 address = lib.mkOption {
                   type = lib.types.str;
-                  default = "127.0.0.1:${cfg.serverProperties.server-port}";
+                  default = "127.0.0.1:${toString cfg.serverProperties.server-port}";
                   example = "127.0.0.1:25566";
                   description = "Server address. Internal IP and port of server started by lazymc to proxy to. Port must be different from public port.";
                 };
