@@ -635,6 +635,8 @@ in
         ExecStart =
           if cfg.msh.enable then
             (lib.getExe pkgs.minecraft-server-hibernation)
+          else if cfg.lazymc.enable then
+            "${lib.getExe pkgs.lazymc} start"
           else
             "${cfg.package}/bin/minecraft-server ${cfg.jvmOpts}";
         ExecStop = lib.mkIf (!cfg.msh.enable) "${stopScript} $MAINPID";
