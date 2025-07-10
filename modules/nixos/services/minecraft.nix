@@ -386,7 +386,7 @@ in
                 };
                 command = lib.mkOption {
                   type = lib.types.str;
-                  default = "${lib.getExe cfg.program} ${cfg.jvmOpts}";
+                  default = "${lib.getExe cfg.package} ${cfg.jvmOpts}";
                   example = "java -Xmx1G -Xms1G -jar server.jar --nogui";
                   description = "Command to start the server. Warning: if using a bash script read: https://git.io/JMIKH";
                 };
