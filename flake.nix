@@ -160,47 +160,46 @@
           ];
 
           checks =
-            with nur-packages.legacyPackages.${system}.lib;
-            derivationOutputs self'.packages
-            // lib.mapAttrs' (n: lib.nameValuePair "devShells-${n}") (
-              lib.filterAttrs (n: v: isCacheable v) self'.devShells
-            )
+            with nixpkgs.lib;
+            with nur-packages.legacyPackages.lib;
+            flakeChecks system self'.packages
+            // mapAttrs' (n: nameValuePair "devShells-${n}") (filterAttrs (n: v: isCacheable v) self'.devShells)
             //
-              lib.mapAttrs'
+              mapAttrs'
                 (
                   n: v:
-                  (lib.nameValuePair "homeConfigurations-${n}") (
+                  (nameValuePair "homeConfigurations-${n}") (
                     self.homeConfigurations."${n}".config.home.activationPackage
                   )
                 )
                 (
-                  lib.filterAttrs (
+                  filterAttrs (
                     n: v: self.homeConfigurations."${n}".pkgs.stdenv.system == system
                   ) self.homeConfigurations
                 )
             //
-              lib.mapAttrs'
+              mapAttrs'
                 (
                   n: v:
-                  (lib.nameValuePair "nixosConfigurations-${n}") (
+                  (nameValuePair "nixosConfigurations-${n}") (
                     self.nixosConfigurations."${n}".config.system.build.toplevel
                   )
                 )
                 (
-                  lib.filterAttrs (
+                  filterAttrs (
                     n: v: self.nixosConfigurations."${n}".pkgs.stdenv.system == system
                   ) self.nixosConfigurations
                 )
             //
-              lib.mapAttrs'
+              mapAttrs'
                 (
                   n: v:
-                  (lib.nameValuePair "darwinConfigurations-${n}") (
+                  (nameValuePair "darwinConfigurations-${n}") (
                     self.darwinConfigurations."${n}".config.system.build.toplevel
                   )
                 )
                 (
-                  lib.filterAttrs (
+                  filterAttrs (
                     n: v: self.darwinConfigurations."${n}".pkgs.stdenv.system == system
                   ) self.darwinConfigurations
                 );

@@ -60,5 +60,9 @@ in
         "nixpkgs=${inputs.nixpkgs}"
       ];
     };
+    sops = {
+      defaultSopsFile = ../../secrets/secrets.yaml;
+      age.keyFile = "/var/sops/age/keys.txt";
+    };
   };
 }

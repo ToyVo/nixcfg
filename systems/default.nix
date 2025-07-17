@@ -27,7 +27,7 @@ let
   sharedHomeModules = [
     catppuccin.homeModules.catppuccin
     nh.homeManagerModules.default
-    nix-index-database.hmModules.nix-index
+    nix-index-database.homeModules.nix-index
     nur.modules.homeManager.default
     nvf.homeManagerModules.nvf
     self.homeModules.default
@@ -142,6 +142,7 @@ let
         nh.nixDarwinModules.prebuiltin
         nix-index-database.darwinModules.nix-index
         self.darwinModules.default
+        sops-nix.darwinModules.sops
         {
           home-manager = {
             extraSpecialArgs = specialArgs;

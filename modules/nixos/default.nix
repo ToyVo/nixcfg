@@ -151,10 +151,6 @@ in
       };
       plymouth.enable = true;
     };
-    sops = {
-      defaultSopsFile = ../../secrets/secrets.yaml;
-      age.keyFile = "/var/sops/age/keys.txt";
-    };
     environment.systemPackages =
       with pkgs;
       [
