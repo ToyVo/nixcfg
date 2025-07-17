@@ -945,11 +945,11 @@
         "nixpkgs": "nixpkgs_11"
       },
       "locked": {
-        "lastModified": 1752790148,
-        "narHash": "sha256-9rtLCBqhNaz97bC+MOSUqwN/QUimVG3D/5O8HKhNIeU=",
+        "lastModified": 1752791710,
+        "narHash": "sha256-FaXp6Hsn49jogaoXNIYycnjZ25F4Jf4A5MsmH6VxP0Q=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "3c776e8afa33406dfe24292fb70d4e259d4dd40e",
+        "rev": "992e1f2bcd76f86b20e71fddfb8529cf2161474f",
         "type": "github"
       },
       "original": {
