@@ -152,12 +152,38 @@
             '';
           };
 
-          devshells.default.commands = [
-            {
-              package = self'.packages.setup-sops;
-              help = "create an age key and place it in the default sops location for editing";
-            }
-          ];
+          devshells.default = {
+            commands = [
+              {
+                package = self'.packages.setup-sops;
+                help = "create an age key and place it in the default sops location for editing";
+              }
+            ];
+            imports = [ "${devshell}/extra/git/hooks.nix" ];
+            git.hooks = {
+              enable = true;
+              pre-commit.text = ''
+                echo "Stashing unstaged changes..."
+                git commit --no-verify -m 'Save index'
+                old_stash=$(git rev-parse -q --verify refs/stash)
+                git stash push -m 'Unstaged changes'
+                new_stash=$(git rev-parse -q --verify refs/stash)
+                git reset --soft HEAD^
+
+                echo "Formatting..."
+                nix fmt
+
+                git add -u
+
+                if [ "$old_stash" != "$new_stash" ]; then
+                    echo "Restoring unstaged changes..."
+                    git stash pop
+                else
+                    echo "No unstaged changes to restore."
+                fi
+              '';
+            };
+          };
 
           checks =
             with nixpkgs.lib;
