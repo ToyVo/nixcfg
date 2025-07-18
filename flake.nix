@@ -67,6 +67,7 @@
       flake-parts,
       nixpkgs,
       nixpkgs-esp-dev,
+      nur,
       nur-packages,
       rust-overlay,
       treefmt-nix,
@@ -83,6 +84,7 @@
             (import rust-overlay)
             nixpkgs-esp-dev.overlays.default
             nur-packages.overlays.default
+            nur.overlays.default
           ];
           config = {
             allowUnfree = true;
@@ -187,7 +189,7 @@
 
           checks =
             with nixpkgs.lib;
-            with nur-packages.legacyPackages.lib;
+            with nur-packages.lib;
             flakeChecks system self'.packages
             // mapAttrs' (n: nameValuePair "devShells-${n}") (filterAttrs (n: v: isCacheable v) self'.devShells)
             //

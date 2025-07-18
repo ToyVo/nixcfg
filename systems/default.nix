@@ -141,6 +141,7 @@ let
         mac-app-util.darwinModules.default
         nh.nixDarwinModules.prebuiltin
         nix-index-database.darwinModules.nix-index
+        nur.modules.darwin.default
         self.darwinModules.default
         sops-nix.darwinModules.sops
         {
