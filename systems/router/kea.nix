@@ -76,7 +76,7 @@
           name = "kea-dhcp4";
           output_options = [
             {
-              output = "/var/lib/kea/kea-dhcp4.log";
+              output = "/var/log/kea/kea-dhcp4.log";
               maxver = 10;
             }
           ];
