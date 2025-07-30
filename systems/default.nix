@@ -119,7 +119,8 @@ let
               homeModules ++ sharedHomeModules ++ [ plasma-manager.homeManagerModules.plasma-manager ];
           };
         }
-      ] ++ nixosModules;
+      ]
+      ++ nixosModules;
     };
   darwinSystem =
     {
@@ -147,15 +148,15 @@ let
         {
           home-manager = {
             extraSpecialArgs = specialArgs;
-            sharedModules =
-              [
-                mac-app-util.homeManagerModules.default
-              ]
-              ++ homeModules
-              ++ sharedHomeModules;
+            sharedModules = [
+              mac-app-util.homeManagerModules.default
+            ]
+            ++ homeModules
+            ++ sharedHomeModules;
           };
         }
-      ] ++ darwinModules;
+      ]
+      ++ darwinModules;
     };
   homeConfiguration =
     {
