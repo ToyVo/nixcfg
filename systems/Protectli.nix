@@ -1,14 +1,23 @@
-{ lib, pkgs, ... }:
 {
+  lib,
+  pkgs,
+  config,
+  ...
+}:
+{
+  imports = [
+    ./router/kea.nix
+    ./router/virtual-hosts.nix
+  ];
+
   hardware.cpu.intel.updateMicrocode = true;
   networking = {
     hostName = "Protectli";
     networkmanager.enable = lib.mkForce false;
+    domain = "diekvoss.net";
+    useNetworkd = true;
     useDHCP = false;
-    nameservers = [
-      "1.1.1.1"
-      "1.0.0.1"
-    ];
+    nameservers = [ "127.0.1.53" ];
     nat = {
       enable = true;
       externalInterface = "enp1s0";
@@ -16,16 +25,30 @@
         "br0"
       ];
     };
-    # Port 53 is for DNS, 22 is for SSH, 67 is for DHCP
-    firewall.interfaces = {
-      br0 = {
+    firewall = {
+      enable = true;
+      # Port 53 is for DNS, 22 is for SSH, 67/68 is for DHCP, 80 is for HTTP, 443 is for HTTPS
+      interfaces.enp1s0 = {
+        allowedTCPPorts = [
+          80
+          443
+        ];
+        allowedUDPPorts = [
+          443
+        ];
+      };
+      interfaces.br0 = {
         allowedTCPPorts = [
           53
           22
+          80
+          443
         ];
         allowedUDPPorts = [
           53
           67
+          68
+          443
         ];
       };
     };
@@ -41,39 +64,41 @@
       "sd_mod"
     ];
     kernelModules = [ "kvm-intel" ];
-    kernelPackages = pkgs.linuxPackages_latest;
   };
+  virtualisation.containers.enable = true;
   profiles.defaults.enable = true;
   userPresets.toyvo.enable = true;
   fileSystemPresets.boot.enable = true;
   fileSystemPresets.btrfs.enable = true;
-  systemd.network = {
-    enable = true;
-    networks = {
-      wan0 = {
+  systemd = {
+    network = {
+      enable = true;
+      networks.wan0 = {
         matchConfig.Name = "enp1s0";
         networkConfig.DHCP = "ipv4";
-        networkConfig.IPv6AcceptRA = true;
+        dhcpV4Config = {
+          UseDNS = false;
+        };
         linkConfig.RequiredForOnline = "routable";
       };
-      lan0 = {
+      networks.lan0 = {
         matchConfig.Name = "enp2s0 enp3s0 enp4s0";
         networkConfig.Bridge = "br0";
       };
-      br0 = {
+      networks.br0 = {
         matchConfig.Name = "br0";
-        networkConfig.Address = "192.168.0.1/24";
+        networkConfig = {
+          Address = "10.1.0.1/24";
+          IPMasquerade = "ipv4";
+          MulticastDNS = true;
+        };
       };
-    };
-    netdevs = {
-      br0.netdevConfig = {
-        Kind = "bridge";
+      netdevs.br0.netdevConfig = {
         Name = "br0";
+        Kind = "bridge";
         MACAddress = "none";
       };
-    };
-    links = {
-      br0 = {
+      links.br0 = {
         matchConfig.OriginalName = "br0";
         linkConfig.MACAddressPolicy = "none";
       };
@@ -82,65 +107,96 @@
   services = {
     openssh = {
       enable = true;
+      openFirewall = false;
       settings.PasswordAuthentication = false;
     };
-    kea.dhcp4 = {
+    resolved = {
       enable = true;
+      extraConfig = ''
+        DNSStubListenerExtra=10.1.0.1
+      '';
+    };
+    adguardhome = {
+      enable = true;
+      port = config.homelab.${config.networking.hostName}.services.adguard.port;
+      mutableSettings = false;
       settings = {
-        interfaces-config = {
-          interfaces = [ "br0" ];
-          dhcp-socket-type = "raw";
+        dns = {
+          bind_hosts = [ "127.0.1.53" ];
+          bootstrap_dns = [ "9.9.9.9" ];
         };
-        lease-database = {
-          type = "memfile";
-          persist = true;
-          name = "/var/lib/kea/dhcp4.leases";
-          lfc-interval = 3600; # 1 hour in seconds
-        };
-        authoritative = true;
-        renew-timer = 3600 * 5;
-        rebind-timer = 3600 * 8;
-        valid-lifetime = 3600 * 9;
-        option-data = [
+        filters = [
           {
-            name = "domain-name-servers";
-            data = "1.1.1.1, 1.0.0.1";
-          }
-          {
-            name = "domain-search";
-            data = "diekvoss.internal, diekvoss.net, diekvoss.com";
-          }
-        ];
-        subnet4 = [
-          {
+            enabled = true;
+            url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt";
+            name = "AdGuard DNS filter";
             id = 1;
-            subnet = "192.168.0.0/24";
-            pools = [
-              {
-                pool = "192.168.0.64 - 192.168.0.254";
-              }
-            ];
-            option-data = [
-              {
-                name = "routers";
-                data = "192.168.0.1";
-              }
-            ];
           }
-        ];
-        loggers = [
           {
-            name = "kea-dhcp4";
-            output_options = [
-              {
-                output = "/var/lib/kea/kea-dhcp4.log";
-                maxver = 10;
-              }
-            ];
-            severity = "INFO";
+            enabled = true;
+            url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_2.txt";
+            name = "AdAway Default Blocklist";
+            id = 2;
+          }
+          {
+            enabled = true;
+            url = "https://big.oisd.nl";
+            name = "OISD Blocklist Big";
+            id = 3;
+          }
+          {
+            enabled = true;
+            url = "https://nsfw.oisd.nl";
+            name = "OISD Blocklist NSFW";
+            id = 4;
           }
         ];
+        filtering.rewrites = lib.mapAttrsToList (
+          hostname:
+          { ip, ... }:
+          {
+            domain = "${lib.toLower hostname}.internal";
+            answer = ip;
+          }
+        ) (lib.filterAttrs (hostname: hostConf: lib.hasAttr "ip" hostConf) config.homelab);
       };
     };
+    caddy.enable = true;
+    cloudflare-dyndns = {
+      enable = true;
+      domains = [
+        "toyvo.dev"
+      ];
+      proxied = true;
+      apiTokenFile = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
+    };
+  };
+  security.acme =
+    let
+      cloudflare = {
+        email = "collin@diekvoss.com";
+        dnsProvider = "cloudflare";
+        credentialFiles = {
+          "CF_API_EMAIL_FILE" = "${pkgs.writeText "cfemail" ''
+            collin@diekvoss.com
+          ''}";
+          "CF_API_KEY_FILE" = config.sops.secrets.cloudflare_global_api_key.path;
+          "CF_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
+        };
+      };
+    in
+    {
+      acceptTerms = true;
+      defaults.email = cloudflare.email;
+      certs = {
+        "diekvoss.net" = cloudflare // {
+          extraDomainNames = [ "*.diekvoss.net" ];
+        };
+        "toyvo.dev" = cloudflare;
+      };
+    };
+  sops.secrets = {
+    cloudflare_global_api_key = { };
+    cloudflare_w_dns_r_zone_token = { };
   };
 }
