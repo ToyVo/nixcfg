@@ -106,116 +106,120 @@
       enable = true;
       settings.PasswordAuthentication = false;
     };
-    kea = {
-      dhcp4 = {
-        enable = true;
-        settings = {
-          interfaces-config = {
-            interfaces = [
+    kea =
+      let
+        reserved = 64;
+      in
+      {
+        dhcp4 = {
+          enable = true;
+          settings = {
+            interfaces-config = {
+              interfaces = [
+                "br0"
+              ];
+              dhcp-socket-type = "raw";
+            };
+            lease-database = {
+              name = "/var/lib/kea/dhcp4.leases";
+              persist = true;
+              type = "memfile";
+            };
+            authoritative = true;
+            renew-timer = 3600 * 5;
+            rebind-timer = 3600 * 8;
+            valid-lifetime = 3600 * 9;
+            subnet4 = [
+              {
+                id = 1;
+                pools = [
+                  {
+                    pool = "192.168.0.${toString reserved} - 192.168.0.254";
+                  }
+                ];
+                subnet = "192.168.0.0/24";
+                option-data = [
+                  {
+                    name = "routers";
+                    data = "192.168.0.1";
+                  }
+                ];
+              }
+            ];
+            option-data = [
+              {
+                name = "domain-name-servers";
+                data = "9.9.9.9, 149.112.112.112";
+              }
+              {
+                name = "domain-search";
+                data = "diekvoss.internal, diekvoss.net, diekvoss.com";
+              }
+            ];
+            loggers = [
+              {
+                name = "kea-dhcp4";
+                output_options = [
+                  {
+                    output = "/var/log/kea/kea-dhcp4.log";
+                    maxver = 10;
+                  }
+                ];
+                severity = "INFO";
+              }
+            ];
+          };
+        };
+        dhcp6 = {
+          enable = true;
+          settings = {
+            interfaces-config.interfaces = [
               "br0"
             ];
-            dhcp-socket-type = "raw";
+            lease-database = {
+              name = "/var/lib/kea/dhcp6.leases";
+              persist = true;
+              type = "memfile";
+            };
+            renew-timer = 3600 * 5;
+            rebind-timer = 3600 * 8;
+            valid-lifetime = 3600 * 9;
+            preferred-lifetime = 3600 * 7;
+            subnet6 = [
+              {
+                id = 1;
+                pools = [
+                  {
+                    pool = "fdbd:2025:0518::${lib.toHexString reserved} - fdbd:2025:0518::ffff";
+                  }
+                ];
+                subnet = "fdbd:2025:0518::/64";
+              }
+            ];
+            option-data = [
+              {
+                name = "dns-servers";
+                data = "2620:fe::fe, 2620:fe::9";
+              }
+              {
+                name = "domain-search";
+                data = "diekvoss.internal, diekvoss.net, diekvoss.com";
+              }
+            ];
+            loggers = [
+              {
+                name = "kea-dhcp6";
+                output_options = [
+                  {
+                    output = "/var/log/kea/kea-dhcp6.log";
+                    maxver = 10;
+                  }
+                ];
+                severity = "INFO";
+              }
+            ];
           };
-          lease-database = {
-            name = "/var/lib/kea/dhcp4.leases";
-            persist = true;
-            type = "memfile";
-          };
-          authoritative = true;
-          renew-timer = 3600 * 5;
-          rebind-timer = 3600 * 8;
-          valid-lifetime = 3600 * 9;
-          subnet4 = [
-            {
-              id = 1;
-              pools = [
-                {
-                  pool = "192.168.0.64 - 192.168.0.254";
-                }
-              ];
-              subnet = "192.168.0.0/24";
-              option-data = [
-                {
-                  name = "routers";
-                  data = "192.168.0.1";
-                }
-              ];
-            }
-          ];
-          option-data = [
-            {
-              name = "domain-name-servers";
-              data = "9.9.9.9, 149.112.112.112";
-            }
-            {
-              name = "domain-search";
-              data = "diekvoss.internal, diekvoss.net, diekvoss.com";
-            }
-          ];
-          loggers = [
-            {
-              name = "kea-dhcp4";
-              output_options = [
-                {
-                  output = "/var/log/kea/kea-dhcp4.log";
-                  maxver = 10;
-                }
-              ];
-              severity = "INFO";
-            }
-          ];
         };
       };
-      dhcp6 = {
-        enable = true;
-        settings = {
-          interfaces-config.interfaces = [
-            "br0"
-          ];
-          lease-database = {
-            name = "/var/lib/kea/dhcp6.leases";
-            persist = true;
-            type = "memfile";
-          };
-          renew-timer = 3600 * 5;
-          rebind-timer = 3600 * 8;
-          valid-lifetime = 3600 * 9;
-          preferred-lifetime = 3600 * 7;
-          subnet6 = [
-            {
-              id = 1;
-              pools = [
-                {
-                  pool = "fdbd:2025:0518::${lib.toHexString reserved} - fdbd:2025:0518::ffff";
-                }
-              ];
-              subnet = "fdbd:2025:0518::/64";
-            }
-          ];
-          option-data = [
-            {
-              name = "dns-servers";
-              data = "2620:fe::fe, 2620:fe::9";
-            }
-            {
-              name = "domain-search";
-              data = "diekvoss.internal, diekvoss.net, diekvoss.com";
-            }
-          ];
-          loggers = [
-            {
-              name = "kea-dhcp6";
-              output_options = [
-                {
-                  output = "/var/log/kea/kea-dhcp6.log";
-                  maxver = 10;
-                }
-              ];
-              severity = "INFO";
-            }
-          ];
-        };
-      };
-    };
   };
 }
