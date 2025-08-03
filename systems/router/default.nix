@@ -2,8 +2,12 @@
   lib,
   pkgs,
   config,
+  homelab,
   ...
 }:
+let
+  inherit (config.networking) hostName;
+in
 {
   imports = [
     ./kea.nix
@@ -121,7 +125,7 @@
     };
     adguardhome = {
       enable = true;
-      port = config.homelab.${config.networking.hostName}.services.adguard.port;
+      port = homelab.${hostName}.services.adguard.port;
       mutableSettings = false;
       settings = {
         dns = {
@@ -161,7 +165,7 @@
             domain = "${lib.toLower hostname}.internal";
             answer = ip;
           }
-        ) (lib.filterAttrs (hostname: hostConf: lib.hasAttr "ip" hostConf) config.homelab);
+        ) (lib.filterAttrs (hostname: hostConf: lib.hasAttr "ip" hostConf) homelab);
       };
     };
     caddy.enable = true;

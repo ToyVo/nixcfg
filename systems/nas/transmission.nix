@@ -2,12 +2,14 @@
   config,
   pkgs,
   lib,
+  homelab,
   ...
 }:
 let
   wireguardInterface = "wg0";
   wireguardInterfaceNamespace = "protonvpn0";
   wireguardGateway = "10.2.0.1";
+  inherit (config.networking) hostName;
 in
 {
   config = lib.mkIf config.services.transmission.enable {
@@ -16,7 +18,7 @@ in
       package = pkgs.transmission_4;
       openRPCPort = true;
       settings = {
-        rpc-port = config.homelab.${config.networking.hostName}.services.transmission.port;
+        rpc-port = homelab.${hostName}.services.transmission.port;
         bind-address-ipv4 = "0.0.0.0";
         rpc-bind-address = "0.0.0.0";
         rpc-whitelist = "127.0.0.1,10.1.0.*";

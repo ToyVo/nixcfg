@@ -2,8 +2,12 @@
   pkgs,
   lib,
   config,
+  homelab,
   ...
 }:
+let
+  inherit (config.networking) hostName;
+in
 {
   config = lib.mkIf config.services.nextcloud.enable {
     networking.firewall = {
@@ -38,7 +42,7 @@
       };
       collabora-online = {
         enable = true;
-        port = config.homelab.${config.networking.hostName}.services.collabora.port;
+        port = homelab.${hostName}.services.collabora.port;
         settings = {
           server_name = "collabora.diekvoss.net";
           storage.wopi = {

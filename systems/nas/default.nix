@@ -1,9 +1,12 @@
 {
   pkgs,
   config,
-  lib,
+  homelab,
   ...
 }:
+let
+  inherit (config.networking) hostName;
+in
 {
   imports = [
     ./samba.nix
@@ -65,20 +68,18 @@
       enable = true;
       openFirewall = true;
       group = "multimedia";
-      listenPort = config.homelab.${config.networking.hostName}.services.bazarr.port;
+      listenPort = homelab.${hostName}.services.bazarr.port;
     };
     cockpit = {
       enable = true;
       openFirewall = true;
-      port = config.homelab.${config.networking.hostName}.services.cockpit.port;
+      port = homelab.${hostName}.services.cockpit.port;
       allowed-origins = [ "https://cockpit.diekvoss.net" ];
     };
     coder = {
       enable = true;
       accessUrl = "https://coder.diekvoss.net";
-      listenAddress = "0.0.0.0:${
-        toString config.homelab.${config.networking.hostName}.services.coder.port
-      }";
+      listenAddress = "0.0.0.0:${toString homelab.${hostName}.services.coder.port}";
     };
     # discord_bot = {
     #   enable = true;
@@ -90,7 +91,7 @@
     #     TSHOCK_REST_BASE_URL = "https://mc.toyvo.dev";
     #     IP = "0.0.0.0";
     #     ADDR = "0.0.0.0";
-    #     PORT = config.homelab.${config.networking.hostName}.services.discord_bot.port;
+    #     PORT = homelab.${hostName}.services.discord_bot.port;
     #     BASE_URL = "https://toyvo.dev";
     #     CLOUD_SSH_HOST = "discord_bot@mc.toyvo.dev";
     #     CLOUD_SSH_KEY = config.sops.secrets.cloud_ssh_ed25519.path;
@@ -99,7 +100,7 @@
     flaresolverr = {
       enable = true;
       openFirewall = true;
-      port = config.homelab.${config.networking.hostName}.services.flaresolverr.port;
+      port = homelab.${hostName}.services.flaresolverr.port;
       package = pkgs.flaresolverr.overrideAttrs (
         finalAttrs: previousAttrs: rec {
           version = "3.3.24";
@@ -122,8 +123,8 @@
           temperature_unit = "F";
         };
         http = {
-          trusted_proxies = [ config.homelab.router.ip ];
-          server_port = config.homelab.${config.networking.hostName}.services.home-assistant.port;
+          trusted_proxies = [ homelab.router.ip ];
+          server_port = homelab.${hostName}.services.home-assistant.port;
         };
       };
     };
@@ -132,7 +133,7 @@
       enable = true;
       openFirewall = true;
       host = "0.0.0.0";
-      port = config.homelab.${config.networking.hostName}.services.immich.port;
+      port = homelab.${hostName}.services.immich.port;
       group = "multimedia";
     };
     jellyfin = {
@@ -144,7 +145,7 @@
       enable = true;
       openFirewall = true;
       group = "multimedia";
-      settings.server.port = config.homelab.${config.networking.hostName}.services.lidarr.port;
+      settings.server.port = homelab.${hostName}.services.lidarr.port;
       package = pkgs.lidarr.overrideAttrs rec {
         version = "2.12.4.4658";
         src = pkgs.fetchurl {
@@ -158,11 +159,11 @@
       enable = true;
       openFirewall = true;
       secretKeyFile = config.sops.secrets."cache-priv-key.pem".path;
-      port = config.homelab.${config.networking.hostName}.services.nix-serve.port;
+      port = homelab.${hostName}.services.nix-serve.port;
     };
     ollama = {
       enable = true;
-      port = config.homelab.${config.networking.hostName}.services.ollama.port;
+      port = homelab.${hostName}.services.ollama.port;
     };
     openssh = {
       enable = true;
@@ -173,26 +174,26 @@
     prowlarr = {
       enable = true;
       openFirewall = true;
-      settings.server.port = config.homelab.${config.networking.hostName}.services.prowlarr.port;
+      settings.server.port = homelab.${hostName}.services.prowlarr.port;
     };
     radarr = {
       enable = true;
       openFirewall = true;
       group = "multimedia";
-      settings.server.port = config.homelab.${config.networking.hostName}.services.radarr.port;
+      settings.server.port = homelab.${hostName}.services.radarr.port;
     };
     readarr = {
       enable = true;
       openFirewall = true;
       group = "multimedia";
-      settings.server.port = config.homelab.${config.networking.hostName}.services.readarr.port;
+      settings.server.port = homelab.${hostName}.services.readarr.port;
     };
     samba.enable = true;
     sonarr = {
       enable = true;
       openFirewall = true;
       group = "multimedia";
-      settings.server.port = config.homelab.${config.networking.hostName}.services.sonarr.port;
+      settings.server.port = homelab.${hostName}.services.sonarr.port;
     };
     spice-vdagentd.enable = true;
     transmission.enable = true;
@@ -203,12 +204,12 @@
       enable = true;
       openFirewall = true;
       dataDir = "/mnt/POOL/open-webui";
-      port = config.homelab.${config.networking.hostName}.services.open-webui.port;
+      port = homelab.${hostName}.services.open-webui.port;
     };
     portainer = {
       enable = true;
       openFirewall = true;
-      sport = config.homelab.${config.networking.hostName}.services.portainer.port;
+      sport = homelab.${hostName}.services.portainer.port;
     };
   };
   fileSystems."/mnt/POOL" = {

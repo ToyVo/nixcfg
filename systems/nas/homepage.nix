@@ -1,9 +1,17 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  homelab,
+  ...
+}:
+let
+  inherit (config.networking) hostName;
+in
 {
   config = lib.mkIf config.services.homepage-dashboard.enable {
     services.homepage-dashboard = {
       openFirewall = true;
-      listenPort = config.homelab.${config.networking.hostName}.services.homepage.port;
+      listenPort = homelab.${hostName}.services.homepage.port;
       allowedHosts = "nas.internal:8082,diekvoss.net";
       bookmarks = [
         {
@@ -56,7 +64,7 @@
         lib.foldl' (
           acc: hostname:
           let
-            services = config.homelab.${hostname}.services or { };
+            services = homelab.${hostname}.services or { };
           in
           lib.foldl' (
             accInner: service:
@@ -79,7 +87,7 @@
               ];
             }
           ) acc (lib.attrNames services)
-        ) { } (lib.attrNames config.homelab)
+        ) { } (lib.attrNames homelab)
       );
       widgets = [
         {

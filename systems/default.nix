@@ -84,6 +84,7 @@ let
       };
     }
   ];
+  homelab = import ../homelab.nix;
   lib = nixpkgs.lib;
   nixosSystem =
     {
@@ -93,13 +94,12 @@ let
     }:
     let
       pkgs = self.lib.import_nixpkgs system;
-      specialArgs = inputs // {
-        inherit system;
-      };
     in
-    lib.nixosSystem {
+    lib.nixosSystem rec {
       inherit system pkgs;
-      specialArgs = specialArgs;
+      specialArgs = inputs // {
+        inherit system homelab;
+      };
       modules = [
         arion.nixosModules.arion
         catppuccin.nixosModules.catppuccin
@@ -130,13 +130,12 @@ let
     }:
     let
       pkgs = self.lib.import_nixpkgs system;
-      specialArgs = inputs // {
-        inherit system;
-      };
     in
-    nix-darwin.lib.darwinSystem {
+    nix-darwin.lib.darwinSystem rec {
       inherit pkgs;
-      specialArgs = specialArgs;
+      specialArgs = inputs // {
+        inherit system homelab;
+      };
       modules = [
         home-manager.darwinModules.default
         mac-app-util.darwinModules.default
@@ -165,13 +164,12 @@ let
     }:
     let
       pkgs = self.lib.import_nixpkgs system;
-      specialArgs = inputs // {
-        inherit system;
-      };
     in
     home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      extraSpecialArgs = specialArgs;
+      extraSpecialArgs = inputs // {
+        inherit system homelab;
+      };
       modules = homeModules ++ sharedHomeModules;
     };
 in

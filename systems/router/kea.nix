@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ homelab, lib, ... }:
 let
   reserved = 64;
 in
@@ -60,7 +60,7 @@ in
                       hostAddress = lib.strings.toInt (lib.last (lib.splitString "." ip));
                     in
                     inSubnet && hostAddress > 1 && hostAddress < reserved
-                  ) config.homelab
+                  ) homelab
                 );
           }
         ];
@@ -138,7 +138,7 @@ in
                       hostAddress = lib.strings.toInt (lib.last (lib.splitString "." ip));
                     in
                     inSubnet && hostAddress > 1 && hostAddress < reserved
-                  ) config.homelab
+                  ) homelab
                 );
           }
         ];

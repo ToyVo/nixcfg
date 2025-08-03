@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  homelab,
+  ...
+}:
 {
   config = lib.mkIf config.services.caddy.enable {
     users.users.caddy.extraGroups = [ "acme" ];
@@ -49,7 +54,7 @@
                 ...
               }:
               lib.hasPrefix "10.1.0." ip
-            ) config.homelab
+            ) homelab
           );
     };
   };
