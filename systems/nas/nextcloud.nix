@@ -19,7 +19,7 @@ in
         hostName = "nextcloud.diekvoss.net";
         config = {
           adminpassFile = config.sops.secrets.nextcloud_admin_password.path;
-          adminuser = config.users.users.toyvo.name;
+          adminuser = config.userPresets.toyvo.name;
           dbtype = "pgsql";
         };
         database.createLocally = true;

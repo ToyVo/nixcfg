@@ -18,7 +18,7 @@
         enableKeyMapping = true;
         remapCapsLockToControl = true;
       };
-      primaryUser = config.users.users.toyvo.name;
+      primaryUser = config.userPresets.toyvo.name;
     };
     environment.variables.TERMINFO_DIRS = lib.mkForce (
       map (path: path + "/share/terminfo") config.environment.profiles
