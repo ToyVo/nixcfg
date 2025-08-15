@@ -121,6 +121,7 @@ in
           temperature_unit = "F";
         };
         http = {
+          use_x_forwarded_for = true;
           trusted_proxies = [ homelab.router.ip ];
           server_port = homelab.${hostName}.services.home-assistant.port;
         };
