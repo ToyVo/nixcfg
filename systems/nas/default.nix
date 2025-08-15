@@ -106,7 +106,10 @@ in
     };
     home-assistant = {
       enable = true;
-      extraComponents = [ "isal" ];
+      extraComponents = [
+        "isal"
+        "met"
+      ];
       extraPackages =
         ps: with ps; [
           isal
