@@ -2,10 +2,12 @@
   pkgs,
   config,
   homelab,
+  nixpkgs-stable,
   ...
 }:
 let
   inherit (config.networking) hostName;
+  inherit (pkgs.stdenv) system;
 in
 {
   imports = [
@@ -104,6 +106,12 @@ in
     };
     home-assistant = {
       enable = true;
+      extraComponents = [ "isal" ];
+      extraPackages =
+        ps: with ps; [
+          isal
+          zlib-ng
+        ];
       openFirewall = true;
       config = {
         homeassistant = {
@@ -124,6 +132,7 @@ in
       host = "0.0.0.0";
       port = homelab.${hostName}.services.immich.port;
       group = "multimedia";
+      package = nixpkgs-stable.legacyPackages.${system}.immich;
     };
     jellyfin = {
       enable = true;
