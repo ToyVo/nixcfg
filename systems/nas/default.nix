@@ -107,8 +107,14 @@ in
     home-assistant = {
       enable = true;
       extraComponents = [
+        "analytics"
+        "google_translate"
         "isal"
         "met"
+        "nest"
+        "radio_browser"
+        "shopping_list"
+        "tplink_omada"
       ];
       extraPackages =
         ps: with ps; [
