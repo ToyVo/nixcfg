@@ -101,17 +101,6 @@ in
       enable = true;
       openFirewall = true;
       port = homelab.${hostName}.services.flaresolverr.port;
-      package = pkgs.flaresolverr.overrideAttrs (
-        finalAttrs: previousAttrs: rec {
-          version = "3.3.24";
-          src = pkgs.fetchFromGitHub {
-            owner = "FlareSolverr";
-            repo = "FlareSolverr";
-            rev = "v${version}";
-            hash = "sha256-BIV5+yLTgVQJtxi/F9FwtZ4pYcE2vGHmEgwigMtqwD8=";
-          };
-        }
-      );
     };
     home-assistant = {
       enable = true;
@@ -146,13 +135,6 @@ in
       openFirewall = true;
       group = "multimedia";
       settings.server.port = homelab.${hostName}.services.lidarr.port;
-      package = pkgs.lidarr.overrideAttrs rec {
-        version = "2.12.4.4658";
-        src = pkgs.fetchurl {
-          url = "https://github.com/lidarr/Lidarr/releases/download/v${version}/Lidarr.master.${version}.linux-core-x64.tar.gz";
-          sha256 = "sha256-ttbQj6GYuKedDEdF8vUZcmc0AluZS6pPC5GCQTUu7OM=";
-        };
-      };
     };
     nextcloud.enable = true;
     nix-serve = {
