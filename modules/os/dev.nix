@@ -71,7 +71,6 @@ in
         ++ lib.optionals cfg.gui.enable [
           jetbrains-toolbox
           zed-editor
-          code-cursor
         ]
         ++ lib.optionals stdenv.isLinux [
           gcc

@@ -12,8 +12,7 @@
     "default_model": {
       "provider": "zed.dev",
       "model": "claude-3-7-sonnet"
-    },
-    "version": "2"
+    }
   },
   "language_models": {
     "ollama": {
@@ -84,7 +83,6 @@
   "inlay_hints": {
     "enabled": true
   },
-  "hour_format": "hour24",
   "vim_mode": true,
   "lsp": {
     "nil": {

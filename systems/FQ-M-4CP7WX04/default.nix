@@ -55,6 +55,12 @@ in
       {
         name = "ollama-app";
       }
+      {
+        name = "cursor";
+      }
+      {
+        name = "github";
+      }
     ];
     taps = [
       "mongodb/brew"
