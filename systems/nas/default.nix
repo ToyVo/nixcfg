@@ -108,6 +108,7 @@ in
       enable = true;
       extraComponents = [
         "analytics"
+        "google_pubsub"
         "google_translate"
         "isal"
         "met"
@@ -118,8 +119,7 @@ in
       ];
       extraPackages =
         ps: with ps; [
-          isal
-          zlib-ng
+          grpcio
         ];
       openFirewall = true;
       config = {
