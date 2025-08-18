@@ -144,46 +144,25 @@
           };
 
           packages = {
-            setup-sops = pkgs.writeShellScriptBin "setup-sops" ''
-              destination="$HOME/${
-                if pkgs.stdenv.isDarwin then "Library/Application Support" else ".config"
-              }/sops/age"
-              mkdir -p "$destination"
-              echo "$(${pkgs.age}/bin/age-keygen)" > "$destination/keys.txt"
-              sudo mkdir -p /var/sops/age
-              sudo cp "$destination/keys.txt" /var/sops/age/keys.txt
-            '';
+            setup-sops = pkgs.callPackage ./pkgs/setup-sops.nix { };
+            setup-git-sops = pkgs.callPackage ./pkgs/setup-git-sops.nix { };
+            git-sops = pkgs.callPackage ./pkgs/git-sops.nix { };
+            pre-commit = pkgs.callPackage ./pkgs/pre-commit.nix { };
           };
 
           devshells.default = {
             commands = [
               {
                 package = self'.packages.setup-sops;
-                help = "create an age key and place it in the default sops location for editing";
+              }
+              {
+                package = self'.packages.setup-git-sops;
               }
             ];
             imports = [ "${devshell}/extra/git/hooks.nix" ];
             git.hooks = {
               enable = true;
-              pre-commit.text = ''
-                echo "Stashing unstaged changes..."
-                git commit --allow-empty --no-verify --message 'Save index'
-                stash_output=$(git stash push --include-untracked --message 'Unstaged changes')
-                echo $stash_output
-                git reset --soft HEAD^
-
-                echo "Formatting..."
-                nix fmt
-
-                git add --all
-
-                if [ -n "$stash_output" ] && [ "$stash_output" != "No local changes to save" ]; then
-                    echo "Restoring unstaged changes..."
-                    git stash pop
-                else
-                    echo "No unstaged changes to restore."
-                fi
-              '';
+              pre-commit.text = self'.packages.pre-commit.text;
             };
           };
 
