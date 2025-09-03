@@ -62,7 +62,6 @@ in
       };
       # TODO: undo
       rio.enable = cfg.gui.enable && pkgs.stdenv.isLinux;
-      vscode.enable = cfg.gui.enable;
       wezterm.enable = cfg.gui.enable;
       kitty.enable = cfg.gui.enable;
       git = {

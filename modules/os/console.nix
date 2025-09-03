@@ -38,16 +38,17 @@ in
             broot
             cachix
             curl
+            curlie
             dig
             dogdns
             dotnet-sdk_8
             fd
-            git-crypt
             gnutar
             gping
             graphviz
             gzip
             helix
+            httpie
             jq
             just
             kubectl

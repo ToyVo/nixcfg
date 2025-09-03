@@ -52,6 +52,7 @@ in
           dioxus-cli
           dotnet-sdk
           flex
+          gh
           gnumake
           gperf
           icu

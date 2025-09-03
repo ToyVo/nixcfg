@@ -5,7 +5,6 @@
     ./editors/helix.nix
     ./editors/ideavim.nix
     ./editors/neovim.nix
-    ./editors/vscode.nix
     ./editors/zed.nix
     ./eza.nix
     ./git.nix
