@@ -63,9 +63,9 @@ in
           nodePackages.prettier
           pipenv
           pkg-config
-          poetry
           rustup
           systemfd
+          uv
           # esp-idf-full
         ]
         ++ lib.optionals cfg.gui.enable [
@@ -75,10 +75,6 @@ in
         ++ lib.optionals stdenv.isLinux [
           gcc
           clang
-        ]
-        ++ lib.optionals stdenv.isDarwin [
-          darwin.apple_sdk.frameworks.SystemConfiguration
-          darwin.apple_sdk.frameworks.CoreServices
         ]
         ++
           lib.optionals
