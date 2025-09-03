@@ -97,7 +97,7 @@
       flake = {
         lib = {
           inherit import_nixpkgs;
-        };
+        } // configurations.lib;
         nixosModules.default = ./modules/nixos;
         darwinModules.default = ./modules/darwin;
         homeModules.default = ./modules/home;
@@ -132,12 +132,7 @@
 
           treefmt = {
             programs = {
-              nixfmt = {
-                enable = true;
-                excludes = [
-                  "secrets/*.nix"
-                ];
-              };
+              nixfmt.enable = true;
               yamlfmt.enable = true;
               jsonfmt.enable = true;
             };

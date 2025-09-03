@@ -136,11 +136,10 @@ let
     };
 in
 {
+  lib = {
+    inherit darwinSystem homeConfiguration nixosSystem;
+  };
   darwinConfigurations = {
-    FQ-M-4CP7WX04 = darwinSystem {
-      system = "aarch64-darwin";
-      darwinModules = [ ./FQ-M-4CP7WX04 ];
-    };
     MacBook-Pro = darwinSystem {
       system = "aarch64-darwin";
       darwinModules = [ ./MacBook-Pro.nix ];
