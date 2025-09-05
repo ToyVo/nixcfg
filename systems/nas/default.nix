@@ -110,6 +110,7 @@ in
         "analytics"
         "google_pubsub"
         "google_translate"
+        "html5"
         "isal"
         "met"
         "nest"
