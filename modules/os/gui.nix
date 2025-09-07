@@ -59,7 +59,6 @@ in
         ++ lib.optionals stdenv.isDarwin [
           appcleaner
           pinentry_mac
-          rectangle
           utm
           warp-terminal
         ];
