@@ -8,7 +8,6 @@
     ./editors/zed.nix
     ./eza.nix
     ./git.nix
-    ./gpg.nix
     ./gtk.nix
     ./kde.nix
     ./shells/bash.nix

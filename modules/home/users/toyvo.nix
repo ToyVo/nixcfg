@@ -71,15 +71,6 @@ in
         userEmail = "Collin@Diekvoss.com";
         signing.key = config.sops.secrets."git_toyvo_sign_ed25519.pub".path;
       };
-      gpg = {
-        enable = true;
-        publicKeys = [
-          {
-            source = ../../../secrets/gpg_yubikey.pub;
-            trust = 5;
-          }
-        ];
-      };
       helix.enable = true;
       hyper.enable = cfg.gui.enable;
       ssh =
@@ -146,7 +137,6 @@ in
       accent = "red";
     };
     sops.secrets = {
-      cachix_auth_token.mode = "0644";
       "git_toyvo_sign_ed25519.pub".mode = "0644";
       git_toyvo_sign_ed25519.mode = "0600";
       "github_toyvo_auth_ed25519.pub".mode = "0644";
