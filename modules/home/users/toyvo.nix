@@ -79,8 +79,8 @@ in
             identitiesOnly = true;
             identityFile = [
               config.sops.secrets.ssh_toyvo_auth_ed25519.path
-              config.sops.secrets.ykC_ed25519_sk.path
-              config.sops.secrets.ykA_ed25519_sk.path
+              config.sops.secrets.yubikey_usbc_ed25519_sk.path
+              config.sops.secrets.yubikey_usba_ed25519_sk.path
             ];
           };
         in
@@ -90,8 +90,8 @@ in
             identitiesOnly = true;
             identityFile = [
               config.sops.secrets.github_toyvo_auth_ed25519.path
-              config.sops.secrets.ykC_ed25519_sk.path
-              config.sops.secrets.ykA_ed25519_sk.path
+              config.sops.secrets.yubikey_usbc_ed25519_sk.path
+              config.sops.secrets.yubikey_usba_ed25519_sk.path
             ];
           };
           matchBlocks."oracle" = identityConfig // {
@@ -143,10 +143,10 @@ in
       github_toyvo_auth_ed25519.mode = "0600";
       "ssh_toyvo_auth_ed25519.pub".mode = "0644";
       ssh_toyvo_auth_ed25519.mode = "0600";
-      "ykA_ed25519_sk.pub".mode = "0644";
-      ykA_ed25519_sk.mode = "0600";
-      "ykC_ed25519_sk.pub".mode = "0644";
-      ykC_ed25519_sk.mode = "0600";
+      "yubikey_usba_ed25519_sk.pub".mode = "0644";
+      yubikey_usba_ed25519_sk.mode = "0600";
+      "yubikey_usbc_ed25519_sk.pub".mode = "0644";
+      yubikey_usbc_ed25519_sk.mode = "0600";
     };
   };
 }

@@ -32,8 +32,8 @@ in
               shell = pkgs.fish;
               openssh.authorizedKeys.keyFiles = [
                 ../../../secrets/ssh_toyvo_auth_ed25519.pub
-                ../../../secrets/ykC_ed25519_sk.pub
-                ../../../secrets/ykA_ed25519_sk.pub
+                ../../../secrets/yubikey_usbc_ed25519_sk.pub
+                ../../../secrets/yubikey_usba_ed25519_sk.pub
               ];
             }
             (lib.mkIf pkgs.stdenv.isLinux {
