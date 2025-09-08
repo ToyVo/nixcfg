@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  homelab,
   ...
 }:
 let
@@ -30,10 +31,10 @@ in
               description = "Collin Diekvoss";
               home = "${homePath}/${cfg.toyvo.name}";
               shell = pkgs.fish;
-              openssh.authorizedKeys.keyFiles = [
-                ../../../secrets/ssh_toyvo_auth_ed25519.pub
-                ../../../secrets/yubikey_usbc_ed25519_sk.pub
-                ../../../secrets/yubikey_usba_ed25519_sk.pub
+              openssh.authorizedKeys.keys = [
+                homelab.publicKeys."ssh_toyvo_auth_ed25519.pub"
+                homelab.publicKeys."yubikey_usbc_ed25519_sk.pub"
+                homelab.publicKeys."yubikey_usba_ed25519_sk.pub"
               ];
             }
             (lib.mkIf pkgs.stdenv.isLinux {

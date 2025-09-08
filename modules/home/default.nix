@@ -12,7 +12,7 @@
 
   config = {
     sops = {
-      defaultSopsFile = ../../secrets/secrets.yaml;
+      defaultSopsFile = ../../secrets.yaml;
       age = {
         keyFile = "${config.home.homeDirectory}/${
           if pkgs.stdenv.isDarwin then "Library/Application Support" else ".config"
