@@ -56,6 +56,7 @@ in
           gnumake
           gperf
           icu
+          jujutsu
           libffi
           libiconv
           libusb1
