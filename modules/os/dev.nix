@@ -44,6 +44,7 @@ in
           bruno
           bun
           cargo-generate
+          cargo-make
           cargo-watch
           ccache
           cmake
