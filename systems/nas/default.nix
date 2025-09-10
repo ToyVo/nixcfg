@@ -173,7 +173,9 @@ in
       settings.PasswordAuthentication = false;
     };
     # Immich doesn't support postgresql_17 yet;
-    postgresql.package = pkgs.postgresql_16;
+    postgresql.package = pkgs.postgresql_16.withPackages (ps: with ps; [
+      pgvector
+    ]);
     prowlarr = {
       enable = true;
       openFirewall = true;
