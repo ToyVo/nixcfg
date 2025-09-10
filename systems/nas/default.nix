@@ -175,6 +175,7 @@ in
     # Immich doesn't support postgresql_17 yet;
     postgresql.package = pkgs.postgresql_16.withPackages (ps: with ps; [
       pgvector
+      vectorchord
     ]);
     prowlarr = {
       enable = true;
