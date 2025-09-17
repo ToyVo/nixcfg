@@ -24,7 +24,7 @@
     font-feature = ss08
     font-feature = ss09
     font-feature = liga
-    theme = catppuccin-frappe
+    theme = light:Catppuccin Latte,dark:Catppuccin Frappe
     command = ${lib.getExe pkgs.fish}
     confirm-close-surface = false
     quit-after-last-window-closed = true
