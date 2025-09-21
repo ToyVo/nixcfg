@@ -105,7 +105,6 @@
         nixosConfigurations = configurations.nixosConfigurations;
         darwinConfigurations = configurations.darwinConfigurations;
         homeConfigurations = configurations.homeConfigurations;
-        nixPath = (builtins.map (n: "${n}=${inputs.${n}.outPath}") (builtins.attrNames inputs));
       };
       systems = [
         "x86_64-linux"

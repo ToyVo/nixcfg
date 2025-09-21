@@ -16,8 +16,8 @@ in
       serverConfig.LegalNotice.Accepted = true;
       webuiPort = homelab.${hostName}.services.qbittorrent.port;
       group = "multimedia";
+      openFirewall = true;
     };
-    networking.firewall.allowedTCPPorts = [ config.services.qbittorrent.webuiPort ];
     systemd = {
       services = {
         qbittorrent = {
