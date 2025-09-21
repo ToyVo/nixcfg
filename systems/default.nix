@@ -12,7 +12,8 @@
   nix-index-database,
   nixos-hardware,
   nixos-wsl,
-  nixpkgs,
+  nixpkgs-unstable,
+  nixpkgs-stable,
   nixpkgs-esp-dev,
   nur,
   nur-packages,
@@ -47,7 +48,7 @@ let
     }
   ];
   homelab = import ../homelab.nix;
-  lib = nixpkgs.lib;
+  lib = nixpkgs-unstable.lib;
   nixosSystem =
     {
       system,
@@ -55,12 +56,19 @@ let
       homeModules ? [ ],
     }:
     let
-      pkgs = self.lib.import_nixpkgs system;
+      unstablePkgs = self.lib.import_nixpkgs system nixpkgs-unstable;
+      stablePkgs = self.lib.import_nixpkgs system nixpkgs-stable;
     in
     lib.nixosSystem rec {
-      inherit system pkgs;
+      inherit system;
+      pkgs = unstablePkgs;
       specialArgs = inputs // {
-        inherit system homelab;
+        inherit
+          system
+          homelab
+          stablePkgs
+          unstablePkgs
+          ;
       };
       modules = [
         arion.nixosModules.arion
@@ -70,7 +78,7 @@ let
         home-manager.nixosModules.default
         nh.nixosModules.default
         nix-index-database.nixosModules.nix-index
-        nixpkgs.nixosModules.notDetected
+        nixpkgs-unstable.nixosModules.notDetected
         nur.modules.nixos.default
         self.nixosModules.default
         sops-nix.nixosModules.sops
@@ -90,12 +98,18 @@ let
       homeModules ? [ ],
     }:
     let
-      pkgs = self.lib.import_nixpkgs system;
+      unstablePkgs = self.lib.import_nixpkgs system nixpkgs-unstable;
+      stablePkgs = self.lib.import_nixpkgs system nixpkgs-stable;
     in
     nix-darwin.lib.darwinSystem rec {
-      inherit pkgs;
+      pkgs = unstablePkgs;
       specialArgs = inputs // {
-        inherit system homelab;
+        inherit
+          system
+          homelab
+          stablePkgs
+          unstablePkgs
+          ;
       };
       modules = [
         home-manager.darwinModules.default
@@ -124,12 +138,18 @@ let
       homeModules ? [ ],
     }:
     let
-      pkgs = self.lib.import_nixpkgs system;
+      unstablePkgs = self.lib.import_nixpkgs system nixpkgs-unstable;
+      stablePkgs = self.lib.import_nixpkgs system nixpkgs-stable;
     in
     home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
+      pkgs = stablePkgs;
       extraSpecialArgs = inputs // {
-        inherit system homelab;
+        inherit
+          system
+          homelab
+          stablePkgs
+          unstablePkgs
+          ;
       };
       modules = homeModules ++ sharedHomeModules;
     };
@@ -185,7 +205,7 @@ in
       system = "aarch64-linux";
       nixosModules = [
         ./oracle-cloud-nixos.nix
-        "${nixpkgs}/nixos/modules/profiles/qemu-guest.nix"
+        "${nixpkgs-unstable}/nixos/modules/profiles/qemu-guest.nix"
       ];
     };
     PineBook-Pro = nixosSystem {
@@ -234,7 +254,7 @@ in
       system = "aarch64-linux";
       nixosModules = [
         ./utm.nix
-        "${nixpkgs}/nixos/modules/profiles/qemu-guest.nix"
+        "${nixpkgs-unstable}/nixos/modules/profiles/qemu-guest.nix"
       ];
     };
     wsl = nixosSystem {

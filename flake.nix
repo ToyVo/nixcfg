@@ -20,37 +20,37 @@
     apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
     arion = {
       url = "github:hercules-ci/arion";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     catppuccin.url = "github:catppuccin/nix";
     devshell = {
       url = "github:numtide/devshell";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     discord_bot.url = "github:toyvo/discord_bot";
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     mac-app-util.url = "github:hraban/mac-app-util";
     nh.url = "github:toyvo/nh";
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixos-wsl.url = "github:nix-community/nixos-wsl";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
     nur-packages.url = "github:ToyVo/nur-packages";
@@ -66,7 +66,7 @@
     inputs@{
       devshell,
       flake-parts,
-      nixpkgs,
+      nixpkgs-unstable,
       nixpkgs-esp-dev,
       nur,
       nur-packages,
@@ -78,7 +78,7 @@
     let
       configurations = import ./systems inputs;
       import_nixpkgs =
-        system:
+        system: nixpkgs:
         import nixpkgs {
           inherit system;
           overlays = [
@@ -128,7 +128,7 @@
         }:
         {
           _module.args = {
-            pkgs = import_nixpkgs system;
+            pkgs = import_nixpkgs system nixpkgs-unstable;
           };
 
           treefmt = {
@@ -163,7 +163,7 @@
           };
 
           checks =
-            with nixpkgs.lib;
+            with nixpkgs-unstable.lib;
             with nur-packages.lib;
             flakeChecks system self'.packages
             // mapAttrs' (n: nameValuePair "devShells-${n}") (filterAttrs (n: v: isCacheable v) self'.devShells)

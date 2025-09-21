@@ -1,8 +1,8 @@
 {
   pkgs,
+  stablePkgs,
   config,
   homelab,
-  nixpkgs-stable,
   ...
 }:
 let
@@ -108,22 +108,28 @@ in
     };
     home-assistant = {
       enable = true;
-      extraComponents = [
-        "analytics"
-        "google_pubsub"
-        "google_translate"
-        "html5"
-        "isal"
-        "met"
-        "nest"
-        "radio_browser"
-        "shopping_list"
-        "tplink_omada"
-      ];
-      extraPackages =
-        ps: with ps; [
-          grpcio
+      packages = stablePkgs.home-assistant.overrideAttrs (oldAttrs: {
+        doInstallCheck = false;
+        extraComponents = oldAttrs.extraComponents ++ [
+          "analytics"
+          "google_pubsub"
+          "google_translate"
+          "html5"
+          "isal"
+          "met"
+          "nest"
+          "radio_browser"
+          "shopping_list"
+          "tplink_omada"
         ];
+        extraPackages =
+          ps:
+          with ps;
+          oldAttrs.extraPackages
+          ++ [
+            grpcio
+          ];
+      });
       openFirewall = true;
       config = {
         default_config = { };
@@ -146,7 +152,7 @@ in
       host = "0.0.0.0";
       port = homelab.${hostName}.services.immich.port;
       group = "multimedia";
-      package = nixpkgs-stable.legacyPackages.${system}.immich;
+      package = stablePkgs.immich;
     };
     jellyfin = {
       enable = true;
