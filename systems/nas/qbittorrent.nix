@@ -14,7 +14,7 @@ in
   config = lib.mkIf config.services.qbittorrent.enable {
     services.qbittorrent = {
       serverConfig.LegalNotice.Accepted = true;
-      webuiPort = homelab.${hostName}.qbittorrent.port;
+      webuiPort = homelab.${hostName}.services.qbittorrent.port;
       group = "multimedia";
     };
     systemd = {

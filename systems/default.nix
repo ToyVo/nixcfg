@@ -77,8 +77,7 @@ let
         {
           home-manager = {
             extraSpecialArgs = specialArgs;
-            sharedModules =
-              homeModules ++ sharedHomeModules ++ [ plasma-manager.homeManagerModules.plasma-manager ];
+            sharedModules = homeModules ++ sharedHomeModules ++ [ plasma-manager.homeModules.plasma-manager ];
           };
         }
       ]
@@ -158,7 +157,7 @@ in
       system = "x86_64-linux";
       homeModules = [
         ./steamdeck.nix
-        plasma-manager.homeManagerModules.plasma-manager
+        plasma-manager.homeModules.plasma-manager
       ];
     };
   };
