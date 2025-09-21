@@ -49,7 +49,7 @@ in
           "nixcache.diekvoss.net:31yGqcL45nEZ73gLt569UoAopxWOfC5bactGqU9C9mI="
         ];
       };
-      nixPath = (lib.mapAttrsToList (n: v: "${n}=${inputs.${n}}") inputs) ++ [
+      nixPath = [
         "nixpkgs=${inputs.nixpkgs-unstable}"
       ];
     };

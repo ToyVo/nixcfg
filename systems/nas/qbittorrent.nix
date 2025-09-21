@@ -17,6 +17,7 @@ in
       webuiPort = homelab.${hostName}.services.qbittorrent.port;
       group = "multimedia";
     };
+    networking.firewall.allowedTCPPorts = [ config.services.qbittorrent.webuiPort ];
     systemd = {
       services = {
         qbittorrent = {

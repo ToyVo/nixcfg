@@ -108,9 +108,8 @@ in
     };
     home-assistant = {
       enable = true;
-      package = stablePkgs.home-assistant.overrideAttrs (oldAttrs: {
-        doInstallCheck = false;
-        extraComponents = oldAttrs.extraComponents ++ [
+      package = stablePkgs.home-assistant.override {
+        extraComponents = [
           "analytics"
           "google_pubsub"
           "google_translate"
@@ -123,13 +122,10 @@ in
           "tplink_omada"
         ];
         extraPackages =
-          ps:
-          with ps;
-          oldAttrs.extraPackages
-          ++ [
+          ps: with ps; [
             grpcio
           ];
-      });
+      };
       openFirewall = true;
       config = {
         default_config = { };
