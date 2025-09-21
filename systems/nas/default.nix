@@ -15,6 +15,8 @@ in
     ./nextcloud.nix
     ./homepage.nix
     ./transmission.nix
+    ./qbittorrent.nix
+    ./wireguard.nix
   ];
 
   hardware.cpu.amd.updateMicrocode = true;
@@ -173,10 +175,12 @@ in
       settings.PasswordAuthentication = false;
     };
     # Immich doesn't support postgresql_17 yet;
-    postgresql.package = pkgs.postgresql_16.withPackages (ps: with ps; [
-      pgvector
-      vectorchord
-    ]);
+    postgresql.package = pkgs.postgresql_16.withPackages (
+      ps: with ps; [
+        pgvector
+        vectorchord
+      ]
+    );
     prowlarr = {
       enable = true;
       openFirewall = true;
@@ -203,6 +207,7 @@ in
     };
     spice-vdagentd.enable = true;
     transmission.enable = true;
+    qbittorrent.enable = true;
   };
   containerPresets = {
     podman.enable = true;

@@ -97,7 +97,8 @@
       flake = {
         lib = {
           inherit import_nixpkgs;
-        } // configurations.lib;
+        }
+        // configurations.lib;
         nixosModules.default = ./modules/nixos;
         darwinModules.default = ./modules/darwin;
         homeModules.default = ./modules/home;

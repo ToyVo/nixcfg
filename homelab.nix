@@ -89,6 +89,12 @@
         description = "Server Management";
         category = "DevOps";
       };
+      qbittorrent = {
+        port = 4080;
+        displayName = "qBittorrent";
+        description = "Torrent Client";
+        category = "Media";
+      };
       transmission = {
         port = 9091;
         displayName = "Transmission";
@@ -313,10 +319,15 @@
     };
   };
   publicKeys = {
-    "git_toyvo_sign_ed25519.pub" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAiHxhZFUQIrOII6q1A5rOB3ZIzPy5mExKoKoMiRwxsC";
-    "github_toyvo_auth_ed25519.pub" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFt+KZ8CWXZjeejGWUcatiJFUAkLJtiMyH/wSNMxxuj1 Collin@Diekvoss.com";
-    "ssh_toyvo_auth_ed25519.pub" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEBGYGku1g/rV12/PJp4rLKeutPU/tZ5scl3ZA5t9iqG";
-    "yubikey_usba_ed25519_sk.pub" = "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIMo+j+J7WLG7LqFajWl6hcDTt0YTxLgw67PsaukKCO6gAAAABHNzaDo=";
-    "yubikey_usbc_ed25519_sk.pub" = "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIIHvhka5cKA2RRK4z1JKcP/ZN0hVNAAetspdJyQ4PExDAAAABHNzaDo=";
+    "git_toyvo_sign_ed25519.pub" =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAiHxhZFUQIrOII6q1A5rOB3ZIzPy5mExKoKoMiRwxsC";
+    "github_toyvo_auth_ed25519.pub" =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFt+KZ8CWXZjeejGWUcatiJFUAkLJtiMyH/wSNMxxuj1 Collin@Diekvoss.com";
+    "ssh_toyvo_auth_ed25519.pub" =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEBGYGku1g/rV12/PJp4rLKeutPU/tZ5scl3ZA5t9iqG";
+    "yubikey_usba_ed25519_sk.pub" =
+      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIMo+j+J7WLG7LqFajWl6hcDTt0YTxLgw67PsaukKCO6gAAAABHNzaDo=";
+    "yubikey_usbc_ed25519_sk.pub" =
+      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIIHvhka5cKA2RRK4z1JKcP/ZN0hVNAAetspdJyQ4PExDAAAABHNzaDo=";
   };
 }
