@@ -108,7 +108,7 @@ in
     };
     home-assistant = {
       enable = true;
-      packages = stablePkgs.home-assistant.overrideAttrs (oldAttrs: {
+      package = stablePkgs.home-assistant.overrideAttrs (oldAttrs: {
         doInstallCheck = false;
         extraComponents = oldAttrs.extraComponents ++ [
           "analytics"
