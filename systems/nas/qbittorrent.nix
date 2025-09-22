@@ -101,6 +101,14 @@ in
                               if line.startswith("Mapped public port"):
                                   port = int(line.split()[3])
                                   # TODO: set forwarding port to whatever comes back and ensure the checkbox to use UPnP / NAT-PMP is disabled
+                                  print(f"TCP port {port} mapped successfully")
+                                  break
+                          # Extract the port from the UDP result
+                          for line in udp_result.stdout.splitlines():
+                              if line.startswith("Mapped public port"):
+                                  port = int(line.split()[3])
+                                  # TODO: set forwarding port to whatever comes back and ensure the checkbox to use UPnP / NAT-PMP is disabled
+                                  print(f"UDP port {port} mapped successfully")
                                   break
                       else:
                           print("ERROR with natpmpc command")
