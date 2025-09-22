@@ -147,6 +147,7 @@ in
       port = homelab.${hostName}.services.immich.port;
       group = "multimedia";
       package = stablePkgs.immich;
+      database.enableVectors = true;
     };
     jellyfin = {
       enable = true;
@@ -175,12 +176,7 @@ in
       settings.PasswordAuthentication = false;
     };
     # Immich doesn't support postgresql_17 yet;
-    postgresql.package = pkgs.postgresql_16.withPackages (
-      ps: with ps; [
-        pgvector
-        vectorchord
-      ]
-    );
+    postgresql.package = pkgs.postgresql_16;
     prowlarr = {
       enable = true;
       openFirewall = true;
