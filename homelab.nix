@@ -95,12 +95,6 @@
         description = "Torrent Client";
         category = "Media";
       };
-      transmission = {
-        port = 9091;
-        displayName = "Transmission";
-        description = "Torrent Client";
-        category = "Media";
-      };
       immich = {
         port = 2283;
         displayName = "Immich";

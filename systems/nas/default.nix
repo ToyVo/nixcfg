@@ -7,14 +7,12 @@
 }:
 let
   inherit (config.networking) hostName;
-  inherit (pkgs.stdenv) system;
 in
 {
   imports = [
     ./samba.nix
     ./nextcloud.nix
     ./homepage.nix
-    ./transmission.nix
     ./qbittorrent.nix
     ./wireguard.nix
   ];
@@ -208,7 +206,6 @@ in
       settings.server.port = homelab.${hostName}.services.sonarr.port;
     };
     spice-vdagentd.enable = true;
-    transmission.enable = true;
     qbittorrent.enable = true;
   };
   containerPresets = {
