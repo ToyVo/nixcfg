@@ -222,7 +222,10 @@ in
     device = "/dev/disk/by-label/POOL";
     fsType = "btrfs";
   };
-  users.users.toyvo.extraGroups = [ "libvirtd" ];
+  users.users = {
+    toyvo.extraGroups = [ "libvirtd" ];
+    jellyfin.extraGroups = [ "video" "render" ];
+  };
   home-manager.users.toyvo.programs.beets.settings.directory = "/mnt/POOL/Public/Music";
   programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [
