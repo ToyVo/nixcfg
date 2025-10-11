@@ -58,6 +58,7 @@ in
         #     ]
         ++ lib.optionals stdenv.isDarwin [
           appcleaner
+          gimp2
           pinentry_mac
           utm
           warp-terminal
