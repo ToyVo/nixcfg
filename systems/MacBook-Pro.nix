@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, stablePkgs, ... }:
 {
   profiles = {
     defaults.enable = true;
@@ -8,7 +8,7 @@
   environment.systemPackages = with pkgs; [
     # openscad
     ollama
-    prismlauncher
+    stablePkgs.prismlauncher
     packwiz
     vlc-bin
   ];

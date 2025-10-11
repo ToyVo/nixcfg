@@ -31,13 +31,13 @@ in
         with pkgs;
         [
           brave
-          gimp
           inkscape
         ]
         ++ lib.optionals stdenv.isLinux [
           element-desktop
           firefox
           ghostty
+          gimp
           # yubikey-manager-qt
           # yubioath-flutter
         ]

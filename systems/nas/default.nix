@@ -224,7 +224,10 @@ in
   };
   users.users = {
     toyvo.extraGroups = [ "libvirtd" ];
-    jellyfin.extraGroups = [ "video" "render" ];
+    jellyfin.extraGroups = [
+      "video"
+      "render"
+    ];
   };
   home-manager.users.toyvo.programs.beets.settings.directory = "/mnt/POOL/Public/Music";
   programs.dconf.enable = true;
