@@ -35,8 +35,6 @@
   services.desktopManager.cosmic.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
   hardware.graphics = {
-    extraPackages = with pkgs; [ amdvlk ];
-    extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
     enable = true;
     enable32Bit = true;
   };
