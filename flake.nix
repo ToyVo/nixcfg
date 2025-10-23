@@ -134,8 +134,7 @@
           treefmt = {
             programs = {
               nixfmt.enable = true;
-              yamlfmt.enable = true;
-              jsonfmt.enable = true;
+              prettier.enable = true;
             };
           };
 

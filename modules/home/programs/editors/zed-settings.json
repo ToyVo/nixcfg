@@ -47,10 +47,7 @@
     {
       "external": {
         "command": "sed",
-        "arguments": [
-          "-e",
-          "s/ *$//"
-        ]
+        "arguments": ["-e", "s/ *$//"]
       }
     }
   ],
@@ -63,10 +60,7 @@
       "formatter": {
         "external": {
           "command": "prettier",
-          "arguments": [
-            "--stdin-filepath",
-            "{buffer_path}"
-          ]
+          "arguments": ["--stdin-filepath", "{buffer_path}"]
         }
       }
     },
@@ -74,10 +68,7 @@
       "tab_size": 4
     },
     "Nix": {
-      "language_servers": [
-        "nil",
-        "!nixd"
-      ]
+      "language_servers": ["nil", "!nixd"]
     }
   },
   "inlay_hints": {
@@ -88,9 +79,7 @@
     "nil": {
       "initialization_options": {
         "formatting": {
-          "command": [
-            "nixfmt"
-          ]
+          "command": ["nixfmt"]
         },
         "nix": {
           "flake": {
