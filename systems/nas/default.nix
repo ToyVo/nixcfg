@@ -87,11 +87,6 @@ in
       enable = true;
       env_file = config.sops.secrets."discord_bot.env".path;
       env = {
-        MINECRAFT_GEYSER_ADDRESS = "mc.toyvo.dev:25566";
-        MINECRAFT_MODDED_ADDRESS = "mc.toyvo.dev:25565";
-        TERRARIA_ADDRESS = "mc.toyvo.dev:7777";
-        TSHOCK_REST_BASE_URL = "https://mc.toyvo.dev";
-        IP = "0.0.0.0";
         ADDR = "0.0.0.0";
         PORT = homelab.${hostName}.services.discord_bot.port;
         BASE_URL = "https://toyvo.dev";
