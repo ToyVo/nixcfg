@@ -16,10 +16,13 @@ in
       };
     };
     programs = {
+      delta = {
+        enable = true;
+        enableGitIntegration = true;
+      };
       git = {
         lfs.enable = true;
-        delta.enable = true;
-        extraConfig = {
+        settings = {
           pull.rebase = "true";
           rebase.autostash = "true";
           core.editor = "nvim";
@@ -28,28 +31,28 @@ in
           gpg.format = "ssh";
           init.defaultBranch = "main";
           url."git@github.com:".pushInsteadOf = "https://github.com/";
-        };
-        aliases = {
-          a = "add";
-          aa = "add -A";
-          b = "branch";
-          ba = "branch -a";
-          c = "commit -m";
-          ca = "commit -am";
-          cam = "commit --amend --date=now";
-          co = "checkout";
-          cob = "checkout -b";
-          sw = "switch";
-          swc = "switch -c";
-          s = "status -sb";
-          po = "!git push -u origin $(git branch --show-current)";
-          d = "diff";
-          dc = "diff --cached";
-          ignore = "update-index --assume-unchanged";
-          unignore = "update-index --no-assume-unchanged";
-          ignored = "!git ls-files -v | grep ^h | cut -c 3-";
-          rbm = "!git fetch && git rebase origin/main";
-          rbc = "-c core.editor=true rebase --continue";
+          alias = {
+            a = "add";
+            aa = "add -A";
+            b = "branch";
+            ba = "branch -a";
+            c = "commit -m";
+            ca = "commit -am";
+            cam = "commit --amend --date=now";
+            co = "checkout";
+            cob = "checkout -b";
+            sw = "switch";
+            swc = "switch -c";
+            s = "status -sb";
+            po = "!git push -u origin $(git branch --show-current)";
+            d = "diff";
+            dc = "diff --cached";
+            ignore = "update-index --assume-unchanged";
+            unignore = "update-index --no-assume-unchanged";
+            ignored = "!git ls-files -v | grep ^h | cut -c 3-";
+            rbm = "!git fetch && git rebase origin/main";
+            rbc = "-c core.editor=true rebase --continue";
+          };
         };
       };
       lazygit.enable = true;

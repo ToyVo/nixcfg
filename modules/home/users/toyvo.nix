@@ -66,10 +66,14 @@ in
       kitty.enable = cfg.gui.enable;
       git = {
         enable = true;
-        signing.signByDefault = true;
-        userName = "Collin Diekvoss";
-        userEmail = "Collin@Diekvoss.com";
-        signing.key = config.sops.secrets."git_toyvo_sign_ed25519.pub".path;
+        signing = {
+          key = config.sops.secrets."git_toyvo_sign_ed25519.pub".path;
+          signByDefault = true;
+        };
+        settings.user = {
+          name = "Collin Diekvoss";
+          email = "Collin@Diekvoss.com";
+        };
       };
       helix.enable = true;
       hyper.enable = cfg.gui.enable;
