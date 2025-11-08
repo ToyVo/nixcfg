@@ -77,7 +77,7 @@ in
             aha
             clinfo
             fwupd
-            glxinfo
+            mesa-demos
             pciutils
             vulkan-tools
             wayland-utils
