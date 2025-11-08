@@ -158,7 +158,8 @@
       };
       nix-serve = {
         port = 5000;
-        subdomain = "nixcache";
+        subdomain = "cache";
+        domain = "toyvo.dev";
         displayName = "Nix Cache";
         description = "Binary Cache";
         category = "Utilities";
@@ -266,7 +267,7 @@
     mac = "b4:8c:9d:b9:5d:fb";
   };
   oracle = {
-    ip = "164.152.108.113";
+    ip = "163.192.123.181";
     services.minecraft = {
       port = 7878;
       subdomain = "mc";

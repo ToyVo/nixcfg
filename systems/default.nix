@@ -12,9 +12,9 @@
   nix-index-database,
   nixos-hardware,
   nixos-wsl,
-  nixpkgs-unstable,
-  nixpkgs-stable,
   nixpkgs-esp-dev,
+  nixpkgs-stable,
+  nixpkgs-unstable,
   nur,
   nur-packages,
   nvf,
@@ -22,6 +22,7 @@
   rust-overlay,
   self,
   sops-nix,
+  zed,
   ...
 }@inputs:
 let
@@ -36,9 +37,11 @@ let
     {
       nixpkgs = {
         overlays = [
-          (import rust-overlay)
           nixpkgs-esp-dev.overlays.default
           nur-packages.overlays.default
+          nur.overlays.default
+          rust-overlay.overlays.default
+          # zed.overlays.default
         ];
         config = {
           allowUnfree = true;

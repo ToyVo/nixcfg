@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  stablePkgs,
   ...
 }:
 let
@@ -73,7 +74,7 @@ in
         ]
         ++ lib.optionals cfg.gui.enable [
           jetbrains-toolbox
-          zed-editor
+          stablePkgs.zed-editor
         ]
         ++ lib.optionals stdenv.isLinux [
           gcc

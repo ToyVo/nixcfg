@@ -6,12 +6,16 @@
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
       "https://toyvo.cachix.org"
+      "https://zed.cachix.org"
+      "https://cache.garnix.io"
       "https://nixcache.diekvoss.net"
     ];
     extra-trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "toyvo.cachix.org-1:s++CG1te6YaS9mjICre0Ybbya2o/S9fZIyDNGiD4UXs="
+      "zed.cachix.org-1:/pHQ6dpMsAZk2DiP4WCL0p9YDNKWj2Q5FL20bNmw1cU="
+      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
       "nixcache.diekvoss.net:31yGqcL45nEZ73gLt569UoAopxWOfC5bactGqU9C9mI="
     ];
   };
@@ -50,9 +54,9 @@
     };
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixos-wsl.url = "github:nix-community/nixos-wsl";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nur-packages.url = "github:ToyVo/nur-packages";
     nur.url = "github:nix-community/nur";
     nvf.url = "github:NotAShelf/nvf";
@@ -60,19 +64,21 @@
     rust-overlay.url = "github:oxalica/rust-overlay";
     sops-nix.url = "github:Mic92/sops-nix";
     treefmt-nix.url = "github:numtide/treefmt-nix";
+    zed.url = "github:zed-industries/zed";
   };
 
   outputs =
     inputs@{
       devshell,
       flake-parts,
-      nixpkgs-unstable,
       nixpkgs-esp-dev,
+      nixpkgs-unstable,
       nur,
       nur-packages,
       rust-overlay,
-      treefmt-nix,
       self,
+      treefmt-nix,
+      zed,
       ...
     }:
     let
@@ -82,10 +88,11 @@
         import nixpkgs {
           inherit system;
           overlays = [
-            (import rust-overlay)
             nixpkgs-esp-dev.overlays.default
             nur-packages.overlays.default
             nur.overlays.default
+            rust-overlay.overlays.default
+            # zed.overlays.default
           ];
           config = {
             allowUnfree = true;

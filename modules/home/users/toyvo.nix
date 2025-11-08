@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  stablePkgs,
   ...
 }:
 let
@@ -132,7 +133,10 @@ in
           };
           matchBlocks."10.1.0.*" = identityConfig;
         };
-      zed.enable = true;
+      zed = {
+        enable = true;
+        package = stablePkgs.zed-editor;
+      };
       zellij.enable = true;
       ideavim.enable = true;
     };
