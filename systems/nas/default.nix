@@ -240,11 +240,7 @@ in
   virtualisation = {
     libvirtd = {
       enable = true;
-      qemu = {
-        swtpm.enable = true;
-        ovmf.enable = true;
-        ovmf.packages = [ pkgs.OVMFFull.fd ];
-      };
+      qemu.swtpm.enable = true;
     };
     spiceUSBRedirection.enable = true;
   };
