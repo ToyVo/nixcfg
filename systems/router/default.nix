@@ -200,7 +200,9 @@ in
         "diekvoss.net" = cloudflare // {
           extraDomainNames = [ "*.diekvoss.net" ];
         };
-        "toyvo.dev" = cloudflare;
+        "toyvo.dev" = cloudflare // {
+          extraDomainNames = [ "*.toyvo.dev" ];
+        };
       };
     };
   sops.secrets = {
