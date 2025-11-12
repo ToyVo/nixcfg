@@ -74,7 +74,6 @@ in
         ]
         ++ lib.optionals cfg.gui.enable [
           jetbrains-toolbox
-          stablePkgs.zed-editor
         ]
         ++ lib.optionals stdenv.isLinux [
           gcc

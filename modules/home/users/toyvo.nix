@@ -134,8 +134,8 @@ in
           matchBlocks."10.1.0.*" = identityConfig;
         };
       zed = {
-        enable = true;
-        package = stablePkgs.zed-editor;
+        enable = cfg.gui.enable;
+        package = pkgs.zed-editor;
       };
       zellij.enable = true;
       ideavim.enable = true;
