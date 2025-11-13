@@ -24,7 +24,7 @@ in
       lutris
       mangohud
       prismlauncher
-      protonup
+      protonup-ng
       gale
       r2modman
       steam

@@ -92,7 +92,7 @@
             nur-packages.overlays.default
             nur.overlays.default
             rust-overlay.overlays.default
-            zed.overlays.default
+            # zed.overlays.default
           ];
           config = {
             allowUnfree = true;
