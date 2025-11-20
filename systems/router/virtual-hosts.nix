@@ -32,7 +32,14 @@
                 name = if subdomain == "@" then domain else "${subdomain}.${domain}";
                 value = {
                   useACMEHost = domain;
-                  listenAddresses = if public then ["0.0.0.0"] else ["127.0.0.1"];
+                  listenAddresses = if public then [
+                    "0.0.0.0"
+                    "[::]"
+                  ] else [
+                    "127.0.0.1"
+                    "[::1]"
+                    homelab.router.ip
+                  ];
                   extraConfig =
                     if selfSigned then
                       ''
