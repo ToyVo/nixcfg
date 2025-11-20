@@ -25,12 +25,14 @@
                 subdomain ? service,
                 domain ? "diekvoss.net",
                 selfSigned ? false,
+                public ? domain != "diekvoss.net",
                 ...
               }:
               {
                 name = if subdomain == "@" then domain else "${subdomain}.${domain}";
                 value = {
                   useACMEHost = domain;
+                  listenAddresses = if public then ["0.0.0.0"] else ["127.0.0.1"];
                   extraConfig =
                     if selfSigned then
                       ''
