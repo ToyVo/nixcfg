@@ -177,11 +177,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1763697782,
-        "narHash": "sha256-+BZMpvK/dICjG9cC4mm+BCBI3jpQj6dqFjNDuvdk1vI=",
+        "lastModified": 1763790519,
+        "narHash": "sha256-Oyi+9hZ41UIfo3YaHlO3RAtUEZSycY4HLeuOqMfpWtM=",
         "owner": "toyvo",
         "repo": "discord_bot",
-        "rev": "f2537767aa70c49dd43806c36100181254a7e42d",
+        "rev": "f8a7ee52664f41436517e600b86669cc581bd8ed",
         "type": "github"
       },
       "original": {
