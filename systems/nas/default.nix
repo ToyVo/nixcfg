@@ -140,7 +140,7 @@ in
       port = homelab.${hostName}.services.immich.port;
       group = "multimedia";
       package = stablePkgs.immich;
-      database.enableVectors = true;
+      database.enableVectors = false;
     };
     jellyfin = {
       enable = true;

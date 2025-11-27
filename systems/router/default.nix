@@ -164,6 +164,7 @@ in
             hostname:
             { ip, ... }:
             {
+              enabled = true;
               domain = "${lib.toLower hostname}.internal";
               answer = ip;
             }
