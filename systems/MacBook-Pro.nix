@@ -7,7 +7,7 @@
   userPresets.toyvo.enable = true;
   environment.systemPackages = with pkgs; [
     # openscad
-    ollama
+    # ollama
     stablePkgs.prismlauncher
     packwiz
     vlc-bin

@@ -158,14 +158,17 @@ in
             id = 4;
           }
         ];
-        filtering.rewrites = lib.mapAttrsToList (
-          hostname:
-          { ip, ... }:
-          {
-            domain = "${lib.toLower hostname}.internal";
-            answer = ip;
-          }
-        ) (lib.filterAttrs (hostname: hostConf: lib.hasAttr "ip" hostConf) homelab);
+        filtering = {
+          filtering_enabled = true;
+          rewrites = lib.mapAttrsToList (
+            hostname:
+            { ip, ... }:
+            {
+              domain = "${lib.toLower hostname}.internal";
+              answer = ip;
+            }
+          ) (lib.filterAttrs (hostname: hostConf: lib.hasAttr "ip" hostConf) homelab);
+        };
       };
     };
     caddy.enable = true;
