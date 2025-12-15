@@ -34,6 +34,7 @@ in
         experimental-features = [
           "nix-command"
           "flakes"
+          "pipe-operators"
         ];
         substituters = config.nix.settings.trusted-substituters;
         trusted-substituters = [

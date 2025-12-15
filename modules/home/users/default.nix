@@ -21,7 +21,7 @@ in
 
   config = lib.mkIf cfg.defaults.enable {
     home = {
-      stateVersion = "25.11";
+      stateVersion = "26.05";
       sessionPath =
         lib.optionals config.programs.volta.enable [
           "${config.programs.volta.voltaHome}/bin"
@@ -65,7 +65,7 @@ in
     };
     xdg.configFile = {
       "nix/nix.conf".text = ''
-        experimental-features = nix-command flakes
+        experimental-features = nix-command flakes pipe-operators
         substituters = https://cache.nixos.org https://nix-community.cachix.org https://toyvo.cachix.org https://cache.toyvo.dev
         trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= toyvo.cachix.org-1:s++CG1te6YaS9mjICre0Ybbya2o/S9fZIyDNGiD4UXs= cache.toyvo.dev:6bv4Qc2/SVaWnWzDOUcoB4pT3i3l4wcM+WrhRBFb7E4=
       '';
