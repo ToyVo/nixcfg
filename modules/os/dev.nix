@@ -25,6 +25,7 @@ in
           pipx
           pygraphviz
           python-dotenv
+          setuptools
           virtualenv
         ]
         ++ config.environment.pythonPackages
