@@ -18,6 +18,7 @@ in
         ps:
         with ps;
         [
+          distutils
           jupyter
           numpy
           pandas
