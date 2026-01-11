@@ -75,6 +75,10 @@ in
           HOME = cfg.home;
           OLLAMA_MODELS = cfg.models;
           OLLAMA_HOST = "${cfg.host}:${toString cfg.port}";
+          OLLAMA_DEBUG = "1";
+          OLLAMA_CONTEXT_LENGTH = "32000";
+          OLLAMA_FLASH_ATTENTION = "1";
+          OLLAMA_KEEP_ALIVE = "24h";
         };
         ProgramArguments = [
           "${lib.getExe cfg.package}"

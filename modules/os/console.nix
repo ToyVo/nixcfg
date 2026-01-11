@@ -40,7 +40,7 @@ in
             curl
             curlie
             dig
-            dogdns
+            doggo
             dotnet-sdk_8
             fd
             gnutar
