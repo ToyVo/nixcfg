@@ -13,6 +13,10 @@ in
       openFirewall = true;
       listenPort = homelab.${hostName}.services.homepage.port;
       allowedHosts = "nas.internal:8082,diekvoss.net";
+      settings = {
+        background = "https://images.unsplash.com/photo-1511884642898-4c92249e20b6?q=80&w=2400&auto=format&fit=crop";
+        cardBlur = "xs";
+      };
       bookmarks = [
         {
           Developer = [
