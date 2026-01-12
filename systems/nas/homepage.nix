@@ -84,7 +84,7 @@ in
             in
             accInner
             // {
-              ${category} = (accInner.${category} or [ ]) ++ [
+              ${category} = lib.mkIf (services.${service}.hasWidget or false) (accInner.${category} or [ ]) ++ [
                 {
                   "${displayName}" = {
                     inherit href description;
@@ -110,7 +110,7 @@ in
           };
         }
         {
-          adguard = {
+          widget = {
             type = "adguard";
             url = "https://adguard.diekvoss.net";
             username = "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}";
@@ -118,14 +118,14 @@ in
           };
         }
         {
-          jellyfin = {
+          widget = {
             type = "jellyfin";
             url = "https://jellyfin.diekvoss.net";
             key = "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}";
           };
         }
         {
-          portainer = {
+          widget = {
             type = "portainer";
             url = "https://portainer.diekvoss.net";
             key = "{{HOMEPAGE_VAR_PORTAINER_API_KEY}}";
@@ -133,7 +133,7 @@ in
           };
         }
         {
-          qbittorrent = {
+          widget = {
             type = "qbittorrent";
             url = "https://qbittorrent.diekvoss.net";
             username = "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}";
@@ -141,7 +141,7 @@ in
           };
         }
         {
-          immich = {
+          widget = {
             type = "immich";
             url = "https://immich.diekvoss.net";
             key = "{{HOMEPAGE_VAR_IMMICH_API_KEY}}";
@@ -149,14 +149,14 @@ in
           };
         }
         {
-          homeassistant = {
+          widget = {
             type = "homeassistant";
             url = "https://home-assistant.diekvoss.net";
             key = "{{HOMEPAGE_VAR_HOMEASSISTANT_API_KEY}}";
           };
         }
         {
-          nextcloud = {
+          widget = {
             type = "nextcloud";
             url = "https://nextcloud.diekvoss.net";
             username = "{{HOMEPAGE_VAR_NEXTCLOUD_USERNAME}}";
@@ -164,42 +164,42 @@ in
           };
         }
         {
-          bazarr = {
+          widget = {
             type = "bazarr";
             url = "https://bazarr.diekvoss.net";
             key = "{{HOMEPAGE_VAR_BAZARR_API_KEY}}";
           };
         }
         {
-          radarr = {
+          widget = {
             type = "radarr";
             url = "https://radarr.diekvoss.net";
             key = "{{HOMEPAGE_VAR_RADARR_API_KEY}}";
           };
         }
         {
-          lidarr = {
+          widget = {
             type = "lidarr";
             url = "https://lidarr.diekvoss.net";
             key = "{{HOMEPAGE_VAR_LIDARR_API_KEY}}";
           };
         }
         {
-          sonarr = {
+          widget = {
             type = "sonarr";
             url = "https://sonarr.diekvoss.net";
             key = "{{HOMEPAGE_VAR_SONARR_API_KEY}}";
           };
         }
         {
-          prowlarr = {
+          widget = {
             type = "prowlarr";
             url = "https://prowlarr.diekvoss.net";
             key = "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}";
           };
         }
         {
-          readarr = {
+          widget = {
             type = "readarr";
             url = "https://readarr.diekvoss.net";
             key = "{{HOMEPAGE_VAR_READARR_API_KEY}}";
