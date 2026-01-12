@@ -13,6 +13,7 @@
       displayName = "AdGuard Home";
       description = "DNS Adblocker";
       category = "Networking";
+      icon = "sh-adguard-home";
       widget = {
         type = "adguard";
         url = "https://adguard.diekvoss.net";
@@ -32,6 +33,7 @@
       displayName = "Omada";
       description = "Omada Controller UI";
       category = "Networking";
+      icon = "sh-omada";
     };
   };
   nas = {
@@ -44,6 +46,7 @@
         subdomain = "@";
         description = "Hosted Services UI";
         category = "Sites";
+        icon = "sh-homepage";
       };
       ollama = {
         port = 11434;
@@ -52,6 +55,7 @@
         category = "APIs";
         displayName = "Ollama";
         description = "Ollama API (Slower)";
+        icon = "sh-ollama";
       };
       open-webui = {
         port = 11435;
@@ -59,6 +63,7 @@
         category = "AI";
         displayName = "Open WebUI";
         description = "Chat with LLMs";
+        icon = "sh-open-webui";
       };
       discord_bot = {
         port = 8080;
@@ -74,6 +79,7 @@
         displayName = "Jellyfin";
         description = "Media Server";
         category = "Media";
+        icon = "sh-jellyfin";
         widget = {
           type = "jellyfin";
           url = "https://jellyfin.diekvoss.net";
@@ -86,6 +92,7 @@
         displayName = "Portainer";
         description = "Adhoc Container Management";
         category = "DevOps";
+        icon = "sh-portainer";
         widget = {
           type = "portainer";
           url = "https://portainer.diekvoss.net";
@@ -98,6 +105,7 @@
         displayName = "Coder";
         description = "Dev Container Environments";
         category = "DevOps";
+        icon = "sh-coder";
       };
       cockpit = {
         port = 9090;
@@ -105,12 +113,14 @@
         displayName = "Cockpit";
         description = "Server Management";
         category = "DevOps";
+        icon = "sh-cockpit";
       };
       qbittorrent = {
         port = 4080;
         displayName = "qBittorrent";
         description = "Torrent Client";
         category = "Media";
+        icon = "sh-qbittorrent";
         widget = {
           type = "qbittorrent";
           url = "https://qbittorrent.diekvoss.net";
@@ -123,6 +133,7 @@
         displayName = "Immich";
         description = "Photo Management";
         category = "Media";
+        icon = "sh-immich";
         widget = {
           type = "immich";
           url = "https://immich.diekvoss.net";
@@ -135,6 +146,7 @@
         displayName = "Home Assistant";
         description = "Home Automation";
         category = "DevOps";
+        icon = "sh-home-assistant";
         widget = {
           type = "homeassistant";
           url = "https://home-assistant.diekvoss.net";
@@ -147,6 +159,7 @@
         displayName = "Nextcloud";
         description = "Cloud Storage";
         category = "DevOps";
+        icon = "sh-nextcloud";
         widget = {
           type = "nextcloud";
           url = "https://nextcloud.diekvoss.net";
@@ -159,6 +172,7 @@
         displayName = "Bazarr";
         description = "Subtitle Manager";
         category = "Starr";
+        icon = "sh-bazarr";
         widget = {
           type = "bazarr";
           url = "https://bazarr.diekvoss.net";
@@ -170,6 +184,7 @@
         displayName = "Radarr";
         description = "Movie Manager";
         category = "Starr";
+        icon = "sh-radarr";
         widget = {
           type = "radarr";
           url = "https://radarr.diekvoss.net";
@@ -181,6 +196,7 @@
         displayName = "Lidarr";
         description = "Music Manager";
         category = "Starr";
+        icon = "sh-lidarr";
         widget = {
           type = "lidarr";
           url = "https://lidarr.diekvoss.net";
@@ -192,6 +208,7 @@
         displayName = "Sonarr";
         description = "TV Show Manager";
         category = "Starr";
+        icon = "sh-sonarr";
         widget = {
           type = "sonarr";
           url = "https://sonarr.diekvoss.net";
@@ -203,6 +220,7 @@
         displayName = "Prowlarr";
         description = "Indexer Manager";
         category = "Starr";
+        icon = "sh-prowlarr";
         widget = {
           type = "prowlarr";
           url = "https://prowlarr.diekvoss.net";
@@ -214,6 +232,7 @@
         displayName = "Readarr";
         description = "EBook/Audiobook Manager";
         category = "Starr";
+        icon = "sh-readarr";
         widget = {
           type = "readarr";
           url = "https://readarr.diekvoss.net";
@@ -225,6 +244,7 @@
         displayName = "FlareSolverr";
         description = "Cloudflare Bypass";
         category = "APIs";
+        icon = "sh-flaresolverr";
       };
       nix-serve = {
         port = 5000;
@@ -233,12 +253,14 @@
         displayName = "Nix Cache";
         description = "Binary Cache";
         category = "Utilities";
+        icon = "sh-nixos";
       };
       collabora = {
         port = 9980;
         displayName = "Collabora";
         description = "Office Suite for Nextcloud";
         category = "APIs";
+        icon = "sh-docs-collaboration";
       };
     };
   };
@@ -316,6 +338,7 @@
       category = "APIs";
       displayName = "Ollama";
       description = "Ollama API";
+      icon = "sh-ollama";
     };
   };
   MacMini-Intel = {
@@ -345,6 +368,7 @@
       category = "Games";
       displayName = "Minecraft";
       description = "Minecraft Server";
+      icon = "sh-minecraft";
     };
   };
   github.services = {

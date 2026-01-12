@@ -88,8 +88,8 @@ in
                   {
                     "${displayName}" = {
                       inherit href description;
-                      # TODO: account for widget not being defined
                       widget = lib.mkIf (lib.hasAttr "widget" services.${service}) services.${service}.widget;
+                      icon = lib.mkIf (lib.hasAttr "icon" services.${service}) services.${service}.icon;
                     };
                   }
                 ];
