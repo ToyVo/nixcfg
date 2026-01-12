@@ -81,17 +81,21 @@ in
               category = services.${service}.category or "TODO";
               description = services.${service}.description or "TODO";
               href = if subdomain == "@" then "https://${domain}" else "https://${subdomain}.${domain}";
+              hasWidget = services.${service}.hasWidget or false;
             in
-            accInner
-            // {
-              ${category} = lib.mkIf (services.${service}.hasWidget or false) (accInner.${category} or [ ]) ++ [
-                {
-                  "${displayName}" = {
-                    inherit href description;
-                  };
-                }
-              ];
-            }
+            if hasWidget then
+              accInner
+            else
+              accInner
+              // {
+                ${category} = (accInner.${category} or [ ]) ++ [
+                  {
+                    "${displayName}" = {
+                      inherit href description;
+                    };
+                  }
+                ];
+              }
           ) acc (lib.attrNames services)
         ) { } (lib.attrNames homelab)
       );
