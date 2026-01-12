@@ -34,6 +34,13 @@
       description = "Omada Controller UI";
       category = "Networking";
       icon = "sh-omada";
+      widget = {
+        type = "omada";
+        url = "https://omada.diekvoss.net";
+        username = "{{HOMEPAGE_VAR_OMADA_USERNAME}}";
+        password = "{{HOMEPAGE_VAR_OMADA_PASSWORD}}";
+        site = "Diekvoss Home";
+      };
     };
   };
   nas = {
