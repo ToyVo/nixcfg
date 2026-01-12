@@ -13,7 +13,12 @@
       displayName = "AdGuard Home";
       description = "DNS Adblocker";
       category = "Networking";
-      hasWidget = true;
+      widget = {
+        type = "adguard";
+        url = "https://adguard.diekvoss.net";
+        username = "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}";
+        password = "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}";
+      };
     };
   };
   omada = {
@@ -69,7 +74,11 @@
         displayName = "Jellyfin";
         description = "Media Server";
         category = "Media";
-        hasWidget = true;
+        widget = {
+          type = "jellyfin";
+          url = "https://jellyfin.diekvoss.net";
+          key = "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}";
+        };
       };
       portainer = {
         port = 9443;
@@ -77,7 +86,12 @@
         displayName = "Portainer";
         description = "Adhoc Container Management";
         category = "DevOps";
-        hasWidget = true;
+        widget = {
+          type = "portainer";
+          url = "https://portainer.diekvoss.net";
+          key = "{{HOMEPAGE_VAR_PORTAINER_API_KEY}}";
+          env = "2";
+        };
       };
       coder = {
         port = 7080;
@@ -97,21 +111,35 @@
         displayName = "qBittorrent";
         description = "Torrent Client";
         category = "Media";
-        hasWidget = true;
+        widget = {
+          type = "qbittorrent";
+          url = "https://qbittorrent.diekvoss.net";
+          username = "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}";
+          password = "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}";
+        };
       };
       immich = {
         port = 2283;
         displayName = "Immich";
         description = "Photo Management";
         category = "Media";
-        hasWidget = true;
+        widget = {
+          type = "immich";
+          url = "https://immich.diekvoss.net";
+          key = "{{HOMEPAGE_VAR_IMMICH_API_KEY}}";
+          version = "2";
+        };
       };
       home-assistant = {
         port = 8123;
         displayName = "Home Assistant";
         description = "Home Automation";
         category = "DevOps";
-        hasWidget = true;
+        widget = {
+          type = "homeassistant";
+          url = "https://home-assistant.diekvoss.net";
+          key = "{{HOMEPAGE_VAR_HOMEASSISTANT_API_KEY}}";
+        };
       };
       # port not configured through nix
       nextcloud = {
@@ -119,49 +147,78 @@
         displayName = "Nextcloud";
         description = "Cloud Storage";
         category = "DevOps";
-        hasWidget = true;
+        widget = {
+          type = "nextcloud";
+          url = "https://nextcloud.diekvoss.net";
+          username = "{{HOMEPAGE_VAR_NEXTCLOUD_USERNAME}}";
+          password = "{{HOMEPAGE_VAR_NEXTCLOUD_PASSWORD}}";
+        };
       };
       bazarr = {
         port = 6767;
         displayName = "Bazarr";
         description = "Subtitle Manager";
         category = "Starr";
-        hasWidget = true;
+        widget = {
+          type = "bazarr";
+          url = "https://bazarr.diekvoss.net";
+          key = "{{HOMEPAGE_VAR_BAZARR_API_KEY}}";
+        };
       };
       radarr = {
         port = 7878;
         displayName = "Radarr";
         description = "Movie Manager";
         category = "Starr";
-        hasWidget = true;
+        widget = {
+          type = "radarr";
+          url = "https://radarr.diekvoss.net";
+          key = "{{HOMEPAGE_VAR_RADARR_API_KEY}}";
+        };
       };
       lidarr = {
         port = 8686;
         displayName = "Lidarr";
         description = "Music Manager";
         category = "Starr";
-        hasWidget = true;
+        widget = {
+          type = "lidarr";
+          url = "https://lidarr.diekvoss.net";
+          key = "{{HOMEPAGE_VAR_LIDARR_API_KEY}}";
+        };
       };
       sonarr = {
         port = 8989;
         displayName = "Sonarr";
         description = "TV Show Manager";
         category = "Starr";
-        hasWidget = true;
+        widget = {
+          type = "sonarr";
+          url = "https://sonarr.diekvoss.net";
+          key = "{{HOMEPAGE_VAR_SONARR_API_KEY}}";
+        };
       };
       prowlarr = {
         port = 9696;
         displayName = "Prowlarr";
         description = "Indexer Manager";
         category = "Starr";
-        hasWidget = true;
+        widget = {
+          type = "prowlarr";
+          url = "https://prowlarr.diekvoss.net";
+          key = "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}";
+        };
       };
       readarr = {
         port = 8787;
         displayName = "Readarr";
         description = "EBook/Audiobook Manager";
         category = "Starr";
-        hasWidget = true;
+        widget = {
+          type = "readarr";
+          url = "https://readarr.diekvoss.net";
+          key = "{{HOMEPAGE_VAR_READARR_API_KEY}}";
+        };
       };
       flaresolverr = {
         port = 8191;
