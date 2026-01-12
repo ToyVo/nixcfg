@@ -111,82 +111,97 @@ in
         }
         {
           adguard = {
-            url = "http://router.internal:3000";
+            type = "adguard";
+            url = "https://adguard.diekvoss.net";
             username = "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}";
             password = "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}";
           };
         }
         {
           jellyfin = {
-            url = "http://nas.internal:8096";
+            type = "jellyfin";
+            url = "https://jellyfin.diekvoss.net";
             key = "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}";
           };
         }
         {
           portainer = {
-            url = "https://nas.internal:9443";
+            type = "portainer";
+            url = "https://portainer.diekvoss.net";
             key = "{{HOMEPAGE_VAR_PORTAINER_API_KEY}}";
+            env = "2";
           };
         }
         {
           qbittorrent = {
-            url = "http://nas.internal:4080";
+            type = "qbittorrent";
+            url = "https://qbittorrent.diekvoss.net";
             username = "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}";
             password = "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}";
           };
         }
         {
           immich = {
-            url = "http://nas.internal:2283";
+            type = "immich";
+            url = "https://immich.diekvoss.net";
             key = "{{HOMEPAGE_VAR_IMMICH_API_KEY}}";
+            version = "2";
           };
         }
         {
           homeassistant = {
-            url = "http://nas.internal:8123";
+            type = "homeassistant";
+            url = "https://home-assistant.diekvoss.net";
             key = "{{HOMEPAGE_VAR_HOMEASSISTANT_API_KEY}}";
           };
         }
         {
           nextcloud = {
-            url = "https://diekvoss.net";
+            type = "nextcloud";
+            url = "https://nextcloud.diekvoss.net";
             username = "{{HOMEPAGE_VAR_NEXTCLOUD_USERNAME}}";
             password = "{{HOMEPAGE_VAR_NEXTCLOUD_PASSWORD}}";
           };
         }
         {
           bazarr = {
-            url = "http://nas.internal:6767";
+            type = "bazarr";
+            url = "https://bazarr.diekvoss.net";
             key = "{{HOMEPAGE_VAR_BAZARR_API_KEY}}";
           };
         }
         {
           radarr = {
-            url = "http://nas.internal:7878";
+            type = "radarr";
+            url = "https://radarr.diekvoss.net";
             key = "{{HOMEPAGE_VAR_RADARR_API_KEY}}";
           };
         }
         {
           lidarr = {
-            url = "http://nas.internal:8686";
+            type = "lidarr";
+            url = "https://lidarr.diekvoss.net";
             key = "{{HOMEPAGE_VAR_LIDARR_API_KEY}}";
           };
         }
         {
           sonarr = {
-            url = "http://nas.internal:8989";
+            type = "sonarr";
+            url = "https://sonarr.diekvoss.net";
             key = "{{HOMEPAGE_VAR_SONARR_API_KEY}}";
           };
         }
         {
           prowlarr = {
-            url = "http://nas.internal:9696";
+            type = "prowlarr";
+            url = "https://prowlarr.diekvoss.net";
             key = "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}";
           };
         }
         {
           readarr = {
-            url = "http://nas.internal:8787";
+            type = "readarr";
+            url = "https://readarr.diekvoss.net";
             key = "{{HOMEPAGE_VAR_READARR_API_KEY}}";
           };
         }
