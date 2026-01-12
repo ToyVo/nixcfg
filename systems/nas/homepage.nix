@@ -17,7 +17,7 @@ in
       environmentFile = config.sops.secrets."homepage.env".path;
       settings = {
         background = "https://images.unsplash.com/photo-1507936580189-3816b4abf640?q=80&w=2400&auto=format&fit=crop";
-        cardBlur = "xs";
+        cardBlur = "md";
       };
       bookmarks = [
         {
