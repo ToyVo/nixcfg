@@ -55,7 +55,7 @@ in
             lsof
             netcat
             nix-output-monitor
-            nixfmt-rfc-style
+            nixfmt
             nmap
             nvd
             openssh

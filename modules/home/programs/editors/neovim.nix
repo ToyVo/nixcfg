@@ -31,7 +31,7 @@ in
               settings = {
                 ["nil"] = {
                   formatting = {
-                    command = {"${lib.getExe pkgs.nixfmt-rfc-style}"},
+                    command = {"${lib.getExe pkgs.nixfmt}"},
                   },
                 },
                 ["nix"] = {
