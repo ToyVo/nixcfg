@@ -13,6 +13,7 @@
       displayName = "AdGuard Home";
       description = "DNS Adblocker";
       category = "Networking";
+      hasWidget = true;
     };
   };
   omada = {
@@ -68,6 +69,7 @@
         displayName = "Jellyfin";
         description = "Media Server";
         category = "Media";
+        hasWidget = true;
       };
       portainer = {
         port = 9443;
@@ -75,6 +77,7 @@
         displayName = "Portainer";
         description = "Adhoc Container Management";
         category = "DevOps";
+        hasWidget = true;
       };
       coder = {
         port = 7080;
@@ -94,18 +97,21 @@
         displayName = "qBittorrent";
         description = "Torrent Client";
         category = "Media";
+        hasWidget = true;
       };
       immich = {
         port = 2283;
         displayName = "Immich";
         description = "Photo Management";
         category = "Media";
+        hasWidget = true;
       };
       home-assistant = {
         port = 8123;
         displayName = "Home Assistant";
         description = "Home Automation";
         category = "DevOps";
+        hasWidget = true;
       };
       # port not configured through nix
       nextcloud = {
@@ -113,42 +119,49 @@
         displayName = "Nextcloud";
         description = "Cloud Storage";
         category = "DevOps";
+        hasWidget = true;
       };
       bazarr = {
         port = 6767;
         displayName = "Bazarr";
         description = "Subtitle Manager";
         category = "Starr";
+        hasWidget = true;
       };
       radarr = {
         port = 7878;
         displayName = "Radarr";
         description = "Movie Manager";
         category = "Starr";
+        hasWidget = true;
       };
       lidarr = {
         port = 8686;
         displayName = "Lidarr";
         description = "Music Manager";
         category = "Starr";
+        hasWidget = true;
       };
       sonarr = {
         port = 8989;
         displayName = "Sonarr";
         description = "TV Show Manager";
         category = "Starr";
+        hasWidget = true;
       };
       prowlarr = {
         port = 9696;
         displayName = "Prowlarr";
         description = "Indexer Manager";
         category = "Starr";
+        hasWidget = true;
       };
       readarr = {
         port = 8787;
         displayName = "Readarr";
         description = "EBook/Audiobook Manager";
         category = "Starr";
+        hasWidget = true;
       };
       flaresolverr = {
         port = 8191;
