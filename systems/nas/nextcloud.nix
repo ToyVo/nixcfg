@@ -23,7 +23,7 @@ in
           dbtype = "pgsql";
         };
         database.createLocally = true;
-        package = pkgs.nextcloud31;
+        package = pkgs.nextcloud32;
         extraApps = {
           inherit (config.services.nextcloud.package.packages.apps)
             news
