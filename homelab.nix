@@ -367,7 +367,7 @@
     mac = "b4:8c:9d:b9:5d:fb";
   };
   oracle = {
-    ip = "163.192.123.181";
+    ip = "149.130.210.149";
     services.minecraft = {
       port = 7878;
       subdomain = "mc";
