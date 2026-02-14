@@ -65,6 +65,14 @@
         extraConfig = "reverse_proxy http://0.0.0.0:7878";
       };
     };
+    mcsmanager.daemon = {
+      enable = true;
+      openFirewall = true;
+    };
+    mcsmanager.panel = {
+      enable = true;
+      openFirewall = true;
+    };
     minecraft-server = {
       declarative = true;
       enable = true;

@@ -83,6 +83,7 @@ let
         nix-index-database.nixosModules.nix-index
         nixpkgs-unstable.nixosModules.notDetected
         nur.modules.nixos.default
+        nur-packages.modules.nixos.mcsmanager
         self.nixosModules.default
         sops-nix.nixosModules.sops
         {
