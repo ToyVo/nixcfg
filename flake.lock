@@ -183,11 +183,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1771023322,
-        "narHash": "sha256-KbrI2gRmMkPj4npqIhTmuugf9sVKssKujHSR/3ig95U=",
+        "lastModified": 1771180733,
+        "narHash": "sha256-WyU5ufA8sl8F7HlpEXIlGDRn4enoBVQBRKYi1w47S5g=",
         "owner": "toyvo",
         "repo": "discord_bot",
-        "rev": "35c92298297c8d9a6fb9bed53a81e800227376af",
+        "rev": "794254096147248dc1fa53bd55379c0377de048a",
         "type": "github"
       },
       "original": {
@@ -500,11 +500,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1771132481,
-        "narHash": "sha256-Tc+YqZ/Q1K35vJK4ji4RbLB/qKGcEq6yh7p4CKoZF60=",
+        "lastModified": 1771188132,
+        "narHash": "sha256-qLXxN/tPrZtnekaLBQuVtxQfvqqs5cT5WbyH4zZaTGI=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "1e53254671f36cb7d0e2dcca08730f066d5e69b4",
+        "rev": "ae8003d8b61d0d373e7ca3da1a48f9c870d15df9",
         "type": "github"
       },
       "original": {
@@ -695,11 +695,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1770882871,
-        "narHash": "sha256-nw5g+xl3veea+maxJ2/81tMEA/rPq9aF1H5XF35X+OE=",
+        "lastModified": 1771171797,
+        "narHash": "sha256-ngIarpog/Hv5r9M1YyvsaaSUBCqtWqHl6pibq6n2ppo=",
         "owner": "nixos",
         "repo": "nixos-hardware",
-        "rev": "af04cb78aa85b2a4d1c15fc7270347e0d0eda97b",
+        "rev": "531af1dbaee7cfdd7aed1e595ce418b7e2e99a80",
         "type": "github"
       },
       "original": {
@@ -1181,11 +1181,11 @@
         "nixpkgs": "nixpkgs_14"
       },
       "locked": {
-        "lastModified": 1771133978,
-        "narHash": "sha256-bCJPdRHNz+hwnD7wlq5MwXViGMq9buyAauisu/mhNn8=",
+        "lastModified": 1771201216,
+        "narHash": "sha256-vSINopV5hqbfgTR5D9ktGKDpdJlbV2sj/Re3X/Wl/Lc=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "ec769cfd16b45d91e869efe65336438334e966f8",
+        "rev": "c644df547cccd2839f67fc91e63a99065371a45a",
         "type": "github"
       },
       "original": {
@@ -1203,11 +1203,11 @@
         "treefmt-nix": "treefmt-nix_4"
       },
       "locked": {
-        "lastModified": 1771034642,
-        "narHash": "sha256-N0wSQM9wyjqc49uSob3y4C1259Ude3Qy6Rnsz2TG4Cc=",
+        "lastModified": 1771202506,
+        "narHash": "sha256-jm2DYHZu0jWI01XJPho7CLA2xC4QrFIJFQ9WsG3yybk=",
         "owner": "ToyVo",
         "repo": "nur-packages",
-        "rev": "1503157b97411314edd4736773d72bd78e41a083",
+        "rev": "69f49029d9640592767de9fe6172f1ba2cf8692a",
         "type": "github"
       },
       "original": {
@@ -1226,11 +1226,11 @@
         "systems": "systems_4"
       },
       "locked": {
-        "lastModified": 1771114524,
-        "narHash": "sha256-qE618WBCfks5S2wVnoqOMjuX6675bVvDeS5rIOu27aw=",
+        "lastModified": 1771148535,
+        "narHash": "sha256-UmpHVCVgqIpWWahmEcFb1pOwyI3PGKpgrL2BiRGDWec=",
         "owner": "NotAShelf",
         "repo": "nvf",
-        "rev": "df94a99201f374c407c7b0a8256aa5c7ce347775",
+        "rev": "d6338d4c4cee45634dd54dfb9cbb6abc5a86752e",
         "type": "github"
       },
       "original": {
@@ -1350,11 +1350,11 @@
         "nixpkgs": "nixpkgs_19"
       },
       "locked": {
-        "lastModified": 1771131053,
-        "narHash": "sha256-tp5/E4tGbeCgFniieITVdQH/zhnIY6S2rPXY7mE4/s8=",
+        "lastModified": 1771166946,
+        "narHash": "sha256-UFc4lfGBr+wJmwgDGJDn1cVD6DTr0/8TdronNUiyXlU=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "d1e085258f41a30e670b5ba306d2e8d57529ac83",
+        "rev": "2d0cf89b4404529778bc82de7e42b5754e0fe4fa",
         "type": "github"
       },
       "original": {
@@ -1524,11 +1524,11 @@
         "rust-overlay": "rust-overlay_3"
       },
       "locked": {
-        "lastModified": 1771102459,
-        "narHash": "sha256-Tfp9255qwX4YpW/aEbI9K9Ke7Agm3K38p7C0urqASnM=",
+        "lastModified": 1771196356,
+        "narHash": "sha256-GkLGyFHYGXBDs4YO+P28AQCY83uF9Rqbr9LfMSptU9A=",
         "owner": "zed-industries",
         "repo": "zed",
-        "rev": "99a558f3689e6920eb3c3ad5e78854c7068c5d75",
+        "rev": "e2f3d5ed8e5a2d8532ef0a82d3594593f0523804",
         "type": "github"
       },
       "original": {

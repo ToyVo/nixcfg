@@ -88,7 +88,7 @@
         };
       };
       openFirewall = true;
-      package = pkgs.papermcServers.papermc-1_21_6;
+      package = pkgs.papermcServers.papermc-1_21_11;
       serverProperties = {
         allow-flight = true;
         difficulty = 3;
