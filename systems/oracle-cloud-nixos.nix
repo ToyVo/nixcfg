@@ -74,30 +74,21 @@
       openFirewall = true;
     };
     minecraft-server = {
-      declarative = true;
+      declarative = false;
       enable = true;
       eula = true;
       lazymc = {
         enable = true;
         config = {
           public = {
-            protocol = 771;
-            version = "1.21.6";
+            protocol = 774;
+            version = "1.21.11";
           };
-          advanced.rewrite_server_properties = false;
+          rcon.randomize_password = true;
         };
       };
       openFirewall = true;
       package = pkgs.papermcServers.papermc-1_21_11;
-      serverProperties = {
-        allow-flight = true;
-        difficulty = 3;
-        enable-query = true;
-        max-world-size = 50000;
-        "query.port" = 25566;
-        server-port = 25566;
-        spawn-protection = 0;
-      };
     };
   };
   security = {
