@@ -93,7 +93,7 @@
           ];
           config = {
             allowUnfree = true;
-            allowBroken = true;
+            android_sdk.accept_license = true;
           };
         };
       inherit (nixpkgs-unstable) lib;
