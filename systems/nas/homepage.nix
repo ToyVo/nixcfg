@@ -14,7 +14,7 @@ in
       openFirewall = true;
       listenPort = homelab.${hostName}.services.homepage.port;
       allowedHosts = "nas.internal:8082,diekvoss.net";
-      environmentFile = config.sops.secrets."homepage.env".path;
+      environmentFiles = [ config.sops.secrets."homepage.env".path ];
       settings = {
         background = "https://images.unsplash.com/photo-1507936580189-3816b4abf640?q=80&w=2400&auto=format&fit=crop";
         cardBlur = "md";
