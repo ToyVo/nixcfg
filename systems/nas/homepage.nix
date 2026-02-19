@@ -9,7 +9,7 @@ let
 in
 {
   config = lib.mkIf config.services.homepage-dashboard.enable {
-    sops.secrets."homepage.env" = {};
+    sops.secrets."homepage.env" = { };
     services.homepage-dashboard = {
       openFirewall = true;
       listenPort = homelab.${hostName}.services.homepage.port;
@@ -82,18 +82,18 @@ in
               description = services.${service}.description or "TODO";
               href = if subdomain == "@" then "https://${domain}" else "https://${subdomain}.${domain}";
             in
-              accInner
-              // {
-                ${category} = (accInner.${category} or [ ]) ++ [
-                  {
-                    "${displayName}" = {
-                      inherit href description;
-                      widget = lib.mkIf (lib.hasAttr "widget" services.${service}) services.${service}.widget;
-                      icon = lib.mkIf (lib.hasAttr "icon" services.${service}) services.${service}.icon;
-                    };
-                  }
-                ];
-              }
+            accInner
+            // {
+              ${category} = (accInner.${category} or [ ]) ++ [
+                {
+                  "${displayName}" = {
+                    inherit href description;
+                    widget = lib.mkIf (lib.hasAttr "widget" services.${service}) services.${service}.widget;
+                    icon = lib.mkIf (lib.hasAttr "icon" services.${service}) services.${service}.icon;
+                  };
+                }
+              ];
+            }
           ) acc (lib.attrNames services)
         ) { } (lib.attrNames homelab)
       );

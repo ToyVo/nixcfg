@@ -1,5 +1,5 @@
 {
-  description = "Collin Diekvoss Nix Configurations";
+  description = "Collin Diekvoss Nix Configurations and NUR packages";
 
   nixConfig = {
     extra-substituters = [
@@ -31,7 +31,7 @@
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    discord_bot.url = "github:toyvo/discord_bot";
+    dioxus_monorepo.url = "github:toyvo/dioxus_monorepo";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -57,7 +57,6 @@
     nixpkgs-esp-dev.url = "github:mirrexagon/nixpkgs-esp-dev";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nur-packages.url = "github:ToyVo/nur-packages";
     nur.url = "github:nix-community/nur";
     nvf.url = "github:NotAShelf/nvf";
     plasma-manager.url = "github:pjones/plasma-manager";
@@ -74,7 +73,6 @@
       nixpkgs-esp-dev,
       nixpkgs-unstable,
       nur,
-      nur-packages,
       rust-overlay,
       self,
       treefmt-nix,
@@ -89,7 +87,6 @@
           inherit system;
           overlays = [
             nixpkgs-esp-dev.overlays.default
-            nur-packages.overlays.default
             nur.overlays.default
             rust-overlay.overlays.default
             # zed.overlays.default
@@ -99,119 +96,137 @@
             allowBroken = true;
           };
         };
+      inherit (nixpkgs-unstable) lib;
+      pkgsDir = "${self}/pkgs";
+      libDir = "${self}/lib";
+      overlaysDir = "${self}/overlays";
+      modulesDir = "${self}/modules";
     in
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      flake = {
-        lib = {
-          inherit import_nixpkgs;
-        }
-        // configurations.lib;
-        nixosModules.default = ./modules/nixos;
-        darwinModules.default = ./modules/darwin;
-        homeModules.default = ./modules/home;
-        nixosConfigurations = configurations.nixosConfigurations;
-        darwinConfigurations = configurations.darwinConfigurations;
-        homeConfigurations = configurations.homeConfigurations;
-      };
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "aarch64-darwin"
-      ];
-      imports = [
-        devshell.flakeModule
-        flake-parts.flakeModules.easyOverlay
-        treefmt-nix.flakeModule
-      ];
-      perSystem =
-        {
-          config,
-          pkgs,
-          lib,
-          system,
-          self',
-          ...
-        }:
-        {
-          _module.args = {
-            pkgs = import_nixpkgs system nixpkgs-unstable;
-          };
-
-          treefmt = {
-            programs = {
-              nixfmt.enable = true;
-              prettier.enable = true;
-            };
-          };
-
-          packages = {
-            setup-sops = pkgs.callPackage ./pkgs/setup-sops.nix { };
-            setup-git-sops = pkgs.callPackage ./pkgs/setup-git-sops.nix { };
-            git-sops = pkgs.callPackage ./pkgs/git-sops.nix { };
-            pre-commit = pkgs.callPackage ./pkgs/pre-commit.nix { };
-          };
-
-          devshells.default = {
-            commands = [
-              {
-                package = self'.packages.setup-sops;
-              }
-              {
-                package = self'.packages.setup-git-sops;
-              }
-            ];
-            imports = [ "${devshell}/extra/git/hooks.nix" ];
-            git.hooks = {
-              enable = true;
-              pre-commit.text = self'.packages.pre-commit.text;
-            };
-          };
-
-          checks =
-            with nixpkgs-unstable.lib;
-            with nur-packages.lib;
-            flakeChecks system self'.packages
-            // mapAttrs' (n: nameValuePair "devShells-${n}") (filterAttrs (n: v: isCacheable v) self'.devShells)
-            //
-              mapAttrs'
-                (
-                  n: v:
-                  (nameValuePair "homeConfigurations-${n}") (
-                    self.homeConfigurations."${n}".config.home.activationPackage
-                  )
-                )
-                (
-                  filterAttrs (
-                    n: v: self.homeConfigurations."${n}".pkgs.stdenv.system == system
-                  ) self.homeConfigurations
-                )
-            //
-              mapAttrs'
-                (
-                  n: v:
-                  (nameValuePair "nixosConfigurations-${n}") (
-                    self.nixosConfigurations."${n}".config.system.build.toplevel
-                  )
-                )
-                (
-                  filterAttrs (
-                    n: v: self.nixosConfigurations."${n}".pkgs.stdenv.system == system
-                  ) self.nixosConfigurations
-                )
-            //
-              mapAttrs'
-                (
-                  n: v:
-                  (nameValuePair "darwinConfigurations-${n}") (
-                    self.darwinConfigurations."${n}".config.system.build.toplevel
-                  )
-                )
-                (
-                  filterAttrs (
-                    n: v: self.darwinConfigurations."${n}".pkgs.stdenv.system == system
-                  ) self.darwinConfigurations
-                );
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      {
+        config,
+        moduleWithSystem,
+        withSystem,
+        ...
+      }:
+      let
+        ourLib =
+          (import libDir { inherit lib; })
+          // {
+            inherit import_nixpkgs;
+          }
+          // configurations.lib;
+        lib' = lib.recursiveUpdate lib ourLib;
+      in
+      {
+        flake = {
+          lib = ourLib;
+          overlays = lib'.importDirRecursive overlaysDir;
+          modules = lib'.importDirRecursive modulesDir;
+          nixosConfigurations = configurations.nixosConfigurations;
+          darwinConfigurations = configurations.darwinConfigurations;
+          homeConfigurations = configurations.homeConfigurations;
         };
-    };
+        systems = lib.systems.flakeExposed;
+        imports = [
+          devshell.flakeModule
+          flake-parts.flakeModules.easyOverlay
+          treefmt-nix.flakeModule
+        ];
+        perSystem =
+          {
+            config,
+            pkgs,
+            system,
+            self',
+            ...
+          }:
+          with lib';
+          let
+            basePkgs = import_nixpkgs system nixpkgs-unstable;
+            pkgs' = recursiveUpdate basePkgs { lib = lib'; };
+            ourPackages = callDirPackageWithRecursive pkgs' pkgsDir;
+          in
+          {
+            _module.args = {
+              pkgs = pkgs';
+            };
+
+            treefmt = {
+              programs = {
+                nixfmt.enable = true;
+                prettier.enable = true;
+                yamlfmt.enable = true;
+                mdformat.enable = true;
+              };
+            };
+            legacyPackages = ourPackages // {
+              inherit (self) lib overlays modules;
+              maintainers = pkgs.callPackage "${self}/maintainers" { };
+            };
+            packages = flakePackages system ourPackages;
+            overlayAttrs.toyvo = ourPackages;
+            devshells.default = {
+              commands = [
+                {
+                  package = self'.packages.setup-sops;
+                }
+                {
+                  package = self'.packages.setup-git-sops;
+                }
+              ];
+              imports = [ "${devshell}/extra/git/hooks.nix" ];
+              git.hooks = {
+                enable = true;
+                pre-commit.text = self'.packages.pre-commit.text;
+                pre-push.text = self'.packages.pre-push.text;
+              };
+            };
+            # we get infinite recursion on freebsd with `nix flake show`, not investigating
+            checks = lib.mkIf (system != "x86_64-freebsd") (
+              flakeChecks system self'.packages
+              // mapAttrs' (n: nameValuePair "devShells-${n}") (filterAttrs (n: v: isCacheable v) self'.devShells)
+              //
+                mapAttrs'
+                  (
+                    n: v:
+                    (nameValuePair "homeConfigurations-${n}") (
+                      self.homeConfigurations."${n}".config.home.activationPackage
+                    )
+                  )
+                  (
+                    filterAttrs (
+                      n: v: self.homeConfigurations."${n}".pkgs.stdenv.system == system
+                    ) self.homeConfigurations
+                  )
+              //
+                mapAttrs'
+                  (
+                    n: v:
+                    (nameValuePair "nixosConfigurations-${n}") (
+                      self.nixosConfigurations."${n}".config.system.build.toplevel
+                    )
+                  )
+                  (
+                    filterAttrs (
+                      n: v: self.nixosConfigurations."${n}".pkgs.stdenv.system == system
+                    ) self.nixosConfigurations
+                  )
+              //
+                mapAttrs'
+                  (
+                    n: v:
+                    (nameValuePair "darwinConfigurations-${n}") (
+                      self.darwinConfigurations."${n}".config.system.build.toplevel
+                    )
+                  )
+                  (
+                    filterAttrs (
+                      n: v: self.darwinConfigurations."${n}".pkgs.stdenv.system == system
+                    ) self.darwinConfigurations
+                  )
+            );
+          };
+      }
+    );
 }

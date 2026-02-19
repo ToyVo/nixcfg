@@ -2,7 +2,7 @@
   apple-silicon-support,
   arion,
   catppuccin,
-  discord_bot,
+  dioxus_monorepo,
   disko,
   home-manager,
   jovian,
@@ -16,7 +16,6 @@
   nixpkgs-stable,
   nixpkgs-unstable,
   nur,
-  nur-packages,
   nvf,
   plasma-manager,
   rust-overlay,
@@ -32,13 +31,13 @@ let
     nix-index-database.homeModules.nix-index
     nur.modules.homeManager.default
     nvf.homeManagerModules.nvf
-    self.homeModules.default
+    self.modules.home.systems
     sops-nix.homeManagerModules.sops
     {
       nixpkgs = {
         overlays = [
           nixpkgs-esp-dev.overlays.default
-          nur-packages.overlays.default
+          self.overlays.default
           nur.overlays.default
           rust-overlay.overlays.default
           # zed.overlays.default
@@ -76,15 +75,15 @@ let
       modules = [
         arion.nixosModules.arion
         catppuccin.nixosModules.catppuccin
-        discord_bot.nixosModules.discord_bot
+        dioxus_monorepo.nixosModules.discord_bot
         disko.nixosModules.disko
         home-manager.nixosModules.default
         nh.nixosModules.default
         nix-index-database.nixosModules.nix-index
         nixpkgs-unstable.nixosModules.notDetected
         nur.modules.nixos.default
-        nur-packages.modules.nixos.mcsmanager
-        self.nixosModules.default
+        self.modules.nixos.mcsmanager
+        self.modules.nixos.systems
         sops-nix.nixosModules.sops
         {
           home-manager = {
@@ -121,7 +120,7 @@ let
         nh.nixDarwinModules.prebuiltin
         nix-index-database.darwinModules.nix-index
         nur.modules.darwin.default
-        self.darwinModules.default
+        self.modules.darwin.systems
         sops-nix.darwinModules.sops
         {
           home-manager = {
