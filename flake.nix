@@ -99,7 +99,7 @@
       inherit (nixpkgs-unstable) lib;
       pkgsDir = "${self}/pkgs";
       libDir = "${self}/lib";
-      overlaysDir = "${self}/overlays";
+      # overlaysDir = "${self}/overlays";
       modulesDir = "${self}/modules";
     in
     flake-parts.lib.mkFlake { inherit inputs; } (
@@ -121,7 +121,7 @@
       {
         flake = {
           lib = ourLib;
-          overlays = lib'.importDirRecursive overlaysDir;
+          # overlays = lib'.importDirRecursive overlaysDir;
           modules = lib'.importDirRecursive modulesDir;
           nixosConfigurations = configurations.nixosConfigurations;
           darwinConfigurations = configurations.darwinConfigurations;
