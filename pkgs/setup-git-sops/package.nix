@@ -13,5 +13,10 @@ writeShellScriptBin "setup-git-sops" ''
   git config diff.git-sops.textconv cat
 ''
 // {
-  meta.description = "setup git repository with filter and diff for sops auto encryption";
+  meta = {
+    description = "Setup git repository with filter and diff for sops auto encryption";
+    homepage = "https://github.com/ToyVo/nixcfg";
+    license = lib.licenses.mit;
+    mainProgram = "setup-git-sops";
+  };
 }

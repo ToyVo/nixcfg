@@ -1,4 +1,4 @@
-{ writeShellScriptBin }:
+{ writeShellScriptBin, lib }:
 writeShellScriptBin "pre-push" ''
   echo "Check evaluation"
   nix flake show
@@ -13,3 +13,11 @@ writeShellScriptBin "pre-push" ''
   echo "Build nix packages"
   nix shell -f '<nixpkgs>' nix-build-uncached -c nix-build-uncached maintainers/ci.nix -A cacheOutputs
 ''
+// {
+  meta = {
+    description = "Pre-push hook that evaluates and builds all nix packages";
+    homepage = "https://github.com/ToyVo/nixcfg";
+    license = lib.licenses.mit;
+    mainProgram = "pre-push";
+  };
+}

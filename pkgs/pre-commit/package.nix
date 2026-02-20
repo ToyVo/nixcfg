@@ -1,4 +1,4 @@
-{ writeShellScriptBin }:
+{ writeShellScriptBin, lib }:
 writeShellScriptBin "pre-commit" ''
   echo "Stashing unstaged changes..."
   git commit --allow-empty --no-verify --message 'Save index'
@@ -18,3 +18,11 @@ writeShellScriptBin "pre-commit" ''
       echo "No unstaged changes to restore."
   fi
 ''
+// {
+  meta = {
+    description = "Pre-commit hook that formats staged changes with nix fmt";
+    homepage = "https://github.com/ToyVo/nixcfg";
+    license = lib.licenses.mit;
+    mainProgram = "pre-commit";
+  };
+}
