@@ -119,9 +119,7 @@ in
     };
     resolved = {
       enable = true;
-      extraConfig = ''
-        DNSStubListenerExtra=10.1.0.1
-      '';
+      settings.DNSStubListenerExtra="10.1.0.1";
     };
     adguardhome = {
       enable = true;
