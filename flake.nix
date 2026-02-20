@@ -161,7 +161,8 @@
               };
             };
             legacyPackages = ourPackages // {
-              inherit (self) lib overlays modules;
+              # inherit (self) lib overlays modules;
+              inherit (self) lib modules;
               maintainers = pkgs.callPackage "${self}/maintainers" { };
             };
             packages = flakePackages system ourPackages;
@@ -178,8 +179,8 @@
               imports = [ "${devshell}/extra/git/hooks.nix" ];
               git.hooks = {
                 enable = true;
-                pre-commit.text = self'.packages.pre-commit.text;
-                pre-push.text = self'.packages.pre-push.text;
+                pre-commit.text = self'.legacyPackages.pre-commit.text;
+                pre-push.text = self'.legacyPackages.pre-push.text;
               };
             };
             # we get infinite recursion on freebsd with `nix flake show`, not investigating

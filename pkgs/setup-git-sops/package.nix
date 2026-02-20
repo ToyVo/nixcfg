@@ -4,7 +4,7 @@
   lib,
 }:
 let
-  git-sops = callPackage ./git-sops.nix { };
+  git-sops = callPackage ../git-sops/package.nix { };
 in
 writeShellScriptBin "setup-git-sops" ''
   git config filter.git-sops.clean "${lib.getExe git-sops} clean %f"
