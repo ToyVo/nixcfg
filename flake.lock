@@ -655,11 +655,11 @@
         "nixpkgs": "nixpkgs_12"
       },
       "locked": {
-        "lastModified": 1771243519,
-        "narHash": "sha256-oeHgjE5GpACBjDeXrTczIl6cKmHltLbk7inNSMgGFFQ=",
+        "lastModified": 1771562090,
+        "narHash": "sha256-6GbbDYX/libMC2cQZEUJ1i1EKdWY3AJ1lpNbcnFG58s=",
         "owner": "nix-community",
         "repo": "nixos-wsl",
-        "rev": "a2cb8eeecfbf4a1ce0083e6a32680b1bec8b045c",
+        "rev": "45b31483caf8bd05017f9a3c86897974bba2e7f7",
         "type": "github"
       },
       "original": {
