@@ -170,6 +170,23 @@ in
         };
       };
     };
+    litellm = {
+      enable = true;
+      host = "0.0.0.0";
+      port = homelab.${hostName}.services.litellm.port;
+      openFirewall = true;
+      settings = {
+        model_list = [
+          {
+            model_name = "ollama/*";
+            litellm_params = {
+              model = "ollama/*";
+              api_base = "https://ollama.diekvoss.net";
+            };
+          }
+        ];
+      };
+    };
     caddy.enable = true;
     cloudflare-dyndns = {
       enable = true;

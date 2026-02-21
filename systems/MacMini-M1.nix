@@ -1,4 +1,9 @@
-{ homelab, openclaw-pr, system, ... }:
+{
+  homelab,
+  openclaw-pr,
+  system,
+  ...
+}:
 {
   profiles = {
     defaults.enable = true;
