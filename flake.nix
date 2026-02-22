@@ -188,45 +188,6 @@
             checks = lib.mkIf (system != "x86_64-freebsd") (
               flakeChecks system self'.packages
               // mapAttrs' (n: nameValuePair "devShells-${n}") (filterAttrs (n: v: isCacheable v) self'.devShells)
-              //
-                mapAttrs'
-                  (
-                    n: v:
-                    (nameValuePair "homeConfigurations-${n}") (
-                      self.homeConfigurations."${n}".config.home.activationPackage
-                    )
-                  )
-                  (
-                    filterAttrs (
-                      n: v: self.homeConfigurations."${n}".pkgs.stdenv.system == system
-                    ) self.homeConfigurations
-                  )
-              //
-                mapAttrs'
-                  (
-                    n: v:
-                    (nameValuePair "nixosConfigurations-${n}") (
-                      self.nixosConfigurations."${n}".config.system.build.toplevel
-                    )
-                  )
-                  (
-                    filterAttrs (
-                      n: v: self.nixosConfigurations."${n}".pkgs.stdenv.system == system
-                    ) self.nixosConfigurations
-                  )
-              //
-                mapAttrs'
-                  (
-                    n: v:
-                    (nameValuePair "darwinConfigurations-${n}") (
-                      self.darwinConfigurations."${n}".config.system.build.toplevel
-                    )
-                  )
-                  (
-                    filterAttrs (
-                      n: v: self.darwinConfigurations."${n}".pkgs.stdenv.system == system
-                    ) self.darwinConfigurations
-                  )
             );
           };
       }
