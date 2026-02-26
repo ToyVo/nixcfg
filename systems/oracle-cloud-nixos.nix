@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }:
 {
@@ -16,6 +17,7 @@
   containerPresets = {
     podman.enable = true;
   };
+  home-manager.users.toyvo.programs.beets.enable = lib.mkForce false;
   networking = {
     hostName = "oracle-cloud-nixos";
     firewall = {
