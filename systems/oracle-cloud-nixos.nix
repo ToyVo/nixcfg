@@ -28,8 +28,6 @@
         25566
         # terraria
         7777
-        # vintage story
-        42420
       ];
       allowedUDPPorts = [
         53
@@ -43,8 +41,6 @@
         24454
         # terraria
         7777
-        # vintage story
-        42420
       ];
     };
   };
@@ -99,6 +95,10 @@
         };
       };
     };
+  };
+  vintagestory = {
+    enable = true;
+    openFirewall = true;
   };
   containerPresets.portainer = {
     enable = true;
