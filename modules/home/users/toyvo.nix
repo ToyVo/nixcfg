@@ -11,6 +11,7 @@ in
 {
   imports = [
     ../programs/terminals/hyper.nix
+    ../programs/editors/zed.nix
   ];
 
   options.profiles.toyvo.enable = lib.mkEnableOption "Enable toyvo profile";
