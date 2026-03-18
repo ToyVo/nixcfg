@@ -20,6 +20,7 @@ in
     ../../modules/os/users/toyvo.nix
     ../../modules/nixos/defaults.nix
     ../../modules/nixos/filesystems.nix
+    ../../modules/nixos/monitoring/default.nix
     ./kea.nix
     ./virtual-hosts.nix
     inputs.arion.nixosModules.arion
@@ -331,7 +332,15 @@ in
         };
       };
     };
-    caddy.enable = true;
+    caddy = {
+      enable = true;
+      globalConfig = ''
+        servers {
+          metrics
+        }
+      '';
+    };
+    monitoring.enable = true;
     cloudflare-dyndns = {
       enable = true;
       domains = [
