@@ -349,7 +349,7 @@ in
       role = "server";
       address = "10.100.0.1/24";
       privateKeySecret = "wireguard-router-private-key";
-      peerPublicKey = "PLACEHOLDER_ORACLE_PUBLIC_KEY";
+      peerPublicKey = "G78etq+AQlSTd1fOXTpxt+mSB5A+kozeUFfagXz49Ws=";
       peerAllowedIPs = [ "10.100.0.2/32" ];
     };
     cloudflare-dyndns = {

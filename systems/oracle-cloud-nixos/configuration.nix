@@ -102,8 +102,8 @@
       role = "peer";
       address = "10.100.0.2/24";
       privateKeySecret = "wireguard-oracle-private-key";
-      peerPublicKey = "PLACEHOLDER_ROUTER_PUBLIC_KEY";
-      peerEndpoint = "PLACEHOLDER_ROUTER_PUBLIC_IP:51820";
+      peerPublicKey = "9EZ8ZiCF34RiMr06QiKBIYGckS9DFUBeX85boFhz2yo=";
+      peerEndpoint = "toyvo.dev:51820";
       peerAllowedIPs = [
         "10.100.0.0/24"
         "10.1.0.0/24"
