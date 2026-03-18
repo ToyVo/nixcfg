@@ -7,6 +7,7 @@
 **Architecture:** NAS-centric hub runs Grafana (:3000), Prometheus (:9090), and Loki (:3100). Every monitored machine runs Grafana Alloy which pushes metrics via remote_write and pushes journal logs to Loki. Oracle Cloud connects via WireGuard tunnel terminated on the Router. Loki uses `auth_enabled: false` (simpler for homelab) with nginx IP-based access control + `X-Scope-OrgID` headers for tenant labeling.
 
 **Design decisions (deviations from spec):**
+
 - **Push-only metrics:** Alloy pushes via `prometheus.remote_write` rather than exposing `/metrics` for Prometheus to scrape. Simpler — no need to open port 12345 on every machine.
 - **Loki auth:** Simplified from bearer token to nginx IP allowlist (LAN + WireGuard subnet). `auth_enabled: false` so Grafana can query all tenants. `X-Scope-OrgID` still used for labeling/isolation.
 - **WireGuard rename in Phase 1:** Moved from spec's Phase 3 to Phase 1 to prevent `wg0` conflicts.
@@ -21,29 +22,31 @@
 ## File Map
 
 ### New Files
-| File | Responsibility |
-|------|---------------|
-| `modules/nixos/monitoring/default.nix` | Shared Alloy agent module — enable on any machine |
-| `modules/nixos/monitoring/grafana.nix` | Grafana server config (NAS only) |
+
+| File                                      | Responsibility                                                 |
+| ----------------------------------------- | -------------------------------------------------------------- |
+| `modules/nixos/monitoring/default.nix`    | Shared Alloy agent module — enable on any machine              |
+| `modules/nixos/monitoring/grafana.nix`    | Grafana server config (NAS only)                               |
 | `modules/nixos/monitoring/prometheus.nix` | Prometheus server + scrape targets from homelab.nix (NAS only) |
-| `modules/nixos/monitoring/loki.nix` | Loki server + nginx IP-allowlist proxy (NAS only) |
-| `modules/nixos/wireguard/default.nix` | WireGuard tunnel config (Router + Oracle) |
+| `modules/nixos/monitoring/loki.nix`       | Loki server + nginx IP-allowlist proxy (NAS only)              |
+| `modules/nixos/wireguard/default.nix`     | WireGuard tunnel config (Router + Oracle)                      |
 
 ### Modified Files
-| File | Changes |
-|------|---------|
-| `homelab.nix` | Add `grafana` service under `nas.services`, rename `oracle` key to `oracle-cloud-nixos`, update `cockpit.port` to 9091 |
-| `systems/nas/configuration.nix` | Import monitoring modules, add firewall ports, add sops secrets |
-| `systems/nas/wireguard.nix` | Rename `wg0` → `wg-proton` throughout |
-| `systems/router/configuration.nix` | Import monitoring + wireguard modules, add firewall ports, add NAT internal interface, add sops secrets |
-| `systems/router/virtual-hosts.nix` | No changes needed — auto-generates from homelab.nix |
-| `systems/oracle-cloud-nixos/configuration.nix` | Import monitoring + wireguard modules, add firewall ports, add sops secrets |
-| `systems/Protectli/configuration.nix` | Import monitoring module, add firewall ports, add sops secrets |
-| `systems/rpi4b4a/configuration.nix` | Import monitoring module, add firewall ports, add sops secrets |
-| `systems/rpi4b8a/configuration.nix` | Import monitoring module, add firewall ports, add sops secrets |
-| `systems/rpi4b8b/configuration.nix` | Import monitoring module, add firewall ports, add sops secrets |
-| `systems/rpi4b8c/configuration.nix` | Import monitoring module, add firewall ports, add sops secrets |
-| `.sops.yaml` | No changes needed — single key group already covers all machines |
+
+| File                                           | Changes                                                                                                                |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `homelab.nix`                                  | Add `grafana` service under `nas.services`, rename `oracle` key to `oracle-cloud-nixos`, update `cockpit.port` to 9091 |
+| `systems/nas/configuration.nix`                | Import monitoring modules, add firewall ports, add sops secrets                                                        |
+| `systems/nas/wireguard.nix`                    | Rename `wg0` → `wg-proton` throughout                                                                                  |
+| `systems/router/configuration.nix`             | Import monitoring + wireguard modules, add firewall ports, add NAT internal interface, add sops secrets                |
+| `systems/router/virtual-hosts.nix`             | No changes needed — auto-generates from homelab.nix                                                                    |
+| `systems/oracle-cloud-nixos/configuration.nix` | Import monitoring + wireguard modules, add firewall ports, add sops secrets                                            |
+| `systems/Protectli/configuration.nix`          | Import monitoring module, add firewall ports, add sops secrets                                                         |
+| `systems/rpi4b4a/configuration.nix`            | Import monitoring module, add firewall ports, add sops secrets                                                         |
+| `systems/rpi4b8a/configuration.nix`            | Import monitoring module, add firewall ports, add sops secrets                                                         |
+| `systems/rpi4b8b/configuration.nix`            | Import monitoring module, add firewall ports, add sops secrets                                                         |
+| `systems/rpi4b8c/configuration.nix`            | Import monitoring module, add firewall ports, add sops secrets                                                         |
+| `.sops.yaml`                                   | No changes needed — single key group already covers all machines                                                       |
 
 ---
 
@@ -52,8 +55,11 @@
 ### Task 1: Update homelab.nix (Cockpit port + Grafana + Oracle rename)
 
 **Files:**
+
 - Modify: `homelab.nix:117-124` (cockpit port)
+
 - Modify: `homelab.nix:369-380` (rename oracle → oracle-cloud-nixos)
+
 - Modify: `homelab.nix:46-272` (add grafana service under nas)
 
 - [ ] **Step 1: Change Cockpit port from 9090 to 9091**
@@ -124,6 +130,7 @@ git commit -m "prep: move cockpit to 9091, add grafana service, rename oracle ke
 ### Task 2: Rename NAS ProtonVPN WireGuard interface
 
 **Files:**
+
 - Modify: `systems/nas/wireguard.nix`
 
 - [ ] **Step 1: Rename wg0 to wg-proton**
@@ -185,6 +192,7 @@ git commit -m "rename NAS ProtonVPN wireguard interface from wg0 to wg-proton"
 ### Task 3: Create Alloy agent module (monitoring/default.nix)
 
 **Files:**
+
 - Create: `modules/nixos/monitoring/default.nix`
 
 - [ ] **Step 1: Create the module directory**
@@ -295,8 +303,11 @@ in
 ```
 
 **Key design decisions:**
+
 - **Push-only metrics:** Alloy pushes via `prometheus.remote_write` to Prometheus. No `/metrics` endpoint exposed, no port 12345 needed. This eliminates the need to open firewall ports on every machine and avoids dual-collection (push + pull).
+
 - **No bearer token for Loki:** Removed — Loki auth is handled by nginx IP allowlist on the NAS (see Task 5). Simpler and avoids the sops EnvironmentFile KEY=VALUE format issue.
+
 - **Alloy config Nix interpolation:** `${hostname}` is resolved at Nix eval time, not by Alloy. The Alloy River config uses `${}` syntax too, but since we're embedding hostname as a literal string at build time, this works correctly.
 
 - [ ] **Step 3: Verify the module evaluates**
@@ -318,6 +329,7 @@ git commit -m "feat: add Grafana Alloy agent module (monitoring/default.nix)"
 ### Task 4: Create Prometheus module (monitoring/prometheus.nix)
 
 **Files:**
+
 - Create: `modules/nixos/monitoring/prometheus.nix`
 
 - [ ] **Step 1: Write the Prometheus server module**
@@ -367,6 +379,7 @@ git commit -m "feat: add Prometheus server module with homelab.nix target genera
 ### Task 5: Create Loki module with nginx auth proxy (monitoring/loki.nix)
 
 **Files:**
+
 - Create: `modules/nixos/monitoring/loki.nix`
 
 - [ ] **Step 1: Write the Loki server module**
@@ -465,8 +478,11 @@ Create `modules/nixos/monitoring/loki.nix`:
 ```
 
 **Design decisions:**
+
 - **`auth_enabled = false`**: Simplifies Grafana's ability to query all hosts' logs. With `auth_enabled = true`, Grafana can only query one tenant at a time, which makes cross-host log correlation painful. The `X-Scope-OrgID` header is still sent by Alloy agents for labeling.
+
 - **Nginx IP allowlist instead of bearer token**: Much simpler to implement with NixOS/sops-nix. Loki has no native bearer token support, and wiring sops secrets into nginx config snippets is fragile. IP allowlist is sufficient for a homelab where you control the network.
+
 - **Loki on localhost:3101, nginx on 0.0.0.0:3100**: Loki never exposed directly. Nginx gates access.
 
 - [ ] **Step 2: Commit**
@@ -481,6 +497,7 @@ git commit -m "feat: add Loki server module with nginx auth proxy"
 ### Task 6: Create Grafana module (monitoring/grafana.nix)
 
 **Files:**
+
 - Create: `modules/nixos/monitoring/grafana.nix`
 
 - [ ] **Step 1: Write the Grafana server module**
@@ -559,6 +576,7 @@ git commit -m "feat: add Grafana server module with auto-provisioned datasources
 ### Task 7: Wire up NAS configuration
 
 **Files:**
+
 - Modify: `systems/nas/configuration.nix`
 
 - [ ] **Step 1: Add monitoring module imports to NAS**
@@ -644,6 +662,7 @@ git commit -m "style: format nix files"
 ### Task 9: Deploy Alloy to Router
 
 **Files:**
+
 - Modify: `systems/router/configuration.nix`
 
 - [ ] **Step 1: Add monitoring module import**
@@ -679,6 +698,7 @@ git commit -m "feat: enable Alloy monitoring agent on Router"
 ### Task 10: Deploy Alloy to Protectli
 
 **Files:**
+
 - Modify: `systems/Protectli/configuration.nix`
 
 - [ ] **Step 1: Add monitoring module import**
@@ -692,6 +712,7 @@ Add to imports in `systems/Protectli/configuration.nix`:
 - [ ] **Step 2: Enable monitoring**
 
 Add:
+
 ```nix
 services.monitoring.enable = true;
 ```
@@ -708,6 +729,7 @@ git commit -m "feat: enable Alloy monitoring agent on Protectli"
 ### Task 11: Enable Caddy Prometheus metrics on Router
 
 **Files:**
+
 - Modify: `systems/router/configuration.nix`
 
 - [ ] **Step 1: Add Caddy global metrics option**
@@ -739,6 +761,7 @@ git commit -m "feat: enable Caddy Prometheus metrics on Router"
 ### Task 12: Add Grafana Caddy virtual host
 
 **Files:**
+
 - No changes needed — `virtual-hosts.nix` auto-generates from `homelab.nix`
 
 Since we already added `grafana` under `nas.services` in homelab.nix (Task 1, Step 2), and the Router's `virtual-hosts.nix` auto-generates Caddy vhosts for all services on `10.1.0.*` IPs, the `grafana.diekvoss.net` virtual host will be created automatically.
@@ -764,6 +787,7 @@ git commit -m "style: format nix files"
 ### Task 13: Create WireGuard module
 
 **Files:**
+
 - Create: `modules/nixos/wireguard/default.nix`
 
 - [ ] **Step 1: Create the module directory**
@@ -860,6 +884,7 @@ git commit -m "feat: add WireGuard tunnel module (general purpose)"
 ### Task 14: Wire up WireGuard on Router
 
 **Files:**
+
 - Modify: `systems/router/configuration.nix`
 
 - [ ] **Step 1: Add wireguard module import**
@@ -935,6 +960,7 @@ git commit -m "feat: configure WireGuard server on Router (wg0, 10.100.0.1)"
 ### Task 15: Wire up WireGuard on Oracle
 
 **Files:**
+
 - Modify: `systems/oracle-cloud-nixos/configuration.nix`
 
 - [ ] **Step 1: Add wireguard and monitoring module imports**
@@ -1038,9 +1064,13 @@ git commit -m "style: format nix files"
 ### Task 17: Deploy Alloy to RPi nodes
 
 **Files:**
+
 - Modify: `systems/rpi4b4a/configuration.nix`
+
 - Modify: `systems/rpi4b8a/configuration.nix`
+
 - Modify: `systems/rpi4b8b/configuration.nix`
+
 - Modify: `systems/rpi4b8c/configuration.nix`
 
 - [ ] **Step 1: Add monitoring to all RPi configs**
@@ -1129,26 +1159,30 @@ rm /tmp/router-wg.key /tmp/oracle-wg.key /tmp/grafana-pass.txt
 ### Deployment Order
 
 1. Deploy NAS first (`nh os switch ~/nixcfg` on NAS) — brings up Grafana, Prometheus, Loki
-2. Deploy Router — brings up Alloy agent + WireGuard server
-3. Deploy Oracle — brings up Alloy agent + WireGuard peer
-4. Deploy Protectli — brings up Alloy agent
-5. Deploy RPis (when they come online) — brings up Alloy agents
+1. Deploy Router — brings up Alloy agent + WireGuard server
+1. Deploy Oracle — brings up Alloy agent + WireGuard peer
+1. Deploy Protectli — brings up Alloy agent
+1. Deploy RPis (when they come online) — brings up Alloy agents
 
 ### Verification
 
 After deploying NAS:
+
 - Visit `https://grafana.diekvoss.net`, log in with admin credentials
 - Check Prometheus targets at `http://10.1.0.3:9090/targets` — NAS should show as UP
 
 After deploying Router:
+
 - Router should appear as UP in Prometheus targets
 - Check Loki logs in Grafana → Explore → Loki datasource
 
 After deploying Oracle:
+
 - Verify WireGuard tunnel: `ping 10.100.0.2` from Router
 - Oracle should appear in Prometheus targets
 
 ### Future Work (not in this plan)
+
 - Grafana alerting rules (disk, CPU, service down)
 - Service-specific dashboards (Jellyfin, Nextcloud, Immich, PostgreSQL)
 - Kea DHCP exporter on Router
