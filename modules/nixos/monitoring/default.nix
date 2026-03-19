@@ -11,6 +11,8 @@ let
   prometheusUrl = "http://${homelab.nas.ip}:9090/api/v1/write";
   hostname = config.networking.hostName;
 
+  caddyEnabled = config.services.caddy.enable;
+
   alloyConfig = ''
     // Node metrics — push to Prometheus via remote_write
     prometheus.exporter.unix "node" {
@@ -22,6 +24,16 @@ let
       forward_to = [prometheus.relabel.instance.receiver]
       scrape_interval = "15s"
     }
+
+    ${lib.optionalString caddyEnabled ''
+      // Caddy metrics
+      prometheus.scrape "caddy" {
+        targets = [{"__address__" = "localhost:2019"}]
+        forward_to = [prometheus.relabel.instance.receiver]
+        scrape_interval = "15s"
+        metrics_path = "/metrics"
+      }
+    ''}
 
     prometheus.relabel "instance" {
       rule {
