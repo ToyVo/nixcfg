@@ -123,14 +123,18 @@ in
           matchBlocks."macmini-m1" = identityConfig // {
             user = "toyvo";
             hostname = "macmini-m1.internal";
-            remoteCommand = "fish --login";
-            extraOptions.RequestTTY = "yes";
+            extraOptions = {
+              RemoteCommand = "fish --login";
+              RequestTTY = "yes";
+            };
           };
           matchBlocks."macmini-intel" = identityConfig // {
             user = "toyvo";
             hostname = "macmini-intel.internal";
-            remoteCommand = "fish --login";
-            extraOptions.RequestTTY = "yes";
+            extraOptions = {
+              RemoteCommand = "fish --login";
+              RequestTTY = "yes";
+            };
           };
           matchBlocks."windows-desktop" = identityConfig // {
             user = "toyvo";
