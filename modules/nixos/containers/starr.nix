@@ -137,6 +137,16 @@ in
           # Must match host GID so bind-mounted paths are writable
           users.groups.multimedia.gid = cfg.multimediaGid;
 
+          # prowlarr uses DynamicUser=yes upstream; override to a static user so the
+          # bind-mounted state dir (owned by a fixed UID from the host) stays accessible.
+          users.users.prowlarr = {
+            uid = 61654;
+            group = "prowlarr";
+            isSystemUser = true;
+          };
+          users.groups.prowlarr = { };
+          systemd.services.prowlarr.serviceConfig.DynamicUser = lib.mkForce false;
+
           services = {
             bazarr = {
               enable = true;
