@@ -35,7 +35,7 @@ in
 
     multimediaGid = lib.mkOption {
       type = lib.types.int;
-      default = config.users.groups.multimedia.gid;
+      default = 976;
       description = "Pinned GID for the multimedia group on both host and container";
     };
 
