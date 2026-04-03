@@ -44,6 +44,24 @@ in
       description = "Pinned GID for the multimedia group on both host and container";
     };
 
+    bazarrUid = lib.mkOption {
+      type = lib.types.int;
+      default = 999;
+      description = "Pinned UID for the bazarr user (must match state dir ownership on host)";
+    };
+
+    prowlarrUid = lib.mkOption {
+      type = lib.types.int;
+      default = 61654;
+      description = "Pinned UID for the prowlarr user (must match state dir ownership on host; prowlarr uses DynamicUser upstream so this is required)";
+    };
+
+    readarrUid = lib.mkOption {
+      type = lib.types.int;
+      default = 997;
+      description = "Pinned UID for the readarr user (must match state dir ownership on host)";
+    };
+
     ports = {
       bazarr = lib.mkOption {
         type = lib.types.port;
@@ -137,10 +155,14 @@ in
           # Must match host GID so bind-mounted paths are writable
           users.groups.multimedia.gid = cfg.multimediaGid;
 
-          # prowlarr uses DynamicUser=yes upstream; override to a static user so the
-          # bind-mounted state dir (owned by a fixed UID from the host) stays accessible.
+          # Pin UIDs to match state dir ownership on the host.
+          # bazarr and readarr are not in nixpkgs ids.nix so their UIDs can diverge
+          # across systems. prowlarr uses DynamicUser=yes upstream and requires an
+          # explicit static user.
+          users.users.bazarr.uid = cfg.bazarrUid;
+          users.users.readarr.uid = cfg.readarrUid;
           users.users.prowlarr = {
-            uid = 61654;
+            uid = cfg.prowlarrUid;
             group = "prowlarr";
             isSystemUser = true;
           };
