@@ -143,8 +143,13 @@ in
               server_name = "collabora.diekvoss.net";
               storage.wopi = {
                 "@allow" = true;
-                # nextcloud is co-located so WOPI requests come from localhost
-                host = [ "localhost" ];
+                # Collabora validates the WOPI file URL host against this list.
+                # The token Nextcloud generates embeds the public hostname, so both
+                # the internal localhost and the public domain must be allowed.
+                host = [
+                  "localhost"
+                  "nextcloud\\.diekvoss\\.net"
+                ];
               };
               net = {
                 listen = "0.0.0.0";
