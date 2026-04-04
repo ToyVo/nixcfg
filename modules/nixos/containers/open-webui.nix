@@ -81,6 +81,27 @@ in
               };
           };
 
+          # services.open-webui uses DynamicUser=true which conflicts with the
+          # bind-mounted stateDir (systemd tries to migrate /var/lib/open-webui
+          # to /var/lib/private/open-webui but the bind mount is in the way).
+          # Use a static user instead.
+          systemd.services.open-webui.serviceConfig = {
+            DynamicUser = lib.mkForce false;
+            User = lib.mkForce "open-webui";
+            Group = lib.mkForce "open-webui";
+          };
+
+          users.users.open-webui = {
+            uid = 357;
+            isSystemUser = true;
+            group = "open-webui";
+          };
+          users.groups.open-webui.gid = 357;
+
+          systemd.tmpfiles.rules = [
+            "d /var/lib/open-webui 0750 open-webui open-webui -"
+          ];
+
           networking.firewall.allowedTCPPorts = [ cfg.port ];
 
           system.stateVersion = "26.05";
