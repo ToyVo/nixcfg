@@ -169,8 +169,10 @@ in
               # Co-located: nextcloud PHP reaches collabora on localhost
               wopi_url = "http://localhost:${toString cfg.ports.collabora}";
               public_wopi_url = "https://collabora.diekvoss.net";
-              # Only localhost can make WOPI requests (nextcloud and collabora are co-located)
-              wopi_allowlist = "127.0.0.1";
+              # Collabora reaches Nextcloud's WOPI endpoint via the public domain, which routes
+              # through Caddy on the NAS host and arrives from the veth host address (cfg.hostAddress).
+              # Allow localhost (direct) and the entire container/host veth subnet.
+              wopi_allowlist = "127.0.0.1,${cfg.hostAddress}";
             in
             {
               wantedBy = [ "multi-user.target" ];
