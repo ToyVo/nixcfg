@@ -22,10 +22,6 @@
 
   inputs = {
     apple-silicon-support.url = "github:tpwrules/nixos-apple-silicon";
-    arion = {
-      url = "github:hercules-ci/arion";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
     catppuccin.url = "github:catppuccin/nix";
     devshell = {
       url = "github:numtide/devshell";

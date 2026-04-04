@@ -35,7 +35,6 @@ in
     inputs.nixcfg.modules.nixos.monitoring.default
     ./samba.nix
     ./homepage.nix
-    inputs.arion.nixosModules.arion
     inputs.catppuccin.nixosModules.catppuccin
     inputs.dioxus_monorepo.nixosModules.discord_bot
     inputs.disko.nixosModules.disko

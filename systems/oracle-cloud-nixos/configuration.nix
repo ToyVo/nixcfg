@@ -24,7 +24,6 @@
     inputs.nixcfg.modules.nixos.containers.vintagestory
     inputs.nixcfg.modules.nixos.containers.terraria
     "${inputs.nixpkgs-unstable}/nixos/modules/profiles/qemu-guest.nix"
-    inputs.arion.nixosModules.arion
     inputs.catppuccin.nixosModules.catppuccin
     inputs.dioxus_monorepo.nixosModules.discord_bot
     inputs.disko.nixosModules.disko
