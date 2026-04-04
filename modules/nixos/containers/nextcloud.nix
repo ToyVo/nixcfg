@@ -75,6 +75,12 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    # The nixpkgs nextcloud module references services.nextcloud.hostName as an attrset
+    # key when constructing nginx virtualHosts, which Nix evaluates eagerly regardless of
+    # services.nextcloud.enable. Set it on the host so evaluation doesn't fail even though
+    # nextcloud itself runs inside the container.
+    services.nextcloud.hostName = "nextcloud.diekvoss.net";
+
     networking.nat = {
       enable = true;
       externalInterface = cfg.natInterface;
