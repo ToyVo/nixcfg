@@ -23,6 +23,7 @@ in
     inputs.nixcfg.modules.nixos.defaults
     inputs.nixcfg.modules.nixos.filesystems
     inputs.nixcfg.modules.nixos.services.ollama
+    inputs.hermes-agent.nixosModules.default
     inputs.nixcfg.modules.nixos.containers.podman
     inputs.nixcfg.modules.nixos.containers.portainer
     inputs.nixcfg.modules.nixos.containers.starr
@@ -291,6 +292,14 @@ in
     hibernate.enable = false;
     hybrid-sleep.enable = false;
   };
+  services.hermes-agent = {
+    enable = true;
+    settings.model.default = "opencode-go/glm-5";
+    stateDir = "/mnt/POOL/hermes";
+    environmentFiles = [ config.sops.secrets."hermes.env".path ];
+    addToSystemPackages = true;
+  };
+  sops.secrets."hermes.env".owner = "hermes";
   sops.secrets."cache-priv-key.pem" = { };
   sops.secrets."discord_bot.env" = {
     owner = "discord_bot";
