@@ -25,7 +25,6 @@ in
     inputs.nixcfg.modules.nixos.services.ollama
     inputs.hermes-agent.nixosModules.default
     inputs.nixcfg.modules.nixos.containers.podman
-    inputs.nixcfg.modules.nixos.containers.portainer
     inputs.nixcfg.modules.nixos.containers.starr
     inputs.nixcfg.modules.nixos.containers.open-webui
     inputs.nixcfg.modules.nixos.containers.monitoring
@@ -164,11 +163,6 @@ in
       stateDir = "/mnt/POOL/open-webui";
       port = homelab.open-webui.services.open-webui.port;
       ollamaBaseUrl = "https://ollama.diekvoss.net";
-    };
-    portainer = {
-      enable = true;
-      openFirewall = true;
-      sport = homelab.${hostName}.services.portainer.port;
     };
     immich = {
       enable = true;
