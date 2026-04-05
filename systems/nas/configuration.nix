@@ -159,7 +159,6 @@ in
     monitoring.enable = true;
   };
   containerPresets = {
-    podman.enable = true;
     open-webui = {
       enable = true;
       natInterface = "eno1";
