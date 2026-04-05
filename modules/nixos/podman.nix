@@ -4,7 +4,7 @@
   ...
 }:
 let
-  cfg = config.virtualization;
+  cfg = config.virtualisation;
 in
 {
   config = lib.mkIf cfg.podman.enable {
