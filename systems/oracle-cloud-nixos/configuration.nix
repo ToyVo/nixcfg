@@ -18,7 +18,7 @@
     inputs.nixcfg.modules.nixos.defaults
     inputs.nixcfg.modules.nixos.monitoring.default
     inputs.nixcfg.modules.nixos.wireguard.default
-    inputs.nixcfg.modules.nixos.containers.podman
+    inputs.nixcfg.modules.nixos.podman
     inputs.nixcfg.modules.nixos.containers.minecraft
     inputs.nixcfg.modules.nixos.containers.vintagestory
     inputs.nixcfg.modules.nixos.containers.terraria
@@ -95,6 +95,7 @@
       peerAllowedIPs = [
         "10.100.0.0/24"
         "10.1.0.0/24"
+        "10.200.0.0/16"
       ];
     };
     caddy = {
