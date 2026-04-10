@@ -47,13 +47,13 @@ let
 
   textfileDirLine = lib.optionalString (
     cfg.textfileDirectory != null
-  ) "  textfile_directory = \"${cfg.textfileDirectory}\"";
+  ) "textfile_directory = \"${cfg.textfileDirectory}\"";
 
   alloyConfig = ''
     // Node metrics — push to Prometheus via remote_write
     prometheus.exporter.unix "node" {
       disable_collectors = ["mdadm"]
-    ${textfileDirLine}
+      ${textfileDirLine}
     }
 
     prometheus.scrape "node" {
