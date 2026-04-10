@@ -105,7 +105,7 @@ in
     # Alloy needs CAP_NET_RAW to send ICMP packets
     systemd.services.alloy.serviceConfig = {
       AmbientCapabilities = [ "CAP_NET_RAW" ];
-      CapabilityBoundingSet = [ "CAP_NET_RAW" ];
+      DynamicUser = lib.mkForce false;
     };
 
     systemd.services.speedtest = {
