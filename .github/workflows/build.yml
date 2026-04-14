@@ -35,8 +35,10 @@ jobs:
         if: github.ref == 'refs/heads/main' && steps.update-flake-lock.outputs.pull-request-number != ''
         run: |
           PR_BRANCH=$(gh pr view ${{ steps.update-flake-lock.outputs.pull-request-number }} --json headRefName --jq .headRefName)
-          git fetch origin "$PR_BRANCH"
+          git fetch origin "$PR_BRANCH" main
           git checkout "$PR_BRANCH"
+          git rebase origin/main
+          git push --force-with-lease origin "$PR_BRANCH"
           echo "ON_PR_BRANCH=true" >> "$GITHUB_ENV"
         env:
           GH_TOKEN: ${{ github.token }}
