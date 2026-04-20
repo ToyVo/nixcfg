@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   imports = [
     ./console.nix
     ./defaults.nix
