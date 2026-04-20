@@ -1,5 +1,5 @@
 {...}: {
-  config.imports = [
+  imports = [
     ../os
     ./containers/home-assistant.nix
     ./containers/immich.nix

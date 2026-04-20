@@ -1,5 +1,5 @@
 {...}: {
-  config.imports = [
+  imports = [
     ./defaults.nix
     ./programs/bat.nix
     ./programs/editors/helix.nix

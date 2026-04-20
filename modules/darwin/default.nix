@@ -1,5 +1,5 @@
 {...}: {
-  config.imports = [
+  imports = [
     ./defaults.nix
     ./ollama.nix
     ./podman.nix

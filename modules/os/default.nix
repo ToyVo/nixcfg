@@ -1,5 +1,5 @@
 {...}: {
-  config.imports = [
+  imports = [
     ./console.nix
     ./defaults.nix
     ./dev.nix
