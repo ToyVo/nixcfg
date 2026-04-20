@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   imports = [
     ./defaults.nix
     ./ollama.nix

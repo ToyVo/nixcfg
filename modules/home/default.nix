@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   imports = [
     ./defaults.nix
     ./programs/bat.nix

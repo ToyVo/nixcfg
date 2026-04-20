@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   imports = [
     ../os
     ./containers/home-assistant.nix
