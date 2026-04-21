@@ -32,7 +32,9 @@
     };
     sharedModules = [ ./home.nix ];
   };
-  networking.hostName = "MacBook-Pro-Nixos";
+  networking.hostName = "MacBook-Pro-NixOS";
+  networking.networkmanager.wifi.backend = "iwd";
+  networking.wireless.iwd.enable = true;
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = false;
