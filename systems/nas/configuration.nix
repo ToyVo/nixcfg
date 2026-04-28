@@ -303,6 +303,12 @@ in
     };
     spiceUSBRedirection.enable = true;
   };
+  security.sudo.extraConfig = ''
+    %wheel ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/nixos-container *
+    %wheel ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/journalctl *
+    %wheel ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/systemctl status *
+  '';
+
   systemd.targets = {
     sleep.enable = false;
     suspend.enable = false;
