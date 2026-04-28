@@ -189,7 +189,7 @@ in
       smtp = {
         host = config.containerPresets.nextcloud.hostAddress;
         port = 1025;
-        secure = "tls";
+        secure = "";
         username = "collin@diekvoss.com";
         passwordFile = config.sops.secrets."protonmail-bridge-smtp-password".path;
         fromAddress = "nextcloud";
