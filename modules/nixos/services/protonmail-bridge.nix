@@ -107,7 +107,7 @@ in
           logLevel = lib.optionalString (cfg.logLevel != null) " --log-level ${cfg.logLevel}";
         in
         ''
-          exec ${pkgs.dbus}/bin/dbus-run-session -- \
+          exec ${pkgs.dbus}/bin/dbus-run-session --dbus-daemon=${pkgs.dbus}/bin/dbus-daemon -- \
             ${pkgs.bash}/bin/bash -c '
               eval "$(echo -n | ${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=secrets --unlock 2>/dev/null)"
               export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID
