@@ -86,7 +86,7 @@ in
             ignore = "update-index --assume-unchanged";
             unignore = "update-index --no-assume-unchanged";
             ignored = "!git ls-files -v | grep ^h | cut -c 3-";
-            bare-clone = "!f() { git clone --bare \"$@\" && git -C \"$${*: -1}\" config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' && git -C \"$${*: -1}\" fetch; }; f";
+            bare-clone = "!f() { if [ \"$#\" -ge 2 ]; then for d; do :; done; else d=\"$(echo \"$1\" | sed 's|.*[:/]||; s|[.]git$||').git\"; fi; git clone --bare \"$@\" && git -C \"$d\" config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' && git -C \"$d\" fetch; }; f";
             rbm = "!git fetch && git rebase origin/main";
             rbc = "-c core.editor=true rebase --continue";
           };
