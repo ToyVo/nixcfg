@@ -5,16 +5,11 @@
 
 let
   lib = pkgs.lib;
-  ourLib = import "${self}/lib/default.nix" { inherit lib; };
+  flake = builtins.getFlake self;
+  ourLib = import "${self}/lib/default.nix" { inherit lib; inputs = flake.inputs; };
   lib' = pkgs.lib.recursiveUpdate lib ourLib;
   pkgs' = lib.recursiveUpdate pkgs { lib = lib'; };
-  lock = builtins.fromJSON (builtins.readFile ./flake.lock);
-  inputs = {
-    nvf = import (lib.fetchFromGithub {
-      inherit (lock.nodes.nvf.locked) owner repo rev;
-      sha256 = lock.nodes.nvf.locked.harHash;
-    }) { };
-  };
+  inputs = flake.inputs;
 
 in
 lib.recursiveUpdate (lib'.callDirPackageWithRecursive pkgs' "${self}/pkgs" { inherit inputs; }) {
