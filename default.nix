@@ -6,7 +6,10 @@
 let
   lib = pkgs.lib;
   flake = builtins.getFlake self;
-  ourLib = import "${self}/lib/default.nix" { inherit lib; inputs = flake.inputs; };
+  ourLib = import "${self}/lib/default.nix" {
+    inherit lib;
+    inputs = flake.inputs;
+  };
   lib' = pkgs.lib.recursiveUpdate lib ourLib;
   pkgs' = lib.recursiveUpdate pkgs { lib = lib'; };
   inputs = flake.inputs;
