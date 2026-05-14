@@ -26,7 +26,7 @@ in
   name,
   package,
   binaryName ? package.meta.mainProgram or (lib.getName package),
-  configDir,
+  configDir ? null,
   envVars ? { },
   extraFlags ? [ ],
   runtimeDeps ? [ ],
@@ -44,7 +44,7 @@ runCommand name
     mkdir -p $out/bin
 
     makeWrapper ${lib.getExe package} $out/bin/${binaryName} \
-      --set XDG_CONFIG_HOME ${configDir} \
+      ${lib.optionalString (configDir != null) "--set XDG_CONFIG_HOME ${configDir}"} \
       ${lib.optionalString (runtimeDeps != [ ]) "--prefix PATH : ${lib.makeBinPath runtimeDeps}"} \
       ${lib.concatMapStringsSep " " (n: "--set ${n} \"${envVars.${n}}\"") (lib.attrNames envVars)} \
       ${lib.concatMapStringsSep " " (flag: "--add-flags \"${flag}\"") extraFlags}
