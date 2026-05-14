@@ -25,8 +25,8 @@ in
       lib.mapAttrsToList (
         directory: uids:
         lib.concatMap (uid: [
-          "a ${directory} - - - - u:${toString uid}:rwx,g::---,m::rwx"
-          "A ${directory} - - - - u:${toString uid}:rwx,g::---,m::rwx"
+          "a+ ${directory} - - - - u:${toString uid}:rwx,g::---,m::rwx"
+          "A+ ${directory} - - - - u:${toString uid}:rwx,g::---,m::rwx"
         ]) uids
       ) cfg
     );

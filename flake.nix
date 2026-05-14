@@ -66,6 +66,7 @@
     nur.url = "github:nix-community/nur";
     nvf.url = "github:NotAShelf/nvf";
     plasma-manager.url = "github:pjones/plasma-manager";
+    preservation.url = "github:WilliButz/preservation";
     rust-overlay.url = "github:oxalica/rust-overlay";
     sops-nix.url = "github:Mic92/sops-nix";
     treefmt-nix.url = "github:numtide/treefmt-nix";

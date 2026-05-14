@@ -68,6 +68,9 @@
     {
       name = "ollama-app";
     }
+    {
+      name = "syncthing";
+    }
   ];
   homebrew.masApps = {
     "Yubico Authenticator" = 1497506650;

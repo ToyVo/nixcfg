@@ -155,6 +155,19 @@ in
     samba.enable = true;
     spice-vdagentd.enable = true;
     monitoring.enable = true;
+    syncthing = {
+      enable = true;
+      settings.folders."llm-wiki" = {
+        path = "/mnt/POOL/hermes/wiki";
+        id = "llm-wiki";
+        label = "LLM Wiki";
+        devices = [ ]; # Add devices manually via web UI after pairing
+        versioning = {
+          type = "simple";
+          params.keep = "5";
+        };
+      };
+    };
   };
   containerPresets = {
     open-webui = {
