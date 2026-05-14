@@ -119,7 +119,7 @@
         ...
       }:
       let
-        ourLib = (import libDir { inherit lib; }) // {
+        ourLib = (import libDir { inherit lib inputs; }) // {
           inherit import_nixpkgs;
         };
         lib' = lib.recursiveUpdate lib ourLib;
@@ -151,7 +151,7 @@
           let
             basePkgs = import_nixpkgs system nixos-unstable;
             pkgs' = recursiveUpdate basePkgs { lib = lib'; };
-            ourPackages = callDirPackageWithRecursive pkgs' pkgsDir;
+            ourPackages = callDirPackageWithRecursive pkgs' pkgsDir { inherit inputs; };
           in
           {
             _module.args = {

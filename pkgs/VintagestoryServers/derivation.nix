@@ -11,6 +11,7 @@
   url,
   version,
   zlib,
+  ...
 }:
 
 let

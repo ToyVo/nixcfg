@@ -315,6 +315,7 @@ in
     pre-commit
     eza
     tldr
+    python
   ];
   virtualisation = {
     libvirtd = {
