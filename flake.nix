@@ -134,7 +134,11 @@
           darwinConfigurations = configurations.darwinConfigurations;
           homeConfigurations = configurations.homeConfigurations;
         };
-        systems = lib.systems.flakeExposed;
+        systems = [
+          "aarch64-darwin"
+          "aarch64-linux"
+          "x86_64-linux"
+        ];
         imports = [
           devshell.flakeModule
           flake-parts.flakeModules.easyOverlay
