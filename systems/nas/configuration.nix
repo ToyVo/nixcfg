@@ -39,6 +39,7 @@ in
         ;
     };
     sharedModules = [ ./home.nix ];
+    users.toyvo.programs.git.settings.safe.directory = "/mnt/POOL/hermes/*";
   };
   hardware.cpu.amd.updateMicrocode = true;
   networking = {
