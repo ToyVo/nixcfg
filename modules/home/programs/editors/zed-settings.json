@@ -1,4 +1,5 @@
 {
+  "cli_default_open_behavior": "new_window",
   "agent": {
     "default_model": { "model": "kimi-k2.6", "provider": "OpenCode Go" },
     "default_profile": "write"
@@ -23,6 +24,7 @@
     "ss08": true
   },
   "buffer_font_size": 16,
+  "code_lens": "on",
   "context_servers": {
     "mcp-server-brave-search": {
       "enabled": true,
@@ -214,7 +216,12 @@
         }
       }
     },
-    "Nix": { "language_servers": ["nil", "!nixd"] }
+    "Nix": { "language_servers": ["nil", "!nixd"] },
+    "http": {
+      "inlay_hints": {
+        "enabled": true
+      }
+    }
   },
   "lsp": {
     "nil": {
