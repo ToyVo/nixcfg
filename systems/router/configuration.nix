@@ -48,6 +48,15 @@ in
     useNetworkd = true;
     useDHCP = false;
     nameservers = [ "127.0.0.1" ];
+    # Local /etc/hosts backup for when DNS is down or during bootstrap
+    hosts = {
+      "127.0.0.1" = [ "localhost" ];
+      "::1" = [ "localhost" ];
+    } // (lib.pipe homelab [
+      (lib.filterAttrs (_: host: lib.hasPrefix "10.1.0." (host.ip or "") || lib.hasPrefix "10.200." (host.ip or "")))
+      (lib.mapAttrsToList (name: host: lib.nameValuePair host.ip [ "${name}.diekvoss.net" name ]))
+      lib.listToAttrs
+    ]);
     nat = {
       enable = true;
       externalInterface = "enp2s0";
@@ -332,6 +341,122 @@ in
     };
   };
   systemd.services.technitium-dns-server.serviceConfig.LogsDirectory = "technitium";
+  # Seed Technitium DNS App configs on first boot (preserves user edits afterwards)
+  systemd.services.technitium-dns-server.preStart =
+    let
+      blockingConfig = pkgs.writeText "technitium-blocking.json" ''
+        {
+          "enableBlocking": true,
+          "blockingAnswerTtl": 30,
+          "blockListUrlUpdateIntervalHours": 24,
+          "blockListUrlUpdateIntervalMinutes": 0,
+          "localEndPointGroupMap": {
+            "127.0.0.1": "bypass",
+            "10.1.0.1:53": "bypass"
+          },
+          "networkGroupMap": {
+            "10.1.0.0/24": "everyone else",
+            "10.1.20.0/24": "everyone else",
+            "10.1.30.0/24": "everyone else",
+            "0.0.0.0/0": "everyone else",
+            "[::]/0": "everyone else"
+          },
+          "groups": [
+            {
+              "name": "everyone else",
+              "enableBlocking": true,
+              "allowTxtBlockingReport": true,
+              "blockAsNxDomain": true,
+              "blockingAddresses": ["0.0.0.0", "::"],
+              "allowed": [],
+              "blocked": [],
+              "allowListUrls": [],
+              "blockListUrls": [
+                "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+                "https://urlhaus.abuse.ch/downloads/hostfile/",
+                "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/tif.txt"
+              ],
+              "allowedRegex": [],
+              "blockedRegex": [],
+              "regexAllowListUrls": [],
+              "regexBlockListUrls": [],
+              "adblockListUrls": []
+            },
+            {
+              "name": "bypass",
+              "enableBlocking": false,
+              "allowTxtBlockingReport": true,
+              "blockAsNxDomain": true,
+              "blockingAddresses": ["0.0.0.0", "::"],
+              "allowed": [],
+              "blocked": [],
+              "allowListUrls": [],
+              "blockListUrls": [],
+              "allowedRegex": [],
+              "blockedRegex": [],
+              "regexAllowListUrls": [],
+              "regexBlockListUrls": [],
+              "adblockListUrls": []
+            }
+          ]
+        }
+      '';
+      forwardingConfig = pkgs.writeText "technitium-forwarding.json" ''
+        {
+          "appPreference": 200,
+          "enableForwarding": true,
+          "proxyServers": [],
+          "forwarders": [
+            {
+              "name": "quad9-doh",
+              "proxy": null,
+              "dnssecValidation": true,
+              "forwarderProtocol": "Https",
+              "forwarderAddresses": [
+                "https://dns.quad9.net/dns-query (9.9.9.9)"
+              ]
+            },
+            {
+              "name": "cloudflare-google",
+              "proxy": null,
+              "dnssecValidation": true,
+              "forwarderProtocol": "Tls",
+              "forwarderAddresses": [
+                "1.1.1.1",
+                "8.8.8.8"
+              ]
+            }
+          ],
+          "networkGroupMap": {
+            "0.0.0.0/0": "everyone",
+            "[::]/0": "everyone"
+          },
+          "groups": [
+            {
+              "name": "everyone",
+              "enableForwarding": true,
+              "forwardings": [
+                {
+                  "forwarders": ["cloudflare-google"],
+                  "domains": ["*"]
+                }
+              ],
+              "adguardUpstreams": []
+            }
+          ]
+        }
+      '';
+    in
+    ''
+      mkdir -p "$STATE_DIRECTORY/apps/Advanced Blocking"
+      mkdir -p "$STATE_DIRECTORY/apps/Advanced Forwarding"
+      if [ ! -f "$STATE_DIRECTORY/apps/Advanced Blocking/dnsApp.config" ]; then
+        cp ${blockingConfig} "$STATE_DIRECTORY/apps/Advanced Blocking/dnsApp.config"
+      fi
+      if [ ! -f "$STATE_DIRECTORY/apps/Advanced Forwarding/dnsApp.config" ]; then
+        cp ${forwardingConfig} "$STATE_DIRECTORY/apps/Advanced Forwarding/dnsApp.config"
+      fi
+    '';
   # Prometheus exporter for Technitium stats + query-log threat scanning
   systemd.services.technitium-exporter = {
     description = "Technitium DNS Prometheus Exporter";
