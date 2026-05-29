@@ -350,122 +350,6 @@ in
     };
   };
   systemd.services.technitium-dns-server.serviceConfig.LogsDirectory = "technitium";
-  # Seed Technitium DNS App configs on first boot (preserves user edits afterwards)
-  systemd.services.technitium-dns-server.preStart =
-    let
-      blockingConfig = pkgs.writeText "technitium-blocking.json" ''
-        {
-          "enableBlocking": true,
-          "blockingAnswerTtl": 30,
-          "blockListUrlUpdateIntervalHours": 24,
-          "blockListUrlUpdateIntervalMinutes": 0,
-          "localEndPointGroupMap": {
-            "127.0.0.1": "bypass",
-            "10.1.0.1:53": "bypass"
-          },
-          "networkGroupMap": {
-            "10.1.0.0/24": "everyone else",
-            "10.1.20.0/24": "everyone else",
-            "10.1.30.0/24": "everyone else",
-            "0.0.0.0/0": "everyone else",
-            "[::]/0": "everyone else"
-          },
-          "groups": [
-            {
-              "name": "everyone else",
-              "enableBlocking": true,
-              "allowTxtBlockingReport": true,
-              "blockAsNxDomain": true,
-              "blockingAddresses": ["0.0.0.0", "::"],
-              "allowed": [],
-              "blocked": [],
-              "allowListUrls": [],
-              "blockListUrls": [
-                "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
-                "https://urlhaus.abuse.ch/downloads/hostfile/",
-                "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/tif.txt"
-              ],
-              "allowedRegex": [],
-              "blockedRegex": [],
-              "regexAllowListUrls": [],
-              "regexBlockListUrls": [],
-              "adblockListUrls": []
-            },
-            {
-              "name": "bypass",
-              "enableBlocking": false,
-              "allowTxtBlockingReport": true,
-              "blockAsNxDomain": true,
-              "blockingAddresses": ["0.0.0.0", "::"],
-              "allowed": [],
-              "blocked": [],
-              "allowListUrls": [],
-              "blockListUrls": [],
-              "allowedRegex": [],
-              "blockedRegex": [],
-              "regexAllowListUrls": [],
-              "regexBlockListUrls": [],
-              "adblockListUrls": []
-            }
-          ]
-        }
-      '';
-      forwardingConfig = pkgs.writeText "technitium-forwarding.json" ''
-        {
-          "appPreference": 200,
-          "enableForwarding": true,
-          "proxyServers": [],
-          "forwarders": [
-            {
-              "name": "quad9-doh",
-              "proxy": null,
-              "dnssecValidation": true,
-              "forwarderProtocol": "Https",
-              "forwarderAddresses": [
-                "https://dns.quad9.net/dns-query (9.9.9.9)"
-              ]
-            },
-            {
-              "name": "cloudflare-google",
-              "proxy": null,
-              "dnssecValidation": true,
-              "forwarderProtocol": "Tls",
-              "forwarderAddresses": [
-                "1.1.1.1",
-                "8.8.8.8"
-              ]
-            }
-          ],
-          "networkGroupMap": {
-            "0.0.0.0/0": "everyone",
-            "[::]/0": "everyone"
-          },
-          "groups": [
-            {
-              "name": "everyone",
-              "enableForwarding": true,
-              "forwardings": [
-                {
-                  "forwarders": ["cloudflare-google"],
-                  "domains": ["*"]
-                }
-              ],
-              "adguardUpstreams": []
-            }
-          ]
-        }
-      '';
-    in
-    ''
-      mkdir -p "$STATE_DIRECTORY/apps/Advanced Blocking"
-      mkdir -p "$STATE_DIRECTORY/apps/Advanced Forwarding"
-      if [ ! -f "$STATE_DIRECTORY/apps/Advanced Blocking/dnsApp.config" ]; then
-        cp ${blockingConfig} "$STATE_DIRECTORY/apps/Advanced Blocking/dnsApp.config"
-      fi
-      if [ ! -f "$STATE_DIRECTORY/apps/Advanced Forwarding/dnsApp.config" ]; then
-        cp ${forwardingConfig} "$STATE_DIRECTORY/apps/Advanced Forwarding/dnsApp.config"
-      fi
-    '';
   # Prometheus exporter for Technitium stats + query-log threat scanning
   systemd.services.technitium-exporter = {
     description = "Technitium DNS Prometheus Exporter";
@@ -481,6 +365,7 @@ in
         "TECHNITIUM_URL=http://127.0.0.1:${toString homelab.${hostName}.services.technitium.port}"
         "EXPORTER_PORT=9187"
         "EXPORTER_ADDR=127.0.0.1"
+        "TECHNITIUM_TOKEN_FILE=${config.sops.secrets.technitium_api_key.path}"
       ];
       ExecStart = lib.getExe inputs.nixcfg.packages.${system}.technitium-exporter;
       Restart = "on-failure";
@@ -498,6 +383,7 @@ in
         "INVENTORY_OUTPUT=/var/lib/alloy/textfiles/network_inventory.prom"
         "KEA_LEASES=/var/lib/kea/dhcp4.leases"
         "TECHNITIUM_URL=http://127.0.0.1:${toString homelab.${hostName}.services.technitium.port}"
+        "TECHNITIUM_TOKEN_FILE=${config.sops.secrets.technitium_api_key.path}"
       ];
       ExecStartPre = "+${pkgs.coreutils}/bin/install -d -m 0755 -o root -g root /var/lib/alloy/textfiles";
       ExecStart = lib.getExe inputs.nixcfg.packages.${system}.network-inventory;
@@ -510,6 +396,217 @@ in
       OnBootSec = "2min";
       OnUnitActiveSec = "5min";
       Persistent = true;
+    };
+  };
+  # Configure Technitium DNS apps via API after service is online
+  systemd.services.configure-technitium = {
+    description = "Configure Technitium DNS Server via API";
+    after = [
+      "network.target"
+      "technitium-dns-server.service"
+    ];
+    requires = [ "technitium-dns-server.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      DynamicUser = true;
+      Environment = [
+        "TECHNITIUM_URL=http://127.0.0.1:${toString homelab.${hostName}.services.technitium.port}"
+        "TECHNITIUM_TOKEN_FILE=${config.sops.secrets.technitium_api_key.path}"
+      ];
+      ExecStart = lib.getExe (pkgs.writeScriptBin "configure-technitium" ''
+        #!${pkgs.python3}/bin/python3
+        import json
+        import os
+        import sys
+        import time
+        import urllib.request
+        import urllib.error
+
+        URL = os.environ.get("TECHNITIUM_URL", "http://127.0.0.1:5380")
+        TOKEN_FILE = os.environ.get("TECHNITIUM_TOKEN_FILE", "")
+        TOKEN = ""
+        if TOKEN_FILE:
+            try:
+                with open(TOKEN_FILE) as f:
+                    TOKEN = f.read().strip()
+            except Exception as e:
+                print(f"Warning: could not read token file: {e}", file=sys.stderr)
+
+        def api_request(endpoint, data=None, method="GET"):
+            url = f"{URL}{endpoint}"
+            headers = {}
+            if TOKEN:
+                headers["Authorization"] = f"Bearer {TOKEN}"
+            if data is not None:
+                headers["Content-Type"] = "application/json"
+                body = json.dumps(data).encode()
+            else:
+                body = None
+            req = urllib.request.Request(url, data=body, headers=headers, method=method)
+            try:
+                with urllib.request.urlopen(req, timeout=30) as resp:
+                    return json.loads(resp.read().decode())
+            except urllib.error.HTTPError as e:
+                print(f"HTTP {e.code} from {endpoint}: {e.read().decode()}", file=sys.stderr)
+                return None
+            except Exception as e:
+                print(f"Error calling {endpoint}: {e}", file=sys.stderr)
+                return None
+
+        def wait_for_api(timeout=120):
+            print("Waiting for Technitium API...", file=sys.stderr)
+            for i in range(timeout):
+                try:
+                    req = urllib.request.Request(f"{URL}/api/stats", method="GET")
+                    if TOKEN:
+                        req.add_header("Authorization", f"Bearer {TOKEN}")
+                    with urllib.request.urlopen(req, timeout=5) as resp:
+                        if resp.status == 200:
+                            print("Technitium API is ready.", file=sys.stderr)
+                            return True
+                except Exception:
+                    pass
+                time.sleep(1)
+            print("Timeout waiting for Technitium API", file=sys.stderr)
+            return False
+
+        def configure_app(app_name, config):
+            print(f"Configuring {app_name}...", file=sys.stderr)
+            # Try common API endpoint patterns for app configuration
+            endpoints = [
+                f"/api/apps/config?appName={app_name.replace(' ', '%20')}",
+                f"/api/apps/{app_name.replace(' ', '%20')}/config",
+                "/api/apps/config",
+            ]
+            for endpoint in endpoints:
+                result = api_request(endpoint, {"appName": app_name, "config": config}, method="POST")
+                if result is not None:
+                    print(f"Successfully configured {app_name} via {endpoint}", file=sys.stderr)
+                    return True
+            print(f"Failed to configure {app_name} - check API docs and endpoint", file=sys.stderr)
+            return False
+
+        def main():
+            if not wait_for_api():
+                sys.exit(1)
+
+            blocking_config = {
+                "enableBlocking": True,
+                "blockingAnswerTtl": 30,
+                "blockListUrlUpdateIntervalHours": 24,
+                "blockListUrlUpdateIntervalMinutes": 0,
+                "localEndPointGroupMap": {
+                    "127.0.0.1": "bypass",
+                    "10.1.0.1:53": "bypass"
+                },
+                "networkGroupMap": {
+                    "10.1.0.0/24": "everyone else",
+                    "10.1.20.0/24": "everyone else",
+                    "10.1.30.0/24": "everyone else",
+                    "0.0.0.0/0": "everyone else",
+                    "[::]/0": "everyone else"
+                },
+                "groups": [
+                    {
+                        "name": "everyone else",
+                        "enableBlocking": True,
+                        "allowTxtBlockingReport": True,
+                        "blockAsNxDomain": True,
+                        "blockingAddresses": ["0.0.0.0", "::"],
+                        "allowed": [],
+                        "blocked": [],
+                        "allowListUrls": [],
+                        "blockListUrls": [
+                            "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+                            "https://urlhaus.abuse.ch/downloads/hostfile/",
+                            "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/tif.txt"
+                        ],
+                        "allowedRegex": [],
+                        "blockedRegex": [],
+                        "regexAllowListUrls": [],
+                        "regexBlockListUrls": [],
+                        "adblockListUrls": []
+                    },
+                    {
+                        "name": "bypass",
+                        "enableBlocking": False,
+                        "allowTxtBlockingReport": True,
+                        "blockAsNxDomain": True,
+                        "blockingAddresses": ["0.0.0.0", "::"],
+                        "allowed": [],
+                        "blocked": [],
+                        "allowListUrls": [],
+                        "blockListUrls": [],
+                        "allowedRegex": [],
+                        "blockedRegex": [],
+                        "regexAllowListUrls": [],
+                        "regexBlockListUrls": [],
+                        "adblockListUrls": []
+                    }
+                ]
+            }
+
+            forwarding_config = {
+                "appPreference": 200,
+                "enableForwarding": True,
+                "proxyServers": [],
+                "forwarders": [
+                    {
+                        "name": "quad9-doh",
+                        "proxy": None,
+                        "dnssecValidation": True,
+                        "forwarderProtocol": "Https",
+                        "forwarderAddresses": [
+                            "https://dns.quad9.net/dns-query (9.9.9.9)"
+                        ]
+                    },
+                    {
+                        "name": "cloudflare-google",
+                        "proxy": None,
+                        "dnssecValidation": True,
+                        "forwarderProtocol": "Tls",
+                        "forwarderAddresses": [
+                            "1.1.1.1",
+                            "8.8.8.8"
+                        ]
+                    }
+                ],
+                "networkGroupMap": {
+                    "0.0.0.0/0": "everyone",
+                    "[::]/0": "everyone"
+                },
+                "groups": [
+                    {
+                        "name": "everyone",
+                        "enableForwarding": True,
+                        "forwardings": [
+                            {
+                                "forwarders": ["cloudflare-google"],
+                                "domains": ["*"]
+                            }
+                        ],
+                        "adguardUpstreams": []
+                    }
+                ]
+            }
+
+            # Discover available apps first
+            print("Discovering installed apps...", file=sys.stderr)
+            apps = api_request("/api/apps/list")
+            if apps:
+                print(f"Installed apps: {json.dumps(apps, indent=2)}", file=sys.stderr)
+            else:
+                print("Could not list apps; will try direct configuration anyway.", file=sys.stderr)
+
+            configure_app("Advanced Blocking", blocking_config)
+            configure_app("Advanced Forwarding", forwarding_config)
+
+            print("Technitium configuration complete.", file=sys.stderr)
+
+        if __name__ == "__main__":
+            main()
+      '');
     };
   };
   security.acme =
@@ -537,5 +634,6 @@ in
   sops.secrets = {
     cloudflare_w_dns_r_zone_token = { };
     "wireguard-router-private-key" = { };
+    technitium_api_key = { };
   };
 }

@@ -28,6 +28,13 @@ OUTPUT = os.environ.get("INVENTORY_OUTPUT", "/var/lib/alloy/textfiles/network_in
 KEA_LEASES = os.environ.get("KEA_LEASES", "/var/lib/kea/dhcp4.leases")
 TECH_URL = os.environ.get("TECHNITIUM_URL", "")
 API_TOKEN = os.environ.get("TECHNITIUM_API_TOKEN", "")
+TOKEN_FILE = os.environ.get("TECHNITIUM_TOKEN_FILE", "")
+if not API_TOKEN and TOKEN_FILE:
+    try:
+        with open(TOKEN_FILE, "r") as f:
+            API_TOKEN = f.read().strip()
+    except Exception:
+        pass
 
 # ---------------------------------------------------------------------------
 # OUI lookup helpers (simple vendor fingerprinting from MAC prefix)

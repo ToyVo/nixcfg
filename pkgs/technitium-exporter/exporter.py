@@ -33,6 +33,14 @@ from prometheus_client import (
 
 TECH_URL = os.environ.get("TECHNITIUM_URL", "http://127.0.0.1:5380")
 API_TOKEN = os.environ.get("TECHNITIUM_TOKEN", "")
+TOKEN_FILE = os.environ.get("TECHNITIUM_TOKEN_FILE", "")
+if not API_TOKEN and TOKEN_FILE:
+    try:
+        with open(TOKEN_FILE, "r") as f:
+            API_TOKEN = f.read().strip()
+    except Exception:
+        pass
+
 REFRESH = int(os.environ.get("TECHNITIUM_REFRESH", "30"))
 
 # ---------------------------------------------------------------------------
