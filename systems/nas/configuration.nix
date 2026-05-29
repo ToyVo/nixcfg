@@ -41,6 +41,12 @@ in
     sharedModules = [ ./home.nix ];
     users.toyvo.programs.git.settings.safe.directory = "/mnt/POOL/hermes/*";
   };
+
+  # Allow root (and libgit2 via nix) to access the flake repo for rebuilds
+  environment.etc."gitconfig".text = ''
+    [safe]
+        directory = /home/toyvo/nixcfg
+  '';
   hardware.cpu.amd.updateMicrocode = true;
   networking = {
     hostName = "nas";

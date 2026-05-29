@@ -20,16 +20,21 @@ in
   };
 
   config = lib.mkIf (cfg != { }) {
-    # Access ACLs on the directories themselves + default ACLs for inheritance
-    systemd.tmpfiles.rules = lib.concatLists (
-      lib.mapAttrsToList (
-        directory: uids:
-        lib.concatMap (uid: [
-          "a+ ${directory} - - - - u:${toString uid}:rwx,g::---,m::rwx"
-          "A+ ${directory} - - - - u:${toString uid}:rwx,g::---,m::rwx"
-        ]) uids
-      ) cfg
-    );
+    # Access ACLs on the directories themselves + default ACLs for inheritance.
+    # IMPORTANT: systemd-tmpfiles a+ rules REPLACE the entire ACL via acl_set_file().
+    # If multiple a+ rules target the same path, the last one wins and wipes previous
+    # entries. We must generate a SINGLE a+ (and A+) rule per directory that includes
+    # ALL users, not one rule per user.
+    systemd.tmpfiles.rules = lib.mapAttrsToList (
+      directory: uids:
+      let
+        userAcls = lib.concatMapStrings (uid: "u:${toString uid}:rwx,") uids;
+      in
+      [
+        "a+ ${directory} - - - - ${userAcls}g::---,m::rwx"
+        "A+ ${directory} - - - - ${userAcls}g::---,m::rwx"
+      ]
+    ) cfg;
 
     # One-shot service to recursively apply ACLs to existing files/directories.
     # This avoids the fragility of listing every subdirectory in generateRules.
@@ -49,8 +54,8 @@ in
             directory: uids:
             map (uid: ''
               if [ -d "${directory}" ]; then
-                ${pkgs.acl}/bin/setfacl -R -m u:${toString uid}:rwx "${directory}" || true
-                ${pkgs.acl}/bin/setfacl -R -d -m u:${toString uid}:rwx "${directory}" || true
+                ${pkgs.acl}/bin/setfacl -R -m m::rwx,u:${toString uid}:rwx "${directory}" || true
+                ${pkgs.acl}/bin/setfacl -R -d -m m::rwx,u:${toString uid}:rwx "${directory}" || true
                 find "${directory}" -type d -name ".ssh" -exec ${pkgs.acl}/bin/setfacl -R -x u:${toString uid} {} + || true
                 find "${directory}" -type d -name ".ssh" -exec ${pkgs.acl}/bin/setfacl -R -d -x u:${toString uid} {} + || true
                 find "${directory}" -type d -path "*/.config/sops" -exec ${pkgs.acl}/bin/setfacl -R -x u:${toString uid} {} + || true
