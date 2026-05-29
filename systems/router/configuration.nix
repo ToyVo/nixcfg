@@ -15,7 +15,6 @@ let
     (lib.filterAttrs (_: host: host ? ip && lib.hasPrefix "10.1.0." host.ip))
     (lib.mapAttrsToList (
       name: host: {
-        zone = "diekvoss.net";
         inherit name;
         type = "A";
         value = host.ip;
@@ -23,23 +22,24 @@ let
       }
     ))
   ];
-  zoneRecords = [
-    {
-      zone = "diekvoss.net";
+  zones = [ "diekvoss.net" "internal" "home.arpa" ];
+  zoneRecords = lib.flatten (lib.map (zone:
+    [{
+      inherit zone;
       name = "@";
       type = "A";
       value = "10.1.0.1";
       ttl = "300";
     }
     {
-      zone = "diekvoss.net";
+      inherit zone;
       name = "*";
       type = "A";
       value = "10.1.0.1";
       ttl = "300";
-    }
-  ]
-  ++ internalHosts;
+    }]
+    ++ (map (host: host // { inherit zone; }) internalHosts)
+  ) zones);
   blocklistUrls = [
     "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
     "https://urlhaus.abuse.ch/downloads/hostfile/"

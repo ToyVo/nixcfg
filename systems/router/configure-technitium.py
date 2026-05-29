@@ -117,20 +117,27 @@ def zone(t):
     if not zone_file or not os.path.exists(zone_file):
         print("WARNING: no zone records file found, skipping.", file=sys.stderr)
         return
-    print("Creating zone diekvoss.net ...")
-    r = request("/api/zones/create", {"zone": "diekvoss.net", "type": "Primary"}, "POST", t)
-    if not is_ok(r):
-        if isinstance(r, dict) and "already exists" in r.get("errorMessage", "").lower():
-            print("  Zone already exists, continuing.")
-        else:
-            print(f"  Warning: zone create failed: {r}")
-
     with open(zone_file) as f:
         records = json.load(f)
+
+    # Group records by zone and create each zone
+    zones_created = set()
+    for rec in records:
+        zone_name = rec.get("zone", "diekvoss.net")
+        if zone_name not in zones_created:
+            print(f"Creating zone {zone_name} ...")
+            r = request("/api/zones/create", {"zone": zone_name, "type": "Primary"}, "POST", t)
+            if is_ok(r):
+                print(f"  Zone created.")
+            elif isinstance(r, dict) and "already exists" in r.get("errorMessage", "").lower():
+                print(f"  Zone already exists, continuing.")
+            else:
+                print(f"  Warning: zone create failed: {r}")
+            zones_created.add(zone_name)
+
     for rec in records:
         name = rec.get("name", "@")
         zone_name = rec.get("zone", "diekvoss.net")
-        # Technitium expects 'domain' as the FQDN
         if name == "@":
             domain = zone_name
         else:
