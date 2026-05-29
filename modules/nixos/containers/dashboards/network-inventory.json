@@ -99,8 +99,7 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [{ "color": "green", "value": null }]
-          },
-          "unit": "dateTimeFromNow"
+          }
         },
         "overrides": [
           {
@@ -177,8 +176,7 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [{ "color": "green", "value": null }]
-          },
-          "unit": "dateTimeAsIso"
+          }
         },
         "overrides": []
       },
