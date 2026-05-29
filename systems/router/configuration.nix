@@ -295,7 +295,8 @@ in
     };
     resolved = {
       enable = true;
-      settings.Resolve.DNSStubListenerExtra = "10.1.0.1";
+      # No DNSStubListenerExtra — AdGuard Home listens directly on LAN interfaces
+      # so clients reach it directly and per-client query logs are accurate.
     };
     adguardhome = {
       enable = true;
@@ -307,7 +308,15 @@ in
           "@@||split.io^"
         ];
         dns = {
-          bind_hosts = [ "127.0.1.53" ];
+          bind_hosts = [
+            "127.0.1.53"
+            "10.1.0.1"
+            "10.1.20.1"
+            "10.1.30.1"
+            "fdcd:2022:1118::1"
+            "fdcd:2022:1118:20::1"
+            "fdcd:2022:1118:30::1"
+          ];
           bootstrap_dns = [ "9.9.9.9" ];
         };
         filters = [
