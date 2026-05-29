@@ -128,8 +128,17 @@ def zone(t):
     with open(zone_file) as f:
         records = json.load(f)
     for rec in records:
-        print(f"  Adding record: {rec.get('name','@')} {rec.get('type','A')} {rec.get('value','')} ...")
-        r = request("/api/zones/records/add", rec, "POST", t)
+        name = rec.get("name", "@")
+        zone_name = rec.get("zone", "diekvoss.net")
+        # Technitium expects 'domain' as the FQDN
+        if name == "@":
+            domain = zone_name
+        else:
+            domain = f"{name}.{zone_name}"
+        payload = dict(rec)
+        payload["domain"] = domain
+        print(f"  Adding record: {domain} {rec.get('type','A')} {rec.get('value','')} ...")
+        r = request("/api/zones/records/add", payload, "POST", t)
         if not is_ok(r):
             msg = str(r.get("errorMessage", "")) if isinstance(r, dict) else ""
             if "already exists" in msg.lower() or "duplicate" in msg.lower():
@@ -148,21 +157,23 @@ def blocklists(t):
     if not urls:
         return
     print("Configuring blocklists ...")
-    endpoints = [
-        "/api/settings/set",
-        "/api/blockList/urls/add",
-        "/api/blockList/urls/set",
-        "/api/apps/config",
-    ]
-    params = ["blockListUrl", "url", "urls", "blockListUrls"]
-    for block_url in urls:
-        print(f"  Adding blocklist: {block_url}")
-        added = False
-        for ep in endpoints:
-            for pr in params:
-                r = request(ep, {pr: block_url}, "POST", t)
+    # Technitium /api/settings/set with blockListUrl overwrites on each call,
+    # so send all URLs at once joined by newlines.
+    combined = "\n".join(urls)
+    r = request("/api/settings/set", {"blockListUrl": combined}, "POST", t)
+    if is_ok(r):
+        print(f"  OK: set {len(urls)} blocklist URLs")
+    else:
+        print(f"  WARNING: could not set blocklists: {r}", file=sys.stderr)
+        # Fallback: try one at a time via add endpoints
+        endpoints = ["/api/blockList/urls/add", "/api/blockList/urls/set"]
+        for block_url in urls:
+            print(f"  Adding blocklist: {block_url}")
+            added = False
+            for ep in endpoints:
+                r = request(ep, {"url": block_url}, "POST", t)
                 if is_ok(r):
-                    print(f"    OK via {ep}?{pr}")
+                    print(f"    OK via {ep}")
                     added = True
                     break
                 elif isinstance(r, dict) and r.get("status") == "error":
@@ -171,10 +182,8 @@ def blocklists(t):
                         print(f"    Already exists, skipped.")
                         added = True
                         break
-            if added:
-                break
-        if not added:
-            print(f"    WARNING: could not add blocklist via any known endpoint", file=sys.stderr)
+            if not added:
+                print(f"    WARNING: could not add blocklist", file=sys.stderr)
 
 
 def forwarders(t):
@@ -187,20 +196,23 @@ def forwarders(t):
     if not fwds:
         return
     print("Configuring forwarders ...")
-    endpoints = [
-        "/api/settings/set",
-        "/api/forwarders/add",
-        "/api/forwarders/set",
-    ]
-    params = ["forwarder", "address", "forwarders"]
-    for fwd in fwds:
-        print(f"  Adding forwarder: {fwd}")
-        added = False
-        for ep in endpoints:
-            for pr in params:
-                r = request(ep, {pr: fwd}, "POST", t)
+    # Technitium /api/settings/set with forwarder overwrites on each call,
+    # so send all forwarders at once joined by newlines.
+    combined = "\n".join(fwds)
+    r = request("/api/settings/set", {"forwarder": combined}, "POST", t)
+    if is_ok(r):
+        print(f"  OK: set {len(fwds)} forwarders")
+    else:
+        print(f"  WARNING: could not set forwarders: {r}", file=sys.stderr)
+        # Fallback: try one at a time via add endpoints
+        endpoints = ["/api/forwarders/add", "/api/forwarders/set"]
+        for fwd in fwds:
+            print(f"  Adding forwarder: {fwd}")
+            added = False
+            for ep in endpoints:
+                r = request(ep, {"address": fwd}, "POST", t)
                 if is_ok(r):
-                    print(f"    OK via {ep}?{pr}")
+                    print(f"    OK via {ep}")
                     added = True
                     break
                 elif isinstance(r, dict) and r.get("status") == "error":
@@ -209,10 +221,8 @@ def forwarders(t):
                         print(f"    Already exists, skipped.")
                         added = True
                         break
-            if added:
-                break
-        if not added:
-            print(f"    WARNING: could not add forwarder via any known endpoint", file=sys.stderr)
+            if not added:
+                print(f"    WARNING: could not add forwarder", file=sys.stderr)
 
 
 # ---------------------------------------------------------------------------
