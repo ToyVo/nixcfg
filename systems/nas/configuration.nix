@@ -40,6 +40,16 @@ in
     };
     sharedModules = [ ./home.nix ];
     users.toyvo.programs.git.settings.safe.directory = "/mnt/POOL/hermes/*";
+    users.hermes = {
+      home.username = "hermes";
+      home.homeDirectory = "/mnt/POOL/hermes";
+      programs.git = {
+        enable = true;
+        userName = "Hermes Agent (kimi-k2.6 via opencode-go)";
+        userEmail = "hermes@diekvoss.com";
+        extraConfig.safe.directory = "/home/toyvo/nixcfg";
+      };
+    };
   };
 
   # Allow root (and libgit2 via nix) to access the flake repo for rebuilds

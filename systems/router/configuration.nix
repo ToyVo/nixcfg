@@ -47,7 +47,7 @@ in
     domain = "diekvoss.net";
     useNetworkd = true;
     useDHCP = false;
-    nameservers = [ "127.0.1.53" ];
+    nameservers = [ "127.0.0.1" ];
     nat = {
       enable = true;
       externalInterface = "enp2s0";
@@ -295,69 +295,67 @@ in
     };
     resolved = {
       enable = true;
-      # No DNSStubListenerExtra — AdGuard Home listens directly on LAN interfaces
-      # so clients reach it directly and per-client query logs are accurate.
     };
-    adguardhome = {
+    technitium-dns-server = {
       enable = true;
-      port = homelab.${hostName}.services.adguard.port;
-      mutableSettings = false;
-      settings = {
-        user_rules = [
-          # Need to allow split.io for my work
-          "@@||split.io^"
+      port = homelab.${hostName}.services.technitium.port;
+      openFirewall = false;
+    };
+    # Prometheus exporter for Technitium stats + query-log threat scanning
+    systemd.services.technitium-exporter = {
+      description = "Technitium DNS Prometheus Exporter";
+      after = [ "network.target" "technitium-dns-server.service" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "simple";
+        DynamicUser = true;
+        Environment = [
+          "TECHNITIUM_URL=http://127.0.0.1:${toString homelab.${hostName}.services.technitium.port}"
+          "EXPORTER_PORT=9187"
+          "EXPORTER_ADDR=127.0.0.1"
         ];
-        dns = {
-          bind_hosts = [
-            "127.0.1.53"
-            "10.1.0.1"
-            "10.1.20.1"
-            "10.1.30.1"
-            "fdcd:2022:1118::1"
-            "fdcd:2022:1118:20::1"
-            "fdcd:2022:1118:30::1"
-          ];
-          bootstrap_dns = [ "9.9.9.9" ];
-        };
-        filters = [
-          {
-            enabled = true;
-            url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt";
-            name = "AdGuard DNS filter";
-            id = 1;
-          }
-          {
-            enabled = true;
-            url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_2.txt";
-            name = "AdAway Default Blocklist";
-            id = 2;
-          }
-          {
-            enabled = true;
-            url = "https://big.oisd.nl";
-            name = "OISD Blocklist Big";
-            id = 3;
-          }
-          {
-            enabled = true;
-            url = "https://nsfw.oisd.nl";
-            name = "OISD Blocklist NSFW";
-            id = 4;
-          }
-        ];
-        filtering = {
-          filtering_enabled = true;
-          rewrites = lib.mapAttrsToList (
-            hostname:
-            { ip, ... }:
-            {
-              enabled = true;
-              domain = "${lib.toLower hostname}.internal";
-              answer = ip;
-            }
-          ) (lib.filterAttrs (hostname: hostConf: lib.hasAttr "ip" hostConf) homelab);
-        };
+        ExecStart = lib.getExe pkgs.technitium-exporter;
+        Restart = "on-failure";
+        RestartSec = "5s";
       };
+    };
+    # Periodic network device inventory (ARP + Kea + Technitium clients)
+    systemd.services.network-inventory = {
+      description = "Collect network device inventory";
+      serviceConfig = {
+        Type = "oneshot";
+        DynamicUser = true;
+        SupplementaryGroups = [ "systemd-journal" ];
+        Environment = [
+          "INVENTORY_OUTPUT=/var/lib/alloy/textfiles/network_inventory.prom"
+          "KEA_LEASES=/var/lib/kea/dhcp4.leases"
+          "TECHNITIUM_URL=http://127.0.0.1:${toString homelab.${hostName}.services.technitium.port}"
+        ];
+        ExecStartPre = "+${pkgs.coreutils}/bin/install -d -m 0755 -o root -g root /var/lib/alloy/textfiles";
+        ExecStart = lib.getExe pkgs.network-inventory;
+      };
+    };
+    systemd.timers.network-inventory = {
+      description = "Periodic network device inventory";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "2min";
+        OnUnitActiveSec = "5min";
+        Persistent = true;
+      };
+    };
+    # Alloy scrapes local exporters and pushes to Prometheus remote-write
+    monitoring = {
+      enable = true;
+      internet.enable = true;
+      alloyExtraConfig = ''
+        prometheus.scrape "technitium" {
+          targets = [{"__address__" = "localhost:9187"}]
+          forward_to = [prometheus.relabel.instance.receiver]
+          scrape_interval = "30s"
+        }
+      '';
+      textfileDirectory = "/var/lib/alloy/textfiles";
     };
     caddy = {
       enable = true;
@@ -367,8 +365,6 @@ in
         }
       '';
     };
-    monitoring.enable = true;
-    monitoring.internet.enable = true;
     cloudflare-dyndns = {
       enable = true;
       domains = [

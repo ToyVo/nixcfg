@@ -34,6 +34,7 @@
     ./services/hermes-dashboard.nix
     ./services/hermes-webui.nix
     ./services/signal-cli.nix
+    ./services/technitium-dns-server.nix
     ./syncthing.nix
     ./tmpfiles.nix
     ./vintagestory.nix
