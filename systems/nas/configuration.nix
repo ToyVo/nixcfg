@@ -43,12 +43,43 @@ in
     users.hermes = {
       home.username = "hermes";
       home.homeDirectory = "/mnt/POOL/hermes";
-      programs.git = {
-        enable = true;
-        userName = "Hermes Agent (kimi-k2.6 via opencode-go)";
-        userEmail = "hermes@diekvoss.com";
-        extraConfig.safe.directory = "/home/toyvo/nixcfg";
+      profiles.defaults.enable = true;
+      programs = {
+        git = {
+          enable = true;
+          userName = "Hermes Agent (${config.services.hermes-agent.settings.model.default} via ${config.services.hermes-agent.settings.model.provider}) for Collin Diekvoss";
+          userEmail = "hermes@diekvoss.com";
+          settings = {
+            safe.directory = "/home/toyvo/*";
+            core.editor = lib.mkForce "hx";
+          };
+        };
+        helix = {
+          enable = true;
+          defaultEditor = true;
+        };
+        direnv = {
+          enable = true;
+          nix-direnv.enable = true;
+        };
+        fzf = {
+          enable = true;
+        };
       };
+      home.packages = with pkgs; [
+        ripgrep
+        fd
+        jq
+        yq
+        nix-output-monitor
+        nix-tree
+        gh
+        tlrc
+        procs
+        du-dust
+        sd
+        hyperfine
+      ];
     };
   };
 
@@ -404,6 +435,18 @@ in
   };
   # Allow hermes-agent to use sudo for nixos-rebuild (upstream sets NoNewPrivileges=true)
   systemd.services.hermes-agent.serviceConfig.NoNewPrivileges = lib.mkForce false;
+
+  # Expand PATH for hermes services so spawned terminals/shells have access to
+  # system packages (nix, nixos-rebuild, git, etc.) and hermes's home-manager profile.
+  # The upstream units hardcode PATH to only coreutils/findutils/gnugrep/gnused/systemd.
+  # Appending a later Environment=PATH=... directive overrides the earlier one in systemd.
+  systemd.services.hermes-agent.serviceConfig.Environment = [
+    "PATH=/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/etc/profiles/per-user/hermes/bin:/mnt/POOL/hermes/.nix-profile/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  ];
+  systemd.services.hermes-webui.serviceConfig.Environment = [
+    "PATH=/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/etc/profiles/per-user/hermes/bin:/mnt/POOL/hermes/.nix-profile/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  ];
+
   sops.secrets."hermes.env".owner = "hermes";
   sops.secrets."signal-cli.env".owner = "signal-cli";
   sops.secrets."cache-priv-key.pem" = { };

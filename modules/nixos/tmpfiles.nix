@@ -25,16 +25,18 @@ in
     # If multiple a+ rules target the same path, the last one wins and wipes previous
     # entries. We must generate a SINGLE a+ (and A+) rule per directory that includes
     # ALL users, not one rule per user.
-    systemd.tmpfiles.rules = lib.concatLists (lib.mapAttrsToList (
-      directory: uids:
-      let
-        userAcls = lib.concatMapStrings (uid: "u:${toString uid}:rwx,") uids;
-      in
-      [
-        "a+ ${directory} - - - - ${userAcls}g::---,m::rwx"
-        "A+ ${directory} - - - - ${userAcls}g::---,m::rwx"
-      ]
-    ) cfg);
+    systemd.tmpfiles.rules = lib.concatLists (
+      lib.mapAttrsToList (
+        directory: uids:
+        let
+          userAcls = lib.concatMapStrings (uid: "u:${toString uid}:rwx,") uids;
+        in
+        [
+          "a+ ${directory} - - - - ${userAcls}g::---,m::rwx"
+          "A+ ${directory} - - - - ${userAcls}g::---,m::rwx"
+        ]
+      ) cfg
+    );
 
     # One-shot service to recursively apply ACLs to existing files/directories.
     # This avoids the fragility of listing every subdirectory in generateRules.

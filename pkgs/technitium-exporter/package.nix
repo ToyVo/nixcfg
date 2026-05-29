@@ -2,11 +2,14 @@
   lib,
   python3Packages,
   fetchFromGitHub,
+  ...
 }:
 
 python3Packages.buildPythonApplication rec {
   pname = "technitium-exporter";
   version = "0.1.0";
+  pyproject = true;
+  build-system = [ python3Packages.setuptools ];
 
   src = ./.;
 

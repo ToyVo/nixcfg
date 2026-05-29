@@ -14,9 +14,7 @@
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [
-              { "color": "blue", "value": null }
-            ]
+            "steps": [{ "color": "blue", "value": null }]
           },
           "unit": "short"
         },
@@ -100,9 +98,7 @@
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [
-              { "color": "green", "value": null }
-            ]
+            "steps": [{ "color": "green", "value": null }]
           },
           "unit": "dateTimeFromNow"
         },
@@ -131,9 +127,7 @@
       "id": 3,
       "options": {
         "showHeader": true,
-        "sortBy": [
-          { "desc": false, "displayName": "IP" }
-        ]
+        "sortBy": [{ "desc": false, "displayName": "IP" }]
       },
       "pluginVersion": "11.0.0",
       "targets": [
@@ -182,9 +176,7 @@
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [
-              { "color": "green", "value": null }
-            ]
+            "steps": [{ "color": "green", "value": null }]
           },
           "unit": "dateTimeAsIso"
         },
@@ -194,9 +186,7 @@
       "id": 4,
       "options": {
         "showHeader": true,
-        "sortBy": [
-          { "desc": true, "displayName": "Last Seen" }
-        ]
+        "sortBy": [{ "desc": true, "displayName": "Last Seen" }]
       },
       "pluginVersion": "11.0.0",
       "targets": [

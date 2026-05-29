@@ -1,11 +1,14 @@
 {
   lib,
   python3Packages,
+  ...
 }:
 
 python3Packages.buildPythonApplication rec {
   pname = "network-inventory";
   version = "0.1.0";
+  pyproject = true;
+  build-system = [ python3Packages.setuptools ];
 
   src = ./.;
 

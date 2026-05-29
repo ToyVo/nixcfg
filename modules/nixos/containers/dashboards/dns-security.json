@@ -14,9 +14,7 @@
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [
-              { "color": "green", "value": null }
-            ]
+            "steps": [{ "color": "green", "value": null }]
           },
           "unit": "short"
         },
@@ -238,9 +236,7 @@
       "id": 6,
       "options": {
         "showHeader": true,
-        "sortBy": [
-          { "desc": true, "displayName": "Value" }
-        ]
+        "sortBy": [{ "desc": true, "displayName": "Value" }]
       },
       "pluginVersion": "11.0.0",
       "targets": [
@@ -287,9 +283,7 @@
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [
-              { "color": "green", "value": null }
-            ]
+            "steps": [{ "color": "green", "value": null }]
           },
           "unit": "short"
         },

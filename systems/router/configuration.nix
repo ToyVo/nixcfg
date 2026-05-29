@@ -298,13 +298,15 @@ in
     };
     technitium-dns-server = {
       enable = true;
-      port = homelab.${hostName}.services.technitium.port;
       openFirewall = false;
     };
     # Prometheus exporter for Technitium stats + query-log threat scanning
     systemd.services.technitium-exporter = {
       description = "Technitium DNS Prometheus Exporter";
-      after = [ "network.target" "technitium-dns-server.service" ];
+      after = [
+        "network.target"
+        "technitium-dns-server.service"
+      ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "simple";
