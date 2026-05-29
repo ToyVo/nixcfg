@@ -47,13 +47,14 @@ in
       programs = {
         git = {
           enable = true;
-          userName = "Hermes Agent (${config.services.hermes-agent.settings.model.default} via ${config.services.hermes-agent.settings.model.provider}) for Collin Diekvoss";
-          userEmail = "hermes@diekvoss.com";
           settings = {
+            user.name = "Hermes Agent (${config.services.hermes-agent.settings.model.default} via ${config.services.hermes-agent.settings.model.provider}) for Collin Diekvoss";
+            user.email = "hermes@diekvoss.com";
             safe.directory = "/home/toyvo/*";
             core.editor = lib.mkForce "hx";
           };
         };
+        nvf.defaultEditor = lib.mkForce false;
         helix = {
           enable = true;
           defaultEditor = true;
@@ -76,7 +77,7 @@ in
         gh
         tlrc
         procs
-        du-dust
+        dust
         sd
         hyperfine
       ];
