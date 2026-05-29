@@ -22,24 +22,33 @@ let
       }
     ))
   ];
-  zones = [ "diekvoss.net" "internal" "home.arpa" ];
-  zoneRecords = lib.flatten (lib.map (zone:
-    [{
-      inherit zone;
-      name = "@";
-      type = "A";
-      value = "10.1.0.1";
-      ttl = "300";
-    }
-    {
-      inherit zone;
-      name = "*";
-      type = "A";
-      value = "10.1.0.1";
-      ttl = "300";
-    }]
-    ++ (map (host: host // { inherit zone; }) internalHosts)
-  ) zones);
+  zones = [
+    "diekvoss.net"
+    "internal"
+    "home.arpa"
+  ];
+  zoneRecords = lib.flatten (
+    lib.map (
+      zone:
+      [
+        {
+          inherit zone;
+          name = "@";
+          type = "A";
+          value = "10.1.0.1";
+          ttl = "300";
+        }
+        {
+          inherit zone;
+          name = "*";
+          type = "A";
+          value = "10.1.0.1";
+          ttl = "300";
+        }
+      ]
+      ++ (map (host: host // { inherit zone; }) internalHosts)
+    ) zones
+  );
   blocklistUrls = [
     "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
     "https://urlhaus.abuse.ch/downloads/hostfile/"
