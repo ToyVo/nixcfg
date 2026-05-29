@@ -399,7 +399,8 @@ in
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "simple";
-      DynamicUser = true;
+      User = "root";
+      Group = "root";
       Environment = [
         "TECHNITIUM_URL=http://127.0.0.1:${toString homelab.${hostName}.services.technitium.port}"
         "EXPORTER_PORT=9187"
@@ -416,7 +417,8 @@ in
     description = "Collect network device inventory";
     serviceConfig = {
       Type = "oneshot";
-      DynamicUser = true;
+      User = "root";
+      Group = "root";
       SupplementaryGroups = [ "systemd-journal" ];
       Environment = [
         "INVENTORY_OUTPUT=/var/lib/alloy/textfiles/network_inventory.prom"
@@ -448,7 +450,8 @@ in
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "oneshot";
-      DynamicUser = true;
+      User = "root";
+      Group = "root";
       Environment = [
         "TECHNITIUM_URL=http://127.0.0.1:${toString homelab.${hostName}.services.technitium.port}"
         "TECHNITIUM_TOKEN_FILE=${config.sops.secrets.technitium_api_key.path}"
