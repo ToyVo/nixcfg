@@ -113,21 +113,24 @@ def wait_for_api(max_wait=120):
 # ---------------------------------------------------------------------------
 
 def zone(t):
+    zone_file = os.environ.get("TECHNITIUM_ZONE_RECORDS_FILE", "")
+    if not zone_file or not os.path.exists(zone_file):
+        print("WARNING: no zone records file found, skipping.", file=sys.stderr)
+        return
     print("Creating zone diekvoss.net ...")
     r = request("/api/zones/create", {"zone": "diekvoss.net", "type": "Primary"}, "POST", t)
     if not is_ok(r):
-        # Zone may already exist; that's fine.
         if isinstance(r, dict) and "already exists" in r.get("errorMessage", "").lower():
             print("  Zone already exists, continuing.")
         else:
             print(f"  Warning: zone create failed: {r}")
 
-    records = json.loads(os.environ.get("TECHNITIUM_ZONE_RECORDS", "[]"))
+    with open(zone_file) as f:
+        records = json.load(f)
     for rec in records:
         print(f"  Adding record: {rec.get('name','@')} {rec.get('type','A')} {rec.get('value','')} ...")
         r = request("/api/zones/records/add", rec, "POST", t)
         if not is_ok(r):
-            # Ignore "already exists" errors
             msg = str(r.get("errorMessage", "")) if isinstance(r, dict) else ""
             if "already exists" in msg.lower() or "duplicate" in msg.lower():
                 print(f"    Already exists, skipped.")
@@ -136,12 +139,15 @@ def zone(t):
 
 
 def blocklists(t):
-    urls = json.loads(os.environ.get("TECHNITIUM_BLOCKLISTS", "[]"))
+    bl_file = os.environ.get("TECHNITIUM_BLOCKLISTS_FILE", "")
+    if not bl_file or not os.path.exists(bl_file):
+        print("WARNING: no blocklists file found, skipping.", file=sys.stderr)
+        return
+    with open(bl_file) as f:
+        urls = json.load(f)
     if not urls:
         return
     print("Configuring blocklists ...")
-    # Try the most common API endpoints Technitium uses for blocklists.
-    # The exact endpoint varies by version; we try them all.
     endpoints = [
         "/api/settings/set",
         "/api/blockList/urls/add",
@@ -165,7 +171,6 @@ def blocklists(t):
                         print(f"    Already exists, skipped.")
                         added = True
                         break
-                    # Otherwise keep trying other endpoints
             if added:
                 break
         if not added:
@@ -173,7 +178,12 @@ def blocklists(t):
 
 
 def forwarders(t):
-    fwds = json.loads(os.environ.get("TECHNITIUM_FORWARDERS", "[]"))
+    fw_file = os.environ.get("TECHNITIUM_FORWARDERS_FILE", "")
+    if not fw_file or not os.path.exists(fw_file):
+        print("WARNING: no forwarders file found, skipping.", file=sys.stderr)
+        return
+    with open(fw_file) as f:
+        fwds = json.load(f)
     if not fwds:
         return
     print("Configuring forwarders ...")

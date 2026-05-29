@@ -50,6 +50,10 @@ let
     "tls.cloudflare-dns.com (1.1.1.1)"
     "tls.dns.google (8.8.8.8)"
   ];
+  # JSON data files for configure-technitium (avoids env var quote mangling)
+  zoneRecordsFile = pkgs.writeText "zone-records.json" (builtins.toJSON zoneRecords);
+  blocklistUrlsFile = pkgs.writeText "blocklist-urls.json" (builtins.toJSON blocklistUrls);
+  forwardersFile = pkgs.writeText "forwarders.json" (builtins.toJSON forwarders);
 in
 {
   imports = [
@@ -456,9 +460,9 @@ in
         "TECHNITIUM_URL=http://127.0.0.1:${toString homelab.${hostName}.services.technitium.port}"
         "TECHNITIUM_TOKEN_FILE=${config.sops.secrets.technitium_api_key.path}"
         "TECHNITIUM_ADMIN_PASS_FILE=${config.sops.secrets.technitium_admin_password.path}"
-        "TECHNITIUM_ZONE_RECORDS=${builtins.toJSON zoneRecords}"
-        "TECHNITIUM_BLOCKLISTS=${builtins.toJSON blocklistUrls}"
-        "TECHNITIUM_FORWARDERS=${builtins.toJSON forwarders}"
+        "TECHNITIUM_ZONE_RECORDS_FILE=${zoneRecordsFile}"
+        "TECHNITIUM_BLOCKLISTS_FILE=${blocklistUrlsFile}"
+        "TECHNITIUM_FORWARDERS_FILE=${forwardersFile}"
       ];
       ExecStart = lib.getExe (
         pkgs.writeScriptBin "configure-technitium" ''
