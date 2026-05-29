@@ -455,6 +455,7 @@ in
       Environment = [
         "TECHNITIUM_URL=http://127.0.0.1:${toString homelab.${hostName}.services.technitium.port}"
         "TECHNITIUM_TOKEN_FILE=${config.sops.secrets.technitium_api_key.path}"
+        "TECHNITIUM_ADMIN_PASS_FILE=${config.sops.secrets.technitium_admin_password.path}"
         "TECHNITIUM_ZONE_RECORDS=${builtins.toJSON zoneRecords}"
         "TECHNITIUM_BLOCKLISTS=${builtins.toJSON blocklistUrls}"
         "TECHNITIUM_FORWARDERS=${builtins.toJSON forwarders}"
@@ -493,5 +494,6 @@ in
     cloudflare_w_dns_r_zone_token = { };
     "wireguard-router-private-key" = { };
     technitium_api_key = { };
+    technitium_admin_password = { };
   };
 }

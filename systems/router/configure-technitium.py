@@ -3,16 +3,20 @@ import json, os, sys, time, urllib.request as u, urllib.parse as p
 url = os.environ.get("TECHNITIUM_URL", "http://127.0.0.1:5380")
 token_file = os.environ.get("TECHNITIUM_TOKEN_FILE", "")
 admin_user = os.environ.get("TECHNITIUM_ADMIN_USER", "admin")
-admin_pass = os.environ.get("TECHNITIUM_ADMIN_PASS", "admin")
+admin_pass_file = os.environ.get("TECHNITIUM_ADMIN_PASS_FILE", "")
 
-# Read token file if it exists
-token = ""
-if token_file and os.path.exists(token_file):
-    try:
-        with open(token_file) as f:
-            token = f.read().strip()
-    except Exception as e:
-        print(f"Warning: could not read token file: {e}", file=sys.stderr)
+# Read files if they exist
+def read_file(path):
+    if path and os.path.exists(path):
+        try:
+            with open(path) as f:
+                return f.read().strip()
+        except Exception as e:
+            print(f"Warning: could not read {path}: {e}", file=sys.stderr)
+    return ""
+
+token = read_file(token_file)
+admin_pass = read_file(admin_pass_file) or "admin"
 
 # ---------------------------------------------------------------------------
 # Low-level HTTP helpers
@@ -70,29 +74,18 @@ def get_auth_token():
         else:
             print(f"Token auth failed: {resp}")
 
-    # 2. Try default admin/admin login
-    print(f"Trying login with {admin_user}/{admin_pass} ...")
+    # 2. Try admin password from sops secret (or default "admin")
+    print(f"Trying login with {admin_user}/<password-from-file> ...")
     login = request("/api/user/login", {"user": admin_user, "pass": admin_pass}, "POST")
     if is_ok(login) and login.get("token"):
-        print("Login successful (default password).")
+        print("Login successful.")
         return login["token"]
     else:
         print(f"Login failed: {login}")
 
-    # 3. Try token-file content as admin password (user may have put password in sops)
-    if token and token != admin_pass:
-        print(f"Trying login with {admin_user}/<token-from-file> ...")
-        login = request("/api/user/login", {"user": admin_user, "pass": token}, "POST")
-        if is_ok(login) and login.get("token"):
-            print("Login successful (password from token file).")
-            return login["token"]
-        else:
-            print(f"Login failed: {login}")
-
     print("FATAL: Could not authenticate with Technitium API.", file=sys.stderr)
-    print("  - If this is a fresh install, the default admin/admin should have worked.", file=sys.stderr)
-    print("  - If you changed the admin password, put it in the sops secret instead of a token.", file=sys.stderr)
-    print("  - Or generate an API token via the web UI and save it to the sops secret.", file=sys.stderr)
+    print("  - Put the admin password in the sops secret 'technitium_admin_password'.", file=sys.stderr)
+    print("  - Or generate an API token via the web UI and save it to the sops secret 'technitium_api_key'.", file=sys.stderr)
     return None
 
 
