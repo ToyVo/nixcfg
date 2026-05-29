@@ -41,7 +41,60 @@ if not API_TOKEN and TOKEN_FILE:
     except Exception:
         pass
 
+ADMIN_PASS_FILE = os.environ.get("TECHNITIUM_ADMIN_PASS_FILE", "")
+ADMIN_PASS = ""
+if ADMIN_PASS_FILE:
+    try:
+        with open(ADMIN_PASS_FILE, "r") as f:
+            ADMIN_PASS = f.read().strip()
+    except Exception:
+        pass
+
 REFRESH = int(os.environ.get("TECHNITIUM_REFRESH", "30"))
+
+# ---------------------------------------------------------------------------
+# Auth helpers
+# ---------------------------------------------------------------------------
+
+def get_session_token():
+    """Try API_TOKEN first, fall back to admin login."""
+    if API_TOKEN:
+        # Quick check if token works
+        try:
+            headers = {"Authorization": f"Bearer {API_TOKEN}"}
+            r = requests.get(f"{TECH_URL}/api/stats", headers=headers, timeout=10)
+            r.raise_for_status()
+            data = r.json()
+            if data.get("status") == "ok":
+                return API_TOKEN
+        except Exception:
+            pass
+
+    if ADMIN_PASS:
+        try:
+            r = requests.post(
+                f"{TECH_URL}/api/user/login",
+                data={"user": "admin", "pass": ADMIN_PASS},
+                timeout=10,
+            )
+            r.raise_for_status()
+            data = r.json()
+            if data.get("status") == "ok" and data.get("token"):
+                return data["token"]
+        except Exception:
+            pass
+
+    return API_TOKEN  # return whatever we have, even if invalid
+
+
+# Cache the working token and refresh if needed
+_session_token = None
+
+def active_token():
+    global _session_token
+    if _session_token is None:
+        _session_token = get_session_token()
+    return _session_token
 
 # ---------------------------------------------------------------------------
 # Metric definitions
@@ -106,9 +159,10 @@ DGA_RE = re.compile(r"^[a-z0-9]{10,30}\.(xyz|top|cn|tk|ml|ga|cf|pw|club|info)$")
 def api_get(endpoint, params=None):
     """GET from Technitium API; return JSON or {} on any error."""
     url = f"{TECH_URL}{endpoint}"
+    token = active_token()
     headers = {}
-    if API_TOKEN:
-        headers["Authorization"] = f"Bearer {API_TOKEN}"
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
     try:
         r = requests.get(url, params=params, headers=headers, timeout=10)
         r.raise_for_status()

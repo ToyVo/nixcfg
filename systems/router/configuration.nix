@@ -410,6 +410,7 @@ in
         "EXPORTER_PORT=9187"
         "EXPORTER_ADDR=127.0.0.1"
         "TECHNITIUM_TOKEN_FILE=${config.sops.secrets.technitium_api_key.path}"
+        "TECHNITIUM_ADMIN_PASS_FILE=${config.sops.secrets.technitium_admin_password.path}"
       ];
       ExecStart = lib.getExe inputs.nixcfg.packages.${system}.technitium-exporter;
       Restart = "on-failure";
