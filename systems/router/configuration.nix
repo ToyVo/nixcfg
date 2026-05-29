@@ -300,52 +300,6 @@ in
       enable = true;
       openFirewall = false;
     };
-    # Prometheus exporter for Technitium stats + query-log threat scanning
-    systemd.services.technitium-exporter = {
-      description = "Technitium DNS Prometheus Exporter";
-      after = [
-        "network.target"
-        "technitium-dns-server.service"
-      ];
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        Type = "simple";
-        DynamicUser = true;
-        Environment = [
-          "TECHNITIUM_URL=http://127.0.0.1:${toString homelab.${hostName}.services.technitium.port}"
-          "EXPORTER_PORT=9187"
-          "EXPORTER_ADDR=127.0.0.1"
-        ];
-        ExecStart = lib.getExe pkgs.technitium-exporter;
-        Restart = "on-failure";
-        RestartSec = "5s";
-      };
-    };
-    # Periodic network device inventory (ARP + Kea + Technitium clients)
-    systemd.services.network-inventory = {
-      description = "Collect network device inventory";
-      serviceConfig = {
-        Type = "oneshot";
-        DynamicUser = true;
-        SupplementaryGroups = [ "systemd-journal" ];
-        Environment = [
-          "INVENTORY_OUTPUT=/var/lib/alloy/textfiles/network_inventory.prom"
-          "KEA_LEASES=/var/lib/kea/dhcp4.leases"
-          "TECHNITIUM_URL=http://127.0.0.1:${toString homelab.${hostName}.services.technitium.port}"
-        ];
-        ExecStartPre = "+${pkgs.coreutils}/bin/install -d -m 0755 -o root -g root /var/lib/alloy/textfiles";
-        ExecStart = lib.getExe pkgs.network-inventory;
-      };
-    };
-    systemd.timers.network-inventory = {
-      description = "Periodic network device inventory";
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnBootSec = "2min";
-        OnUnitActiveSec = "5min";
-        Persistent = true;
-      };
-    };
     # Alloy scrapes local exporters and pushes to Prometheus remote-write
     monitoring = {
       enable = true;
@@ -375,6 +329,53 @@ in
       ];
       proxied = false;
       apiTokenFile = config.sops.secrets.cloudflare_w_dns_r_zone_token.path;
+    };
+  };
+  systemd.services.technitium-dns-server.serviceConfig.LogsDirectory = "technitium";
+  # Prometheus exporter for Technitium stats + query-log threat scanning
+  systemd.services.technitium-exporter = {
+    description = "Technitium DNS Prometheus Exporter";
+    after = [
+      "network.target"
+      "technitium-dns-server.service"
+    ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "simple";
+      DynamicUser = true;
+      Environment = [
+        "TECHNITIUM_URL=http://127.0.0.1:${toString homelab.${hostName}.services.technitium.port}"
+        "EXPORTER_PORT=9187"
+        "EXPORTER_ADDR=127.0.0.1"
+      ];
+      ExecStart = lib.getExe inputs.nixcfg.packages.${system}.technitium-exporter;
+      Restart = "on-failure";
+      RestartSec = "5s";
+    };
+  };
+  # Periodic network device inventory (ARP + Kea + Technitium clients)
+  systemd.services.network-inventory = {
+    description = "Collect network device inventory";
+    serviceConfig = {
+      Type = "oneshot";
+      DynamicUser = true;
+      SupplementaryGroups = [ "systemd-journal" ];
+      Environment = [
+        "INVENTORY_OUTPUT=/var/lib/alloy/textfiles/network_inventory.prom"
+        "KEA_LEASES=/var/lib/kea/dhcp4.leases"
+        "TECHNITIUM_URL=http://127.0.0.1:${toString homelab.${hostName}.services.technitium.port}"
+      ];
+      ExecStartPre = "+${pkgs.coreutils}/bin/install -d -m 0755 -o root -g root /var/lib/alloy/textfiles";
+      ExecStart = lib.getExe inputs.nixcfg.packages.${system}.network-inventory;
+    };
+  };
+  systemd.timers.network-inventory = {
+    description = "Periodic network device inventory";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "2min";
+      OnUnitActiveSec = "5min";
+      Persistent = true;
     };
   };
   security.acme =
