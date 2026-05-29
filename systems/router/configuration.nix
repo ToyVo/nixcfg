@@ -13,18 +13,33 @@ let
   inherit (config.networking) hostName;
   internalHosts = lib.pipe homelab [
     (lib.filterAttrs (_: host: host ? ip && lib.hasPrefix "10.1.0." host.ip))
-    (lib.mapAttrsToList (name: host: {
-      zone = "diekvoss.net";
-      inherit name;
-      type = "A";
-      value = host.ip;
-      ttl = "300";
-    }))
+    (lib.mapAttrsToList (
+      name: host: {
+        zone = "diekvoss.net";
+        inherit name;
+        type = "A";
+        value = host.ip;
+        ttl = "300";
+      }
+    ))
   ];
   zoneRecords = [
-    { zone = "diekvoss.net"; name = "@"; type = "A"; value = "10.1.0.1"; ttl = "300"; }
-    { zone = "diekvoss.net"; name = "*"; type = "A"; value = "10.1.0.1"; ttl = "300"; }
-  ] ++ internalHosts;
+    {
+      zone = "diekvoss.net";
+      name = "@";
+      type = "A";
+      value = "10.1.0.1";
+      ttl = "300";
+    }
+    {
+      zone = "diekvoss.net";
+      name = "*";
+      type = "A";
+      value = "10.1.0.1";
+      ttl = "300";
+    }
+  ]
+  ++ internalHosts;
   blocklistUrls = [
     "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
     "https://urlhaus.abuse.ch/downloads/hostfile/"
@@ -441,10 +456,12 @@ in
         "TECHNITIUM_BLOCKLISTS=${builtins.toJSON blocklistUrls}"
         "TECHNITIUM_FORWARDERS=${builtins.toJSON forwarders}"
       ];
-      ExecStart = lib.getExe (pkgs.writeScriptBin "configure-technitium" ''
-        #!${pkgs.python3}/bin/python3
-        ${builtins.readFile ./configure-technitium.py}
-      '');
+      ExecStart = lib.getExe (
+        pkgs.writeScriptBin "configure-technitium" ''
+          #!${pkgs.python3}/bin/python3
+          ${builtins.readFile ./configure-technitium.py}
+        ''
+      );
     };
   };
   security.acme =
