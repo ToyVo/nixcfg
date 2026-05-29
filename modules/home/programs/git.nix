@@ -10,9 +10,10 @@ in
 {
   config = lib.mkIf cfg.enable {
     sops.secrets.opencode_api_key = { };
+    # see https://models.dev/?search=opencode&sort=output-costper&order=asc if considering different models, same api key, but url is different https://opencode.ai/zen/v1 vs https://opencode.ai/zen/go/v1
     sops.templates.opencommit.content = ''
-      OCO_MODEL=mimo-v2.5
-      OCO_API_URL=https://opencode.ai/zen/go/v1
+      OCO_MODEL=mimo-v2.5-free
+      OCO_API_URL=https://opencode.ai/zen/v1
       OCO_PROXY=undefined
       OCO_API_KEY=${config.sops.placeholder.opencode_api_key}
       OCO_API_CUSTOM_HEADERS=undefined

@@ -418,6 +418,7 @@ in
     enable = true;
     settings = {
       model = {
+        # see https://models.dev/?search=opencode&sort=output-costper&order=asc if considering different models, same api key, but url is different https://opencode.ai/zen/v1 vs https://opencode.ai/zen/go/v1
         default = "kimi-k2.6";
         provider = "opencode-go";
         base_url = "https://opencode.ai/zen/go/v1";
