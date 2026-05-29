@@ -203,10 +203,10 @@ let
                     formatting = {
                       command = {"${lib.getExe nixfmt}"},
                     },
-                  },
-                  ["nix"] = {
-                    flake = {
-                      autoArchive = true,
+                    nix = {
+                      flake = {
+                        autoArchive = true,
+                      },
                     },
                   },
                 },
