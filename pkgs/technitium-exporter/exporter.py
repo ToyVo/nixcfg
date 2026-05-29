@@ -59,16 +59,17 @@ REFRESH = int(os.environ.get("TECHNITIUM_REFRESH", "30"))
 def get_session_token():
     """Try API_TOKEN first, fall back to admin login."""
     if API_TOKEN:
-        # Quick check if token works
         try:
             headers = {"Authorization": f"Bearer {API_TOKEN}"}
             r = requests.get(f"{TECH_URL}/api/stats", headers=headers, timeout=10)
             r.raise_for_status()
             data = r.json()
             if data.get("status") == "ok":
+                print("Using configured API token for auth", file=sys.stderr)
                 return API_TOKEN
         except Exception:
             pass
+        print("Configured API token invalid, falling back to admin login", file=sys.stderr)
 
     if ADMIN_PASS:
         try:
@@ -80,19 +81,20 @@ def get_session_token():
             r.raise_for_status()
             data = r.json()
             if data.get("status") == "ok" and data.get("token"):
+                print("Admin login successful, using session token", file=sys.stderr)
                 return data["token"]
         except Exception:
             pass
 
-    return API_TOKEN  # return whatever we have, even if invalid
+    print("WARNING: no valid auth method available", file=sys.stderr)
+    return None
 
 
-# Cache the working token and refresh if needed
 _session_token = None
 
-def active_token():
+def active_token(force_refresh=False):
     global _session_token
-    if _session_token is None:
+    if _session_token is None or force_refresh:
         _session_token = get_session_token()
     return _session_token
 
@@ -157,7 +159,7 @@ DGA_RE = re.compile(r"^[a-z0-9]{10,30}\.(xyz|top|cn|tk|ml|ga|cf|pw|club|info)$")
 
 
 def api_get(endpoint, params=None):
-    """GET from Technitium API; return JSON or {} on any error."""
+    """GET from Technitium API; retry once on auth failure."""
     url = f"{TECH_URL}{endpoint}"
     token = active_token()
     headers = {}
@@ -166,7 +168,16 @@ def api_get(endpoint, params=None):
     try:
         r = requests.get(url, params=params, headers=headers, timeout=10)
         r.raise_for_status()
-        return r.json()
+        data = r.json()
+        # Detect auth failure and retry with fresh token
+        if data.get("status") == "error" and "token" in str(data.get("errorMessage", "")).lower():
+            token = active_token(force_refresh=True)
+            if token:
+                headers["Authorization"] = f"Bearer {token}"
+                r = requests.get(url, params=params, headers=headers, timeout=10)
+                r.raise_for_status()
+                data = r.json()
+        return data
     except Exception:
         return {}
 
