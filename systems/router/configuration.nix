@@ -11,6 +11,30 @@
 }:
 let
   inherit (config.networking) hostName;
+  internalHosts = lib.pipe homelab [
+    (lib.filterAttrs (_: host: host ? ip && lib.hasPrefix "10.1.0." host.ip))
+    (lib.mapAttrsToList (name: host: {
+      zone = "diekvoss.net";
+      inherit name;
+      type = "A";
+      value = host.ip;
+      ttl = "300";
+    }))
+  ];
+  zoneRecords = [
+    { zone = "diekvoss.net"; name = "@"; type = "A"; value = "10.1.0.1"; ttl = "300"; }
+    { zone = "diekvoss.net"; name = "*"; type = "A"; value = "10.1.0.1"; ttl = "300"; }
+  ] ++ internalHosts;
+  blocklistUrls = [
+    "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
+    "https://urlhaus.abuse.ch/downloads/hostfile/"
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/tif.txt"
+  ];
+  forwarders = [
+    "https://dns.quad9.net/dns-query (9.9.9.9)"
+    "tls.cloudflare-dns.com (1.1.1.1)"
+    "tls.dns.google (8.8.8.8)"
+  ];
 in
 {
   imports = [
@@ -398,7 +422,7 @@ in
       Persistent = true;
     };
   };
-  # Configure Technitium DNS apps via API after service is online
+  # Configure Technitium DNS Server built-in zones, blocklists, and forwarders
   systemd.services.configure-technitium = {
     description = "Configure Technitium DNS Server via API";
     after = [
@@ -413,199 +437,13 @@ in
       Environment = [
         "TECHNITIUM_URL=http://127.0.0.1:${toString homelab.${hostName}.services.technitium.port}"
         "TECHNITIUM_TOKEN_FILE=${config.sops.secrets.technitium_api_key.path}"
+        "TECHNITIUM_ZONE_RECORDS=${builtins.toJSON zoneRecords}"
+        "TECHNITIUM_BLOCKLISTS=${builtins.toJSON blocklistUrls}"
+        "TECHNITIUM_FORWARDERS=${builtins.toJSON forwarders}"
       ];
       ExecStart = lib.getExe (pkgs.writeScriptBin "configure-technitium" ''
         #!${pkgs.python3}/bin/python3
-        import json
-        import os
-        import sys
-        import time
-        import urllib.request
-        import urllib.error
-
-        URL = os.environ.get("TECHNITIUM_URL", "http://127.0.0.1:5380")
-        TOKEN_FILE = os.environ.get("TECHNITIUM_TOKEN_FILE", "")
-        TOKEN = ""
-        if TOKEN_FILE:
-            try:
-                with open(TOKEN_FILE) as f:
-                    TOKEN = f.read().strip()
-            except Exception as e:
-                print(f"Warning: could not read token file: {e}", file=sys.stderr)
-
-        def api_request(endpoint, data=None, method="GET"):
-            url = f"{URL}{endpoint}"
-            headers = {}
-            if TOKEN:
-                headers["Authorization"] = f"Bearer {TOKEN}"
-            if data is not None:
-                headers["Content-Type"] = "application/json"
-                body = json.dumps(data).encode()
-            else:
-                body = None
-            req = urllib.request.Request(url, data=body, headers=headers, method=method)
-            try:
-                with urllib.request.urlopen(req, timeout=30) as resp:
-                    return json.loads(resp.read().decode())
-            except urllib.error.HTTPError as e:
-                print(f"HTTP {e.code} from {endpoint}: {e.read().decode()}", file=sys.stderr)
-                return None
-            except Exception as e:
-                print(f"Error calling {endpoint}: {e}", file=sys.stderr)
-                return None
-
-        def wait_for_api(timeout=120):
-            print("Waiting for Technitium API...", file=sys.stderr)
-            for i in range(timeout):
-                try:
-                    req = urllib.request.Request(f"{URL}/api/stats", method="GET")
-                    if TOKEN:
-                        req.add_header("Authorization", f"Bearer {TOKEN}")
-                    with urllib.request.urlopen(req, timeout=5) as resp:
-                        if resp.status == 200:
-                            print("Technitium API is ready.", file=sys.stderr)
-                            return True
-                except Exception:
-                    pass
-                time.sleep(1)
-            print("Timeout waiting for Technitium API", file=sys.stderr)
-            return False
-
-        def configure_app(app_name, config):
-            print(f"Configuring {app_name}...", file=sys.stderr)
-            # Try common API endpoint patterns for app configuration
-            endpoints = [
-                f"/api/apps/config?appName={app_name.replace(' ', '%20')}",
-                f"/api/apps/{app_name.replace(' ', '%20')}/config",
-                "/api/apps/config",
-            ]
-            for endpoint in endpoints:
-                result = api_request(endpoint, {"appName": app_name, "config": config}, method="POST")
-                if result is not None:
-                    print(f"Successfully configured {app_name} via {endpoint}", file=sys.stderr)
-                    return True
-            print(f"Failed to configure {app_name} - check API docs and endpoint", file=sys.stderr)
-            return False
-
-        def main():
-            if not wait_for_api():
-                sys.exit(1)
-
-            blocking_config = {
-                "enableBlocking": True,
-                "blockingAnswerTtl": 30,
-                "blockListUrlUpdateIntervalHours": 24,
-                "blockListUrlUpdateIntervalMinutes": 0,
-                "localEndPointGroupMap": {
-                    "127.0.0.1": "bypass",
-                    "10.1.0.1:53": "bypass"
-                },
-                "networkGroupMap": {
-                    "10.1.0.0/24": "everyone else",
-                    "10.1.20.0/24": "everyone else",
-                    "10.1.30.0/24": "everyone else",
-                    "0.0.0.0/0": "everyone else",
-                    "[::]/0": "everyone else"
-                },
-                "groups": [
-                    {
-                        "name": "everyone else",
-                        "enableBlocking": True,
-                        "allowTxtBlockingReport": True,
-                        "blockAsNxDomain": True,
-                        "blockingAddresses": ["0.0.0.0", "::"],
-                        "allowed": [],
-                        "blocked": [],
-                        "allowListUrls": [],
-                        "blockListUrls": [
-                            "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
-                            "https://urlhaus.abuse.ch/downloads/hostfile/",
-                            "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/tif.txt"
-                        ],
-                        "allowedRegex": [],
-                        "blockedRegex": [],
-                        "regexAllowListUrls": [],
-                        "regexBlockListUrls": [],
-                        "adblockListUrls": []
-                    },
-                    {
-                        "name": "bypass",
-                        "enableBlocking": False,
-                        "allowTxtBlockingReport": True,
-                        "blockAsNxDomain": True,
-                        "blockingAddresses": ["0.0.0.0", "::"],
-                        "allowed": [],
-                        "blocked": [],
-                        "allowListUrls": [],
-                        "blockListUrls": [],
-                        "allowedRegex": [],
-                        "blockedRegex": [],
-                        "regexAllowListUrls": [],
-                        "regexBlockListUrls": [],
-                        "adblockListUrls": []
-                    }
-                ]
-            }
-
-            forwarding_config = {
-                "appPreference": 200,
-                "enableForwarding": True,
-                "proxyServers": [],
-                "forwarders": [
-                    {
-                        "name": "quad9-doh",
-                        "proxy": None,
-                        "dnssecValidation": True,
-                        "forwarderProtocol": "Https",
-                        "forwarderAddresses": [
-                            "https://dns.quad9.net/dns-query (9.9.9.9)"
-                        ]
-                    },
-                    {
-                        "name": "cloudflare-google",
-                        "proxy": None,
-                        "dnssecValidation": True,
-                        "forwarderProtocol": "Tls",
-                        "forwarderAddresses": [
-                            "1.1.1.1",
-                            "8.8.8.8"
-                        ]
-                    }
-                ],
-                "networkGroupMap": {
-                    "0.0.0.0/0": "everyone",
-                    "[::]/0": "everyone"
-                },
-                "groups": [
-                    {
-                        "name": "everyone",
-                        "enableForwarding": True,
-                        "forwardings": [
-                            {
-                                "forwarders": ["cloudflare-google"],
-                                "domains": ["*"]
-                            }
-                        ],
-                        "adguardUpstreams": []
-                    }
-                ]
-            }
-
-            # Discover available apps first
-            print("Discovering installed apps...", file=sys.stderr)
-            apps = api_request("/api/apps/list")
-            if apps:
-                print(f"Installed apps: {json.dumps(apps, indent=2)}", file=sys.stderr)
-            else:
-                print("Could not list apps; will try direct configuration anyway.", file=sys.stderr)
-
-            configure_app("Advanced Blocking", blocking_config)
-            configure_app("Advanced Forwarding", forwarding_config)
-
-            print("Technitium configuration complete.", file=sys.stderr)
-
-        if __name__ == "__main__":
-            main()
+        ${builtins.readFile ./configure-technitium.py}
       '');
     };
   };
