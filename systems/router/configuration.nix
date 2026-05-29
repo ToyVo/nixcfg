@@ -52,9 +52,18 @@ in
     hosts = {
       "127.0.0.1" = [ "localhost" ];
       "::1" = [ "localhost" ];
-    } // (lib.pipe homelab [
-      (lib.filterAttrs (_: host: lib.hasPrefix "10.1.0." (host.ip or "") || lib.hasPrefix "10.200." (host.ip or "")))
-      (lib.mapAttrsToList (name: host: lib.nameValuePair host.ip [ "${name}.diekvoss.net" name ]))
+    }
+    // (lib.pipe homelab [
+      (lib.filterAttrs (
+        _: host: lib.hasPrefix "10.1.0." (host.ip or "") || lib.hasPrefix "10.200." (host.ip or "")
+      ))
+      (lib.mapAttrsToList (
+        name: host:
+        lib.nameValuePair host.ip [
+          "${name}.diekvoss.net"
+          name
+        ]
+      ))
       lib.listToAttrs
     ]);
     nat = {
