@@ -28,7 +28,17 @@ let
   ];
   forwarderZones = [
     {
+      zone = "diekvoss.com";
+      protocol = "Quic";
+      forwarder = "dns.quad9.net:853 (9.9.9.9)";
+    }
+    {
       zone = "diekvoss.net";
+      protocol = "Quic";
+      forwarder = "dns.quad9.net:853 (9.9.9.9)";
+    }
+    {
+      zone = "toyvo.dev";
       protocol = "Quic";
       forwarder = "dns.quad9.net:853 (9.9.9.9)";
     }
