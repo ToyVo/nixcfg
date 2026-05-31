@@ -69,7 +69,7 @@
       name = "ollama-app";
     }
     {
-      name = "syncthing";
+      name = "syncthing-app";
     }
   ];
   homebrew.masApps = {
