@@ -1,4 +1,8 @@
 {
+  "1.22.3": {
+    "hash": "sha256-z9IbxQg+uh8MevP5uLLNnQmlG3jFE1RCfHeBLnaSDjQ=",
+    "url": "https://cdn.vintagestory.at/gamefiles/stable/vs_server_linux-x64_1.22.3.tar.gz"
+  },
   "1.22.2": {
     "hash": "sha256-UcDVDI9ykUY5bPBORJyZ4bGTiJ2n2Df1TNhKyIkQ8eU=",
     "url": "https://cdn.vintagestory.at/gamefiles/stable/vs_server_linux-x64_1.22.2.tar.gz"

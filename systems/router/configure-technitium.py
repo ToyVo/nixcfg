@@ -112,6 +112,14 @@ def wait_for_api(max_wait=120):
 # Configuration helpers
 # ---------------------------------------------------------------------------
 
+def get_zone_type(t, zone_name):
+    """Query zone options to get the zone type. Returns type string or None."""
+    r = request(f"/api/zones/options?zone={p.quote(zone_name)}", auth_token=t)
+    if is_ok(r) and isinstance(r, dict):
+        return r.get("type")
+    return None
+
+
 def zone(t):
     zone_file = os.environ.get("TECHNITIUM_ZONE_RECORDS_FILE", "")
     if not zone_file or not os.path.exists(zone_file):
@@ -120,7 +128,7 @@ def zone(t):
     with open(zone_file) as f:
         records = json.load(f)
 
-    # Group records by zone and create each zone
+    # Group records by zone and create each primary zone
     zones_created = set()
     for rec in records:
         zone_name = rec.get("zone", "diekvoss.net")
@@ -154,6 +162,52 @@ def zone(t):
                 print(f"    ERROR: {r}")
 
 
+def forwarder_zones(t):
+    fw_file = os.environ.get("TECHNITIUM_FORWARDER_ZONES_FILE", "")
+    if not fw_file or not os.path.exists(fw_file):
+        print("WARNING: no forwarder zones file found, skipping.", file=sys.stderr)
+        return
+    with open(fw_file) as f:
+        zones = json.load(f)
+
+    for zone_cfg in zones:
+        zone_name = zone_cfg.get("zone")
+        protocol = zone_cfg.get("protocol", "Udp")
+        forwarder = zone_cfg.get("forwarder", "")
+        print(f"Creating forwarder zone {zone_name} ...")
+        r = request("/api/zones/create", {
+            "zone": zone_name,
+            "type": "Forwarder",
+            "protocol": protocol,
+            "forwarder": forwarder,
+        }, "POST", t)
+        if is_ok(r):
+            print(f"  Forwarder zone created.")
+        elif isinstance(r, dict) and "already exists" in r.get("errorMessage", "").lower():
+            # Check if it's already a forwarder zone
+            existing_type = get_zone_type(t, zone_name)
+            if existing_type == "Forwarder":
+                print(f"  Forwarder zone already exists, continuing.")
+            else:
+                print(f"  Zone exists as {existing_type}, deleting to recreate as Forwarder...")
+                del_r = request("/api/zones/delete", {"zone": zone_name}, "POST", t)
+                if is_ok(del_r):
+                    r2 = request("/api/zones/create", {
+                        "zone": zone_name,
+                        "type": "Forwarder",
+                        "protocol": protocol,
+                        "forwarder": forwarder,
+                    }, "POST", t)
+                    if is_ok(r2):
+                        print(f"  Forwarder zone created after delete.")
+                    else:
+                        print(f"  Warning: forwarder zone recreate failed: {r2}")
+                else:
+                    print(f"  Warning: could not delete existing zone: {del_r}")
+        else:
+            print(f"  Warning: forwarder zone create failed: {r}")
+
+
 def blocklists(t):
     bl_file = os.environ.get("TECHNITIUM_BLOCKLISTS_FILE", "")
     if not bl_file or not os.path.exists(bl_file):
@@ -164,10 +218,10 @@ def blocklists(t):
     if not urls:
         return
     print("Configuring blocklists ...")
-    # Technitium /api/settings/set with blockListUrl overwrites on each call,
-    # so send all URLs at once joined by newlines.
-    combined = "\n".join(urls)
-    r = request("/api/settings/set", {"blockListUrl": combined}, "POST", t)
+    # Technitium /api/settings/set with blockListUrls overwrites on each call,
+    # so send all URLs at once joined by commas.
+    combined = ",".join(urls)
+    r = request("/api/settings/set", {"blockListUrls": combined}, "POST", t)
     if is_ok(r):
         print(f"  OK: set {len(urls)} blocklist URLs")
     else:
@@ -203,10 +257,17 @@ def forwarders(t):
     if not fwds:
         return
     print("Configuring forwarders ...")
-    # Technitium /api/settings/set with forwarder overwrites on each call,
-    # so send all forwarders at once joined by newlines.
-    combined = "\n".join(fwds)
-    r = request("/api/settings/set", {"forwarder": combined}, "POST", t)
+    # Technitium /api/settings/set with forwarders overwrites on each call,
+    # so send all forwarders at once joined by commas.
+    combined = ",".join(fwds)
+    r = request("/api/settings/set", {
+        "forwarders": combined,
+        "forwarderProtocol": "Quic",
+        "concurrentForwarding": "true",
+        "forwarderRetries": "3",
+        "forwarderTimeout": "2000",
+        "forwarderConcurrency": "2",
+    }, "POST", t)
     if is_ok(r):
         print(f"  OK: set {len(fwds)} forwarders")
     else:
@@ -248,6 +309,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     zone(t)
+    forwarder_zones(t)
     blocklists(t)
     forwarders(t)
 

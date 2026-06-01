@@ -22,36 +22,42 @@ let
       }
     ))
   ];
-  zones = [ "diekvoss.net" "internal" "home.arpa" ];
-  zoneRecords = lib.flatten (lib.map (zone:
-    [{
-      inherit zone;
-      name = "@";
-      type = "A";
-      value = "10.1.0.1";
-      ttl = "300";
+  primaryZones = [
+    "internal"
+    "home.arpa"
+  ];
+  forwarderZones = [
+    {
+      zone = "diekvoss.com";
+      protocol = "Quic";
+      forwarder = "dns.quad9.net:853 (9.9.9.9)";
     }
     {
-      inherit zone;
-      name = "*";
-      type = "A";
-      value = "10.1.0.1";
-      ttl = "300";
-    }]
-    ++ (map (host: host // { inherit zone; }) internalHosts)
-  ) zones);
+      zone = "diekvoss.net";
+      protocol = "Quic";
+      forwarder = "dns.quad9.net:853 (9.9.9.9)";
+    }
+    {
+      zone = "toyvo.dev";
+      protocol = "Quic";
+      forwarder = "dns.quad9.net:853 (9.9.9.9)";
+    }
+  ];
+  zoneRecords = lib.flatten (
+    lib.map (zone: map (host: host // { inherit zone; }) internalHosts) primaryZones
+  );
   blocklistUrls = [
-    "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
-    "https://urlhaus.abuse.ch/downloads/hostfile/"
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/tif.txt"
+    "https://big.oisd.nl/domainswild2"
+    "https://nsfw.oisd.nl/domainswild2"
+    "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts"
   ];
   forwarders = [
-    "https://dns.quad9.net/dns-query (9.9.9.9)"
-    "tls.cloudflare-dns.com (1.1.1.1)"
-    "tls.dns.google (8.8.8.8)"
+    "dns.quad9.net:853 (9.9.9.9)"
+    "dns.quad9.net:853 (149.112.112.112)"
   ];
   # JSON data files for configure-technitium (avoids env var quote mangling)
   zoneRecordsFile = pkgs.writeText "zone-records.json" (builtins.toJSON zoneRecords);
+  forwarderZonesFile = pkgs.writeText "forwarder-zones.json" (builtins.toJSON forwarderZones);
   blocklistUrlsFile = pkgs.writeText "blocklist-urls.json" (builtins.toJSON blocklistUrls);
   forwardersFile = pkgs.writeText "forwarders.json" (builtins.toJSON forwarders);
 in
@@ -462,6 +468,7 @@ in
         "TECHNITIUM_TOKEN_FILE=${config.sops.secrets.technitium_api_key.path}"
         "TECHNITIUM_ADMIN_PASS_FILE=${config.sops.secrets.technitium_admin_password.path}"
         "TECHNITIUM_ZONE_RECORDS_FILE=${zoneRecordsFile}"
+        "TECHNITIUM_FORWARDER_ZONES_FILE=${forwarderZonesFile}"
         "TECHNITIUM_BLOCKLISTS_FILE=${blocklistUrlsFile}"
         "TECHNITIUM_FORWARDERS_FILE=${forwardersFile}"
       ];
