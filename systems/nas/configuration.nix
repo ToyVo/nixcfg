@@ -43,7 +43,13 @@ in
     users.hermes = {
       home.username = "hermes";
       home.homeDirectory = "/mnt/POOL/hermes";
-      profiles.defaults.enable = true;
+      nixcfg = {
+        shells.enable = true;
+        tools.enable = true;
+        session.enable = true;
+        sops-home.enable = true;
+        catppuccin-home.enable = true;
+      };
       programs = {
         git = {
           enable = true;
@@ -126,9 +132,17 @@ in
     kernelModules = [ "kvm-amd" ];
     binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
-  profiles = {
-    defaults.enable = true;
+  nixcfg = {
+    nix.enable = true;
+    security.enable = true;
+    home-manager.enable = true;
+    networking.enable = true;
+    system.enable = true;
+    boot.enable = true;
+    nix-ld.enable = true;
+    gui.enable = true;
     dev.enable = true;
+    users.hermes.enable = true;
   };
   userPresets.chloe.enable = true;
   userPresets.toyvo.enable = true;
