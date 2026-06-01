@@ -232,7 +232,7 @@ in
       };
     };
   };
-  containerPresets = {
+  nixcfg.containers = {
     open-webui = {
       enable = true;
       natInterface = "eno1";
@@ -242,7 +242,7 @@ in
       environmentFile = config.sops.secrets."openwebui.env".path;
       environment = {
         # Hermes agent OpenAI-compatible API (host IP from container's perspective)
-        OPENAI_API_BASE_URL = "http://${config.containerPresets.open-webui.hostAddress}:8642/v1";
+        OPENAI_API_BASE_URL = "http://${config.nixcfg.containers.open-webui.hostAddress}:8642/v1";
       };
     };
     immich = {
@@ -276,7 +276,7 @@ in
         "tasks"
       ];
       smtp = {
-        host = config.containerPresets.nextcloud.hostAddress;
+        host = config.nixcfg.containers.nextcloud.hostAddress;
         port = 1025;
         secure = "";
         username = "collin@diekvoss.com";
@@ -355,7 +355,7 @@ in
     wants = [ "protonmail-bridge.service" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
-      ExecStart = "${pkgs.socat}/bin/socat TCP-LISTEN:1025,bind=${config.containerPresets.nextcloud.hostAddress},fork,reuseaddr TCP:127.0.0.1:1025";
+      ExecStart = "${pkgs.socat}/bin/socat TCP-LISTEN:1025,bind=${config.nixcfg.containers.nextcloud.hostAddress},fork,reuseaddr TCP:127.0.0.1:1025";
       Restart = "on-failure";
       RestartSec = "5s";
       DynamicUser = true;

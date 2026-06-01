@@ -131,7 +131,7 @@
       %wheel ALL=(ALL) NOPASSWD: /run/current-system/sw/bin/systemctl status *
     '';
   };
-  containerPresets = {
+  nixcfg.containers = {
     minecraft = {
       enable = true;
       natInterface = "enp0s6";
