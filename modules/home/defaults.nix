@@ -87,6 +87,12 @@ in
         settings = {
           right_format = "$time";
           time.disabled = false;
+          git_status = {
+            ahead = "⇡$count";
+            behind = "⇣$count";
+            diverged = "⇡$ahead_count⇣$behind_count";
+            stashes = "📦$count";
+          };
         };
       };
       zoxide.enable = true;
