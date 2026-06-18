@@ -147,7 +147,7 @@ in
       ensureUsers = [
         {
           name = cfg.db.user;
-          ensureDBs."${cfg.db.name}".grant = "ALL";
+          ensureDBOwnership = true;
         }
       ];
     };
