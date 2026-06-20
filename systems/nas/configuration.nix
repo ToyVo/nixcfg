@@ -220,13 +220,13 @@ in
         host  discord_bot  discord_bot  10.1.0.0/16  scram-sha-256
         host  authentik  authentik  10.200.0.0/16  scram-sha-256
       '';
-      # Set authentik user password from sops secret at activation time
-      postStart = ''
-        $PSQL -tAc "ALTER ROLE authentik PASSWORD '$(cat ${
-          config.sops.secrets."authentik-db-password".path
-        })';"
-      '';
     };
+    # Set authentik user password from sops secret at activation time
+    systemd.services.postgresql.postStart = ''
+      $PSQL -tAc "ALTER ROLE authentik PASSWORD '$(cat ${
+        config.sops.secrets."authentik-db-password".path
+      })';"
+    '';
     protonmail-bridge.enable = true;
     samba.enable = true;
     spice-vdagentd.enable = true;
