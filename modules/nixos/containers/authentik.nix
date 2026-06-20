@@ -137,8 +137,8 @@ in
       externalInterface = cfg.natInterface;
       internalInterfaces = [
         "ve-authentik"
-        "ve-authentik-worker"
-        "ve-authentik-redis"
+        "ve-ak-worker"
+        "ve-ak-redis"
       ];
     };
 
@@ -158,8 +158,8 @@ in
 
     systemd.tmpfiles.rules = [
       "d /var/lib/nixos-containers/authentik/var/log/journal 0755 root systemd-journal -"
-      "d /var/lib/nixos-containers/authentik-worker/var/log/journal 0755 root systemd-journal -"
-      "d /var/lib/nixos-containers/authentik-redis/var/log/journal 0755 root systemd-journal -"
+      "d /var/lib/nixos-containers/ak-worker/var/log/journal 0755 root systemd-journal -"
+      "d /var/lib/nixos-containers/ak-redis/var/log/journal 0755 root systemd-journal -"
     ];
 
     containers.authentik = {
@@ -250,7 +250,7 @@ in
       };
     };
 
-    containers.authentik-worker = {
+    containers.ak-worker = {
       autoStart = true;
       extraFlags = [ "--link-journal=guest" ];
       privateNetwork = true;
@@ -364,7 +364,7 @@ in
       };
     };
 
-    containers.authentik-redis = lib.mkIf (cfg.redis.location == "internal") {
+    containers.ak-redis = lib.mkIf (cfg.redis.location == "internal") {
       autoStart = true;
       extraFlags = [ "--link-journal=guest" ];
       privateNetwork = true;
