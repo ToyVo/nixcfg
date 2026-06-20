@@ -220,21 +220,11 @@ in
         host  discord_bot  discord_bot  10.1.0.0/16  scram-sha-256
         host  authentik  authentik  10.200.0.0/16  scram-sha-256
       '';
-      # Set authentik user password from sops secret (ensureUsers uses peer auth only)
-      initialScript = pkgs.writeText "authentik-init" ''
-        DO \$\$
-        BEGIN
-          IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'authentik') THEN
-            CREATE ROLE authentik LOGIN PASSWORD '${
-              builtins.readFile (toString config.sops.secrets."authentik-db-password".path)
-            }';
-          ELSE
-            ALTER ROLE authentik PASSWORD '${
-              builtins.readFile (toString config.sops.secrets."authentik-db-password".path)
-            }';
-          END IF;
-        END
-        \$\$;
+      # Set authentik user password from sops secret at activation time
+      postStart = ''
+        $PSQL -tAc "ALTER ROLE authentik PASSWORD '$(cat ${
+          config.sops.secrets."authentik-db-password".path
+        })';"
       '';
     };
     protonmail-bridge.enable = true;
