@@ -509,7 +509,10 @@ in
   sops.secrets."grafana-secret-key".mode = "0444";
   sops.secrets."authentik-secret-key".mode = "0444";
   sops.secrets."authentik-bootstrap-password".mode = "0444";
-  sops.secrets."authentik-db-password".mode = "0444";
+  sops.secrets."authentik-db-password" = {
+    owner = "postgres";
+    mode = "0444";
+  };
   # The ProtonVPN private key is decrypted here on the host by sops-nix so that
   # it can be bind-mounted read-only into the starr container, where the WireGuard
   # interface and network namespace are actually configured.
