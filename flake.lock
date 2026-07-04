@@ -440,11 +440,11 @@
     "hermes-webui": {
       "flake": false,
       "locked": {
-        "lastModified": 1783124486,
-        "narHash": "sha256-jCshjHLpK+lIdaUp8gpLRmBcCm59x5EoCReGPjD7b44=",
+        "lastModified": 1783128772,
+        "narHash": "sha256-LkWPKM7lYuWsC1x3P9fLOuPb0bCt+P2cdN9Nmb9NPwg=",
         "owner": "nesquena",
         "repo": "hermes-webui",
-        "rev": "f38cf4456929c87632058c654a02817ae0b9aa84",
+        "rev": "5e0d4d1e3d2300dc8373f079ac09558da3fbae9a",
         "type": "github"
       },
       "original": {
@@ -1194,11 +1194,11 @@
         "nixpkgs": "nixpkgs_16"
       },
       "locked": {
-        "lastModified": 1783124436,
-        "narHash": "sha256-Wk2tCtDOoUcI26GQC63TL+6IYPr87TtyvwQc8wGz/I0=",
+        "lastModified": 1783128872,
+        "narHash": "sha256-+UWqUJRonkJ2bU+RG/i0zNLEmuJt02KQnWCjmpXOzjo=",
         "owner": "nix-community",
         "repo": "nur",
-        "rev": "20f033e3704b7058dd82300edcb6ff0f6f8434b1",
+        "rev": "0a6e743d790af29825544ea0125e828a76fa18f5",
         "type": "github"
       },
       "original": {
