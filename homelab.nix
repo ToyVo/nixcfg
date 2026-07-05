@@ -183,27 +183,16 @@
   };
   jellyfin = {
     ip = "10.200.0.6";
-    services = {
-      jellyfin = {
-        port = 8096;
-        displayName = "Jellyfin";
-        description = "Media Server";
-        category = "Jellyfin";
-        icon = "sh-jellyfin";
-        widget = {
-          type = "jellyfin";
-          url = "https://jellyfin.diekvoss.net";
-          key = "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}";
-        };
-      };
-      jellyfin-app = {
-        port = 8096;
-        subdomain = "jellyfin-app";
-        protected = false;
-        displayName = "Jellyfin (App)";
-        description = "Jellyfin for Mobile Apps";
-        category = "Jellyfin";
-        icon = "sh-jellyfin";
+    services.jellyfin = {
+      port = 8096;
+      displayName = "Jellyfin";
+      description = "Media Server";
+      category = "Jellyfin";
+      icon = "sh-jellyfin";
+      widget = {
+        type = "jellyfin";
+        url = "https://jellyfin.diekvoss.net";
+        key = "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}";
       };
     };
   };
