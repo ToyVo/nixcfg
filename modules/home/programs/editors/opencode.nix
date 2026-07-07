@@ -32,6 +32,7 @@
         };
         chrome-devtools = {
           type = "local";
+          enabled = true;
           command = [
             "npx"
             "-y"
