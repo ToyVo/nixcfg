@@ -58,7 +58,9 @@ in
     (builtins.any (s: s == system) (p.meta.platforms or [ system ]))
     && !(builtins.any (s: s == system) (p.meta.badPlatforms or [ ]));
 
-  mkWrappedProgram = pkgs: {
+  mkWrappedProgram =
+    pkgs:
+    {
       name,
       package,
       binaryName ? package.meta.mainProgram or (lib.getName package),

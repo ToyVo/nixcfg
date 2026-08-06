@@ -19,15 +19,15 @@
         ./users/toyvo.nix
       ];
     };
-console = ./console.nix;
-dev = ./dev.nix;
-gui = ./gui.nix;
-home-manager = ./home-manager.nix;
-nix = ./nix.nix;
-podman = ./podman.nix;
-security = ./security.nix;
-chloe = ./users/chloe.nix;
-hermes = ./users/hermes.nix;
-root = ./users/root.nix;
-toyvo = ./users/toyvo.nix;
+  console = ./console.nix;
+  dev = ./dev.nix;
+  gui = ./gui.nix;
+  home-manager = ./home-manager.nix;
+  nix = ./nix.nix;
+  podman = ./podman.nix;
+  security = ./security.nix;
+  chloe = ./users/chloe.nix;
+  hermes = ./users/hermes.nix;
+  root = ./users/root.nix;
+  toyvo = ./users/toyvo.nix;
 }

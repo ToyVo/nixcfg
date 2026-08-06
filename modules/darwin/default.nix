@@ -17,12 +17,12 @@
         (import ../os).default
       ];
     };
-bash = ./bash.nix;
-homebrew = ./homebrew.nix;
-keyboard = ./keyboard.nix;
-ollama = ./ollama.nix;
-podman = ./podman.nix;
-system = ./system.nix;
-terminfo = ./terminfo.nix;
-touchid = ./touchid.nix;
+  bash = ./bash.nix;
+  homebrew = ./homebrew.nix;
+  keyboard = ./keyboard.nix;
+  ollama = ./ollama.nix;
+  podman = ./podman.nix;
+  system = ./system.nix;
+  terminfo = ./terminfo.nix;
+  touchid = ./touchid.nix;
 }
