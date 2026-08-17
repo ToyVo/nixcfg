@@ -202,6 +202,7 @@ in
             "router" = identityConfig // {
               User = "toyvo";
               HostName = "router.internal";
+              Port = "2222";
             };
             "steamdeck-nixos" = identityConfig // {
               User = "toyvo";
