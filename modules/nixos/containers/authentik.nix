@@ -153,7 +153,7 @@ in
     # exits, so it stays "activating" until the DB is reachable. The default
     # 1min container start timeout was killing the container mid-attempt
     # every time, tearing down ve-authentik and restarting the whole loop.
-    systemd.services."container@authentik".serviceConfig.TimeoutStartSec = "10min";
+    systemd.services."container@authentik".serviceConfig.TimeoutStartSec = lib.mkForce "10min";
 
     networking.nat = lib.mkIf (cfg.natInterface != null) {
       enable = true;
