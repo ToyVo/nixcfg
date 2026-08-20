@@ -299,7 +299,7 @@ in
             # Wait for network interface to have an IP address
             echo "Waiting for network interface to be ready..."
             for i in $(seq 1 30); do
-              if ip addr show | grep -q "${cfg.localAddress}"; then
+              if ${pkgs.iproute2}/bin/ip addr show | grep -q "${cfg.localAddress}"; then
                 echo "Network interface has IP ${cfg.localAddress}"
                 break
               fi
