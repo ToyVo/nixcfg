@@ -271,6 +271,7 @@ in
           description = "Authentik Database Migration";
           wantedBy = [ "multi-user.target" ];
           after = [ "network-online.target" ];
+          wants = [ "network-online.target" ];
           before = [ "authentik-server.service" ];
           environment = {
             AUTHENTIK_POSTGRESQL__HOST = cfg.db.host;
