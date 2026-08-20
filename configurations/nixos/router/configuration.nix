@@ -86,7 +86,7 @@ let
         zone = "toyvo.dev";
         svcPriority = "1";
         svcTargetName = ".";
-        svcParams = "alpn=h2";
+        svcParams = "alpn|h2";
       }
       {
         name = "cache";
@@ -95,7 +95,7 @@ let
         zone = "toyvo.dev";
         svcPriority = "1";
         svcTargetName = ".";
-        svcParams = "alpn=h2";
+        svcParams = "alpn|h2";
       }
       {
         name = "@";
@@ -104,7 +104,7 @@ let
         zone = "toyvo.dev";
         svcPriority = "1";
         svcTargetName = ".";
-        svcParams = "alpn=h2";
+        svcParams = "alpn|h2";
       }
     ];
   blocklistUrls = [
