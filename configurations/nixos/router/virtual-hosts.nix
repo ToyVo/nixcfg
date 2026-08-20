@@ -47,6 +47,9 @@
                       ];
                   extraConfig =
                     let
+                      logBlock = ''
+                        log
+                      '';
                       forwardAuthBlock = lib.optionalString (forwardAuthGate && !selfSigned) ''
                         forward_auth http://${homelab.authentik.ip}:9000 {
                           uri /outpost.goauthentik.io/auth/caddy
@@ -59,7 +62,8 @@
                         }
                       '';
                     in
-                    forwardAuthBlock
+                    logBlock
+                    + forwardAuthBlock
                     + (
                       if selfSigned then
                         ''
