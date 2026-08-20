@@ -53,8 +53,12 @@
                       ];
                   extraConfig =
                     let
+                      # stdout -> journal -> already shipped to Loki/Grafana by the
+                      # monitoring module's loki.source.journal "systemd" block.
                       logBlock = ''
-                        log
+                        log {
+                          output stdout
+                        }
                       '';
                       forwardAuthBlock = lib.optionalString (forwardAuthGate && !selfSigned) ''
                         forward_auth http://${homelab.authentik.ip}:9000 {
