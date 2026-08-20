@@ -38,6 +38,12 @@
                       [
                         "0.0.0.0"
                         "[::]"
+                        # Private-domain sites explicitly bind router.ip too, which
+                        # otherwise steals connections addressed to that specific IP
+                        # into their own server (no route -> empty 200) since Caddy
+                        # groups sites into servers by exact listenAddresses set and
+                        # a specific bind wins over the 0.0.0.0 wildcard for that IP.
+                        homelab.router.ip
                       ]
                     else
                       [
