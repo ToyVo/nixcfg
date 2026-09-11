@@ -1193,11 +1193,11 @@
     "odysseus": {
       "flake": false,
       "locked": {
-        "lastModified": 1788343501,
-        "narHash": "sha256-46d28HiUpOlc1CsQiDgs3R76cbC/wjxIsxUwtnZA2EI=",
+        "lastModified": 1788628872,
+        "narHash": "sha256-/kGtXHIP9XTMqxK7aP5BotnCKY1Zc9MVUFVd5w0HdMg=",
         "owner": "odysseus-dev",
         "repo": "odysseus",
-        "rev": "affaee1e668001a57e2966e8f26a436f19ec1304",
+        "rev": "934d23c0be29c9721385f34565c0ae2cbd60da04",
         "type": "github"
       },
       "original": {
