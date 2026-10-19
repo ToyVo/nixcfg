@@ -15,12 +15,23 @@
 
 import { createHash } from "node:crypto";
 
+export interface FetchJsonOptions {
+  /** Per-request timeout in ms (default 60_000). Passed-through callers
+      that already set `init.signal` keep their own signal. */
+  timeoutMs?: number;
+}
+
 /** Fetch a URL and parse the response as JSON, throwing on HTTP errors. */
 export async function fetchJson<T>(
   url: string,
   init?: RequestInit,
+  opts: FetchJsonOptions = {},
 ): Promise<T> {
-  const res = await fetch(url, init);
+  const { timeoutMs = 60_000 } = opts;
+  const withTimeout = init?.signal
+    ? init
+    : { ...init, signal: AbortSignal.timeout(timeoutMs) };
+  const res = await fetch(url, withTimeout);
   if (!res.ok) {
     throw new Error(
       `Failed to fetch ${url} (${res.status} ${res.statusText}): ${await res.text()}`,
@@ -59,6 +70,10 @@ export interface DownloadAndHashOptions {
   retries?: number;
   /** Delay between attempts in ms (default 10_000). */
   retryDelayMs?: number;
+  /** Per-attempt timeout in ms (default 600_000). Bounds stalled
+      connections so one stuck download can't pin a CI runner; the
+      retry loop still applies afterwards. */
+  timeoutMs?: number;
 }
 
 /**
@@ -71,11 +86,19 @@ export async function downloadAndHash(
   url: string,
   opts: DownloadAndHashOptions = {},
 ): Promise<string> {
-  const { headers, retries = 5, retryDelayMs = 10_000 } = opts;
+  const {
+    headers,
+    retries = 5,
+    retryDelayMs = 10_000,
+    timeoutMs = 600_000,
+  } = opts;
   let lastError: unknown;
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
-      const res = await fetch(url, headers ? { headers } : undefined);
+      const res = await fetch(url, {
+        headers,
+        signal: AbortSignal.timeout(timeoutMs),
+      });
       if (!res.ok || !res.body) {
         throw new Error(
           `Failed to download ${url}: ${res.status} ${res.statusText}`,
