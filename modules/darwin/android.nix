@@ -13,7 +13,7 @@ let
   avdName = "Pixel_7_API34_microG";
   cmdlineToolsUrl = "https://dl.google.com/android/repository/commandlinetools-mac-11076708_latest.zip";
 
-  revanced-android-setup = pkgs.writeShellScriptBin "revanced-android-setup" ''
+  android-emulator-setup = pkgs.writeShellScriptBin "android-emulator-setup" ''
     set -euo pipefail
     SDK="$HOME/Library/Android/sdk"
     mkdir -p "$SDK/cmdline-tools"
@@ -48,29 +48,9 @@ let
     else
       echo "no" | avdmanager create avd -n "${avdName}" -k "${systemImage}" -d "pixel_7" --force
     fi
-
-    echo "==> test keystore (emulator-only, NOT your phone key)"
-    mkdir -p "$HOME/Clone/revanced/test"
-    if [ ! -f "$HOME/Clone/revanced/test/test.keystore" ]; then
-      "${pkgs.temurin-bin-17}/bin/keytool" -genkeypair -alias test \
-        -keyalg RSA -keysize 2048 -validity 10000 \
-        -keystore "$HOME/Clone/revanced/test/test.keystore" \
-        -storepass android -keypass android \
-        -dname "CN=ReVanced Test, OU=Emulator, O=Local"
-      echo "created $HOME/Clone/revanced/test/test.keystore (storepass: android)"
-    else
-      echo "keystore exists, skipping"
-    fi
-
-    cat <<EOF
-    Done. Next:
-      1. revanced-avd-boot            # boots ${avdName}
-      2. install GmsCore + patched apk (see revanced-patch-test --help)
-      3. adb -s emulator-5554 logcat -s "revanced:*" | grep AUDIT
-    EOF
   '';
 
-  revanced-avd-boot = pkgs.writeShellScriptBin "revanced-avd-boot" ''
+  android-emulator-boot = pkgs.writeShellScriptBin "android-emulator-boot" ''
     set -euo pipefail
     SDK="$HOME/Library/Android/sdk"
     export ANDROID_HOME="$SDK"
@@ -87,38 +67,18 @@ let
     adb shell settings put global animator_duration_scale 0 || true
     echo "boot complete. Serial: $(adb get-serialno)"
   '';
-
-  revanced-patch-test = pkgs.writeShellScriptBin "revanced-patch-test" ''
-    set -euo pipefail
-    echo "Usage:"
-    echo "  # 1. build patched apk (from ~/Clone/revanced, needs revanced-cli jar):"
-    echo "  #    java -jar revanced-cli.jar patch --keystore test/test.keystore \\"
-    echo "  #      --keystore-password android --key-alias test --key-password android \\"
-    echo "  #      -p revanced-patches -o test/youtube-patched.apk <your-20.40.45.apkm>"
-    echo ""
-    echo "  # 2. install microG + patched app on the emulator:"
-    echo "  adb -s emulator-5554 install -r <gmscore.apk>   # ReVanced GmsCore, same version as your Manager"
-    echo "  adb -s emulator-5554 install -r test/youtube-patched.apk"
-    echo ""
-    echo "  # 3. collect audit logs:"
-    echo "  adb -s emulator-5554 logcat -s \"revanced:*\" | grep AUDIT"
-    echo ""
-    echo "Note: emulator uses test/test.keystore. Your phone Manager key is untouched;"
-    echo "never install a CLI-signed apk over a Manager-signed one (or vice versa)."
-  '';
 in
 {
   options.nixcfg.darwin.android.enable =
-    lib.mkEnableOption "Android emulator + ReVanced test env (Temurin 17, adb, SDK/AVD helpers)";
+    lib.mkEnableOption "Android emulator test env (Temurin 17, adb, SDK/AVD helpers)";
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [
       pkgs.temurin-bin-17
       pkgs.android-tools
       pkgs.unzip
-      revanced-android-setup
-      revanced-avd-boot
-      revanced-patch-test
+      android-emulator-setup
+      android-emulator-boot
     ];
   };
 }
