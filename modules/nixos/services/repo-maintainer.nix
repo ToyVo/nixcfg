@@ -12,9 +12,9 @@ in
     enable = lib.mkEnableOption "durable Forgejo repo maintainer (polls CI, reruns infra cancels, opens fix PRs)";
 
     package = lib.mkOption {
-      type = lib.types.package;
-      default = pkgs.repo-maintainer;
-      description = "The repo-maintainer package to run";
+      type = lib.types.nullOr lib.types.package;
+      default = null;
+      description = "The repo-maintainer package to run (e.g. inputs.nixcfg.packages.\${system}.repo-maintainer; system pkgs carry no custom overlay)";
     };
 
     stateDir = lib.mkOption {
@@ -71,6 +71,10 @@ in
       {
         assertion = cfg.environmentFile != null;
         message = "services.repo-maintainer.environmentFile must be set (FORGEJO_TOKEN)";
+      }
+      {
+        assertion = cfg.package != null;
+        message = "services.repo-maintainer.package must be set (e.g. inputs.nixcfg.packages.\${system}.repo-maintainer)";
       }
     ];
 

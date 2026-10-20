@@ -508,6 +508,7 @@ in
   };
   services.repo-maintainer = {
     enable = true;
+    package = inputs.nixcfg.packages.${system}.repo-maintainer;
     stateDir = "/mnt/POOL/repo-maintainer";
     forgejoLogDir = "/mnt/POOL/forgejo/data/actions_log";
     environmentFile = config.sops.templates."repo-maintainer.env".path;
