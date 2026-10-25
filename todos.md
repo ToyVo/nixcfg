@@ -1,5 +1,9 @@
 # TODOs
 
+## nas libvirtd (pre-existing, unrelated to k3s)
+
+- [ ] `libvirtd.service` fails since ~Oct 24 with `status=243/CREDENTIALS` (`LoadCredentialEncrypted` from upstream libvirt packaging can't determine host key; no TPM on nas). Switches still activate (k3s fine) but exit non-zero. No stored libvirt secrets (only the key file in `/var/lib/libvirt/secrets/`), so safe to regenerate: `sudo rm /var/lib/libvirt/secrets/secrets-encryption-key && sudo systemctl start virt-secret-init-encryption.service && sudo systemctl restart libvirtd.service`. If init also fails → host-key problem, investigate `systemd-creds`/TPM-less setup. If no VMs are used, set `virtualisation.libvirtd.enable = false` instead.
+
 ## k3s cluster (nas + MacMini-Intel, day one)
 
 - [x] k3s two-server cluster declared (design: `docs/superpowers/specs/2026-10-25-k3s-nas-design.md`, plan: `docs/superpowers/plans/2026-10-25-k3s-nas-macmini.md`): `nixcfg.k3s` wrapper module, nas cluster-init server, MacMini-Intel joins via `https://10.1.0.3:6443`, shared sops `k3s-token`, traefik disabled.
