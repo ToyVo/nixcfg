@@ -10,7 +10,7 @@
   - Manual rollout order (eval verified, not yet deployed): deploy nas first, wait for `k3s kubectl get nodes` Ready, then deploy MacMini-Intel.
 - [x] Deploy + verify (2026-10-26): `nixos-rebuild switch --flake .#nas`, then `.#MacMini-Intel-NixOS`; `kubectl get nodes` shows nas + macmini-intel-nixos Ready (control-plane,etcd). Required opening etcd 2379-2380/tcp in `nixcfg.k3s` firewall on both nodes.
 - [x] Router joined as etcd-only third server (2026-10-26).
-- [ ] Protectli joins as worker agent (code done, design `docs/superpowers/specs/2026-10-26-k3s-protectli-agent-design.md`, plan `docs/superpowers/plans/2026-10-26-k3s-protectli-agent.md`): deploy protectli, verify Ready worker with INTERNAL-IP 10.1.0.6.
+- [x] Protectli joined as worker agent (2026-10-26): Ready, `<none>` roles as designed; etcd stays 3 voters.
 - [ ] Traefik NodePorts 30080/30443 live (code done on nas+macmini); deploy both, verify svc + cross-node pod curl.
 - [x] homepage serves from cluster (2026-10-26): manifests live, Caddy `upstreams` flip for `diekvoss.net` verified 200 with auth gate, nas-native service retired (file deleted, 8082 closed). Failover verified 2026-10-26 in both directions (k3s stopped on nas → 200 via macmini, and vice versa).
 - [ ] Storage re-architecture for stateful workloads (`/mnt/POOL` via local-path/Longhorn/Ceph decision).
