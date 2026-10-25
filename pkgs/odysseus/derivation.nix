@@ -21,8 +21,11 @@
 let
   # Python interpreter with Odysseus-specific test skips: niquests' and
   # caldav's live test suites fail SSL verification in the Darwin build
-  # sandbox, so their checks are skipped there. Scoped via packageOverrides
-  # (instead of a nixpkgs overlay) so the package stays self-contained.
+  # sandbox, so their checks are skipped there. urllib3-future's SOCKS tests
+  # additionally fail in the Linux sandbox (no network) and the package is
+  # frequently uncached, so its checks are skipped everywhere. Scoped via
+  # packageOverrides (instead of a nixpkgs overlay) so the package stays
+  # self-contained.
   python = python3.override {
     packageOverrides = _pyFinal: pyPrev: {
       niquests = pyPrev.niquests.overridePythonAttrs (_: {
@@ -31,6 +34,9 @@ let
       caldav = pyPrev.caldav.overridePythonAttrs (_: {
         doCheck = !stdenv.hostPlatform.isDarwin;
         doInstallCheck = !stdenv.hostPlatform.isDarwin;
+      });
+      "urllib3-future" = pyPrev."urllib3-future".overridePythonAttrs (_: {
+        doCheck = false;
       });
     };
   };
