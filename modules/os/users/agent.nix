@@ -12,14 +12,9 @@ in
   # `ids` option, so this module must NOT import it — NixOS hosts importing
   # this module must also import `inputs.nixcfg.modules.nixos.ids`.
   options.nixcfg.users.agent.enable = lib.mkEnableOption "agent system user";
-  options.userPresets.agent.enable = lib.mkEnableOption "agent user preset";
 
-  config = lib.mkMerge [
-    # Preset shorthand for the registry-style `userPresets = { agent...; }`
-    # blocks (cf. userPresets.root/toyvo). Default-on so an explicit
-    # `nixcfg.users.agent.enable = false` still wins; never the reverse.
-    { nixcfg.users.agent.enable = lib.mkIf config.userPresets.agent.enable (lib.mkDefault true); }
-    (lib.mkIf cfg.enable {
+  config =
+    lib.mkIf cfg.enable {
       users.users.agent = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         uid = config.ids.uids.agent;
         home = "/var/lib/agent";
@@ -65,6 +60,6 @@ in
       nix.settings.trusted-users = [
         "agent"
       ];
-    })
-  ];
+    }
+  ;
 }

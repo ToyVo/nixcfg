@@ -150,7 +150,7 @@ in
     dev.enable = true;
     users.agent.enable = true;
   };
-  userPresets = {
+  nixcfg.users = {
     agent.enable = true;
     chloe.enable = true;
     root.enable = true;

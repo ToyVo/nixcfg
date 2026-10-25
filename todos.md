@@ -53,7 +53,6 @@ Outstanding work and follow-up items for this repository.
 
 - [x] Removed `default` aggregators from `modules/{os,nixos,darwin,home}/default.nix` (now pure registries + new `modules.os`/`osModules` output); every module declares its own `imports`, every host imports a minimal set (plan: `docs/superpowers/plans/2026-10-25-remove-default-modules.md`). Verified: `nix flake show` PASS, `nix flake check --no-build` all green, dry-run builds for wsl + MacBook-Pro darwin + deck@steamdeck green.
 - [ ] `nix flake check` (full, with builds) still red on `checks.aarch64-darwin.tinycast` (dmg unpack fails; pre-existing package issue in `pkgs/tinycast`, unrelated to the refactor).
-- [ ] nas eval blocked on `userPresets.agent` (no module defines it yet) — belongs to the in-flight hermes→agent consolidation, not the refactor; finish that work, then re-run `nix flake check`.
 
 ## Neovim
 
