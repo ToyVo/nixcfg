@@ -161,6 +161,8 @@ in
     k3sStarr.readarr.enable = true;
     # Sixth starr migration (bazarr); same template, different wiring.
     k3sStarr.bazarr.enable = true;
+    # Stateless solver for prowlarr; no storage at all.
+    k3sStarr.flaresolverr.enable = true;
     security.enable = true;
     home-manager.enable = true;
     networking.enable = true;
