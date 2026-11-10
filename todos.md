@@ -70,8 +70,13 @@ Outstanding work and follow-up items for this repository.
 ## Neovim
 
 - [ ] Unpin `neovide` in `modules/os/dev.nix` from `stablePkgs` (0.16.2) back to `pkgs` once nixos-unstable ships a fixed 0.17.1+ (2026-11-07 CI failure: vendor staging fails with missing `Cargo.lock`).
+- [ ] Unpin `dioxus-cli` in `modules/os/dev.nix` from `stablePkgs` (0.7.9) back to `pkgs` once nixos-unstable ships a fixed 0.7.10+ (2026-11-09 failure: zstd-sys build can't find libzstd via pkg-config).
+- [ ] Unpin `gale` in `modules/nixos/gaming.nix` from `stablePkgs` (1.21.0) back to `pkgs` once nixos-unstable ships a fixed 1.23.2+ (2026-11-09 failure: aws-lc-sys requires system AWS-LC, none found).
+- [ ] Unpin `zed-editor` in `modules/home/users/toyvo.nix` + `configurations/darwin/FQ-M-907WN2P9/configuration.nix` from `stablePkgs` (1.25.3) back to `pkgs` once nixos-unstable ships a fixed 1.27.0+ (2026-11-09 failure: transitive cargo-bundle/aws-lc-sys breakage).
+- [ ] Re-enable `herdr-desktop-fixed` in `modules/os/gui.nix` once nixos-unstable herdr-desktop builds again (2026-11-09 failure: 0.1.10 zstd-sys can't find pkg-config/libzstd; stable has no herdr-desktop to pin to).
 - [ ] Drop vendored `mega.logging`/`mega.cmdparse` from `pkgs/toyvo-neovim/default.nix` once nvf packages avante.nvim's `ColinKennedy/mega.*` dependencies upstream
 
 ## Herdr
 
+- [ ] herdr-app fish shell: override to herdr-core 0.1.16 is implemented in `modules/os/console.nix` (verified: scratch 0.1.16 core spawns `fish -l` from `~/.config/herdr-core/config.toml`). Still to do: `darwin-rebuild switch` + core restart to activate. Drop the override once nixpkgs herdr-core reaches 0.1.16.
 - [ ] Drop `herdr-desktop-fixed` override in `modules/os/gui.nix` (injects `NSLocalNetworkUsageDescription` + ad-hoc re-sign) once upstream `herdrdev/herdr-app` ships the key in its macOS bundle (nixpkgs picks it up automatically). Without it, macOS 15+ Local Network privacy silently blocks Herdr's LAN SSH (`No route to host`). Note: nix store-path churn invalidates the Settings grant on every Herdr update, so expect to re-allow + restart Herdr after each bump regardless.
