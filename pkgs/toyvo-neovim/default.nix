@@ -13,6 +13,7 @@
   typescript-language-server,
   bash-language-server,
   yaml-language-server,
+  tree-sitter,
   marksman,
   vscode-langservers-extracted,
   pyright,
@@ -86,7 +87,7 @@ if inputs ? "nvf" then
                 desc = 'Highlight when yanking text',
                 group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
                 callback = function()
-                  vim.highlight.on_yank()
+                  vim.hl.hl_op()
                 end,
               })
             '';
@@ -95,8 +96,8 @@ if inputs ? "nvf" then
               {
                 key = "<Esc>";
                 mode = "n";
-                action = "<cmd>nohlsearch<CR>";
-                desc = "Clear search highlights";
+                action = ''<Cmd>nohlsearch<Bar>call nvim_buf_clear_namespace(0, nvim_create_namespace("nvim.multicursor"), 0, -1)<CR>'';
+                desc = "Clear search highlights and multicursors";
               }
               {
                 key = "<C-h>";
@@ -253,6 +254,15 @@ if inputs ? "nvf" then
             };
 
             utility.sleuth.enable = true;
+            mini.icons.enable = true;
+            # Upstream nvf bug (modules/plugins/languages/go.nix): the
+            # nvim-dap-go lazy spec sets setupModule = "nvim-dap", but the
+            # plugin's Lua module is `dap-go` (leoluz/nvim-dap-go), so the
+            # generated after-hook runs require("nvim-dap") and throws
+            # "module 'nvim-dap' not found". Force the correct module
+            # until upstream fixes it; setupOpts ({delve.path}) already
+            # matches dap-go's expected config shape.
+            lazy.plugins.nvim-dap-go.setupModule = lib.mkForce "dap-go";
             statusline.lualine.enable = true;
             telescope.enable = true;
             autocomplete.blink-cmp = {
@@ -372,6 +382,7 @@ if inputs ? "nvf" then
       typescript-language-server
       bash-language-server
       yaml-language-server
+      tree-sitter
       marksman
       vscode-langservers-extracted
       pyright
