@@ -21,8 +21,32 @@
 
 if inputs ? "nvf" then
   let
+    nightly = builtins.fromJSON (builtins.readFile ./versions.json);
+    # Track nightly neovim: override just neovim-unwrapped in the package
+    # set handed to nvf. Bumped by ./update.ts (registered in
+    # scripts/update-all.ts); drop the override to return to nixpkgs neovim.
+    nightlyPkgs = pkgs.extend (
+      final: prev: {
+        neovim-unwrapped = prev.neovim-unwrapped.overrideAttrs {
+          version = nightly.version;
+          src = prev.fetchFromGitHub {
+            owner = "neovim";
+            repo = "neovim";
+            rev = nightly.rev;
+            hash = nightly.hash;
+          };
+          # Nightly moves daily and its own test suite is occasionally red
+          # (e.g. treesitter specs on the pinned commit); upstream CI gates
+          # the release, so don't gate the packaging on it.
+          doCheck = false;
+          # Our version label (nightly-<date>-g<sha>) never appears in
+          # `nvim --version`, which prints upstream's own v0.13.0-dev tag.
+          doInstallCheck = false;
+        };
+      }
+    );
     nvfConfig = inputs.nvf.lib.neovimConfiguration {
-      inherit pkgs;
+      pkgs = nightlyPkgs;
       modules = [
         {
           config.vim = {
