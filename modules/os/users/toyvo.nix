@@ -11,6 +11,21 @@ let
   cfg = config.nixcfg.users;
   homePath =
     if pkgs.stdenv.hostPlatform.isDarwin then "/Users/${cfg.toyvo.name}" else "/home/${cfg.toyvo.name}";
+  # nixpkgs' cargo-bundle (needed to bundle Zed on macOS) fails to build:
+  # cargo-setup-hook exports AWS_LC_SYS_USE_SYSTEM=1 but openssl is not
+  # AWS-LC. Build the bundled copy with cmake instead.
+  # TODO: drop once nixpkgs' cargo-bundle builds again.
+  zed-editor-fixed = pkgs.zed-editor.override (
+    lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
+      cargo-bundle = pkgs.cargo-bundle.overrideAttrs (old: {
+        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.cmake ];
+        preBuild = (old.preBuild or "") + ''
+          unset AWS_LC_SYS_USE_SYSTEM
+        '';
+        dontUseCmakeConfigure = true;
+      });
+    }
+  );
   # herdr-desktop from nixpkgs ships a macOS bundle without
   # NSLocalNetworkUsageDescription, so macOS 15+ Local Network privacy
   # silently blocks its LAN connections (ssh: No route to host) and never
@@ -22,9 +37,10 @@ let
   # TODO: drop once upstream herdrdev/herdr-app ships the key in its bundle
   # (nixpkgs picks it up automatically); then this becomes plain `herdr-desktop`.
   herdr-desktop-fixed = pkgs.herdr-desktop.overrideAttrs (old: {
-    # zstd-sys finds libzstd via pkg-config under cargo-setup-hook (Linux only,
-    # so the Darwin derivation is unchanged)
-    buildInputs = (old.buildInputs or [ ]) ++ lib.optional pkgs.stdenv.hostPlatform.isLinux pkgs.zstd;
+    # zstd-sys finds libzstd via pkg-config under cargo-setup-hook, and the
+    # nixpkgs package provides neither (Darwin has no pkg-config at all)
+    nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.pkg-config ];
+    buildInputs = (old.buildInputs or [ ]) ++ [ pkgs.zstd ];
     postFixup =
       (old.postFixup or "")
       + lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
@@ -188,7 +204,7 @@ let
       herdr-desktop-fixed
       inkscape
       podman-desktop
-      zed-editor
+      zed-editor-fixed
     ]
     ++ lib.optionals stdenv.hostPlatform.isDarwin [
       appcleaner
