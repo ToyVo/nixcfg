@@ -10,6 +10,9 @@
  *   - Only subnets in ALLOWED_SUBNETS are published.
  *   - Names in STATIC_NAMES_FILE are never touched.
  *   - Only TTL-120 records are managed; all other records are ignored.
+ *   - Adds/updates apply immediately; deletes wait until a name has been
+ *     continuously absent for GRACE_PERIOD_SEC (covers torn lease-file
+ *     reads, sleep, brief roaming). Last-seen state lives in STATE_FILE.
  *   - If the lease file or the existing-records list cannot be read,
  *     the script aborts BEFORE mutating anything.
  *
@@ -22,14 +25,17 @@
  *   DNS_ZONE                     (default "home.arpa")
  *   ALLOWED_SUBNETS              (default "1", comma separated)
  *   STATIC_NAMES_FILE            JSON array of reserved hostnames
+ *   GRACE_PERIOD_SEC             (default "3600") absent-before-delete
+ *   STATE_FILE                   (default "/var/lib/kea-technitium-ddns/state.json")
  */
 
 import {
   buildDesiredRecords,
-  diffRecords,
   isSnapshotTrustworthy,
   parseKeaLeases,
+  planSync,
   type ExistingRecord,
+  type SeenState,
 } from "./sync";
 
 const DYNAMIC_TTL = 120;
@@ -44,6 +50,12 @@ const allowedSubnets = (process.env.ALLOWED_SUBNETS ?? "1")
   .split(",")
   .map((s) => Number.parseInt(s.trim(), 10))
   .filter((n) => Number.isInteger(n));
+const graceSec = (() => {
+  const n = Number.parseInt(process.env.GRACE_PERIOD_SEC ?? "3600", 10);
+  return Number.isInteger(n) && n >= 0 ? n : 3600;
+})();
+const stateFile =
+  process.env.STATE_FILE ?? "/var/lib/kea-technitium-ddns/state.json";
 const staticNamesFile = process.env.STATIC_NAMES_FILE ?? "";
 
 async function readFile(path: string): Promise<string> {
@@ -214,7 +226,31 @@ async function main(): Promise<void> {
     );
     process.exit(1);
   }
-  const { toAdd, toUpdate, toDelete } = diffRecords(desired, existing);
+  // Last-seen state: deletes wait out the grace period, adds don't.
+  let prev: SeenState = {};
+  try {
+    prev = (await Bun.file(stateFile).json()) as SeenState;
+  } catch {
+    console.error(`No usable state at ${stateFile}, starting fresh.`);
+  }
+  const nowSec = Date.now() / 1000;
+  const plan = planSync(desired, existing, prev, nowSec, graceSec);
+  const { toAdd, toUpdate, toDelete } = plan;
+  const deleted = new Set(toDelete.map((d) => d.name));
+  for (const rec of existing) {
+    if (
+      rec.ttl === DYNAMIC_TTL &&
+      !desired.has(rec.name) &&
+      !deleted.has(rec.name)
+    ) {
+      console.error(`KEEP ${rec.name}.${zone} (grace, last seen recently)`);
+    }
+  }
+  try {
+    await Bun.write(stateFile, JSON.stringify(plan.next));
+  } catch (e) {
+    console.error(`WARNING: cannot persist state: ${e}`);
+  }
 
   for (const { name, ip } of toAdd) {
     const domain = `${name}.${zone}`;

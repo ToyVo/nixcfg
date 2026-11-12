@@ -5,6 +5,7 @@ import {
   buildDesiredRecords,
   diffRecords,
   isSnapshotTrustworthy,
+  planSync,
 } from "./src/sync";
 test("sanitize lowercases and rejects junk", () => {
   expect(sanitizeHostname("My_Laptop ")).toBe("my-laptop");
@@ -43,4 +44,38 @@ test("empty snapshot with existing dynamic records is untrustworthy", () => {
   expect(isSnapshotTrustworthy(0, 3)).toBe(false);
   expect(isSnapshotTrustworthy(0, 0)).toBe(true);
   expect(isSnapshotTrustworthy(5, 3)).toBe(true);
+});
+test("planSync adds immediately but delays deletes until grace expires", () => {
+  const existing = [
+    { name: "gone", ip: "10.1.0.9", ttl: 120 },
+    { name: "staying", ip: "10.1.0.7", ttl: 120 },
+  ];
+  const desired = new Map([
+    ["staying", "10.1.0.7"],
+    ["new", "10.1.0.8"],
+  ]);
+  // First run noticing the absence: clock starts, nothing deleted.
+  const p1 = planSync(desired, existing, {}, 1000, 3600);
+  expect(p1.toAdd).toEqual([{ name: "new", ip: "10.1.0.8" }]);
+  expect(p1.toDelete).toEqual([]);
+  expect(p1.next["gone"].lastSeen).toBe(1000);
+  // Still within grace: kept.
+  const p2 = planSync(desired, existing, p1.next, 2000, 3600);
+  expect(p2.toDelete).toEqual([]);
+  // Past grace: deleted and pruned from state.
+  const p3 = planSync(desired, existing, p1.next, 5000, 3600);
+  expect(p3.toDelete).toEqual([{ name: "gone" }]);
+  expect("gone" in p3.next).toBe(false);
+});
+test("planSync refreshes lastSeen for present hosts and updates IPs immediately", () => {
+  const existing = [{ name: "laptop", ip: "10.1.0.70", ttl: 120 }];
+  const p = planSync(
+    new Map([["laptop", "10.1.0.99"]]),
+    existing,
+    { laptop: { ip: "10.1.0.70", lastSeen: 100 } },
+    2000,
+    3600,
+  );
+  expect(p.toUpdate).toEqual([{ name: "laptop", ip: "10.1.0.99" }]);
+  expect(p.next["laptop"]).toEqual({ ip: "10.1.0.99", lastSeen: 2000 });
 });

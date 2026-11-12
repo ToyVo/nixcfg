@@ -135,6 +135,61 @@ export interface RecordDiff {
   toDelete: Array<{ name: string }>;
 }
 
+export interface SeenEntry {
+  ip: string;
+  lastSeen: number;
+}
+export type SeenState = Record<string, SeenEntry>;
+
+export interface SyncPlan {
+  toAdd: Array<{ name: string; ip: string }>;
+  toUpdate: Array<{ name: string; ip: string }>;
+  toDelete: Array<{ name: string }>;
+  next: SeenState;
+}
+
+/**
+ * Immediate adds/updates, grace-delayed deletes.
+ *
+ * Desired entries refresh their lastSeen clock every run. A dynamic
+ * record absent from the leases is deleted only after being continuously
+ * absent for graceSec (covers torn lease-file reads, sleep, brief
+ * roaming). First sighting of an absence starts the clock. State entries
+ * for names in neither desired nor the zone are pruned.
+ */
+export function planSync(
+  desired: DesiredRecords,
+  existing: ExistingRecord[],
+  prev: SeenState,
+  nowSec: number,
+  graceSec: number,
+): SyncPlan {
+  const {
+    toAdd,
+    toUpdate,
+    toDelete: immediate,
+  } = diffRecords(desired, existing);
+  const byName = new Map(existing.map((r) => [r.name, r]));
+  const next: SeenState = {};
+  for (const [name, ip] of desired) next[name] = { ip, lastSeen: nowSec };
+  const toDelete: SyncPlan["toDelete"] = [];
+  for (const { name } of immediate) {
+    const seen = prev[name];
+    if (!seen) {
+      // Absence noticed for the first time: start the clock, keep it.
+      next[name] = { ip: byName.get(name)?.ip ?? "", lastSeen: nowSec };
+      continue;
+    }
+    if (nowSec - seen.lastSeen < graceSec) {
+      next[name] = seen;
+      continue;
+    }
+    // Grace expired: delete (and drop from state by omitting).
+    toDelete.push({ name });
+  }
+  return { toAdd, toUpdate, toDelete, next };
+}
+
 /**
  * A header-only/empty lease snapshot alongside existing dynamic records
  * means Kea was likely mid-rewrite: abort instead of deleting everything.
