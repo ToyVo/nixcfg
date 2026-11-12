@@ -4,6 +4,7 @@ import {
   parseKeaLeases,
   buildDesiredRecords,
   diffRecords,
+  isSnapshotTrustworthy,
 } from "./sync";
 test("sanitize lowercases and rejects junk", () => {
   expect(sanitizeHostname("My_Laptop ")).toBe("my-laptop");
@@ -37,4 +38,9 @@ test("diff only deletes TTL-120 records missing from desired", () => {
   ]);
   expect(d.toDelete).toEqual([{ name: "stale" }]);
   expect(d.toAdd).toEqual([]);
+});
+test("empty snapshot with existing dynamic records is untrustworthy", () => {
+  expect(isSnapshotTrustworthy(0, 3)).toBe(false);
+  expect(isSnapshotTrustworthy(0, 0)).toBe(true);
+  expect(isSnapshotTrustworthy(5, 3)).toBe(true);
 });

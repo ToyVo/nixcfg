@@ -136,6 +136,17 @@ export interface RecordDiff {
 }
 
 /**
+ * A header-only/empty lease snapshot alongside existing dynamic records
+ * means Kea was likely mid-rewrite: abort instead of deleting everything.
+ */
+export function isSnapshotTrustworthy(
+  dataRowCount: number,
+  existingDynamicCount: number,
+): boolean {
+  return dataRowCount > 0 || existingDynamicCount === 0;
+}
+
+/**
  * Diff desired state against existing zone records.
  * Records with a TTL other than 120 are treated as static/managed
  * elsewhere and are never added over, updated, or deleted.

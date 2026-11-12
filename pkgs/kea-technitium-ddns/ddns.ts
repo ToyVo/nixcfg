@@ -27,6 +27,7 @@
 import {
   buildDesiredRecords,
   diffRecords,
+  isSnapshotTrustworthy,
   parseKeaLeases,
   type ExistingRecord,
 } from "./sync";
@@ -202,6 +203,17 @@ async function main(): Promise<void> {
     process.exit(1);
   }
   const byName = new Map(existing.map((r) => [r.name, r]));
+  const dataRows = Math.max(
+    0,
+    csv.split("\n").filter((l) => l !== "").length - 1,
+  );
+  const dynamicCount = existing.filter((r) => r.ttl === DYNAMIC_TTL).length;
+  if (!isSnapshotTrustworthy(dataRows, dynamicCount)) {
+    console.error(
+      "FATAL: lease snapshot is empty but dynamic records exist; aborting to avoid mass delete.",
+    );
+    process.exit(1);
+  }
   const { toAdd, toUpdate, toDelete } = diffRecords(desired, existing);
 
   for (const { name, ip } of toAdd) {
