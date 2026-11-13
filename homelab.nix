@@ -499,6 +499,16 @@
     # Wifi
     # mac = "f0:18:98:8a:6d:ee";
   };
+  macbookpro = {
+    ip = "10.1.0.15";
+    # Wifi (Private Wi-Fi Address off; stable MAC)
+    mac = "0a:00:7b:57:f4:03";
+  };
+  fq-m-6kl6hvkq = {
+    ip = "10.1.0.16";
+    # Wifi (Private Wi-Fi Address off; stable MAC)
+    mac = "de:c2:7f:a7:f9:80";
+  };
   windows-desktop = {
     ip = "10.1.0.13";
     # Ethernet
