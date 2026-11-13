@@ -341,8 +341,10 @@ in
       clusterInit = false;
       serverAddr = "https://10.1.0.3:6443";
       tokenFile = config.sops.secrets."k3s-token".path;
-      # Quorum vote only: no kubelet, no workloads on the edge box.
-      disableAgent = true;
+      # Edge workloads allowed: kubelet on, but the node taint keeps
+      # everything except the Traefik DaemonSet off this box.
+      disableAgent = false;
+      nodeTaints = [ "dedicated=edge:NoSchedule" ];
       # Traefik must be enabled on EVERY server: k3s shares one Addon
       # object per packaged chart, and a server with --disable=traefik
       # deletes it cluster-wide (observed: router join uninstalled Traefik

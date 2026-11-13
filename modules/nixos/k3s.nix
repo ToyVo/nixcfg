@@ -71,6 +71,13 @@ in
       description = "Only run the server (etcd/control-plane, no kubelet workloads). For quorum-only members like the router.";
     };
 
+    nodeTaints = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      example = [ "dedicated=edge:NoSchedule" ];
+      description = "Extra --node-taint= flags for k3s servers.";
+    };
+
     firewallInterfaces = lib.mkOption {
       type = lib.types.nullOr (lib.types.listOf lib.types.str);
       default = null;
@@ -158,9 +165,12 @@ in
         if cfg.traefik.enable then builtins.filter (x: x != "traefik") cfg.disable else cfg.disable
       );
       serverAddr = lib.mkIf (cfg.serverAddr != null) cfg.serverAddr;
-      extraFlags = map (san: "--tls-san=${san}") cfg.extraSANs ++ [
-        "--resolv-conf=/etc/rancher/k3s/resolv.conf"
-      ];
+      extraFlags =
+        map (san: "--tls-san=${san}") cfg.extraSANs
+        ++ [
+          "--resolv-conf=/etc/rancher/k3s/resolv.conf"
+        ]
+        ++ map (t: "--node-taint=${t}") cfg.nodeTaints;
       manifests = lib.mkIf cfg.traefik.enable {
         "traefik-config.yaml".content = {
           apiVersion = "helm.cattle.io/v1";
