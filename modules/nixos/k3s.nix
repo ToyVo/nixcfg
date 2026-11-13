@@ -88,6 +88,15 @@ in
     traefik = {
       enable = lib.mkEnableOption "k3s Traefik ingress (NodePort service with pinned nodePorts)";
 
+      tcpEntrypoints = lib.mkOption {
+        type = lib.types.attrsOf lib.types.port;
+        default = { };
+        example = {
+          netbird = 9443;
+        };
+        description = "Extra TCP entrypoints (e.g. NetBird); empty until its port map is known.";
+      };
+
       httpNodePort = lib.mkOption {
         type = lib.types.port;
         default = 30080;
@@ -180,6 +189,20 @@ in
             namespace = "kube-system";
           };
           spec.valuesContent = ''
+            deployment:
+              kind: DaemonSet
+            hostNetwork: false
+            nodeSelector:
+              kubernetes.io/hostname: router
+            tolerations:
+              - key: dedicated
+                operator: Equal
+                value: edge
+                effect: NoSchedule
+            accesslog: true
+            metrics:
+              prometheus:
+                entryPoint: metrics
             service:
               type: NodePort
             ports:
@@ -187,6 +210,21 @@ in
                 nodePort: ${toString cfg.traefik.httpNodePort}
               websecure:
                 nodePort: ${toString cfg.traefik.httpsNodePort}
+              web-internal:
+                port: 8001
+                expose: false
+              websecure-internal:
+                port: 8444
+                expose: false
+              metrics:
+                port: 8082
+                expose: false
+            ${lib.concatStringsSep "\n" (
+              lib.mapAttrsToList (name: port: ''
+                ${name}:
+                  port: ${toString port}
+                  expose: false'') cfg.traefik.tcpEntrypoints
+            )}
           '';
         };
       };
