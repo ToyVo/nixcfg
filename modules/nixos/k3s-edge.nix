@@ -10,7 +10,7 @@ let
 
   sanitize = s: lib.toLower (builtins.replaceStrings [ "." "_" "@" ] [ "-" "-" "" ] s);
 
-  # Same host filter as the old Caddy virtual-hosts.nix.
+  # Same host filter Caddy used: only 10.1.0./10.200. hosts get edge routes.
   edgeHosts = lib.filterAttrs (
     _:
     {
@@ -69,6 +69,7 @@ let
         middlewares = [
           { name = "edge-secure-headers"; }
         ]
+        ++ lib.optional (!r.public) { name = "edge-lan-only"; }
         ++ lib.optional (r.forwardAuthGate && !r.selfSigned) { name = "edge-authentik-forwardauth"; };
         backend = {
           name = svcName;
@@ -129,7 +130,7 @@ let
               namespace = edgeNamespace;
             };
             spec = {
-              entryPoints = if r.public then [ "websecure" ] else [ "websecure-internal" ];
+              entryPoints = [ "websecure" ];
               routes = [
                 {
                   match = "Host(`${r.vhost}`)";
@@ -196,6 +197,22 @@ in
             "X-Forwarded-For"
           ];
         };
+      };
+      "edge-mw-lanonly.yaml".content = {
+        apiVersion = "traefik.io/v1alpha1";
+        kind = "Middleware";
+        metadata = {
+          name = "edge-lan-only";
+          namespace = edgeNamespace;
+        };
+        spec.ipAllowList.sourceRange = [
+          "127.0.0.0/8"
+          "::1/128"
+          "10.0.0.0/8"
+          "172.16.0.0/12"
+          "192.168.0.0/16"
+          "fc00::/7"
+        ];
       };
       "edge-mw-headers.yaml".content = {
         apiVersion = "traefik.io/v1alpha1";

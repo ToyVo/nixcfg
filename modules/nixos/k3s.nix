@@ -191,7 +191,7 @@ in
           spec.valuesContent = ''
             deployment:
               kind: DaemonSet
-            hostNetwork: false
+            hostNetwork: true
             nodeSelector:
               kubernetes.io/hostname: router
             tolerations:
@@ -203,19 +203,16 @@ in
             metrics:
               prometheus:
                 entryPoint: metrics
+            additionalArguments:
+              - --entrypoints.metrics.address=127.0.0.1:8082
             service:
               type: NodePort
             ports:
               web:
                 nodePort: ${toString cfg.traefik.httpNodePort}
+                redirectTo: websecure
               websecure:
                 nodePort: ${toString cfg.traefik.httpsNodePort}
-              web-internal:
-                port: 8001
-                expose: false
-              websecure-internal:
-                port: 8444
-                expose: false
               metrics:
                 port: 8082
                 expose: false

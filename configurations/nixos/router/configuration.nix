@@ -137,7 +137,6 @@ in
     inputs.nixcfg.modules.nixos.monitoring
     inputs.nixcfg.modules.nixos.internet
     ./kea.nix
-    ./virtual-hosts.nix
     inputs.catppuccin.nixosModules.catppuccin
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.default
@@ -526,16 +525,14 @@ in
           forward_to = [prometheus.relabel.instance.receiver]
           scrape_interval = "30s"
         }
-      '';
-      textfileDirectory = "/var/lib/alloy/textfiles";
-    };
-    caddy = {
-      enable = true;
-      globalConfig = ''
-        servers {
-          metrics
+        // Traefik edge metrics (DaemonSet hostNetwork, metrics on loopback)
+        prometheus.scrape "traefik" {
+          targets = [{"__address__" = "127.0.0.1:8082"}]
+          forward_to = [prometheus.relabel.instance.receiver]
+          scrape_interval = "30s"
         }
       '';
+      textfileDirectory = "/var/lib/alloy/textfiles";
     };
     cloudflare-dyndns = {
       enable = true;
