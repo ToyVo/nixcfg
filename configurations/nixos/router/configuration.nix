@@ -77,7 +77,7 @@ let
       # fall through the forwarder zone to the real public record (Cloudflare),
       # which advertises an ECH config for the Cloudflare edge. A client then
       # encrypts its ClientHello for Cloudflare's ECH key but sends it to the
-      # local A-record target (this router's Caddy), which can't decrypt it,
+      # local A-record target (this router's edge proxy), which can't decrypt it,
       # causing SSL_ERROR_INTERNAL_ERROR_ALERT. Override HTTPS locally too,
       # without an ech param, so it matches the local origin.
       {

@@ -539,7 +539,7 @@ in
       toolsets = [ "hermes-cli" ];
       display.personality = "kawaii";
       dashboard = {
-        # Public URL behind the router Caddy reverse proxy. Its hostname is
+        # Public URL behind the router Traefik edge. Its hostname is
         # trusted by the Host/Origin guards and it builds the OIDC
         # redirect_uri (https://hermes.diekvoss.net/auth/callback).
         public_url = "https://hermes.diekvoss.net";
