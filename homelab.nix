@@ -499,10 +499,10 @@
     # Wifi
     # mac = "f0:18:98:8a:6d:ee";
   };
-  macbookpro = {
+  macbook-pro = {
     ip = "10.1.0.15";
-    # Wifi (Private Wi-Fi Address off; stable MAC)
-    mac = "0a:00:7b:57:f4:03";
+    # Wifi (Private Wi-Fi Address off; real hardware MAC)
+    mac = "f8:4d:89:87:a5:2a";
   };
   fq-m-6kl6hvkq = {
     ip = "10.1.0.16";
