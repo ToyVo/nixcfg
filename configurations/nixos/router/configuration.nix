@@ -652,6 +652,33 @@ in
       Persistent = true;
     };
   };
+  # Sync NixOS ACME wildcard certs into cluster TLS secrets for edge Traefik.
+  systemd.services.traefik-cert-sync = {
+    description = "Sync ACME wildcard certs into cluster TLS secrets";
+    after = [
+      "network.target"
+      "k3s.service"
+    ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+      Group = "root";
+      Environment = [
+        "KUBECONFIG=/etc/rancher/k3s/k3s.yaml"
+        "NAMESPACES=edge default"
+      ];
+      ExecStart = lib.getExe inputs.nixcfg.packages.${system}.traefik-cert-sync;
+    };
+  };
+  systemd.timers.traefik-cert-sync = {
+    description = "Periodic ACME to cluster TLS secret sync";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "5min";
+      OnUnitActiveSec = "1h";
+      Persistent = true;
+    };
+  };
   # Configure Technitium DNS Server built-in zones, blocklists, and forwarders
   systemd.services.configure-technitium = {
     description = "Configure Technitium DNS Server via API";

@@ -50,6 +50,7 @@ let
             ip
             serviceName
             port
+            domain
             selfSigned
             public
             forwardAuthGate
@@ -137,7 +138,7 @@ let
                   services = [ backend ];
                 }
               ];
-              tls.secretName = "wildcard-tls";
+              tls.secretName = "wildcard-tls-${lib.replaceStrings [ "." ] [ "-" ] r.domain}";
             };
           };
         }
