@@ -30,81 +30,38 @@ export function sanitizeHostname(raw: string): string | null {
   return lowered;
 }
 
-/** Split one CSV row, honoring double-quoted fields. */
-function splitCsvRow(row: string): string[] {
-  const fields: string[] = [];
-  let cur = "";
-  let inQuotes = false;
-  for (let i = 0; i < row.length; i++) {
-    const c = row[i];
-    if (inQuotes) {
-      if (c === '"') {
-        if (row[i + 1] === '"') {
-          cur += '"';
-          i++;
-        } else {
-          inQuotes = false;
-        }
-      } else {
-        cur += c;
-      }
-    } else if (c === '"') {
-      inQuotes = true;
-    } else if (c === ",") {
-      fields.push(cur);
-      cur = "";
-    } else {
-      cur += c;
-    }
-  }
-  fields.push(cur);
-  return fields;
-}
-
 /**
- * Parse a Kea memfile DHCPv4 CSV lease dump.
- * Keeps only leases on allowed subnets that have not expired and carry a
- * usable hostname. Unparseable `expire` values are treated as expired.
+ * Normalize a `lease4-get-all` response into parsed leases.
+ *
+ * Keeps only leases on allowed subnets that have not expired, carry a
+ * usable hostname, and are in assigned state. Unparseable or missing
+ * `expire` values are treated as expired (fail-closed): a live Kea
+ * server always sends them.
  */
-export function parseKeaLeases(
-  csv: string,
+export function normalizeControlLeases(
+  raw: unknown[],
   allowedSubnetIds: number[],
   nowSec: number,
 ): ParsedLease[] {
   const allowed = new Set(allowedSubnetIds);
-  const lines = csv.split("\n").filter((l) => l !== "");
-  if (lines.length === 0) return [];
-  const header = splitCsvRow(lines[0]);
-  const ipIdx = header.indexOf("address");
-  const hostnameIdx = header.indexOf("hostname");
-  const expireIdx = header.indexOf("expire");
-  const subnetIdx =
-    header.indexOf("subnet_id") !== -1
-      ? header.indexOf("subnet_id")
-      : header.indexOf("subnet-id") !== -1
-        ? header.indexOf("subnet-id")
-        : header.indexOf("subnet");
-  if (ipIdx === -1 || hostnameIdx === -1) return [];
-
   const out: ParsedLease[] = [];
-  for (const line of lines.slice(1)) {
-    const row = splitCsvRow(line);
-    const ip = (row[ipIdx] ?? "").trim();
+  for (const item of raw) {
+    if (typeof item !== "object" || item === null) continue;
+    const rec = item as Record<string, unknown>;
+    const ip = typeof rec["ip-address"] === "string" ? rec["ip-address"] : "";
     if (!ip) continue;
-    if (subnetIdx !== -1) {
-      const subnetId = Number.parseInt((row[subnetIdx] ?? "").trim(), 10);
-      if (!allowed.has(subnetId)) continue;
-    } else if (allowed.size > 0) {
-      continue;
-    }
-    if (expireIdx !== -1) {
-      const expire = Number.parseInt((row[expireIdx] ?? "").trim(), 10);
-      if (!Number.isInteger(expire) || expire <= nowSec) continue;
-    }
-    const hostname = sanitizeHostname((row[hostnameIdx] ?? "").trim());
-    if (!hostname) continue;
     const subnetId =
-      subnetIdx !== -1 ? Number.parseInt((row[subnetIdx] ?? "").trim(), 10) : 0;
+      typeof rec["subnet-id"] === "number" ? rec["subnet-id"] : NaN;
+    if (!allowed.has(subnetId)) continue;
+    const state = rec["state"];
+    if (state !== undefined && state !== 0) continue;
+    const expire = typeof rec["expire"] === "number" ? rec["expire"] : NaN;
+    if (!Number.isInteger(expire) || expire <= nowSec) continue;
+    const hostname =
+      typeof rec["hostname"] === "string"
+        ? sanitizeHostname(rec["hostname"].trim())
+        : null;
+    if (!hostname) continue;
     out.push({ ip, hostname, subnetId });
   }
   return out;

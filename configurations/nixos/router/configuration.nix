@@ -629,7 +629,7 @@ in
       Group = "root";
       StateDirectory = "kea-technitium-ddns";
       Environment = [
-        "KEA_LEASES=/var/lib/kea/dhcp4.leases"
+        "KEA_SOCKET=/run/kea/kea-dhcp4.socket"
         "DNS_ZONE=home.arpa"
         "ALLOWED_SUBNETS=1"
         "GRACE_PERIOD_SEC=3600"

@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
 import {
   sanitizeHostname,
-  parseKeaLeases,
+  normalizeControlLeases,
   buildDesiredRecords,
   diffRecords,
   isSnapshotTrustworthy,
@@ -13,9 +13,50 @@ test("sanitize lowercases and rejects junk", () => {
   expect(sanitizeHostname("***")).toBeNull();
   expect(sanitizeHostname("-bad-")).toBeNull();
 });
-test("parse keeps only unexpired allowed-subnet leases", () => {
-  const csv = `address,hwaddr,hostname,expire,subnet_id\n10.1.0.70,aa:bb:cc:dd:ee:ff,laptop1,1899999999,1\n10.1.0.71,aa:bb:cc:dd:ee:00,oldlaptop,1000000000,1\n10.1.20.90,aa:bb:cc:dd:ee:11,guestphone,1899999999,20\n`;
-  expect(parseKeaLeases(csv, [1], 1800000000)).toEqual([
+test("normalizeControlLeases maps fields and filters", () => {
+  const raw = [
+    {
+      "ip-address": "10.1.0.70",
+      "hw-address": "aa:bb:cc:dd:ee:ff",
+      hostname: "Laptop1",
+      "subnet-id": 1,
+      expire: 1899999999,
+      state: 0,
+    },
+    {
+      "ip-address": "10.1.0.71",
+      "hw-address": "aa:bb:cc:dd:ee:00",
+      hostname: "old",
+      "subnet-id": 1,
+      expire: 1000000000,
+      state: 0,
+    },
+    {
+      "ip-address": "10.1.20.90",
+      "hw-address": "aa:bb:cc:dd:ee:11",
+      hostname: "guest",
+      "subnet-id": 20,
+      expire: 1899999999,
+      state: 0,
+    },
+    {
+      "ip-address": "10.1.0.72",
+      "hw-address": "aa:bb:cc:dd:ee:22",
+      hostname: "",
+      "subnet-id": 1,
+      expire: 1899999999,
+      state: 0,
+    },
+    {
+      "ip-address": "10.1.0.73",
+      "hw-address": "aa:bb:cc:dd:ee:33",
+      hostname: "declined",
+      "subnet-id": 1,
+      expire: 1899999999,
+      state: 1,
+    },
+  ];
+  expect(normalizeControlLeases(raw, [1], 1800000000)).toEqual([
     { ip: "10.1.0.70", hostname: "laptop1", subnetId: 1 },
   ]);
 });

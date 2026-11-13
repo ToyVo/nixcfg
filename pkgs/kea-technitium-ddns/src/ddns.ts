@@ -2,7 +2,7 @@
 /**
  * Kea DHCP → Technitium dynamic DNS sync (one-shot).
  *
- * Reads the Kea DHCPv4 lease file, builds the desired set of
+ * Reads Kea's live DHCPv4 leases over its unix control socket, builds the desired set of
  * `<hostname>.<zone>` A records, and reconciles them with the
  * Technitium zone via its HTTP API.
  *
@@ -13,7 +13,7 @@
  *   - Adds/updates apply immediately; deletes wait until a name has been
  *     continuously absent for GRACE_PERIOD_SEC (covers torn lease-file
  *     reads, sleep, brief roaming). Last-seen state lives in STATE_FILE.
- *   - If the lease file or the existing-records list cannot be read,
+ *   - If the control socket or the existing-records list cannot be read,
  *     the script aborts BEFORE mutating anything.
  *
  * Required environment:
@@ -21,7 +21,7 @@
  *   TECHNITIUM_TOKEN_FILE        API token (preferred auth)
  *   TECHNITIUM_ADMIN_PASS_FILE   admin password (fallback auth)
  *   TECHNITIUM_ADMIN_USER        (default "admin")
- *   KEA_LEASES                   (default /var/lib/kea/dhcp4.leases)
+ *   KEA_SOCKET                   (default /run/kea/kea-dhcp4.socket)
  *   DNS_ZONE                     (default "home.arpa")
  *   ALLOWED_SUBNETS              (default "1", comma separated)
  *   STATIC_NAMES_FILE            JSON array of reserved hostnames
@@ -32,11 +32,12 @@
 import {
   buildDesiredRecords,
   isSnapshotTrustworthy,
-  parseKeaLeases,
+  normalizeControlLeases,
   planSync,
   type ExistingRecord,
   type SeenState,
 } from "./sync";
+import { queryKeaLeases } from "./kea";
 
 const DYNAMIC_TTL = 120;
 
@@ -44,7 +45,7 @@ const url = process.env.TECHNITIUM_URL ?? "http://127.0.0.1:5380";
 const tokenFile = process.env.TECHNITIUM_TOKEN_FILE ?? "";
 const adminUser = process.env.TECHNITIUM_ADMIN_USER ?? "admin";
 const adminPassFile = process.env.TECHNITIUM_ADMIN_PASS_FILE ?? "";
-const leasesFile = process.env.KEA_LEASES ?? "/var/lib/kea/dhcp4.leases";
+const keaSocket = process.env.KEA_SOCKET ?? "/run/kea/kea-dhcp4.socket";
 const zone = process.env.DNS_ZONE ?? "home.arpa";
 const allowedSubnets = (process.env.ALLOWED_SUBNETS ?? "1")
   .split(",")
@@ -185,15 +186,16 @@ async function main(): Promise<void> {
     }
   }
 
-  // 2. Kea leases — abort before any mutation if unreadable.
-  let csv: string;
+  // 2. Kea leases, live from the control socket — abort before any
+  // mutation if unreachable.
+  let raw: unknown[];
   try {
-    csv = await Bun.file(leasesFile).text();
+    raw = await queryKeaLeases(keaSocket);
   } catch (e) {
-    console.error(`FATAL: cannot read Kea leases: ${e}`);
+    console.error(`FATAL: cannot query Kea leases: ${e}`);
     process.exit(1);
   }
-  const leases = parseKeaLeases(csv, allowedSubnets, Date.now() / 1000);
+  const leases = normalizeControlLeases(raw, allowedSubnets, Date.now() / 1000);
   const desired = buildDesiredRecords(leases, staticNames);
   console.error(
     `Leases: ${leases.length} valid, desired DNS records: ${desired.size}`,
@@ -215,12 +217,8 @@ async function main(): Promise<void> {
     process.exit(1);
   }
   const byName = new Map(existing.map((r) => [r.name, r]));
-  const dataRows = Math.max(
-    0,
-    csv.split("\n").filter((l) => l !== "").length - 1,
-  );
   const dynamicCount = existing.filter((r) => r.ttl === DYNAMIC_TTL).length;
-  if (!isSnapshotTrustworthy(dataRows, dynamicCount)) {
+  if (!isSnapshotTrustworthy(raw.length, dynamicCount)) {
     console.error(
       "FATAL: lease snapshot is empty but dynamic records exist; aborting to avoid mass delete.",
     );
