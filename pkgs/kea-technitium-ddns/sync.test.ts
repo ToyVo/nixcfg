@@ -12,53 +12,42 @@ test("sanitize lowercases and rejects junk", () => {
   expect(sanitizeHostname("")).toBeNull();
   expect(sanitizeHostname("***")).toBeNull();
   expect(sanitizeHostname("-bad-")).toBeNull();
+  expect(sanitizeHostname("windows-desktop.")).toBe("windows-desktop");
+  expect(sanitizeHostname(".")).toBeNull();
 });
 test("normalizeControlLeases maps fields and filters", () => {
-  const raw = [
-    {
-      "ip-address": "10.1.0.70",
-      "hw-address": "aa:bb:cc:dd:ee:ff",
-      hostname: "Laptop1",
-      "subnet-id": 1,
-      expire: 1899999999,
-      state: 0,
-    },
-    {
-      "ip-address": "10.1.0.71",
-      "hw-address": "aa:bb:cc:dd:ee:00",
-      hostname: "old",
-      "subnet-id": 1,
-      expire: 1000000000,
-      state: 0,
-    },
-    {
-      "ip-address": "10.1.20.90",
-      "hw-address": "aa:bb:cc:dd:ee:11",
-      hostname: "guest",
-      "subnet-id": 20,
-      expire: 1899999999,
-      state: 0,
-    },
-    {
-      "ip-address": "10.1.0.72",
-      "hw-address": "aa:bb:cc:dd:ee:22",
-      hostname: "",
-      "subnet-id": 1,
-      expire: 1899999999,
-      state: 0,
-    },
-    {
-      "ip-address": "10.1.0.73",
-      "hw-address": "aa:bb:cc:dd:ee:33",
-      hostname: "declined",
-      "subnet-id": 1,
-      expire: 1899999999,
-      state: 1,
-    },
-  ];
-  expect(normalizeControlLeases(raw, [1], 1800000000)).toEqual([
-    { ip: "10.1.0.70", hostname: "laptop1", subnetId: 1 },
-  ]);
+  const lease = (over: Record<string, unknown>) => ({
+    "ip-address": "10.1.0.70",
+    "hw-address": "aa:bb:cc:dd:ee:ff",
+    hostname: "Laptop1",
+    "subnet-id": 1,
+    cltt: 1800000000,
+    "valid-lft": 32400,
+    state: 0,
+    ...over,
+  });
+  expect(
+    normalizeControlLeases(
+      [
+        lease({}),
+        lease({ "ip-address": "10.1.0.71", hostname: "old", cltt: 1000000000 }),
+        lease({
+          "ip-address": "10.1.20.90",
+          hostname: "guest",
+          "subnet-id": 20,
+        }),
+        lease({ "ip-address": "10.1.0.72", hostname: "" }),
+        lease({ "ip-address": "10.1.0.73", hostname: "declined", state: 1 }),
+        lease({
+          "ip-address": "10.1.0.74",
+          hostname: "nodata",
+          cltt: undefined,
+        }),
+      ],
+      [1],
+      1800000000,
+    ),
+  ).toEqual([{ ip: "10.1.0.70", hostname: "laptop1", subnetId: 1 }]);
 });
 test("buildDesired skips static names and last-wins duplicates", () => {
   const m = buildDesiredRecords(

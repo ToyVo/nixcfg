@@ -20,11 +20,15 @@ export interface ExistingRecord {
 /** Hostname without domain → IP for records we want to exist. */
 export type DesiredRecords = Map<string, string>;
 
-/** Lowercase, replace underscores/whitespace with `-`, validate RFC 1035 label. */
+/**
+ * Lowercase, strip one trailing dot (FQDN notation), replace
+ * underscores/whitespace with `-`, validate RFC 1035 label.
+ */
 export function sanitizeHostname(raw: string): string | null {
   const lowered = raw
     .trim()
     .toLowerCase()
+    .replace(/\.$/, "")
     .replace(/[_\s]+/g, "-");
   if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(lowered)) return null;
   return lowered;
@@ -33,10 +37,11 @@ export function sanitizeHostname(raw: string): string | null {
 /**
  * Normalize a `lease4-get-all` response into parsed leases.
  *
+ * Kea reports `cltt` (client last transaction time, epoch seconds) and
+ * `valid-lft`; a lease is live while `cltt + valid-lft` is in the future.
  * Keeps only leases on allowed subnets that have not expired, carry a
- * usable hostname, and are in assigned state. Unparseable or missing
- * `expire` values are treated as expired (fail-closed): a live Kea
- * server always sends them.
+ * usable hostname, and are in assigned state. Missing or unparseable
+ * times are treated as expired (fail-closed).
  */
 export function normalizeControlLeases(
   raw: unknown[],
@@ -55,8 +60,15 @@ export function normalizeControlLeases(
     if (!allowed.has(subnetId)) continue;
     const state = rec["state"];
     if (state !== undefined && state !== 0) continue;
-    const expire = typeof rec["expire"] === "number" ? rec["expire"] : NaN;
-    if (!Number.isInteger(expire) || expire <= nowSec) continue;
+    const cltt = typeof rec["cltt"] === "number" ? rec["cltt"] : NaN;
+    const validLft =
+      typeof rec["valid-lft"] === "number"
+        ? rec["valid-lft"]
+        : typeof rec["valid-lifetime"] === "number"
+          ? rec["valid-lifetime"]
+          : NaN;
+    if (!Number.isInteger(cltt) || !Number.isInteger(validLft)) continue;
+    if (cltt + validLft <= nowSec) continue;
     const hostname =
       typeof rec["hostname"] === "string"
         ? sanitizeHostname(rec["hostname"].trim())
