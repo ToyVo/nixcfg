@@ -262,6 +262,18 @@ in
                   name = "immich-server";
                   image = immichServerImage;
                   imagePullPolicy = "IfNotPresent";
+                  # Run as the immich UID (ids.uids.immich = 354, matching
+                  # POOL file ownership + the /mnt/POOL/immich ACLs) instead
+                  # of root: the library NFS export uses root_squash, so
+                  # root-in-pod is squashed to nobody and the startup
+                  # folder-integrity writes (`.immich` sentinels) die with
+                  # EACCES. Non-root numeric UID passes NFS untouched.
+                  # No fsGroup: it would recursively chown the 101G library
+                  # mount on every pod start.
+                  securityContext = {
+                    runAsUser = 354;
+                    runAsGroup = 354;
+                  };
                   env = [
                     {
                       name = "DB_HOSTNAME";
