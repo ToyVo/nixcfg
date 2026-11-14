@@ -202,6 +202,10 @@ in
   # Run as the kea system user against the persisted dir instead.
   systemd.services.kea-dhcp4-server.serviceConfig.DynamicUser = lib.mkForce false;
   systemd.services.kea-dhcp6-server.serviceConfig.DynamicUser = lib.mkForce false;
+  # With DynamicUser off nothing creates /run/kea owned by kea anymore
+  # (pid + logger lockfiles, control socket); declare it explicitly.
+  systemd.services.kea-dhcp4-server.serviceConfig.RuntimeDirectory = "kea";
+  systemd.services.kea-dhcp6-server.serviceConfig.RuntimeDirectory = "kea";
   # Activation scripts don't run at boot, so on tmpfs root nothing would
   # reinstall /run/secrets after a reboot (k3s then waits on the token
   # forever). The systemd unit installs them at every boot instead.
