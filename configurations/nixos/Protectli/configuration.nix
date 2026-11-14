@@ -649,11 +649,13 @@ in
         ".ssh"
         "nixcfg"
         # herdr + herdr-core mutable settings, auth, and session state
-        # (XDG config + data; caches rebuild and are intentionally skipped).
+        # (XDG config + data + state; caches rebuild and are intentionally skipped).
         ".config/herdr"
         ".config/herdr-core"
         ".local/share/herdr"
         ".local/share/herdr-core"
+        ".local/state/herdr"
+        ".local/state/herdr-core"
       ];
       files = [
         # sops-nix age key (private key, must not be world-readable)
