@@ -674,6 +674,17 @@ in
       transmission
     ];
 
+  };
+  # The repo checkout: keep file ACLs VCS-clean between boots (new files
+  # are born without default ACLs; the 5-minute timer re-asserts entries).
+  # Scoped to the checkout only — never list media trees here (see option).
+  systemd.tmpfiles.generateRulesContinuous = {
+    "/home/toyvo/nixcfg" = with config.ids.uids; [
+      agent
+      toyvo
+    ];
+  };
+  systemd.tmpfiles.generateRules = {
     # Service-specific directories.
     "/mnt/POOL/home-assistant" = with config.ids.uids; [
       hass
