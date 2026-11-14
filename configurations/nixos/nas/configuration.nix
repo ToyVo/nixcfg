@@ -149,7 +149,7 @@ in
     k3sEdge.enable = true;
     # Home Assistant (not starr); same cluster-wide pattern.
     k3sHomeassistant.enable = true;
-    # Immich (server + ML + Postgres + Valkey); server/ML scaled 0 until cutover.
+    # Immich (server + ML + Postgres + Valkey, live since 2026-11-14 cutover).
     k3sImmich.enable = true;
     # Shared NFS storage (csi-driver-nfs + static pool PVs).
     # Single writer: enable ONLY here, never on another server.
